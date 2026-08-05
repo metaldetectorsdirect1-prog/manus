@@ -1,0 +1,52 @@
+{%- comment -%}
+  HIVOLT — Organization + WebSite structured data
+
+  WHY: establishes the brand entity for Google (knowledge panel eligibility,
+  sitelinks search box) and is a prerequisite signal for E-E-A-T on a new domain.
+
+  WHERE TO PUT IT:
+    Online Store > Themes > hivolt-theme-v13-engineering-sheet > Edit code
+    Open layout/theme.liquid and paste this immediately before </head>.
+    It must render on EVERY page, not just the homepage.
+
+  BEFORE PUBLISHING: fill in the sameAs array with your real social profiles.
+  Leave an entry out rather than guessing — a dead URL is worse than no URL.
+{%- endcomment -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "description": "HIVOLT makes performance activewear with published fabric specifications - exact fibre composition and fabric weight taken from the supplier specification.",
+  {%- if settings.logo %}
+  "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+  {%- endif %}
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "email": "support@hivolt-usa.com",
+    "areaServed": "US",
+    "availableLanguage": "English"
+  },
+  "sameAs": []
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
