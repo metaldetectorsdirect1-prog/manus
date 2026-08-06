@@ -1,15 +1,20 @@
 # HIVOLT storefront
 
-**Live preview:** https://claude.ai/code/artifact/2457c34e-d06c-46a2-af97-a73b28a7a22b
+**Live previews**
+- Homepage — https://claude.ai/code/artifact/2457c34e-d06c-46a2-af97-a73b28a7a22b
+- Product page — https://claude.ai/code/artifact/bd82f8ee-0b41-4f4e-a80f-4277e8fa67b3
 
 ## Files
 
 | File | What it is |
 |---|---|
-| `index.html` | The design, as a standalone page. Open it in a browser. |
+| `index.html` | Homepage design, standalone. Open in a browser. |
+| `product.html` | Product page design, standalone. |
 | `index.liquid` | Shopify homepage template. Replaces `templates/index.liquid`. |
-| `theme-hivolt.css` | Stylesheet. Goes in `assets/` as `hivolt.css`. |
-| `shot-*.png` | Rendered screenshots (desktop light, desktop dark, mobile). |
+| `product.liquid` | Shopify product template. Replaces `templates/product.liquid`. |
+| `theme-hivolt.css` | Stylesheet for both. Goes in `assets/` as `hivolt.css`. |
+| `product-preview.html` | Self-contained PDP (CSS inlined) — for the artifact only. |
+| `shot-*.png` | Rendered screenshots, light and dark, desktop and mobile. |
 
 ## Installing on Shopify
 
@@ -20,7 +25,8 @@
    ```liquid
    {{ 'hivolt.css' | asset_url | stylesheet_tag }}
    ```
-4. Replace the contents of `templates/index.liquid` with `index.liquid`.
+4. Replace `templates/index.liquid` with `index.liquid`, and
+   `templates/product.liquid` with `product.liquid`.
 5. **Preview before publishing.** Check one product page on a phone.
 
 ## The two metafields
@@ -32,8 +38,16 @@ Settings → Custom data → Products → Add definition:
 |---|---|---|
 | `spec.gsm` | Integer | `220` |
 | `spec.composition` | Single line text | `75% nylon / 25% spandex` |
+| `spec.rise` | Single line text | `High · 11.5"` |
+| `spec.inseam` | Single line text | `31" (size M)` |
+| `spec.seams` | Single line text | `Flatlock, 4-thread` |
+| `spec.gusset` | Single line text | `Yes, diamond` |
+| `spec.opacity` | Single line text | `Opaque under stretch` |
+| `spec.care` | Single line text | `Cold wash · hang dry` |
 
-Where a product has no `spec.gsm`, the badge is omitted rather than guessed.
+The first two drive the homepage tiles; all eight drive the product page
+specification sheet. **A row with no value is not rendered** — never filled with
+a placeholder.
 That is deliberate — the page's entire claim is that every number on it is real,
 and a placeholder would break it on the first product a customer checks.
 
@@ -69,11 +83,30 @@ with more legal exposure, not less.
 The "What we publish" section turns those absences into the argument. It is the
 only trust play available to a 36-day-old store that is also true.
 
+## The product page
+
+The specification sheet is the top third of the buy column — above the size
+picker, above the button. That is deliberate. On a store with no reviews, the
+spec sheet is the only evidence a stranger has, so it does the work a review
+carousel does elsewhere.
+
+Below the button, a block headed **"What this product is"** states plainly that
+these are manufacturer blanks, that the photographs are the supplier's own of
+that exact garment, and that there is no logo on it. Most stores hide this.
+Saying it is what makes the specification credible — and it is the sentence that
+would have prevented the 80 fabricated images.
+
 ## Verified
 
-Rendered in Chromium at 1440px and 390px, light and dark. No horizontal overflow
-at either width. Keyboard focus visible, `prefers-reduced-motion` respected, no
-external fonts or images so nothing can silently fail to load.
+Rendered in Chromium at 1440px and 390px, light and dark, both pages. No
+horizontal overflow at either width. Keyboard focus visible,
+`prefers-reduced-motion` respected, no external fonts or images so nothing can
+silently fail to load.
+
+One real bug was caught this way: the product gallery blew out to 462px inside a
+390px viewport — `min-width: auto` on a grid item letting an aspect-ratio'd tile
+force the track wider than the screen. Fixed with `min-width: 0`, re-measured,
+clean.
 
 Untested against a live Shopify store — the Shopify connector was expired when
 this was built, so the Liquid has not been run through a real render. Preview

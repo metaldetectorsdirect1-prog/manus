@@ -1,0 +1,277 @@
+{%- comment -%}
+  HIVOLT — product template
+  ─────────────────────────
+  Drop-in replacement for templates/product.liquid.
+  Requires assets/hivolt.css (linked from layout/theme.liquid).
+
+  Specification rows are driven by metafields. A row that has no value is not
+  rendered — never filled with a placeholder. The page's whole claim is that
+  every number on it is real, and one invented figure destroys that on the first
+  product a customer checks.
+
+  Metafields (Settings → Custom data → Products):
+    spec.gsm          integer            220
+    spec.composition  single line text   75% nylon / 25% spandex
+    spec.rise         single line text   High · 11.5"
+    spec.inseam       single line text   31" (size M)
+    spec.seams        single line text   Flatlock, 4-thread
+    spec.gusset       single line text   Yes, diamond
+    spec.opacity      single line text   Opaque under stretch
+    spec.care         single line text   Cold wash · hang dry
+{%- endcomment -%}
+
+{%- assign m = product.metafields.spec -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    {%- if collection -%}
+      <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+    {%- endif -%}
+    <li aria-current="page">{{ product.title }}</li>
+  </ol>
+</nav>
+
+<main>
+  <div class="pdp">
+
+    <!-- gallery: supplier studio photography only -->
+    <div class="gal">
+      {%- for media in product.media limit: 5 -%}
+        {%- if media.media_type == 'image' -%}
+          <div class="gal__f">
+            <span class="gal__n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <img
+              src="{{ media | image_url: width: 1200 }}"
+              srcset="{{ media | image_url: width: 600 }} 600w,
+                      {{ media | image_url: width: 1200 }} 1200w,
+                      {{ media | image_url: width: 1600 }} 1600w"
+              sizes="(max-width:960px) 100vw, 55vw"
+              alt="{{ media.alt | default: product.title | escape }}"
+              width="{{ media.width }}" height="{{ media.height }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="gal__f"><div class="ph--lg"><span>No image</span></div></div>
+      {%- endfor -%}
+    </div>
+
+    <!-- buy column -->
+    <div class="buy">
+      <p class="mono buy__ref">
+        {{ product.type }}{% if product.vendor != blank %} · {{ product.vendor }}{% endif %}
+      </p>
+      <h1 class="buy__h">{{ product.title }}</h1>
+
+      <p class="buy__price" id="price">
+        {{ product.selected_or_first_available_variant.price | money }}
+        {%- if product.compare_at_price > product.price -%}
+          <s style="color:var(--steel);margin-left:8px">{{ product.compare_at_price | money }}</s>
+        {%- endif -%}
+      </p>
+      <p class="buy__ship">Free US shipping · arrives in 8–14 business days</p>
+
+      {%- comment -%} Specification sheet — only rows that actually have values {%- endcomment -%}
+      {%- capture rows -%}
+        {%- if m.gsm != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Fabric weight</span><span class="sheet__v"><em>{{ m.gsm }} g/m²</em></span></div>
+        {%- endif -%}
+        {%- if m.composition != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Composition</span><span class="sheet__v">{{ m.composition }}</span></div>
+        {%- endif -%}
+        {%- if m.rise != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Rise</span><span class="sheet__v">{{ m.rise }}</span></div>
+        {%- endif -%}
+        {%- if m.inseam != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Inseam</span><span class="sheet__v">{{ m.inseam }}</span></div>
+        {%- endif -%}
+        {%- if m.seams != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Seams</span><span class="sheet__v">{{ m.seams }}</span></div>
+        {%- endif -%}
+        {%- if m.gusset != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Gusset</span><span class="sheet__v">{{ m.gusset }}</span></div>
+        {%- endif -%}
+        {%- if m.opacity != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Opacity</span><span class="sheet__v">{{ m.opacity }}</span></div>
+        {%- endif -%}
+        {%- if m.care != blank -%}
+          <div class="sheet__row"><span class="sheet__k">Care</span><span class="sheet__v">{{ m.care }}</span></div>
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- if rows != blank -%}
+        <div class="sheet">
+          {{ rows }}
+          <p class="sheet__src">Figures taken from the mill's specification sheet, unedited.</p>
+        </div>
+      {%- endif -%}
+
+      <!-- add to cart -->
+      {%- form 'product', product, id: 'hivolt-form' -%}
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="opt">
+              <div class="opt__lab">
+                <span class="mono">{{ option.name }}</span>
+                {%- if option.name == 'Size' -%}<a href="#sizes">Size guide</a>{%- endif -%}
+              </div>
+              <div class="sizes">
+                {%- for value in option.values -%}
+                  <button type="button" class="size js-opt"
+                          data-index="option{{ option.position }}" data-value="{{ value | escape }}"
+                          aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}">
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <select name="id" id="variant-select" class="visually-hidden" aria-hidden="true" tabindex="-1">
+          {%- for v in product.variants -%}
+            <option value="{{ v.id }}"
+                    {% if v == product.selected_or_first_available_variant %}selected{% endif %}
+                    {% unless v.available %}disabled{% endunless %}
+                    data-price="{{ v.price | money }}">
+              {{ v.title }}
+            </option>
+          {%- endfor -%}
+        </select>
+
+        <button type="submit" class="btn add" id="add"
+                {% unless product.available %}disabled{% endunless %}>
+          {%- if product.available -%}
+            Add to bag — <span id="btn-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+          {%- else -%}
+            Sold out
+          {%- endif -%}
+        </button>
+      {%- endform -%}
+
+      <div class="assure">
+        <ul>
+          <li><b>Ship</b><span>Free, no minimum. Dispatched from Illinois, tracked. 8–14 business days.</span></li>
+          <li><b>Return</b><span>60 days, unworn with tags. No restocking fee, no explanation required.</span></li>
+          <li><b>Pay</b><span>Shopify Checkout. Card details never touch our servers.</span></li>
+        </ul>
+      </div>
+
+      <div class="disc">
+        <p><strong>What this product is</strong>
+          A manufacturer blank, selected and specified by us — not made in a HIVOLT factory.
+          The photographs above are the supplier's studio images of this exact garment. We don't
+          publish pictures we haven't taken, and there is no logo printed on it.</p>
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="rte" style="margin-top:24px">{{ product.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Related — from the same collection, never `collections.all` {%- endcomment -%}
+  {%- if collection and collection.products_count > 1 -%}
+    <section class="cat wrap">
+      <div class="sec__head">
+        <h2 class="sec__h">More in {{ collection.title }}</h2>
+        <span class="mono">{{ collection.products_count }} styles</span>
+      </div>
+      <div class="grid">
+        {%- assign shown = 0 -%}
+        {%- for p in collection.products limit: 8 -%}
+          {%- if p.id != product.id and shown < 4 -%}
+            {%- assign shown = shown | plus: 1 -%}
+            <a class="item" href="{{ p.url }}">
+              <div class="item__fig">
+                {%- if p.metafields.spec.gsm != blank -%}
+                  <span class="item__gsm">{{ p.metafields.spec.gsm }}</span>
+                {%- endif -%}
+                {%- if p.featured_image -%}
+                  <img src="{{ p.featured_image | image_url: width: 800 }}"
+                       alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                       width="{{ p.featured_image.width }}" height="{{ p.featured_image.height }}"
+                       loading="lazy">
+                {%- else -%}
+                  <div class="ph"><span>No image</span></div>
+                {%- endif -%}
+              </div>
+              <div class="item__body">
+                <h3 class="item__name">{{ p.title }}</h3>
+                <p class="item__meta">{{ p.metafields.spec.composition | default: p.type }}</p>
+                <div class="item__foot">
+                  <span class="item__price">{{ p.price | money }}</span>
+                  <span class="item__buy">View</span>
+                </div>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+</main>
+
+{%- comment -%} Product + Breadcrumb structured data {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+  "brand": {"@type":"Brand","name":"HIVOLT"},
+  {%- if product.featured_image %}
+  "image": [{{ product.featured_image | image_url: width: 1200 | prepend: "https:" | json }}],
+  {%- endif %}
+  "offers": {
+    "@type": "Offer",
+    "url": {{ shop.url | append: product.url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ product.price | divided_by: 100.0 | json }},
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+    "seller": {"@type":"Organization","name":"HIVOLT"}
+  }
+}
+</script>
+
+<script>
+(function(){
+  var sel=document.getElementById('variant-select');
+  if(!sel) return;
+  var price=document.getElementById('price'), btnPrice=document.getElementById('btn-price');
+
+  document.querySelectorAll('.js-opt').forEach(function(b){
+    b.addEventListener('click',function(){
+      // mark this value selected within its own option group
+      b.parentNode.querySelectorAll('.js-opt').forEach(function(x){x.setAttribute('aria-pressed','false')});
+      b.setAttribute('aria-pressed','true');
+
+      // collect the chosen value for every option group, in order
+      var chosen=[];
+      document.querySelectorAll('.opt .sizes').forEach(function(group){
+        var on=group.querySelector('.js-opt[aria-pressed="true"]');
+        if(on) chosen.push(on.dataset.value);
+      });
+      var want=chosen.join(' / ');
+
+      for(var i=0;i<sel.options.length;i++){
+        if(sel.options[i].text.trim()===want){
+          sel.selectedIndex=i;
+          sel.dispatchEvent(new Event('change',{bubbles:true}));
+          var p=sel.options[i].dataset.price;
+          if(price&&p) price.firstChild.nodeValue=p+' ';
+          if(btnPrice&&p) btnPrice.textContent=p;
+          var add=document.getElementById('add');
+          if(add){
+            add.disabled=sel.options[i].disabled;
+            if(sel.options[i].disabled) add.textContent='Sold out';
+          }
+          break;
+        }
+      }
+    });
+  });
+})();
+</script>

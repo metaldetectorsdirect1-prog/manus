@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 220 Flare Legging — HIVOLT</title>
+<link rel="stylesheet" href="theme-hivolt.css">
+<style>
+/* ── PDP ───────────────────────────────────────────────────── */
+.crumb{padding-block:18px;border-bottom:1px solid var(--rule)}
+.crumb ol{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
+.crumb a{text-decoration:none;color:var(--steel)}
+.crumb a:hover{color:var(--blueprint)}
+.crumb li+li::before{content:"/";margin-right:8px;color:var(--rule)}
+
+.pdp{display:grid;grid-template-columns:1.15fr .85fr;gap:0;border-bottom:1px solid var(--rule)}
+.pdp>*{min-width:0}
+@media (max-width:960px){.pdp{grid-template-columns:1fr}}
+
+/* gallery — supplier cutouts sit on flat colour, no fake lifestyle framing */
+.gal{border-right:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;min-width:0}
+.gal>*{min-width:0}
+@media (max-width:560px){.gal{grid-template-columns:1fr}}
+.gal__f{aspect-ratio:3/4;background:var(--paper-2);display:grid;place-items:center;
+  border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);position:relative}
+.gal__f:nth-child(1){grid-column:1/-1;aspect-ratio:1/1}
+.gal__f img{width:100%;height:100%;object-fit:cover}
+.gal__n{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.1em;color:var(--steel)}
+.ph--lg{width:58%;height:62%;border:1px solid var(--rule);background:var(--paper);
+  display:grid;place-items:center}
+.ph--lg span{font-family:var(--mono);font-size:10px;letter-spacing:.09em;color:var(--steel);text-align:center;padding:10px}
+
+/* buy column — sticky on desktop */
+.buy{padding:clamp(24px,3vw,44px);position:sticky;top:62px;align-self:start}
+@media (max-width:960px){.buy{position:static}}
+.buy__ref{color:var(--steel)}
+.buy__h{font-size:clamp(26px,3.4vw,40px);line-height:1.02;letter-spacing:-.025em;
+  font-weight:800;text-transform:uppercase;margin:14px 0 0;text-wrap:balance}
+.buy__price{font-family:var(--mono);font-size:22px;margin:18px 0 0;font-variant-numeric:tabular-nums}
+.buy__ship{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--steel);
+  margin:7px 0 0;text-transform:none}
+
+/* the spec table — the reason to buy here rather than anywhere else */
+.sheet{margin-top:26px;border-top:1px solid var(--ink)}
+.sheet__row{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:11px 0;
+  border-bottom:1px solid var(--rule);align-items:baseline}
+.sheet__k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--steel);white-space:nowrap}
+.sheet__v{font-family:var(--mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.sheet__v em{font-style:normal;color:var(--blueprint);font-weight:700}
+.sheet__src{font-family:var(--mono);font-size:10px;color:var(--steel);margin:12px 0 0;line-height:1.7}
+
+.opt{margin-top:26px}
+.opt__lab{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.opt__lab .mono{color:var(--steel)}
+.opt__lab a{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blueprint)}
+.sizes{display:flex;flex-wrap:wrap;gap:7px}
+.size{font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:11px 0;width:56px;
+  text-align:center;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;
+  transition:border-color .14s ease,background .14s ease,color .14s ease}
+.size:hover{border-color:var(--ink)}
+.size[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.size[disabled]{color:var(--steel);border-style:dashed;cursor:not-allowed;text-decoration:line-through}
+
+.add{width:100%;margin-top:22px;padding:18px;font-size:12px}
+.assure{display:grid;gap:9px;margin-top:20px;padding-top:18px;border-top:1px solid var(--rule)}
+.assure li{list-style:none;display:grid;grid-template-columns:auto 1fr;gap:11px;
+  font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.assure ul{margin:0;padding:0;display:grid;gap:9px}
+.assure b{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blueprint);padding-top:3px}
+
+.disc{margin-top:22px;padding:16px 18px;border:1px solid var(--rule);background:var(--paper-2)}
+.disc p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.6}
+.disc strong{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  display:block;margin-bottom:7px;color:var(--ink)}
+
+/* size table */
+.sz{padding-block:var(--band)}
+.sz__wrap{overflow-x:auto;border:1px solid var(--rule);margin-top:26px}
+table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{font-family:var(--mono);font-size:12px;padding:12px 14px;text-align:right;
+  border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);font-weight:400;
+  background:var(--paper-2)}
+th:first-child,td:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:0}
+</style>
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>Free US shipping · no minimum</span><span>60-day returns</span>
+    <span>Every fabric weight published</span><span>Ships from Illinois</span><span>US orders only</span>
+    <span>Free US shipping · no minimum</span><span>60-day returns</span>
+    <span>Every fabric weight published</span><span>Ships from Illinois</span><span>US orders only</span>
+  </div>
+</div>
+
+<header class="mast">
+  <div class="wrap mast__in">
+    <a href="index.html" class="logo">Hivolt</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#">Women</a><a href="#">Men</a><a href="#">Training</a>
+      <a href="#">Fabric</a><a href="#">About</a>
+    </nav>
+    <div class="mast__act">
+      <a href="#" class="mono">Search</a><a href="#" class="mono">Bag (0)</a>
+    </div>
+  </div>
+</header>
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#">Women</a></li>
+    <li><a href="#">Leggings</a></li>
+    <li aria-current="page">The 220 Flare Legging</li>
+  </ol>
+</nav>
+
+<main>
+  <div class="pdp">
+    <div class="gal">
+      <div class="gal__f"><span class="gal__n">01 · FRONT</span>
+        <div class="ph--lg"><span>Supplier studio photograph<br>1400 × 1400</span></div></div>
+      <div class="gal__f"><span class="gal__n">02 · BACK</span>
+        <div class="ph--lg"><span>Alternate view</span></div></div>
+      <div class="gal__f"><span class="gal__n">03 · DETAIL</span>
+        <div class="ph--lg"><span>Waistband detail</span></div></div>
+    </div>
+
+    <div class="buy">
+      <p class="mono buy__ref">REF 01 · Leggings · Women</p>
+      <h1 class="buy__h">The 220 Flare Legging</h1>
+      <p class="buy__price">$54.00</p>
+      <p class="buy__ship">Free US shipping · arrives in 8–14 business days</p>
+
+      <!-- THE SPEC SHEET: the whole reason to buy here -->
+      <div class="sheet">
+        <div class="sheet__row"><span class="sheet__k">Fabric weight</span><span class="sheet__v"><em>220 g/m²</em></span></div>
+        <div class="sheet__row"><span class="sheet__k">Composition</span><span class="sheet__v">75% nylon / 25% spandex</span></div>
+        <div class="sheet__row"><span class="sheet__k">Rise</span><span class="sheet__v">High · 11.5&quot;</span></div>
+        <div class="sheet__row"><span class="sheet__k">Inseam</span><span class="sheet__v">31&quot; (size M)</span></div>
+        <div class="sheet__row"><span class="sheet__k">Seams</span><span class="sheet__v">Flatlock, 4-thread</span></div>
+        <div class="sheet__row"><span class="sheet__k">Gusset</span><span class="sheet__v">Yes, diamond</span></div>
+        <div class="sheet__row"><span class="sheet__k">Opacity</span><span class="sheet__v">Opaque under stretch</span></div>
+        <div class="sheet__row"><span class="sheet__k">Care</span><span class="sheet__v">Cold wash · hang dry</span></div>
+        <p class="sheet__src">Figures taken from the mill's specification sheet, unedited.
+          Inseam measured flat on a finished size M garment.</p>
+      </div>
+
+      <div class="opt">
+        <div class="opt__lab">
+          <span class="mono">Size</span>
+          <a href="#sizes">Size guide</a>
+        </div>
+        <div class="sizes">
+          <button class="size" aria-pressed="false">XS</button>
+          <button class="size" aria-pressed="false">S</button>
+          <button class="size" aria-pressed="true">M</button>
+          <button class="size" aria-pressed="false">L</button>
+          <button class="size" aria-pressed="false">XL</button>
+          <button class="size" disabled>XXL</button>
+        </div>
+      </div>
+
+      <button class="btn add">Add to bag — $54.00</button>
+
+      <div class="assure">
+        <ul>
+          <li><b>Ship</b><span>Free, no minimum. Dispatched from Illinois, tracked. 8–14 business days.</span></li>
+          <li><b>Return</b><span>60 days, unworn with tags. No restocking fee, no explanation required.</span></li>
+          <li><b>Pay</b><span>Shopify Checkout. Card details never touch our servers.</span></li>
+        </ul>
+      </div>
+
+      <div class="disc">
+        <p><strong>What this product is</strong>
+          A manufacturer blank, selected and specified by us — not made in a HIVOLT factory.
+          The photographs above are the supplier's studio images of this exact garment. We don't
+          publish pictures we haven't taken, and there is no logo printed on it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- size table -->
+  <section class="sz wrap" id="sizes">
+    <div class="sec__head">
+      <h2 class="sec__h">Measurements</h2>
+      <span class="mono">Garment measured flat, in inches</span>
+    </div>
+    <div class="sz__wrap">
+      <table>
+        <thead><tr><th scope="col">Size</th><th scope="col">Waist</th><th scope="col">Hip</th>
+          <th scope="col">Inseam</th><th scope="col">Rise</th><th scope="col">US dress</th></tr></thead>
+        <tbody>
+          <tr><td>XS</td><td>23.5</td><td>33.0</td><td>30.0</td><td>10.5</td><td>0–2</td></tr>
+          <tr><td>S</td><td>25.5</td><td>35.0</td><td>30.5</td><td>11.0</td><td>4–6</td></tr>
+          <tr><td>M</td><td>27.5</td><td>37.0</td><td>31.0</td><td>11.5</td><td>8–10</td></tr>
+          <tr><td>L</td><td>29.5</td><td>39.5</td><td>31.5</td><td>12.0</td><td>12–14</td></tr>
+          <tr><td>XL</td><td>32.0</td><td>42.0</td><td>32.0</td><td>12.5</td><td>16–18</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sheet__src" style="margin-top:14px">
+      Between sizes, take the larger — this knit has less give than a 180 g/m² legging.
+      Measurements are of the garment laid flat, not of the body.
+    </p>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a href="index.html" class="logo" style="font-size:17px">Hivolt</a>
+        <p class="foot__addr" style="margin-top:16px">
+          Technical activewear, specified in public.<br>
+          Shipping within the United States.<br>
+          support@hivolt-usa.com
+        </p>
+      </div>
+      <div><h4>Shop</h4><ul>
+        <li><a href="#">Women</a></li><li><a href="#">Men</a></li>
+        <li><a href="#">Training</a></li><li><a href="#">Everything</a></li></ul></div>
+      <div><h4>Information</h4><ul>
+        <li><a href="#">Fabric &amp; specifications</a></li><li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns &amp; refunds</a></li><li><a href="#">Materials</a></li></ul></div>
+      <div><h4>Company</h4><ul>
+        <li><a href="#">About</a></li><li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+    </div>
+    <div class="foot__legal">
+      <span>© 2026 HIVOLT</span>
+      <span>Free US shipping · 60-day returns · US orders only</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.size:not([disabled])').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.size').forEach(function(x){x.setAttribute('aria-pressed','false')});
+    b.setAttribute('aria-pressed','true');
+  });
+});
+</script>
+</body>
+</html>
