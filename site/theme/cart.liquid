@@ -1,0 +1,229 @@
+{%- comment -%}
+  HIVOLT — cart template
+  ─────────────────────
+  Drop-in replacement for templates/cart.liquid.
+  Requires assets/hivolt.css and assets/cart.css, both linked from
+  layout/theme.liquid:
+
+      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+      {{ 'cart.css'   | asset_url | stylesheet_tag }}
+
+  The whole page works with JavaScript switched off. Quantities are plain
+  number inputs named updates[] inside the cart form, applied by a
+  real Update submit. Remove is a link to item.url_to_remove — a GET, no
+  script. The script at the foot only saves a click by submitting the form
+  when a quantity changes; nothing depends on it.
+
+  Every figure on this page comes from the cart object. There is no
+  "you saved" line, because the store cannot honestly compute one, and no
+  claim beyond the four in the strip at the bottom.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Cart</li>
+  </ol>
+</nav>
+
+<main>
+  <section class="ct wrap">
+
+    <div class="sec__head">
+      <h1 class="sec__h">Cart</h1>
+      <span class="mono">
+        {%- if cart.item_count > 0 -%}
+          {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}
+        {%- else -%}
+          Empty
+        {%- endif -%}
+      </span>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+
+      {%- comment -%} Empty state — short, and straight back to the three collections {%- endcomment -%}
+      <div class="ct__empty">
+        <p class="ct__empty-t">Nothing in the cart.</p>
+        <p class="ct__empty-p">Pick up where you left off.</p>
+        <div class="ct__links">
+          <a class="btn btn--ghost" href="/collections/womens">Women's</a>
+          <a class="btn btn--ghost" href="/collections/mens">Men's</a>
+          <a class="btn btn--ghost" href="/collections/training">Training</a>
+        </div>
+      </div>
+
+    {%- else -%}
+
+      {%- form 'cart', cart, id: 'ct-form', class: 'ct__form' -%}
+
+        {%- comment -%} Wide by nature — its own scroll container, and it stacks under 640px {%- endcomment -%}
+        <div class="ct__scroll">
+          <div class="ct__tbl" role="table" aria-label="Cart line items">
+
+            <div class="ln ln--head" role="row">
+              <span class="ln__fig" aria-hidden="true"></span>
+              <span class="ln__desc" role="columnheader">Item</span>
+              <span class="ln__unit" role="columnheader">Unit</span>
+              <span class="ln__qty" role="columnheader">Qty</span>
+              <span class="ln__tot" role="columnheader">Line total</span>
+              <span class="ln__rm" role="columnheader"><span class="visually-hidden">Remove</span></span>
+            </div>
+
+            {%- for item in cart.items -%}
+              <div class="ln" role="row">
+
+                <span class="ln__fig">
+                  {%- if item.image -%}
+                    <img
+                      src="{{ item.image | image_url: width: 220 }}"
+                      srcset="{{ item.image | image_url: width: 220 }} 220w,
+                              {{ item.image | image_url: width: 440 }} 440w"
+                      sizes="72px"
+                      alt="{{ item.image.alt | default: item.product.title | escape }}"
+                      width="{{ item.image.width }}" height="{{ item.image.height }}"
+                      loading="lazy">
+                  {%- else -%}
+                    <span class="ph"><span>No image</span></span>
+                  {%- endif -%}
+                </span>
+
+                <span class="ln__desc" role="cell">
+                  <a class="ln__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                  {%- unless item.product.has_only_default_variant -%}
+                    <span class="ln__var">{{ item.variant.title }}</span>
+                  {%- endunless -%}
+                  {%- if item.selling_plan_allocation != blank -%}
+                    <span class="ln__var">{{ item.selling_plan_allocation.selling_plan.name }}</span>
+                  {%- endif -%}
+                  {%- for alloc in item.line_level_discount_allocations -%}
+                    <span class="ln__disc">{{ alloc.discount_application.title }} −{{ alloc.amount | money }}</span>
+                  {%- endfor -%}
+                </span>
+
+                <span class="ln__unit" role="cell">
+                  <span class="ln__lab">Unit</span>
+                  <span class="ln__num">
+                    {%- if item.original_price > item.final_price -%}
+                      <s>{{ item.original_price | money }}</s>
+                    {%- endif -%}
+                    {{ item.final_price | money }}
+                  </span>
+                </span>
+
+                <span class="ln__qty" role="cell">
+                  <label class="ln__lab" for="updates_{{ item.key }}">Qty</label>
+                  <input
+                    type="number"
+                    id="updates_{{ item.key }}"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    aria-label="Quantity for {{ item.product.title | escape }}">
+                </span>
+
+                <span class="ln__tot" role="cell">
+                  <span class="ln__lab">Line total</span>
+                  <span class="ln__num">{{ item.final_line_price | money }}</span>
+                </span>
+
+                <span class="ln__rm" role="cell">
+                  <a href="{{ item.url_to_remove }}"
+                     aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a>
+                </span>
+
+              </div>
+            {%- endfor -%}
+
+          </div>
+        </div>
+
+        <div class="ct__foot">
+
+          <div class="ct__note">
+            <label class="mono ct__note-l" for="cart-note">Order note</label>
+            <textarea id="cart-note" name="note" rows="4"
+                      placeholder="Anything we need to know about this order.">{{ cart.note }}</textarea>
+            <p class="ct__note-h">Saved when you press Update or Checkout.</p>
+          </div>
+
+          <div class="ct__sum">
+            <div class="sheet">
+              <div class="sheet__row">
+                <span class="sheet__k">Subtotal</span>
+                <span class="sheet__v">{{ cart.items_subtotal_price | money }}</span>
+              </div>
+              {%- for d in cart.cart_level_discount_applications -%}
+                <div class="sheet__row">
+                  <span class="sheet__k">{{ d.title }}</span>
+                  <span class="sheet__v">−{{ d.total_allocated_amount | money }}</span>
+                </div>
+              {%- endfor -%}
+              <div class="sheet__row">
+                <span class="sheet__k">Total</span>
+                <span class="sheet__v"><em>{{ cart.total_price | money }}</em></span>
+              </div>
+            </div>
+
+            <p class="ct__terms">
+              Shipping is free within the US, with no minimum. Tax is calculated at checkout.
+            </p>
+
+            <div class="ct__acts">
+              <button type="submit" name="update" class="btn btn--ghost ct__update">Update</button>
+              <button type="submit" name="checkout" class="btn ct__checkout">Checkout</button>
+            </div>
+          </div>
+
+        </div>
+
+      {%- endform -%}
+
+    {%- endif -%}
+
+    {%- comment -%} Four facts. Nothing else is claimed anywhere on this page. {%- endcomment -%}
+    <div class="ct__assure">
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Shipping</span>
+        <p class="ct__assure-d">Free within the US, no minimum.</p>
+      </div>
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Delivery</span>
+        <p class="ct__assure-d">8–14 business days, from Illinois.</p>
+      </div>
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Returns</span>
+        <p class="ct__assure-d">60 days, unworn with tags. No restocking fee.</p>
+      </div>
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Payment</span>
+        <p class="ct__assure-d">Shopify Checkout. Card details never touch our servers.</p>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<script>
+/* Progressive enhancement only. With scripting off, the Update button below
+   the totals does exactly the same job — this just saves the click. */
+(function(){
+  var form = document.getElementById('ct-form');
+  if(!form) return;
+  var update = form.querySelector('button[name="update"]');
+  if(!update) return;
+
+  form.querySelectorAll('input[name="updates[]"]').forEach(function(input){
+    var initial = input.value;
+    input.addEventListener('change', function(){
+      var n = parseInt(input.value, 10);
+      if (isNaN(n) || n < 0) { input.value = initial; return; }
+      if (String(n) === String(initial)) return;
+      if (form.requestSubmit) { form.requestSubmit(update); } else { update.click(); }
+    });
+  });
+})();
+</script>
