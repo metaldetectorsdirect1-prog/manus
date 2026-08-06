@@ -22,6 +22,7 @@ ok "comfyui-mcp version $VER available via npx"
 
 # ---------------------------------------------------------------- register
 CLAUDE_SETTINGS="${CLAUDE_SETTINGS:-$HOME/.claude/settings.json}"
+CLAUDE_CLI_FAILED=0
 
 if have claude; then
   info "registering via the Claude Code CLI"
@@ -29,16 +30,17 @@ if have claude; then
     ok "MCP server 'comfyui' already registered"
   else
     # --scope user makes it available in every project.
+    # Note: this writes to ~/.claude.json, NOT ~/.claude/settings.json.
     if claude mcp add --scope user comfyui -- npx -y comfyui-mcp; then
       ok "registered MCP server 'comfyui'"
     else
       warn "'claude mcp add' failed - falling back to editing settings.json"
-      have claude && CLAUDE_CLI_FAILED=1
+      CLAUDE_CLI_FAILED=1
     fi
   fi
 fi
 
-if ! have claude || [ "${CLAUDE_CLI_FAILED:-0}" = "1" ]; then
+if ! have claude || [ "$CLAUDE_CLI_FAILED" = "1" ]; then
   info "writing MCP config into $CLAUDE_SETTINGS"
   mkdir -p "$(dirname "$CLAUDE_SETTINGS")"
   PY="$(python_bin)"; [ -n "$PY" ] || PY="$PY_BIN"
@@ -77,6 +79,7 @@ cat <<EOF
   MCP server name : comfyui
   command         : npx -y comfyui-mcp
   ComfyUI URL     : $COMFY_URL (auto-detected by the server; ports 8188 then 8000)
+  config file     : ~/.claude.json (CLI path) or $CLAUDE_SETTINGS (fallback)
 
   To point it at a ComfyUI on another machine instead, add:
       --comfyui-url http://<host>:8188
@@ -85,4 +88,7 @@ EOF
 
 echo
 warn "Restart Claude Code (or run /mcp) so it picks up the new server."
-ok "then ask Claude:  \"What ComfyUI tools do you have?\"  (expect ~86)"
+ok "check it connected with:  claude mcp list"
+info "comfyui-mcp is a tool ROUTER: Claude will see 3 tools (call_tool,"
+info "describe_tool, list_tools) fronting a catalogue of ~151. That is correct."
+info "Ask Claude \"list all the ComfyUI tools available\" to see the catalogue."

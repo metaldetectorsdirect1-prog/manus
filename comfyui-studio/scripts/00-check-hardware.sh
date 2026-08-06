@@ -86,18 +86,20 @@ info "nvcc:      ${NVCC_VER:-none} (optional - the PyTorch wheel bundles its own
 
 # ---------------------------------------------------------------- profile
 # Profiles decide which weights get downloaded and how ComfyUI is launched.
-#   high     >=24GB VRAM  bf16 UNet + t5xxl_fp16          ~34 GB download
-#   balanced 16-23GB      bf16 UNet cast fp8 + t5 fp8     ~29 GB
-#   low      10-15GB      same as balanced + --lowvram    ~29 GB
-#   gguf      6-9GB       Q4_K_S GGUF + t5 GGUF           ~12 GB (needs ComfyUI-GGUF)
-#   cpu      no GPU       bf16 + t5 fp8, --cpu            ~29 GB, minutes/image
-PROFILE="cpu"; LAUNCH_FLAGS="--cpu"; EST_DOWNLOAD_GB=29
+# Download sizes are the verified byte counts from config/model-profiles.json,
+# rounded up: common files total 1.10 GB, plus the profile's UNet + T5.
+#   high     >=24GB VRAM  bf16 UNet + t5xxl_fp16          34.67 -> 35 GB
+#   balanced 16-23GB      bf16 UNet cast fp8 + t5 fp8     29.77 -> 30 GB
+#   low      10-15GB      same as balanced + --lowvram    29.77 -> 30 GB
+#   gguf      6-9GB       Q4_K_S GGUF + t5 GGUF           11.27 -> 12 GB (needs ComfyUI-GGUF)
+#   cpu      no GPU       bf16 + t5 fp8, --cpu            29.77 -> 30 GB, minutes/image
+PROFILE="cpu"; LAUNCH_FLAGS="--cpu"; EST_DOWNLOAD_GB=30
 if [ "$GPU_VENDOR" = "nvidia" ] || [ "$GPU_VENDOR" = "amd" ] || [ "$GPU_VENDOR" = "apple" ]; then
-  if   [ "$VRAM_GB" -ge 24 ]; then PROFILE="high";     LAUNCH_FLAGS="";           EST_DOWNLOAD_GB=34
-  elif [ "$VRAM_GB" -ge 16 ]; then PROFILE="balanced"; LAUNCH_FLAGS="";           EST_DOWNLOAD_GB=29
-  elif [ "$VRAM_GB" -ge 10 ]; then PROFILE="low";      LAUNCH_FLAGS="--lowvram";  EST_DOWNLOAD_GB=29
+  if   [ "$VRAM_GB" -ge 24 ]; then PROFILE="high";     LAUNCH_FLAGS="";           EST_DOWNLOAD_GB=35
+  elif [ "$VRAM_GB" -ge 16 ]; then PROFILE="balanced"; LAUNCH_FLAGS="";           EST_DOWNLOAD_GB=30
+  elif [ "$VRAM_GB" -ge 10 ]; then PROFILE="low";      LAUNCH_FLAGS="--lowvram";  EST_DOWNLOAD_GB=30
   elif [ "$VRAM_GB" -ge 6  ]; then PROFILE="gguf";     LAUNCH_FLAGS="--lowvram";  EST_DOWNLOAD_GB=12
-  else                             PROFILE="cpu";      LAUNCH_FLAGS="--cpu";      EST_DOWNLOAD_GB=29
+  else                             PROFILE="cpu";      LAUNCH_FLAGS="--cpu";      EST_DOWNLOAD_GB=30
   fi
 fi
 # Apple Silicon uses MPS, not CUDA, and never wants --cpu.

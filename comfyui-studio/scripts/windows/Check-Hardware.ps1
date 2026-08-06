@@ -110,11 +110,13 @@ Write-Info "Git:       $gitVer"
 Write-Info "Node:      $nodeVer (npm $npmVer)"
 
 # ---------------------------------------------------------------- profile
-$profile_ = 'cpu'; $flags = @('--cpu'); $dl = 29
+# Download sizes are the verified byte counts from config/model-profiles.json,
+# rounded up: high 34.67, balanced/low/cpu 29.77, gguf 11.27.
+$profile_ = 'cpu'; $flags = @('--cpu'); $dl = 30
 if ($gpuVendor -eq 'nvidia') {
-    if     ($vramGb -ge 24) { $profile_='high';     $flags=@();            $dl=34 }
-    elseif ($vramGb -ge 16) { $profile_='balanced'; $flags=@();            $dl=29 }
-    elseif ($vramGb -ge 10) { $profile_='low';      $flags=@('--lowvram'); $dl=29 }
+    if     ($vramGb -ge 24) { $profile_='high';     $flags=@();            $dl=35 }
+    elseif ($vramGb -ge 16) { $profile_='balanced'; $flags=@();            $dl=30 }
+    elseif ($vramGb -ge 10) { $profile_='low';      $flags=@('--lowvram'); $dl=30 }
     elseif ($vramGb -ge 6)  { $profile_='gguf';     $flags=@('--lowvram'); $dl=12 }
 }
 

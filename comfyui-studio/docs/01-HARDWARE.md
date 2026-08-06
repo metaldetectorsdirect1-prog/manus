@@ -30,11 +30,11 @@ Results are written to `~/.comfyui-studio/hardware.env`
 
 | Profile | VRAM | UNet | T5 text encoder | Download | Flags |
 |---|---|---|---|---|---|
-| `high` | ≥ 24 GB | `flux1-schnell.safetensors` bf16 | `t5xxl_fp16` | ~34 GB | — |
-| `balanced` | 16–23 GB | same, `weight_dtype=fp8_e4m3fn` | `t5xxl_fp8_e4m3fn` | ~29 GB | — |
-| `low` | 10–15 GB | same as balanced | `t5xxl_fp8_e4m3fn` | ~29 GB | `--lowvram` |
-| `gguf` | 6–9 GB | `flux1-schnell-Q4_K_S.gguf` | `t5-v1_1-xxl-encoder-Q5_K_M.gguf` | ~12 GB | `--lowvram` |
-| `cpu` | none | bf16 | `t5xxl_fp8_e4m3fn` | ~29 GB | `--cpu` |
+| `high` | ≥ 24 GB | `flux1-schnell.safetensors` bf16 | `t5xxl_fp16` | 34.7 GB | — |
+| `balanced` | 16–23 GB | same, `weight_dtype=fp8_e4m3fn` | `t5xxl_fp8_e4m3fn` | 29.8 GB | — |
+| `low` | 10–15 GB | same as balanced | `t5xxl_fp8_e4m3fn` | 29.8 GB | `--lowvram` |
+| `gguf` | 6–9 GB | `flux1-schnell-Q4_K_S.gguf` | `t5-v1_1-xxl-encoder-Q5_K_M.gguf` | 11.3 GB | `--lowvram` |
+| `cpu` | none | bf16 | `t5xxl_fp8_e4m3fn` | 29.8 GB | `--cpu` |
 
 `balanced` downloads the same 23.8 GB bf16 file as `high` and casts it to fp8
 **at load time** — that saves VRAM, not disk. The `gguf` profile is the only one
@@ -90,7 +90,7 @@ RAM        15 GB                            Free disk  24 GB
 GPU        none  (no nvidia-smi, no /dev/dri, no VGA device)
 Python     3.11.15 / 3.12                   Git 2.43.0    Node 22.22.2
 CUDA       none
-→ profile  cpu   → blocked: needs ~44 GB free, found 24 GB
+→ profile  cpu   → blocked: needs ~45 GB free, found 24 GB
 ```
 
 That is the check working correctly: it refused to install. See the

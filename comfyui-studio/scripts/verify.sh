@@ -80,8 +80,13 @@ else
 fi
 
 step "6. Claude Code MCP"
+# Three places it can live: the CLI's own registry (~/.claude.json, what
+# `claude mcp add --scope user` writes), or ~/.claude/settings.json (our
+# fallback path). `claude mcp list` is authoritative when the CLI exists.
 if have claude && claude mcp list 2>/dev/null | grep -q '^comfyui\b'; then
   check "MCP server registered" 0 "claude mcp list"
+elif grep -q '"comfyui"' "$HOME/.claude.json" 2>/dev/null; then
+  check "MCP server registered" 0 "~/.claude.json"
 elif grep -q '"comfyui"' "$HOME/.claude/settings.json" 2>/dev/null; then
   check "MCP server registered" 0 "~/.claude/settings.json"
 else

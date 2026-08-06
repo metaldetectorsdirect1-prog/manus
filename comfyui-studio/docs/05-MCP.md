@@ -10,7 +10,8 @@ workflows, manage models and custom nodes, and view results.
 | Version confirmed | **0.49.8** |
 | Licence | MIT |
 | Requires | **Node.js ≥ 22** |
-| Tools exposed | ~86 |
+| Tools in catalogue | **151** (measured) |
+| Tools Claude sees | **3** — see "Why only 3 tools" below |
 | Install | none — runs via `npx` |
 
 ## Install
@@ -27,6 +28,11 @@ claude mcp add --scope user comfyui -- npx -y comfyui-mcp
 
 Falls back to merging into `~/.claude/settings.json` — after a timestamped
 backup, and refusing outright if that file isn't valid JSON.
+
+> **Where the config actually lands.** `claude mcp add --scope user` writes to
+> **`~/.claude.json`**, not `~/.claude/settings.json`. Only the fallback path
+> uses `settings.json`. Both work; `claude mcp list` is the reliable way to
+> check, and that is what `verify.sh` uses.
 
 ## Configuration
 
@@ -77,7 +83,30 @@ A copy lives at [`../config/mcp.example.json`](../config/mcp.example.json).
 
 1. Start ComfyUI: `./scripts/start-studio.sh`
 2. **Restart Claude Code**, or run `/mcp` to reconnect
-3. Ask: *"What ComfyUI tools do you have?"* — expect ~86
+3. Check it connected: `claude mcp list` → `comfyui: npx -y comfyui-mcp - ✓ Connected`
+
+## Why only 3 tools
+
+`comfyui-mcp` runs a **tool router**. Ask Claude what ComfyUI tools it has and it
+will report **three**, not 151:
+
+```
+call_tool      run a catalogue tool by name
+describe_tool  get a tool's parameters
+list_tools     enumerate the catalogue
+```
+
+That is by design — it keeps the tool surface small enough for weaker models,
+and the full catalogue stays reachable through the router. I measured the
+catalogue at **151 tools** in v0.49.8, across groups including `workflows` (10),
+`workflow-authoring` (19), models, custom nodes, and queue control.
+
+**Three tools is correct, not broken.** Ask for the real list instead:
+
+> List all the ComfyUI tools available.
+
+Claude calls `list_tools` and gets the catalogue. You do not need to name tools
+yourself — just describe the outcome and Claude routes it.
 
 ## The test command
 
@@ -131,6 +160,8 @@ scene without it rather than negating it.
 
 **"ComfyUI not detected on ports 8188, 8000"** — it isn't running.
 `./scripts/start-studio.sh`.
+
+**Only 3 tools showing** — expected. That's the router; see above.
 
 **Tools missing after install** — Claude Code wasn't restarted. Run `/mcp`.
 

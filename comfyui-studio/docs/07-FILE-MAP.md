@@ -12,7 +12,7 @@ comfyui-studio/
 │   └── mcp.example.json                        MCP snippet for settings.json
 ├── docs/
 │   ├── 01-HARDWARE.md   02-INSTALL.md   03-MODELS.md   04-WORKFLOWS.md
-│   └── 05-MCP.md        06-TROUBLESHOOTING.md   07-FILE-MAP.md
+│   └── 05-MCP.md  06-TROUBLESHOOTING.md  07-FILE-MAP.md  08-AUDIT.md
 ├── packs/flux1-schnell/
 │   ├── pack.yaml                               comfyui-mcp pack descriptor
 │   └── manifest.yaml                           comfyui-mcp install manifest
@@ -82,7 +82,8 @@ comfyui-studio/
 
 | File | Change | Safety |
 |---|---|---|
-| `~/.claude/settings.json` | adds `mcpServers.comfyui` | **timestamped backup first**; refuses if not valid JSON; leaves an existing `comfyui` entry alone |
+| `~/.claude.json` | `claude mcp add --scope user` writes here (the CLI path) | managed by the Claude Code CLI; remove with `claude mcp remove comfyui` |
+| `~/.claude/settings.json` | fallback path only, when the `claude` CLI is unavailable | **timestamped backup first**; refuses if not valid JSON; leaves an existing `comfyui` entry alone |
 
 That is the **only** file outside `$COMFY_HOME` and `$STATE_DIR` that is touched.
 No system-wide installs, no services, no PATH edits, no registry keys, no sudo.
@@ -140,7 +141,7 @@ of its own.
 |---|---|
 | ComfyUI checkout | ~200 MB |
 | `.venv` incl. PyTorch | ~6–8 GB |
-| Models (`balanced`) | ~29 GB |
-| Models (`gguf`) | ~12 GB |
-| **Total (`balanced`)** | **~37 GB** |
-| **Total (`gguf`)** | **~20 GB** |
+| Models (`balanced`) | 29.8 GB |
+| Models (`gguf`) | 11.3 GB |
+| **Total (`balanced`)** | **~38 GB** |
+| **Total (`gguf`)** | **~19 GB** |

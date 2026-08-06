@@ -87,11 +87,11 @@ own shipped blueprint for BiRefNet.
 
 | Profile | VRAM | Weights | Download | Launch flags |
 |---|---|---|---|---|
-| `high` | ≥ 24 GB | bf16 UNet + fp16 T5 | ~34 GB | — |
-| `balanced` | 16–23 GB | bf16 UNet cast fp8 + fp8 T5 | ~29 GB | — |
-| `low` | 10–15 GB | as balanced | ~29 GB | `--lowvram` |
-| `gguf` | 6–9 GB | Q4_K_S GGUF + GGUF T5 | ~12 GB | `--lowvram` |
-| `cpu` | none | bf16 + fp8 T5 | ~29 GB | `--cpu` (minutes/image) |
+| `high` | ≥ 24 GB | bf16 UNet + fp16 T5 | 34.7 GB | — |
+| `balanced` | 16–23 GB | bf16 UNet cast fp8 + fp8 T5 | 29.8 GB | — |
+| `low` | 10–15 GB | as balanced | 29.8 GB | `--lowvram` |
+| `gguf` | 6–9 GB | Q4_K_S GGUF + GGUF T5 | 11.3 GB | `--lowvram` |
+| `cpu` | none | bf16 + fp8 T5 | 29.8 GB | `--cpu` (minutes/image) |
 
 Switching profile later:
 
@@ -127,22 +127,34 @@ actually executed while authoring it:
 | Profile round-trip `balanced → gguf → balanced` | pass |
 | `00-check-hardware.sh` on a GPU-less box | correctly refused to install |
 | `03-download-models.sh` preflight | correctly downloaded **nothing** when URLs unverifiable |
+| **`01-install-comfyui.sh` run end-to-end** into a clean prefix | pass — real clone + venv (py3.12) |
+| **`04-install-custom-nodes.sh` run end-to-end** | pass — ComfyUI-Manager installed |
+| **`05-install-mcp.sh` run end-to-end** | pass — `claude mcp list` → **✓ Connected** |
+| **MCP → ComfyUI round trip** (`get_system_stats` through the router) | **pass — returned live ComfyUI 0.30.0 stats** |
+| **Every model path + byte count + licence** via the HuggingFace Hub API | **all 9 confirmed** |
+| **PowerShell scripts AST-parsed** (pwsh 7.6.4) | **3/3 parse clean** after fixing 1 syntax error |
 | `verify.sh` end-to-end | pass |
 | `comfyui-mcp` on npm: `0.49.8`, MIT, `node >= 22` | confirmed |
 
-**Not verified here, and you should treat it as such:**
+A later self-audit found and fixed seven real defects, including a **PowerShell
+syntax error that made `Start-Studio.ps1` unrunnable**, a claim that the FLUX
+repo was ungated (**it is gated**), and a `sed \t` construct that breaks on
+macOS/BSD. See [docs/08-AUDIT.md](docs/08-AUDIT.md) for the full list.
+
+**Still not verified, and you should treat it as such:**
 
 - **No GPU was present** in the authoring environment, so the CUDA/ROCm/MPS
   branches of `02-install-pytorch.sh` are unexercised. CPU-only PyTorch was.
-- **huggingface.co was unreachable** from the authoring environment, so model
-  weights were never downloaded and the FLUX/T5/BiRefNet URLs could not be
-  fetched. URLs marked `"verified": true` in `config/model-profiles.json` were
-  taken verbatim from manifests **shipped inside ComfyUI 0.30.0**
-  (`blueprints/*.json`); the rest follow the documented upstream layout and are
-  HEAD-checked at install time before anything downloads.
-- **The PowerShell scripts were never executed** — no Windows host and no `pwsh`
-  available. They mirror the bash logic but are the least-tested part of this pack.
-- No image has been generated yet; that needs weights on a real machine.
+- **No weights were ever downloaded.** Direct HTTPS to `huggingface.co` was
+  blocked, so while every file's path, byte count and licence is confirmed via
+  the Hub API, the bulk transfer itself is untested. The preflight re-checks on
+  your machine before committing to 30 GB.
+- **The PowerShell scripts were parsed, not executed** — no Windows host. Parsing
+  catches syntax and reserved-variable errors, not runtime behaviour. They remain
+  the least-tested part of this pack; on Windows, WSL2 + the bash scripts is the
+  path that was actually run.
+- **No image has been generated**, and Claude has not viewed one. That needs
+  weights on real hardware.
 
 ---
 
@@ -154,7 +166,7 @@ comfyui-studio/
 ├── config/
 │   ├── model-profiles.json      # profiles, model URLs, sizes, licences
 │   └── mcp.example.json         # MCP snippet for ~/.claude/settings.json
-├── docs/                        # 01-HARDWARE … 07-FILE-MAP
+├── docs/                        # 01-HARDWARE … 08-AUDIT
 ├── packs/flux1-schnell/         # comfyui-mcp-compatible install manifest
 ├── scripts/
 │   ├── install.sh               # runs 00→05
@@ -211,3 +223,4 @@ Nothing here deletes or silently overwrites your files.
 | [05-MCP.md](docs/05-MCP.md) | Claude Code wiring, prompts to use |
 | [06-TROUBLESHOOTING.md](docs/06-TROUBLESHOOTING.md) | OOM, CUDA mismatch, MCP issues |
 | [07-FILE-MAP.md](docs/07-FILE-MAP.md) | complete inventory |
+| [08-AUDIT.md](docs/08-AUDIT.md) | self-audit: defects found and fixed |

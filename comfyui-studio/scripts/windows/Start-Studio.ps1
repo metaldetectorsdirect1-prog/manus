@@ -49,12 +49,13 @@ if (Test-ComfyUp) {
     Write-Info "flags     $(if ($flags) { $flags -join ' ' } else { '<none>' })"
     Write-Info "url       $Url"
 
-    $args = @('main.py','--port',"$Port",'--listen','127.0.0.1') + $flags
+    # NOT $args - that is a reserved automatic variable in PowerShell.
+    $comfyArgs = @('main.py','--port',"$Port",'--listen','127.0.0.1') + $flags
     New-Item -ItemType Directory -Force -Path $StateDir | Out-Null
     $log = Join-Path $StateDir 'comfyui.log'
 
     if ($Background) {
-        $p = Start-Process -FilePath $VenvPy -ArgumentList $args -WorkingDirectory $ComfyHome `
+        $p = Start-Process -FilePath $VenvPy -ArgumentList $comfyArgs -WorkingDirectory $ComfyHome `
                            -RedirectStandardOutput $log -RedirectStandardError "$log.err" `
                            -WindowStyle Hidden -PassThru
         $p.Id | Set-Content (Join-Path $StateDir 'comfyui.pid')
@@ -64,13 +65,13 @@ if (Test-ComfyUp) {
         while ((Get-Date) -lt $deadline -and -not (Test-ComfyUp)) { Start-Sleep -Seconds 2 }
         if (Test-ComfyUp) { Write-Ok "ComfyUI API is up at $Url" }
         else {
-            Write-Fail "ComfyUI did not come up in time - last lines of $log:"
+            Write-Fail "ComfyUI did not come up in time - last lines of ${log}:"
             Get-Content $log -Tail 20 -ErrorAction SilentlyContinue
             exit 1
         }
     } else {
         Push-Location $ComfyHome
-        try { & $VenvPy @args } finally { Pop-Location }
+        try { & $VenvPy @comfyArgs } finally { Pop-Location }
         return
     }
 }

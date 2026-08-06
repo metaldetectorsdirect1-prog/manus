@@ -4,15 +4,21 @@
 # Requirement: nothing large is fetched until hardware AND every URL is verified.
 # The script therefore runs in two phases:
 #   PHASE 1  HEAD-check every URL and re-check free disk. Downloads nothing.
+#            Writes a RESOLVED manifest naming the URL that actually answered.
 #   PHASE 2  only after phase 1 is clean (and you confirm) does it fetch weights.
+#
+# Note on gating: black-forest-labs/FLUX.1-schnell is a GATED HuggingFace repo.
+# Without HUGGINGFACE_TOKEN its URLs return 401/403, so phase 1 automatically
+# falls back to the ungated Comfy-Org mirror, which hosts byte-identical files.
 
 . "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh"
 load_hardware
 
 PY="$(python_bin)"
 [ -n "$PY" ] || die "no virtualenv - run scripts/01-install-comfyui.sh first"
+[ -d "$COMFY_HOME" ] || die "ComfyUI is not installed at $COMFY_HOME - run scripts/01-install-comfyui.sh first"
 
-CFG="$STUDIO_DIR/config/model-profiles.json"
+CFG="${CFG:-$STUDIO_DIR/config/model-profiles.json}"
 [ -f "$CFG" ] || die "missing $CFG"
 
 PROFILE="${PROFILE_OVERRIDE:-$PROFILE}"
@@ -20,6 +26,7 @@ step "Step 3/5 - models for profile '$PROFILE'"
 
 # Resolve the profile's file list (common + profile, following inherits_models_from).
 MANIFEST="$STATE_DIR/manifest-$PROFILE.tsv"
+RESOLVED="$STATE_DIR/resolved-$PROFILE.tsv"
 "$PY" - "$CFG" "$PROFILE" > "$MANIFEST" <<'PYCODE'
 import json, sys
 cfg = json.load(open(sys.argv[1])); prof = sys.argv[2]
@@ -36,9 +43,9 @@ PYCODE
 TOTAL_GB="$(awk -F'\t' '{s+=$4} END{printf "%.1f", s}' "$MANIFEST")"
 
 echo
-printf '  %-42s %-20s %7s  %s\n' FILE DIRECTORY SIZE_GB "URL VERIFIED UPSTREAM"
+printf '  %-44s %-26s %7s\n' FILE DIRECTORY SIZE_GB
 while IFS=$'\t' read -r name dir url size lic verified mirror; do
-  printf '  %-42s %-20s %7s  %s\n' "$name" "models/$dir" "$size" "$verified"
+  printf '  %-44s %-26s %7s\n' "$name" "models/$dir" "$size"
 done < "$MANIFEST"
 printf '\n  total download: %s GB\n' "$TOTAL_GB"
 printf '  licences:\n'
@@ -52,77 +59,102 @@ AVAIL_GB="$(df -Pk "$COMFY_HOME" | awk 'NR==2{print int($4/1024/1024)}')"
 info "free disk at $COMFY_HOME: ${AVAIL_GB} GB (need ~${NEED_GB} GB)"
 [ "$AVAIL_GB" -ge "$NEED_GB" ] || die "not enough free disk - nothing was downloaded"
 
+# HEAD-check a URL and echo only the FINAL status code (curl prints one per
+# redirect hop, and HF serves weights off a CDN).
+head_code() {
+  local c
+  c="$(curl -sSL -o /dev/null -w '%{http_code}' --max-time 45 -I \
+        ${HUGGINGFACE_TOKEN:+-H "Authorization: Bearer $HUGGINGFACE_TOKEN"} \
+        "$1" 2>/dev/null | tail -c 3 || true)"
+  echo "${c:-000}"
+}
+
+: > "$RESOLVED"
 BAD=0
+GATED_HINT=0
 while IFS=$'\t' read -r name dir url size lic verified mirror; do
   dest="$COMFY_HOME/models/$dir/$name"
   if [ -f "$dest" ]; then
     ok "already present, skipping: $name"
     continue
   fi
-  # -L follows redirects (HF serves weights off a CDN); tail -c3 keeps only the
-  # FINAL status code, since curl prints one per hop.
-  code="$(curl -sSL -o /dev/null -w '%{http_code}' --max-time 45 -I "$url" 2>/dev/null | tail -c 3 || true)"
-  code="${code:-000}"
+
+  use=""
+  code="$(head_code "$url")"
   if [ "$code" = "200" ]; then
+    use="$url"
     ok "reachable: $name"
   elif [ -n "$mirror" ]; then
-    mcode="$(curl -sSL -o /dev/null -w '%{http_code}' --max-time 45 -I "$mirror" 2>/dev/null | tail -c 3 || true)"
-    mcode="${mcode:-000}"
+    mcode="$(head_code "$mirror")"
     if [ "$mcode" = "200" ]; then
-      warn "primary URL for $name returned $code - will use the mirror"
-      sed -i.bak "s|^$name\t$dir\t[^\t]*|$name\t$dir\t$mirror|" "$MANIFEST" 2>/dev/null || true
-    else
-      err "$name unreachable (primary $code, mirror $mcode)"; BAD=$((BAD+1))
+      use="$mirror"
+      if [ "$code" = "401" ] || [ "$code" = "403" ]; then
+        warn "$name: upstream is gated (HTTP $code) - using the ungated mirror"
+        GATED_HINT=1
+      else
+        warn "$name: primary returned $code - using the mirror"
+      fi
     fi
+  fi
+
+  if [ -n "$use" ]; then
+    printf '%s\t%s\t%s\t%s\n' "$name" "$dir" "$use" "$size" >> "$RESOLVED"
   else
-    err "$name unreachable (HTTP $code) - $url"; BAD=$((BAD+1))
+    err "$name unreachable (HTTP $code) - $url"
+    [ "$code" = "401" ] || [ "$code" = "403" ] && GATED_HINT=1
+    BAD=$((BAD+1))
   fi
 done < "$MANIFEST"
 
 if [ "$BAD" -gt 0 ]; then
   echo
   err "$BAD file(s) could not be verified. NOTHING has been downloaded."
-  err "Model repos occasionally move files. Fix the URLs in:"
-  err "  $CFG"
-  err "then re-run this script. See docs/03-MODELS.md for how to find the current path."
+  if [ "$GATED_HINT" = "1" ]; then
+    err "At least one 401/403 - that repo is GATED on HuggingFace. Either:"
+    err "  1. accept the licence on the model page, create a token at"
+    err "     https://huggingface.co/settings/tokens, then re-run with"
+    err "     HUGGINGFACE_TOKEN=hf_xxx scripts/03-download-models.sh"
+    err "  2. or add an ungated 'mirror' for it in $CFG"
+  fi
+  err "Model repos also move files; see docs/03-MODELS.md to find the current path."
   exit 1
 fi
 
-echo
-ok "all URLs verified, disk is sufficient"
-if [ "${SKIP_CONFIRM:-0}" != "1" ]; then
-  confirm "Download ${TOTAL_GB} GB of model weights now?" || { info "aborted - nothing downloaded"; exit 0; }
+if [ ! -s "$RESOLVED" ]; then
+  ok "every model for profile '$PROFILE' is already installed"
+else
+  echo
+  ok "all URLs verified, disk is sufficient"
+  if [ "${SKIP_CONFIRM:-0}" != "1" ]; then
+    confirm "Download ${TOTAL_GB} GB of model weights now?" || { info "aborted - nothing downloaded"; exit 0; }
+  fi
+
+  # -------------------------------------------------------------- PHASE 2
+  step "Phase 2 - downloading"
+  while IFS=$'\t' read -r name dir url size; do
+    dest="$COMFY_HOME/models/$dir/$name"
+    mkdir -p "$(dirname "$dest")"
+    info "downloading $name (${size} GB) -> models/$dir/"
+    # -C - resumes a partial file; write to .part so an interrupted run never
+    # leaves a truncated file that looks complete.
+    curl -fL --retry 5 --retry-delay 5 --retry-all-errors -C - \
+         ${HUGGINGFACE_TOKEN:+-H "Authorization: Bearer $HUGGINGFACE_TOKEN"} \
+         -o "${dest}.part" "$url"
+    mv "${dest}.part" "$dest"
+    ok "$name"
+  done < "$RESOLVED"
 fi
-
-# ---------------------------------------------------------------- PHASE 2
-step "Phase 2 - downloading"
-
-HF_HDR=()
-[ -n "${HUGGINGFACE_TOKEN:-}" ] && HF_HDR=(-H "Authorization: Bearer $HUGGINGFACE_TOKEN")
-
-while IFS=$'\t' read -r name dir url size lic verified mirror; do
-  dest="$COMFY_HOME/models/$dir/$name"
-  [ -f "$dest" ] && { ok "skip $name"; continue; }
-  mkdir -p "$(dirname "$dest")"
-  info "downloading $name (${size} GB) -> models/$dir/"
-  # -C - resumes a partial file; write to .part so an interrupted run never
-  # leaves a truncated file that looks complete.
-  curl -fL --retry 5 --retry-delay 5 --retry-all-errors -C - \
-       "${HF_HDR[@]}" -o "${dest}.part" "$url"
-  mv "${dest}.part" "$dest"
-  ok "$name"
-done < "$MANIFEST"
 
 # ---------------------------------------------------------------- point workflows at these files
 info "aligning workflows with profile '$PROFILE'"
-"$PY" "$STUDIO_DIR/scripts/apply-profile.py" --profile "$PROFILE" >/dev/null
+"$PY" "$STUDIO_DIR/scripts/apply-profile.py" --profile "$PROFILE" --config "$CFG" >/dev/null
 ok "workflows updated"
 
 step "Installed models"
 find "$COMFY_HOME/models" -type f \( -name '*.safetensors' -o -name '*.gguf' -o -name '*.pth' \) \
-  -printf '  %-46p %6.2f GB\n' 2>/dev/null \
+  -printf '  %-52p %6.2f GB\n' 2>/dev/null \
   | sed "s|$COMFY_HOME/models/||" \
   || du -h "$COMFY_HOME/models" | tail -20
 
 echo
-ok "next: scripts/04-install-custom-nodes.sh"
+ok "next: scripts/05-install-mcp.sh"

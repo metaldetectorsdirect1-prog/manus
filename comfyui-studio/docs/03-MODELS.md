@@ -24,28 +24,31 @@ $COMFY_HOME/models/
 
 ## Always installed
 
-| File | Dir | Size | Source | Licence |
-|---|---|---|---|---|
-| `clip_l.safetensors` | `text_encoders` | 0.25 GB | `comfyanonymous/flux_text_encoders` ✅ | Apache-2.0 |
-| `ae.safetensors` | `vae` | 0.34 GB | `black-forest-labs/FLUX.1-schnell` | Apache-2.0 |
-| `birefnet.safetensors` | `background_removal` | 0.9 GB | `Comfy-Org/BiRefNet` ✅ | MIT |
-| `RealESRGAN_x4plus.pth` | `upscale_models` | 0.07 GB | `xinntao/Real-ESRGAN` GitHub release | BSD-3-Clause |
+| File | Dir | Bytes | Size | Source | Licence |
+|---|---|---|---|---|---|
+| `clip_l.safetensors` | `text_encoders` | 246,144,152 | 0.25 GB | `comfyanonymous/flux_text_encoders` | Apache-2.0 |
+| `ae.safetensors` | `vae` | 335,304,388 | 0.34 GB | `black-forest-labs/FLUX.1-schnell` 🔒 | Apache-2.0 |
+| `birefnet.safetensors` | `background_removal` | 444,473,596 | 0.44 GB | `Comfy-Org/BiRefNet` | MIT |
+| `RealESRGAN_x4plus.pth` | `upscale_models` | 67,040,989 | 0.07 GB | `xinntao/Real-ESRGAN` GitHub release | BSD-3-Clause |
 
 ## Per profile
 
-| Profile | File | Dir | Size | Source |
-|---|---|---|---|---|
-| `high` | `flux1-schnell.safetensors` | `diffusion_models` | 23.8 GB | `black-forest-labs/FLUX.1-schnell` |
-| | `t5xxl_fp16.safetensors` | `text_encoders` | 9.79 GB | `comfyanonymous/flux_text_encoders` ✅ |
-| `balanced` `low` `cpu` | `flux1-schnell.safetensors` | `diffusion_models` | 23.8 GB | same |
-| | `t5xxl_fp8_e4m3fn.safetensors` | `text_encoders` | 4.89 GB | same repo |
-| `gguf` | `flux1-schnell-Q4_K_S.gguf` | `diffusion_models` | 6.8 GB | `city96/FLUX.1-schnell-gguf` |
-| | `t5-v1_1-xxl-encoder-Q5_K_M.gguf` | `text_encoders` | 3.9 GB | `city96/t5-v1_1-xxl-encoder-gguf` |
+| Profile | File | Dir | Bytes | Size | Source |
+|---|---|---|---|---|---|
+| `high` | `flux1-schnell.safetensors` | `diffusion_models` | 23,782,506,688 | 23.78 GB | `black-forest-labs/FLUX.1-schnell` 🔒 |
+| | `t5xxl_fp16.safetensors` | `text_encoders` | 9,787,841,024 | 9.79 GB | `comfyanonymous/flux_text_encoders` |
+| `balanced` `low` `cpu` | `flux1-schnell.safetensors` | `diffusion_models` | 23,782,506,688 | 23.78 GB | same 🔒 |
+| | `t5xxl_fp8_e4m3fn.safetensors` | `text_encoders` | 4,893,934,904 | 4.89 GB | same repo |
+| `gguf` | `flux1-schnell-Q4_K_S.gguf` | `diffusion_models` | 6,783,943,712 | 6.78 GB | `city96/FLUX.1-schnell-gguf` |
+| | `t5-v1_1-xxl-encoder-Q5_K_M.gguf` | `text_encoders` | 3,386,856,640 | 3.39 GB | `city96/t5-v1_1-xxl-encoder-gguf` |
 
-✅ = URL taken **verbatim from a manifest shipped inside ComfyUI 0.30.0**
-(`blueprints/*.json`), so it is ComfyUI-official. The rest follow the documented
-upstream layout but could not be reached from the authoring environment — see
-the honesty note below.
+🔒 = gated repo, automatic ungated mirror configured (see below).
+
+**Every file above was verified to exist at that exact path with that exact byte
+count**, via the HuggingFace Hub API (and an HTTP HEAD for the GitHub release).
+Licences were read from the repo metadata: FLUX.1-schnell `apache-2.0`,
+Comfy-Org/flux1-schnell `apache-2.0`, Comfy-Org/BiRefNet `mit`,
+city96/FLUX.1-schnell-gguf `apache-2.0`.
 
 ## Licensing — why Schnell and not dev
 
@@ -55,8 +58,32 @@ the honesty note below.
 | FLUX.1 dev | FLUX.1-dev Non-Commercial | **no** |
 | FLUX.1 pro | closed, API only | n/a |
 
-Only Schnell is installed. It is also *ungated* — no HuggingFace token, no
-licence click-through. `HUGGINGFACE_TOKEN` is supported but unnecessary.
+Only Schnell is installed.
+
+### The BFL repo is gated — and that is handled
+
+`black-forest-labs/FLUX.1-schnell` is a **gated** HuggingFace repo. Its files
+return **401/403 without a token**, even though the model is Apache-2.0. You have
+two options, and the installer takes the second automatically:
+
+1. **Use the official BFL source.** Accept the licence on
+   [the model page](https://huggingface.co/black-forest-labs/FLUX.1-schnell),
+   create a token at <https://huggingface.co/settings/tokens>, then:
+   ```bash
+   HUGGINGFACE_TOKEN=hf_xxx ./scripts/03-download-models.sh
+   ```
+2. **Do nothing.** The preflight detects the 401/403 and falls back to the
+   **ungated Comfy-Org mirror**, which hosts *byte-identical* files:
+
+   | File | BFL (gated) | Comfy-Org mirror (ungated) |
+   |---|---|---|
+   | `flux1-schnell.safetensors` | 23,782,506,688 | **23,782,506,688** |
+   | `ae.safetensors` | 335,304,388 | **335,304,388** |
+
+   Same bytes, same Apache-2.0 licence, no token. The preflight prints
+   `upstream is gated (HTTP 401) - using the ungated mirror` when this happens.
+
+No other model in this pack is gated.
 
 Schnell is guidance- and timestep-distilled, which is why the workflows use
 **4 steps at CFG 1.0**. Raising either makes output *worse*, not better — see
@@ -93,15 +120,11 @@ Model repos reorganise. To fix:
 
 ### Honesty note
 
-`huggingface.co` was **unreachable** from the environment where this pack was
-authored (blocked by egress policy), so:
-
-- no weights were ever downloaded here
-- the HuggingFace URLs marked without ✅ were **not** confirmed to return 200
-- the GitHub RealESRGAN URL **was** confirmed reachable
-
-This is exactly why the preflight exists: it checks on *your* machine, before
-committing to 30 GB.
+Direct HTTPS to `huggingface.co` was blocked by egress policy in the authoring
+environment, so **no weights were ever downloaded here**. Every path, byte count
+and licence above was instead confirmed through the HuggingFace Hub API, which
+was reachable. What remains unproven is only the bulk transfer itself — the
+preflight re-checks all of it on your machine before committing to 30 GB.
 
 ## Verifying what you have
 
@@ -135,9 +158,9 @@ none of the eight bundled workflows change when you install it.
 
 | Profile | Weights | + venv/PyTorch | Recommended free |
 |---|---|---|---|
-| `high` | ~34 GB | ~8 GB | 50 GB |
-| `balanced` / `low` / `cpu` | ~29 GB | ~8 GB | 45 GB |
-| `gguf` | ~12 GB | ~8 GB | 25 GB |
+| `high` | 34.67 GB | ~8 GB | 50 GB |
+| `balanced` / `low` / `cpu` | 29.77 GB | ~8 GB | 45 GB |
+| `gguf` | 11.27 GB | ~8 GB | 25 GB |
 
 Generated images land in `$COMFY_HOME/output/` and grow over time — a 1024×1024
 PNG is roughly 1–2 MB.
