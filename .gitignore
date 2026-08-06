@@ -8,3 +8,16 @@ HIVOLT-deliverables/docs/
 HIVOLT-deliverables/model/
 HIVOLT-deliverables/theme-snippets/
 HIVOLT-storefront.zip
+
+# Ruflo local secrets and runtime data
+.env
+.env.local
+.env.*.local
+.claude-flow/data/
+.claude-flow/logs/
+.claude-flow/sessions/
+.claude-flow/metrics/
+.claude-flow/security/
+.swarm/
+ruvector.db
+ruvector.db-journal
