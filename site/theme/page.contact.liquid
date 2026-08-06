@@ -4,9 +4,9 @@
   Alternate page template. In the admin: Pages → Contact → Template suffix →
   "contact". Renders inside layout/theme.liquid, which supplies <main>.
 
-  Requires:
-      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
 
   Uses Shopify's native contact form tag — form 'contact'. Field names matter:
 

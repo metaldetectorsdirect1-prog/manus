@@ -4,9 +4,9 @@
   Alternate page template. In the admin: Pages → Shipping → Template suffix →
   "shipping". Renders inside layout/theme.liquid, which supplies <main>.
 
-  Requires:
-      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
 
   Every figure on this page is one the store has published elsewhere and can
   stand behind: free on every US order with no minimum, 8-14 business days,

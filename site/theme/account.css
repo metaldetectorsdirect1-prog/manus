@@ -185,7 +185,10 @@ select.fld__in{padding-right:34px}
 .tbl--items th:nth-child(3),
 .tbl--items td:nth-child(3),
 .tbl--items th:nth-child(4),
-.tbl--items td:nth-child(4){text-align:right;padding-right:0}
+.tbl--items td:nth-child(4){text-align:right}
+/* only the last column loses its gutter, or a right-aligned number collides
+   with the column after it */
+.tbl th:last-child,.tbl td:last-child{padding-right:0}
 
 .tbl__num{font-variant-numeric:tabular-nums}
 .tbl__link{
@@ -214,19 +217,22 @@ select.fld__in{padding-right:34px}
     clip:rect(0 0 0 0);white-space:nowrap;
   }
   .tbl tr{border:1px solid var(--rule);padding:14px 16px;margin-bottom:-1px}
+  /* label above value, the same shape the forms use — not a two-column grid,
+     which would scatter the second and third element of a cell (a SKU, a
+     tracking link) back into the label column */
   .tbl td,
   .tbl--orders td:nth-child(5),
   .tbl--items td:nth-child(2),
   .tbl--items td:nth-child(3),
   .tbl--items td:nth-child(4){
-    border:0;padding:7px 0;text-align:left;
-    display:grid;grid-template-columns:10ch minmax(0,1fr);gap:14px;align-items:baseline;
+    border:0;padding:8px 0 0;text-align:left;
   }
   .tbl td::before{
-    content:attr(data-l);
+    content:attr(data-l);display:block;margin-bottom:4px;
     font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
     color:var(--steel);
   }
+  .tbl tr td:last-child{padding-bottom:4px}
 }
 
 /* ── empty state ───────────────────────────────────────────── */

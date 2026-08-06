@@ -7,8 +7,8 @@
    no colour literals — every value is var(--token), so the dark theme
    is inherited rather than re-implemented.
 
-   Install as assets/hivolt-pages.css and link it from layout/theme.liquid
-   after hivolt.css.
+   build-theme.py concatenates this into the single assets/hivolt.css,
+   ordered after theme-hivolt.css, so these rules win where they overlap.
 
    Two rules here exist because of a specific failure mode:
      · .rte holds a 68ch measure. Admin-entered body copy has no other

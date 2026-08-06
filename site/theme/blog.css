@@ -8,11 +8,14 @@
    that already exists upstream. Components reused as-is, not
    duplicated: .wrap .mono .btn .btn--ghost .sec__head .sec__h
    .crumb from hivolt.css, and .pager / .empty from collection.css.
+   .rte is shared with pages.css and is extended under .art rather
+   than redefined; the comment form is namespaced .cmtf because
+   .cf belongs to the contact form in pages.css.
 
    New here: the tag filter row, the ruled article list, the
-   article page furniture, the long-form .rte, previous/next
-   article navigation, the comment thread and form, and the
-   ruled collection index.
+   article page furniture, the article-scoped long-form treatment,
+   previous/next article navigation, the comment thread and form,
+   and the ruled collection index.
    ───────────────────────────────────────────────────────────── */
 
 /* ── blog index ────────────────────────────────────────────── */
@@ -158,10 +161,14 @@
    from a template, so the table becomes its own scroll container. width:max-content
    keeps the columns at their natural width; max-width + min-width:0 stop it pushing
    the document sideways — min-width:0 is what overrides the 520px floor the shared
-   size-chart rule sets on every table. */
+   size-chart rule sets on every table.
+   The cell floor is what makes the scroll actually happen: without it a wide table
+   shrinks its columns to fit the measure instead of overflowing, and an eight-column
+   spec table ends up breaking words down the middle. Narrow tables stay under the
+   floor and render full width, unscrolled. */
 .art .rte table{display:block;width:max-content;max-width:100%;min-width:0;
   overflow-x:auto;margin:1.9em 0;border:1px solid var(--rule)}
-.art .rte th,.art .rte td{text-align:left;font-size:12.5px;overflow-wrap:anywhere}
+.art .rte th,.art .rte td{text-align:left;font-size:12.5px;min-width:10ch}
 .art .rte caption{caption-side:bottom;margin-top:9px;text-align:left;
   font-family:var(--mono);font-size:10.5px;color:var(--steel)}
 

@@ -4,9 +4,9 @@
   Alternate page template. In the admin: Pages → About → Template suffix →
   "about". Renders inside layout/theme.liquid, which supplies <main>.
 
-  Requires:
-      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
 
   The copy here is the honest version, and it is deliberately the honest
   version. HIVOLT selects manufacturer blanks; it does not own a factory. That

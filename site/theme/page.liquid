@@ -9,10 +9,9 @@
   masthead and the footer. No <main> here — nesting one inside another is
   invalid HTML.
 
-  Requires two stylesheets linked from layout/theme.liquid:
-
-      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
 
   The body is wrapped in .rte, which holds the measure at 68ch and styles the
   elements the rich-text editor can emit — headings, lists, links, quotes,

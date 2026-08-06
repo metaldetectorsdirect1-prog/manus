@@ -4,9 +4,9 @@
   Alternate page template. In the admin: Pages → Returns → Template suffix →
   "returns". Renders inside layout/theme.liquid, which supplies <main>.
 
-  Requires:
-      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
 
   Published terms only: 60 days, unworn with tags attached, no restocking fee,
   no reason required, started from the order email.

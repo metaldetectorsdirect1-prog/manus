@@ -34,8 +34,8 @@
     <div class="sec__head">
       <h1 class="sec__h">Collections</h1>
       <span class="mono">
-        {{- collections.size }} collection{% if collections.size != 1 %}s{% endif %}
-        · {{ collections.all.products_count }} styles in total
+        {{- collections.size }} collection{% if collections.size != 1 %}s{% endif -%}
+        {%- if collections.all.products_count > 0 %} · {{ collections.all.products_count }} styles in total{% endif -%}
       </span>
     </div>
 
