@@ -43,7 +43,10 @@
   </ol>
 </nav>
 
-<main>
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
   {%- paginate collection.products by 24 -%}
 
     <section class="col wrap">
@@ -264,7 +267,6 @@
 
     </section>
   {%- endpaginate -%}
-</main>
 
 {%- comment -%} Breadcrumb structured data {%- endcomment -%}
 <script type="application/ld+json">

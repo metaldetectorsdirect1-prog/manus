@@ -12,6 +12,7 @@
   --rule:#C6C2BA;
   --blueprint:#1B36C4;
   --on-blueprint:#F4F3EF;
+  --on-ink-muted:#9AA0A8;
 
   --grot:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Segoe UI",Arial,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
@@ -22,16 +23,16 @@
 @media (prefers-color-scheme:dark){
   :root{
     --paper:#121417; --paper-2:#191C21; --ink:#E7E5E0; --ink-2:#CFCCC5;
-    --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013;
+    --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013; --on-ink-muted:#8A8F97;
   }
 }
 :root[data-theme="dark"]{
   --paper:#121417; --paper-2:#191C21; --ink:#E7E5E0; --ink-2:#CFCCC5;
-  --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013;
+  --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013; --on-ink-muted:#8A8F97;
 }
 :root[data-theme="light"]{
   --paper:#E9E7E2; --paper-2:#DFDCD5; --ink:#16181C; --ink-2:#22252B;
-  --steel:#6B6F76; --rule:#C6C2BA; --blueprint:#1B36C4; --on-blueprint:#F4F3EF;
+  --steel:#6B6F76; --rule:#C6C2BA; --blueprint:#1B36C4; --on-blueprint:#F4F3EF; --on-ink-muted:#9AA0A8;
 }
 
 *,*::before,*::after{box-sizing:border-box}

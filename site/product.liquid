@@ -32,7 +32,11 @@
   </ol>
 </nav>
 
-<main>
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+
   <div class="pdp">
 
     <!-- gallery: supplier studio photography only -->
@@ -211,7 +215,6 @@
       </div>
     </section>
   {%- endif -%}
-</main>
 
 {%- comment -%} Product + Breadcrumb structured data {%- endcomment -%}
 <script type="application/ld+json">

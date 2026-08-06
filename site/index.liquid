@@ -24,19 +24,10 @@
   {%- assign col = collections.all -%}
 {%- endif -%}
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker__track">
-    {%- for i in (1..2) -%}
-      <span>Free US shipping · no minimum</span>
-      <span>60-day returns</span>
-      <span>Every fabric weight published</span>
-      <span>Ships from Illinois</span>
-      <span>US orders only</span>
-    {%- endfor -%}
-  </div>
-</div>
-
-<main>
+{%- comment -%}
+  The ticker, masthead, <main> and footer now live in layout/theme.liquid so
+  they render on every page. This template supplies page content only.
+{%- endcomment -%}
 
   <!-- ── HERO: the specification is the thesis ─────────────── -->
   <section class="hero wrap">
@@ -265,7 +256,7 @@
   <section class="faq">
     <div class="wrap">
       <h2 class="faq__h">Questions worth asking</h2>
-      <p class="mono" style="color:var(--steel)">Including the ones most stores avoid</p>
+      <p class="mono" style="color:var(--on-ink-muted)">Including the ones most stores avoid</p>
 
       <div class="faq__list">
         <details>
@@ -303,7 +294,6 @@
       </div>
     </div>
   </section>
-</main>
 
 <script type="application/ld+json">
 {

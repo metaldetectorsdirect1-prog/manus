@@ -3,9 +3,9 @@
   ────────────────────────────
   The shared shell for every page. Drop-in replacement for layout/theme.liquid.
 
-  Requires two assets:
-      assets/hivolt.css   (theme-hivolt.css, renamed)
-      assets/layout.css   (site/theme/layout.css, renamed — mobile nav + skip link)
+  Requires one asset: assets/hivolt.css. site/build-theme.py concatenates
+  theme-hivolt.css and every per-agent stylesheet — including this shell's
+  site/theme/layout.css — into that single file, so nothing else is linked here.
 
   Chrome lifted from the built design:
       ticker   — site/index.liquid
@@ -95,7 +95,6 @@
   {{ content_for_header }}
 
   {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-  {{ 'layout.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%} Brand entity + sitelinks search box. Renders on every page. {%- endcomment -%}
   <script type="application/ld+json">
@@ -111,7 +110,7 @@
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer support",
-      "email": {{ shop.email | default: 'support@hivolt-usa.com' | json }},
+      "email": {{ settings.support_email | default: shop.email | default: 'support@hivolt-usa.com' | json }},
       "areaServed": "US",
       "availableLanguage": "English"
     },
@@ -154,6 +153,8 @@
 {%- assign foot_co_t = 'About,Contact,Privacy,Terms' | split: ',' -%}
 {%- assign foot_co_u = '/pages/about,/pages/contact,/policies/privacy-policy,/policies/terms-of-service' | split: ',' -%}
 
+{%- comment -%} settings.show_ticker is defined in settings_schema.json. Fails on. {%- endcomment -%}
+{%- unless settings.show_ticker == false -%}
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">
     {%- for i in (1..2) -%}
@@ -165,6 +166,7 @@
     {%- endfor -%}
   </div>
 </div>
+{%- endunless -%}
 
 <header class="mast">
   <div class="wrap mast__in">
@@ -221,7 +223,7 @@
         <p class="foot__addr" style="margin-top:16px">
           Technical activewear, specified in public.<br>
           Shipping within the United States.<br>
-          {{ shop.email | default: 'support@hivolt-usa.com' }}
+          {{ settings.support_email | default: shop.email | default: 'support@hivolt-usa.com' }}
         </p>
       </div>
 

@@ -1,0 +1,564 @@
+{%- comment -%}
+  HIVOLT — fabric reference page
+  ──────────────────────────────
+  Alternate page template. site/build-theme.py maps this file to
+  templates/page.fabric.liquid; assign it to the page with handle `fabric`
+  (Online Store → Pages → Fabric → Template).
+
+  Styles live in site/theme/fabric.css, which build-theme.py concatenates into
+  assets/hivolt.css. Nothing extra is linked from layout/theme.liquid.
+
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+
+  Suggested page title (it becomes the <h1>): "Fabric weight, explained".
+
+  Editorial constraints this file is built under, do not relax them:
+    · No claim about a HIVOLT garment's performance appears here. The only
+      HIVOLT numbers on the page are spec.gsm metafield values, rendered from
+      the catalogue. If a product has no spec.gsm it is silently omitted.
+    · The weight-band table is industry convention, not measurement, and is
+      labelled as such directly beneath itself.
+    · No health or medical claim of any kind.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Fabric weight, explained' }}</li>
+  </ol>
+</nav>
+
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+
+  <!-- ── HEADER ────────────────────────────────────────────── -->
+  <header class="fab-head wrap">
+    <p class="mono fab-head__eyebrow">Reference · fabric weight</p>
+    <h1 class="fab-head__h">{{ page.title | default: 'Fabric weight, explained' }}</h1>
+    <p class="fab-head__sub">
+      This page explains what grams per square metre measures, what it does and
+      does not tell you about a garment, and how to work it out yourself with a
+      kitchen scale and a tape measure. It exists because we publish a g/m²
+      figure for every style we sell, and a published number is only worth
+      anything if you can check it.
+    </p>
+
+    <nav class="fab__toc" aria-label="On this page">
+      <a class="mono" href="#measures">What g/m² measures</a>
+      <a class="mono" href="#bands">Weight bands</a>
+      <a class="mono" href="#measure-it">Check it yourself</a>
+      <a class="mono" href="#fibres">Fibres</a>
+      <a class="mono" href="#publish">What we publish</a>
+      <a class="mono" href="#questions">Questions</a>
+    </nav>
+
+    {%- if page.content != blank -%}
+      <div class="rte fab__rte">{{ page.content }}</div>
+    {%- endif -%}
+  </header>
+
+  <!-- ── 1 · WHAT g/m² ACTUALLY MEASURES ───────────────────── -->
+  <section class="fab wrap" id="measures">
+    <div class="sec__head">
+      <h2 class="sec__h">What grams per square metre actually measures</h2>
+      <span class="mono">Mass ÷ area</span>
+    </div>
+
+    <div class="fab__lead">
+      <div>
+        <p class="fab__p"><strong>It is the weight of one square metre of the fabric.</strong>
+          Nothing more. A 220 g/m² knit is one where a square metre of it, cut flat and
+          weighed, comes to 220 grams. Mills measure it with a die cutter that punches a
+          disc of known area and a balance that reads to a hundredth of a gram. The
+          published test methods are ISO 3801 and ASTM D3776. It is the least ambiguous
+          figure on a specification sheet, which is a fair part of why so few brands
+          print it.</p>
+
+        <p class="fab__p"><strong>Weight is a proxy for knit density.</strong>
+          For a given fibre and yarn type, more grams in a square metre means more fibre
+          packed into that square metre — more material sitting between a light source
+          and whatever is behind the fabric. Density is what light has to get through.
+          That is the whole mechanism. It is not a feeling, and it does not depend on
+          anyone's judgement.</p>
+
+        <p class="fab__p"><strong>Stretch is why the resting figure matters.</strong>
+          When a knit is stretched, its area grows and its mass does not. Pull a fabric
+          to 1.3 times its resting area and every square metre of it now holds 1.3 times
+          less material: at that instant a 220 g/m² knit is behaving optically like a
+          169 g/m² one, and a 180 g/m² knit like a 138 g/m² one. That is arithmetic, not
+          a test result — the 1.3× figure is an illustration, not a measurement of any
+          particular garment on any particular body. The point survives whatever number
+          you substitute. The weight on a spec sheet is the weight at rest, and the
+          useful question is how much headroom it leaves once the garment is stretched
+          over the glute and the wearer moves.</p>
+      </div>
+
+      <div>
+        <p class="fab__p"><strong>This is why "compression" and "buttery" answer nothing.</strong>
+          Neither word carries a unit, a test method or a number. Hand-feel is real and
+          people care about it, but it is not measurable and it has no relationship to
+          whether a fabric goes translucent when it is stretched. Density does. A brand
+          that describes a fabric only in adjectives has told you nothing you can verify
+          against another brand.</p>
+
+        <p class="fab__p"><strong>Where weight stops being enough.</strong>
+          Two fabrics at the same g/m² can differ in opacity, and it is worth saying so
+          plainly. Yarn construction matters — many fine filaments cover better than
+          fewer coarse ones at the same mass. So do knit gauge and knit structure.
+          Colour matters a great deal: a pale or heathered knit shows through at a weight
+          where the identical fabric in black does not. Finishing — brushing, calendering,
+          coating — moves it again.</p>
+
+        <p class="fab__p">
+          Fabric weight is the single most useful number a brand can publish about a
+          stretch knit, and it is not the only variable. Anyone who tells you it settles
+          the question on its own is selling something.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2 · WEIGHT BANDS ──────────────────────────────────── -->
+  <section class="fab fab--alt" id="bands">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 class="sec__h">A reference table of weight bands</h2>
+        <span class="mono">Industry convention · stretch knits</span>
+      </div>
+
+      <div class="fab__tw">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Band</th>
+              <th scope="col">g/m²</th>
+              <th scope="col">Typical use</th>
+              <th scope="col">Behaviour under stretch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="fab__band">Sheer</th>
+              <td class="fab__num">120–150</td>
+              <td>Mesh panels, vents, jersey liners, sheer overlays</td>
+              <td class="fab__beh">Translucent at rest in most colours, and effectively
+                see-through once stretched. Used deliberately for ventilation, not as a
+                main body fabric.</td>
+            </tr>
+            <tr>
+              <th scope="row" class="fab__band">Light</th>
+              <td class="fab__num">150–180</td>
+              <td>T-shirts, loose layers, some lightweight yoga leggings</td>
+              <td class="fab__beh">Covers at rest. Thins visibly as soon as it is
+                stretched. Fine for anything worn loose, marginal for anything worn
+                tight.</td>
+            </tr>
+            <tr>
+              <th scope="row" class="fab__band">Standard</th>
+              <td class="fab__num">180–200</td>
+              <td>The most common legging and short weight in this price bracket</td>
+              <td class="fab__beh">Opaque standing still. Thins under deep stretch — the
+                seated position and the bottom of a squat are where it shows. Pale and
+                heathered colours show it first.</td>
+            </tr>
+            <tr>
+              <th scope="row" class="fab__band">Dense</th>
+              <td class="fab__num">200–220</td>
+              <td>Leggings specified for training rather than lounging</td>
+              <td class="fab__beh">Generally holds opacity through the same stretch that
+                thins a standard knit. Firmer hand, slower to dry, harder to pull on.</td>
+            </tr>
+            <tr>
+              <th scope="row" class="fab__band">Heavy</th>
+              <td class="fab__num">220–260</td>
+              <td>Heavyweight leggings, "sculpt" and "contour" knits, some bike shorts</td>
+              <td class="fab__beh">Holds opacity with headroom. Noticeably stiff, warmer,
+                and slower to dry. Above roughly 260 the trade-off is usually not worth
+                it in a legging.</td>
+            </tr>
+            <tr>
+              <th scope="row" class="fab__band">Fleece</th>
+              <td class="fab__num">260–320</td>
+              <td>Sweatshirts, joggers, fleece-backed sets</td>
+              <td class="fab__beh">Little stretch by comparison, so opacity is rarely the
+                constraint. Weight here buys warmth and durability, not coverage.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="disc fab__disc">
+        <p><strong>These bands are convention, not measurement</strong>
+          No standards body defines them. They are the rough lines mills, buyers and
+          technical designers draw when they talk about weight in this category, and
+          different suppliers draw them in different places — one mill's "mid-weight" is
+          another mill's "light". They describe stretch knits used in activewear only: a
+          200 g/m² woven shirting behaves nothing like a 200 g/m² knit. <em>Nothing in
+          this table is a measurement of a HIVOLT garment.</em> For any HIVOLT style, the
+          figure that applies is the one printed on its own product page, taken from the
+          mill's specification sheet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3 · CHECK IT YOURSELF ─────────────────────────────── -->
+  <section class="fab wrap" id="measure-it">
+    <div class="sec__head">
+      <h2 class="sec__h">How to check any brand's claim yourself</h2>
+      <span class="mono">Ours included</span>
+    </div>
+
+    <p class="fab__p fab__p--lead">
+      A scale, a tape measure and one division. The method is approximate — call it
+      ±5% — which is not good enough to argue about five grams and is easily good
+      enough to catch a claim that is wrong by thirty.
+    </p>
+
+    <ol class="fab__steps">
+      <li><strong>Weigh the garment.</strong> A digital kitchen scale that resolves 1 g
+        is enough. Weigh it dry, clean and on its own. If a card hangtag is still
+        attached, weigh the tag separately and subtract it.</li>
+      <li><strong>Lay it flat and unstretched</strong> on a hard floor. Smooth the
+        wrinkles out with a flat hand. Do not pull it.</li>
+      <li><strong>Measure the outline in centimetres</strong> and break it into
+        rectangles. For a legging: one rectangle from the top of the waistband down to
+        the crotch seam (flat width × height), plus one for each leg (the average of the
+        flat width at the top and at the hem, × the inseam).</li>
+      <li><strong>Add the rectangles up.</strong> That total is the flat outline area in
+        square centimetres.</li>
+      <li><strong>Double it.</strong> A garment laid flat is two layers of fabric — front
+        panel and back panel — everywhere inside that outline.</li>
+      <li><strong>Divide by 10,000</strong> to convert square centimetres to square
+        metres.</li>
+      <li><strong>Divide the weight in grams by the area in square metres.</strong> The
+        answer is grams per square metre.</li>
+    </ol>
+
+    <h3 class="fab__sub">Worked through once, with real numbers</h3>
+    <div class="sheet fab__sheet">
+      <div class="sheet__row"><span class="sheet__k">Scale reading, size M legging</span><span class="sheet__v">124 g</span></div>
+      <div class="sheet__row"><span class="sheet__k">Waistband to crotch, 36 × 29 cm</span><span class="sheet__v">1,044 cm²</span></div>
+      <div class="sheet__row"><span class="sheet__k">One leg, 13.5 cm avg × 79 cm inseam</span><span class="sheet__v">1,067 cm²</span></div>
+      <div class="sheet__row"><span class="sheet__k">Flat outline, 1,044 + (2 × 1,067)</span><span class="sheet__v">3,178 cm²</span></div>
+      <div class="sheet__row"><span class="sheet__k">Two layers, 3,178 × 2</span><span class="sheet__v">6,356 cm²</span></div>
+      <div class="sheet__row"><span class="sheet__k">As square metres, 6,356 ÷ 10,000</span><span class="sheet__v">0.6356 m²</span></div>
+      <div class="sheet__row"><span class="sheet__k">Result, 124 ÷ 0.6356</span><span class="sheet__v"><em>195 g/m²</em></span></div>
+      <p class="sheet__src">
+        195 lands in the 180–200 band. If that garment's label said 220, the label is
+        wrong by far more than this method's error. If the label said 200, you have
+        learned nothing — the gap is inside the noise.
+      </p>
+    </div>
+
+    <div class="fab__lead fab__lead--tight">
+      <div>
+        <h3 class="fab__sub">What this method will not tell you</h3>
+        <ul class="fab__list">
+          <li>Waistbands are two or more layers and are often a different, heavier knit
+            with elastic inside them. They pull the answer up.</li>
+          <li>Seam allowances, the gusset and the hems add fabric that is not inside the
+            flat outline. Also up.</li>
+          <li>A panelled garment mixes fabrics, so what you get is a weighted average
+            across all of them, not the weight of the main body knit.</li>
+          <li>Those errors mostly push the same way, so treat your result as an upper
+            bound on the main fabric rather than a reading of it.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="fab__sub">The exact method, if you can spare the fabric</h3>
+        <p class="fab__p">Cut a square exactly 10 cm × 10 cm. That is 0.01 m². Weigh it
+          and multiply by 100. A 10 cm square weighing 2.20 g is a 220 g/m² fabric; one
+          weighing 1.85 g is 185 g/m².</p>
+        <p class="fab__p">This is what a mill does, with a circular die cutter and a lab
+          balance instead of scissors and a kitchen scale. It destroys the garment, so do
+          it on a scrap, on an offcut, or on something you have already written off. It
+          is the only version of this that is exact.</p>
+      </div>
+    </div>
+
+    {%- comment -%}
+      Our own published figures, so the method above has something to be pointed at.
+      Values come from the spec.gsm metafield only. A product without one is omitted
+      rather than guessed at.
+    {%- endcomment -%}
+    {%- capture gsm_rows -%}
+      {%- for p in collections.all.products limit: 24 -%}
+        {%- assign g = p.metafields.spec.gsm -%}
+        {%- if g != blank -%}
+          <a class="sheet__row" href="{{ p.url }}">
+            <span class="sheet__k">{{ p.title }}</span>
+            <span class="sheet__v"><em>{{ g }} g/m²</em></span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- if gsm_rows != blank -%}
+      <h3 class="fab__sub">Our published figures, so you have something to check</h3>
+      <div class="sheet fab__sheet">
+        {{ gsm_rows }}
+        <p class="sheet__src">
+          Every figure above is the fabric weight from the mill's specification sheet for
+          that style, copied unedited, and is the same number shown on the product page.
+          Where a style has no published figure it is not listed here rather than
+          estimated. Measure one and tell us if we are wrong —
+          {{ shop.email | default: 'support@hivolt-usa.com' }}.
+        </p>
+      </div>
+    {%- endif -%}
+  </section>
+
+  <!-- ── 4 · FIBRE GLOSSARY ────────────────────────────────── -->
+  <section class="fab wrap" id="fibres">
+    <div class="sec__head">
+      <h2 class="sec__h">Fibre glossary</h2>
+      <span class="mono">What each one contributes</span>
+    </div>
+
+    <div class="trust__grid fab__fib">
+      <div class="trust__c">
+        <div class="trust__k">Polyamide</div>
+        <p class="trust__v">Nylon</p>
+        <p class="trust__d">The softer and stronger of the two common synthetics. At a
+          given weight it takes more abrasion before the surface goes fuzzy, and it has a
+          smoother, more fluid drape than polyester.</p>
+        <ul class="fab__attr">
+          <li><b>Hand</b><span>Smooth, soft, fluid. The reason a nylon blend feels
+            different from a polyester one at identical weight.</span></li>
+          <li><b>Moisture</b><span>Absorbs a few per cent of its own weight in water, so
+            it dries more slowly and feels heavier when soaked.</span></li>
+          <li><b>Durability</b><span>Higher tensile and abrasion resistance than
+            polyester; less resistant to prolonged sunlight.</span></li>
+          <li><b>Cost</b><span>More expensive per kilo, which is why it appears more
+            often above a certain price point.</span></li>
+        </ul>
+      </div>
+
+      <div class="trust__c">
+        <div class="trust__k">Polyester</div>
+        <p class="trust__v">Polyester</p>
+        <p class="trust__d">Dimensionally stable, resistant to sunlight and most
+          chemicals, and it holds dyed colour well. The default fibre for activewear at
+          volume, on cost as much as on performance.</p>
+        <ul class="fab__attr">
+          <li><b>Hand</b><span>Drier and crisper than nylon at the same
+            construction.</span></li>
+          <li><b>Moisture</b><span>Absorbs almost nothing — well under 1% of its weight.
+            Water travels along the outside of the fibre rather than into it, which is
+            what the word "wicking" describes, and it dries fast.</span></li>
+          <li><b>Durability</b><span>Very good UV and chemical resistance; holds shape
+            and printed colour over time.</span></li>
+          <li><b>Trade-off</b><span>The same oil-friendly surface holds body oils, which
+            is why polyester activewear can keep odour through a cold wash.</span></li>
+        </ul>
+      </div>
+
+      <div class="trust__c">
+        <div class="trust__k">Elastomeric</div>
+        <p class="trust__v">Spandex / elastane</p>
+        <p class="trust__d">One fibre, three names: spandex in the United States,
+          elastane in Europe, and Lycra as a trade name for a particular maker's version
+          of it. It is never the whole fabric — it is blended in.</p>
+        <ul class="fab__attr">
+          <li><b>Contributes</b><span>Recovery. It stretches several times its own length
+            and pulls back, which is what returns a fabric to shape instead of letting it
+            bag at the knee and seat.</span></li>
+          <li><b>Proportion</b><span>Commonly 5–30% by weight of the finished fabric. The
+            percentage is by weight, not by how much stretch you feel — knit structure
+            decides that as much as the blend does.</span></li>
+          <li><b>Limits</b><span>Degraded by chlorine, high heat and oils. That is the
+            reason care labels on these fabrics say cold wash and no tumble dry.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="sheet__src fab__note">
+      Composition percentages are by weight of the finished fabric, and they tell you
+      nothing about g/m² on their own. A 75/25 nylon-spandex blend exists at 160 g/m² and
+      at 240 g/m², and those are not the same garment. Composition and weight are two
+      independent numbers, and a specification sheet that gives you one without the other
+      has given you half of it.
+    </p>
+  </section>
+
+  <!-- ── 5 · WHAT WE PUBLISH ───────────────────────────────── -->
+  <section class="pub" id="publish">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 class="sec__h">What we publish</h2>
+        <span class="mono">And what we won't</span>
+      </div>
+
+      <div class="pub__grid">
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">The mill specification</h3>
+          <p class="pub__d">Fibre composition and fabric weight for every style, copied
+            from the supplier's sheet without editing. If a number looks unflattering, it
+            stays.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">Where it ships from</h3>
+          <p class="pub__d">Orders leave a facility in Illinois and take 8–14 business
+            days. Free, no minimum, United States only.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">Photographs we took</h3>
+          <p class="pub__d">Product images are the supplier's own studio photography of
+            the exact garment. Diagrams are labelled as diagrams.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Reviews we don't have</h3>
+          <p class="pub__d">HIVOLT is new. There are no star ratings on this site because
+            there are no customers yet to write them. When there are, they'll be
+            real.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Countdown timers</h3>
+          <p class="pub__d">No fake stock counters, no "12 people are viewing", no
+            expiring offer that resets when you reload. The price is the price.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Health claims</h3>
+          <p class="pub__d">Leggings are not a medical device. Competitors in this
+            category sell them as treatments. We don't, and nothing on this page is one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6 · QUESTIONS (mirrored in FAQPage JSON-LD below) ──── -->
+  <section class="faq" id="questions">
+    <div class="wrap">
+      <h2 class="faq__h">Questions about fabric weight</h2>
+      <p class="mono fab__faqnote">Answered from the page above</p>
+
+      <div class="faq__list">
+        <details>
+          <summary>What does g/m² mean on a fabric label?</summary>
+          <p class="faq__a">Grams per square metre is the weight of one square metre of
+            that fabric. A 220 g/m² knit is one where a square metre of it, cut flat and
+            weighed, comes to 220 grams. It is measured to ISO 3801 or ASTM D3776 by
+            cutting a disc of known area and weighing it on a laboratory balance. For a
+            given fibre and yarn it is a direct proxy for knit density.</p>
+        </details>
+        <details>
+          <summary>Why does a legging go translucent when it is stretched?</summary>
+          <p class="faq__a">Because stretching increases the fabric's area while its mass
+            stays the same, so there is less material in every square metre of it. A
+            fabric pulled to 1.3 times its resting area behaves optically like one that
+            is 1.3 times lighter — a 220 g/m² knit like a 169 g/m² one. The weight quoted
+            on a specification sheet is the weight at rest, so it tells you how much
+            headroom is left once the garment is stretched over the body.</p>
+        </details>
+        <details>
+          <summary>What fabric weight stays opaque?</summary>
+          <p class="faq__a">By industry convention, stretch knits at 200–220 g/m² and
+            above generally hold opacity through deep stretch, and 180–200 g/m² is the
+            common legging weight that thins under it. No standards body defines those
+            bands, different mills draw them in different places, and colour, yarn
+            construction and knit gauge all move the line — a pale or heathered knit
+            shows through at a weight where the same fabric in black does not.</p>
+        </details>
+        <details>
+          <summary>How do I measure the fabric weight of a garment at home?</summary>
+          <p class="faq__a">Weigh the garment in grams on a kitchen scale. Lay it flat
+            and unstretched, measure its outline in centimetres and break that into
+            rectangles. Double the total, because a garment laid flat is two layers of
+            fabric. Divide by 10,000 to get square metres, then divide the weight by the
+            area. Worked example: 124 g over a 6,356 cm² two-layer area, which is
+            0.6356 m², gives 195 g/m². Expect about ±5%, because waistbands, seam
+            allowances and gussets add fabric that is not in the outline. The exact
+            method is to cut a 10 cm × 10 cm square, weigh it and multiply by 100.</p>
+        </details>
+        <details>
+          <summary>What is the difference between nylon and polyester in activewear?</summary>
+          <p class="faq__a">Nylon is softer and more abrasion-resistant, drapes more
+            fluidly, absorbs a few per cent of its weight in water so dries more slowly,
+            and costs more. Polyester absorbs almost nothing, so it dries faster and
+            wicks along the fibre surface, resists sunlight and chemicals better, holds
+            colour well, and is cheaper — but its oil-friendly surface tends to hold
+            odour. Spandex, also called elastane and sold under the Lycra trade name, is
+            blended into either at roughly 5–30% by weight and supplies recovery: the
+            return to shape that stops a fabric bagging out.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does g/m² mean on a fabric label?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Grams per square metre is the weight of one square metre of that fabric. A 220 g/m² knit is one where a square metre of it, cut flat and weighed, comes to 220 grams. It is measured to ISO 3801 or ASTM D3776 by cutting a disc of known area and weighing it on a laboratory balance. For a given fibre and yarn type it is a direct proxy for knit density."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does a legging go translucent when it is stretched?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Stretching increases the fabric's area while its mass stays the same, so there is less material in every square metre of it. A fabric pulled to 1.3 times its resting area behaves optically like one 1.3 times lighter: a 220 g/m² knit like a 169 g/m² one, and a 180 g/m² knit like a 138 g/m² one. The weight quoted on a specification sheet is the weight at rest, so it tells you how much headroom is left once the garment is stretched over the body."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What fabric weight stays opaque?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "By industry convention, stretch knits at 200-220 g/m² and above generally hold opacity through deep stretch, while 180-200 g/m² is the common legging weight that thins under it. No standards body defines those bands, different mills draw them in different places, and colour, yarn construction and knit gauge all move the line. A pale or heathered knit shows through at a weight where the same fabric in black does not."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I measure the fabric weight of a garment at home?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Weigh the garment in grams on a kitchen scale. Lay it flat and unstretched, measure its outline in centimetres and break that into rectangles. Double the total, because a garment laid flat is two layers of fabric. Divide by 10,000 to convert to square metres, then divide the weight by the area. Worked example: 124 g over a 6,356 cm² two-layer area, which is 0.6356 m², gives 195 g/m². Expect roughly plus or minus 5 per cent, because waistbands, seam allowances and gussets add fabric that is not inside the flat outline. The exact method is to cut a 10 cm by 10 cm square, weigh it, and multiply by 100."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between nylon and polyester in activewear?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nylon is softer and more abrasion-resistant, drapes more fluidly, absorbs a few per cent of its weight in water so dries more slowly, and costs more per kilo. Polyester absorbs almost nothing, so it dries faster and wicks along the fibre surface, resists sunlight and chemicals better, and holds colour well, but its oil-friendly surface tends to hold odour. Spandex, also called elastane and sold under the Lycra trade name, is blended into either at roughly 5 to 30 per cent by weight and supplies recovery: the return to shape that stops a fabric bagging out."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | append: routes.root_url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ page.title | default: 'Fabric weight, explained' | json }},
+      "item": {{ shop.url | append: page.url | json }}
+    }
+  ]
+}
+</script>

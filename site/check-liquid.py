@@ -69,6 +69,11 @@ def check(path):
             # treatments for cellulite. We won't."
             if NEG.search(before) or re.search(r"\b(we won't|we don't|we do not|not here|never)\b", after):
                 continue          # disavowal, not a claim
+            # a term inside quotation marks is being cited, not claimed:
+            #   'why "compression" and "buttery" answer nothing'
+            if re.search(r'["\u201c\u2018\u2019\u201d]\s*$', src[:m.start()]) and \
+               re.match(r'\s*["\u201c\u2018\u2019\u201d]', src[m.end():]):
+                continue
             errs.append(f'line {line}: {why} — "{src[m.start():m.end()][:40]}"')
 
     # 4. images need dimensions

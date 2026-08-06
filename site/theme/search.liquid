@@ -9,10 +9,13 @@
       {{ 'hivolt-collection.css' | asset_url | stylesheet_tag }}
 
   Product hits use the same .grid/.item tiles as index.liquid and
-  collection.liquid. Article and page hits are a plain list — they are not
-  products and are not dressed up as products.
+  collection.liquid — same classes, same image handling. Article and page hits
+  are a plain list; they are not products and are not dressed up as products.
 
   The fabric-weight badge is rendered only when spec.gsm has a value.
+
+  paginate wraps the results only. search.results is nil until a search has
+  actually been performed, and paginating nil raises a Liquid error.
 {%- endcomment -%}
 
 <nav class="crumb wrap" aria-label="Breadcrumb">
@@ -22,38 +25,41 @@
   </ol>
 </nav>
 
-<main>
-  {%- paginate search.results by 24 -%}
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+  <section class="col wrap">
 
-    <section class="col wrap">
-
-      <!-- ── header + form ───────────────────────────────────── -->
-      <div class="sec__head">
-        <h1 class="sec__h">Search</h1>
+    <!-- ── header ──────────────────────────────────────────── -->
+    <div class="sec__head">
+      <h1 class="sec__h">Search</h1>
+      <span class="mono">
         {%- if search.performed -%}
-          <span class="mono">
-            {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %}
-            {%- if search.terms != blank %} for “{{ search.terms | escape }}”{% endif -%}
-          </span>
+          {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %}
+          {%- if search.terms != blank %} for “{{ search.terms | escape }}”{% endif -%}
         {%- else -%}
-          <span class="mono">Styles, fabric weights, pages</span>
+          Styles, fabric weights, pages
         {%- endif -%}
-      </div>
+      </span>
+    </div>
 
-      <form class="srch" action="{{ routes.search_url }}" method="get" role="search">
-        <input type="hidden" name="type" value="product,article,page">
-        <input type="hidden" name="options[prefix]" value="last">
-        <label class="visually-hidden" for="q">Search HIVOLT</label>
-        <input class="srch__in" type="search" name="q" id="q"
-               value="{{ search.terms | escape }}"
-               placeholder="Legging, 220, nylon, returns"
-               autocomplete="off" autocapitalize="off" spellcheck="false">
-        <button class="btn srch__go" type="submit">Search</button>
-      </form>
+    <!-- ── form ────────────────────────────────────────────── -->
+    <form class="srch" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="type" value="product,article,page">
+      <input type="hidden" name="options[prefix]" value="last">
+      <label class="visually-hidden" for="q">Search HIVOLT</label>
+      <input class="srch__in" type="search" name="q" id="q"
+             value="{{ search.terms | escape }}"
+             placeholder="Legging, 220, nylon, returns"
+             autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button class="btn srch__go" type="submit">Search</button>
+    </form>
 
-      {%- if search.performed and search.results_count > 0 -%}
+    {%- if search.performed and search.results_count > 0 -%}
+      {%- paginate search.results by 24 -%}
 
-        {%- comment -%} Split the mixed result set: products to the grid, everything else to a list. {%- endcomment -%}
+        {%- comment -%} The result set is mixed: products go to the grid, everything else to a list. {%- endcomment -%}
         {%- assign n = 0 -%}
         {%- capture tiles -%}
           {%- for item in search.results -%}
@@ -61,7 +67,7 @@
               {%- assign n = n | plus: 1 -%}
               {%- assign gsm = item.metafields.spec.gsm -%}
               {%- assign comp = item.metafields.spec.composition -%}
-              {%- assign ref = n -%}
+              {%- assign ref = n | plus: paginate.current_offset -%}
               {%- if ref < 10 -%}{%- assign ref = ref | prepend: '0' -%}{%- endif -%}
               <a class="item" href="{{ item.url }}">
                 <div class="item__fig">
@@ -104,11 +110,11 @@
         {%- capture reading -%}
           {%- for item in search.results -%}
             {%- unless item.object_type == 'product' -%}
+              {%- assign blurb = item.content | strip_html | strip | truncatewords: 26 -%}
               <li class="hits__i">
                 <a class="hits__a" href="{{ item.url }}">
                   <span class="mono hits__k">{{ item.object_type }}</span>
                   <span class="hits__t">{{ item.title }}</span>
-                  {%- assign blurb = item.content | strip_html | truncatewords: 26 -%}
                   {%- if blurb != blank -%}<span class="hits__d">{{ blurb }}</span>{%- endif -%}
                 </a>
               </li>
@@ -121,9 +127,7 @@
         {%- endif -%}
 
         {%- if reading != blank -%}
-          <div class="hits__head">
-            <h2 class="mono">Pages and writing</h2>
-          </div>
+          <div class="hits__head"><h2 class="mono">Pages and writing</h2></div>
           <ul class="hits">{{ reading }}</ul>
         {%- endif -%}
 
@@ -157,38 +161,38 @@
           </nav>
         {%- endif -%}
 
-      {%- elsif search.performed -%}
-        <!-- ── searched, nothing matched ─────────────────────── -->
-        <div class="empty">
-          <p class="empty__h">Nothing matches “{{ search.terms | escape }}”.</p>
-          <p class="empty__p">
-            Search matches product names, types and page text. Styles are named by
-            fabric weight, so a number like <b>220</b> works as a query. The three
-            collections:
-          </p>
-          <ul class="empty__links">
-            <li><a href="/collections/womens">Women's</a></li>
-            <li><a href="/collections/mens">Men's</a></li>
-            <li><a href="/collections/training">Training</a></li>
-          </ul>
-        </div>
+      {%- endpaginate -%}
 
-      {%- else -%}
-        <!-- ── landed here without a query ───────────────────── -->
-        <div class="empty">
-          <p class="empty__h">Type a query above.</p>
-          <p class="empty__p">
-            Styles are named by fabric weight, so <b>220</b> or <b>165</b> works as
-            a query, as does a fibre name. Or start from a collection:
-          </p>
-          <ul class="empty__links">
-            <li><a href="/collections/womens">Women's</a></li>
-            <li><a href="/collections/mens">Men's</a></li>
-            <li><a href="/collections/training">Training</a></li>
-          </ul>
-        </div>
-      {%- endif -%}
+    {%- elsif search.performed -%}
+      <!-- ── searched, nothing matched ───────────────────────── -->
+      <div class="empty">
+        <p class="empty__h">Nothing matches “{{ search.terms | escape }}”.</p>
+        <p class="empty__p">
+          Search reads product names, product types and page text. Styles are named
+          by fabric weight, so a number like <b>220</b> works as a query. The three
+          collections:
+        </p>
+        <ul class="empty__links">
+          <li><a href="/collections/womens">Women's</a></li>
+          <li><a href="/collections/mens">Men's</a></li>
+          <li><a href="/collections/training">Training</a></li>
+        </ul>
+      </div>
 
-    </section>
-  {%- endpaginate -%}
-</main>
+    {%- else -%}
+      <!-- ── landed here without a query ─────────────────────── -->
+      <div class="empty">
+        <p class="empty__h">Type a query above.</p>
+        <p class="empty__p">
+          Styles are named by fabric weight, so <b>220</b> or <b>165</b> works as a
+          query, as does a fibre name. Or start from a collection:
+        </p>
+        <ul class="empty__links">
+          <li><a href="/collections/womens">Women's</a></li>
+          <li><a href="/collections/mens">Men's</a></li>
+          <li><a href="/collections/training">Training</a></li>
+        </ul>
+      </div>
+    {%- endif -%}
+
+  </section>

@@ -158,6 +158,20 @@
   .ct__assure{grid-template-columns:repeat(2,1fr)}
 }
 
+/* Between the stacked layout and a comfortable desktop there is a band where
+   six columns genuinely do not fit. Tightening them here drops the table's
+   min-width to 600px, which shrinks that band to roughly 641–655px instead of
+   641–740px. The scroll container still catches the remainder. */
+@media (max-width:900px){
+  .ct__tbl{min-width:600px}
+  .ln{
+    grid-template-columns:60px minmax(0,1fr) 92px 98px 96px 62px;
+    gap:0 12px;
+  }
+  .ln__num{font-size:12.5px}
+  .ln__qty input{width:64px;padding:8px 6px}
+}
+
 /* ── under 640px the row stacks; it must not scroll sideways ── */
 @media (max-width:640px){
   .ct__scroll{overflow-x:visible}
@@ -176,8 +190,11 @@
     padding:18px 0;
   }
   .ln__fig{align-self:start}
-  .ln__unit,.ln__tot{text-align:left}
-  .ln__rm{text-align:left}
+  .ln__unit{text-align:left}
+  /* qty and line total share a row: total stays hard right, so the stacked
+     row still reads as a ledger line rather than two loose blocks */
+  .ln__tot{text-align:right;align-self:center}
+  .ln__rm{text-align:left;padding-top:2px}
 
   .ln__lab{
     position:static!important;width:auto;height:auto;margin:0 0 4px;
