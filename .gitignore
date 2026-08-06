@@ -1,0 +1,8 @@
+# Derived packaging artifact — rebuilt from tracked sources
+HIVOLT-deliverables.zip
+
+# Staged copies of files already tracked at their source paths.
+# Only the folder's README is tracked, since it is the index and exists nowhere else.
+HIVOLT-deliverables/docs/
+HIVOLT-deliverables/model/
+HIVOLT-deliverables/theme-snippets/
