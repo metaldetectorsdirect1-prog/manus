@@ -1,0 +1,12 @@
+# Python bytecode cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+
+# ComfyUI install output, if anyone runs the installer inside this repo
+ComfyUI/
+models/
+output/
