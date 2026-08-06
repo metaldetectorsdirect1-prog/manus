@@ -1,0 +1,49 @@
+name: flux1-schnell
+display_name: FLUX.1 Schnell (Apache-2.0 commercial e-commerce pack)
+family: flux
+kind: txt2img
+description: >-
+  FLUX.1 Schnell text-to-image with the CLIP-L + T5-XXL encoder pair and the FLUX
+  autoencoder, plus BiRefNet background removal and RealESRGAN 4x upscaling for
+  product photography. Every component is permissively licensed (Apache-2.0,
+  MIT, BSD-3-Clause), so generated images are unrestricted for commercial use.
+  FLUX.1 dev is deliberately NOT included - its licence forbids commercial output.
+vram: "6GB+ (GGUF Q4_K_S); 16GB+ (fp8); 24GB+ (bf16 + fp16 T5)"
+workflow: null
+skill: null
+launch_args: []
+sources:
+  model: https://huggingface.co/black-forest-labs/FLUX.1-schnell
+  text_encoders: https://huggingface.co/comfyanonymous/flux_text_encoders
+  background_removal: https://huggingface.co/Comfy-Org/BiRefNet
+  upscaler: https://github.com/xinntao/Real-ESRGAN
+notes:
+  - >-
+    Run the generated installer from your ComfyUI root (the folder containing
+    custom_nodes/ and models/).
+  - >-
+    FLUX.1 Schnell is guidance- and timestep-distilled: use 4 steps at CFG 1.0
+    with the euler sampler and simple scheduler. Raising CFG above 1.0 degrades
+    output rather than improving prompt adherence, and the negative prompt has
+    no effect.
+  - >-
+    This manifest ships the fp8 tier (bf16 UNet cast at load time + fp8 T5),
+    which suits 16GB+ cards. For 24GB+ swap t5xxl_fp8_e4m3fn for t5xxl_fp16.
+    For 6-9GB use the GGUF entries at the bottom and install ComfyUI-GGUF.
+  - >-
+    No custom nodes are required. BiRefNet background removal is built into
+    ComfyUI core from 0.30.0 (LoadBackgroundRemovalModel + RemoveBackground).
+  - >-
+    Eight ready-made API-format workflows ship alongside this pack in
+    comfyui-studio/workflows/ - txt2img, img2img, background replacement,
+    upscale, transparent product, and 1:1 / 4:5 / 16:9 marketing sizes.
+post_install:
+  - Restart ComfyUI so the new model files are picked up.
+  - >-
+    Verify with comfyui-studio/scripts/verify.sh, which checks every file and
+    validates all eight workflows against the running server.
+  - >-
+    If you hit "Torch not compiled with CUDA enabled", reinstall the CUDA torch
+    build into the venv, e.g.
+    python -m pip install --force-reinstall torch torchvision torchaudio
+    --index-url https://download.pytorch.org/whl/cu124

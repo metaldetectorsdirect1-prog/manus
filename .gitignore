@@ -1,0 +1,25 @@
+# Model weights are never committed - they are downloaded by
+# comfyui-studio/scripts/03-download-models.sh
+*.safetensors
+*.gguf
+*.pth
+*.ckpt
+*.bin
+
+# Local state written by the installer
+.comfyui-studio/
+*.log
+*.pid
+*.part
+*.bak
+*.bak.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db

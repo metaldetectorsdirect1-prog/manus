@@ -1,0 +1,77 @@
+{
+  "20": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "example.png"
+    },
+    "_meta": {
+      "title": "Load Product Photo"
+    }
+  },
+  "30": {
+    "class_type": "LoadBackgroundRemovalModel",
+    "inputs": {
+      "bg_removal_name": "birefnet.safetensors"
+    },
+    "_meta": {
+      "title": "Load BiRefNet"
+    }
+  },
+  "31": {
+    "class_type": "RemoveBackground",
+    "inputs": {
+      "bg_removal_model": [
+        "30",
+        0
+      ],
+      "image": [
+        "20",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Foreground mask (1 = product)"
+    }
+  },
+  "35": {
+    "class_type": "InvertMask",
+    "inputs": {
+      "mask": [
+        "31",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Invert (JoinImageWithAlpha does alpha = 1 - mask)"
+    }
+  },
+  "36": {
+    "class_type": "JoinImageWithAlpha",
+    "inputs": {
+      "image": [
+        "20",
+        0
+      ],
+      "alpha": [
+        "35",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Attach alpha -> RGBA"
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "36",
+        0
+      ],
+      "filename_prefix": "flux/transparent"
+    },
+    "_meta": {
+      "title": "Save RGBA PNG"
+    }
+  }
+}

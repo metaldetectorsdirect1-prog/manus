@@ -1,0 +1,21 @@
+{
+  "_comment": [
+    "Merge the mcpServers block into ~/.claude/settings.json.",
+    "scripts/05-install-mcp.sh does this for you (with a backup first).",
+    "",
+    "This is the LOCAL configuration: comfyui-mcp auto-detects the ComfyUI",
+    "install path and probes port 8188, then 8000. Nothing else is needed.",
+    "",
+    "Remote ComfyUI instead:",
+    "  \"args\": [\"-y\", \"comfyui-mcp\", \"--comfyui-url\", \"http://192.168.1.50:8188\"]",
+    "",
+    "Do NOT set COMFYUI_API_KEY unless you want Comfy Cloud - it switches the",
+    "server into cloud mode and local-only tools then fail with CLOUD_UNSUPPORTED."
+  ],
+  "mcpServers": {
+    "comfyui": {
+      "command": "npx",
+      "args": ["-y", "comfyui-mcp"]
+    }
+  }
+}
