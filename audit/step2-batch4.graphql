@@ -1,0 +1,67 @@
+# STEP 2 — batch 4: 7 products, 21 images
+
+mutation RemoveFabricatedImages {
+  # Women's High-Stretch Cropped Sports Bra  (5 images)
+  op32_WomensHighStretchCroppedSportsBra: productDeleteMedia(
+    productId: "gid://shopify/Product/9571321086184"
+    mediaIds: [
+      "None",
+      "None",
+      "None",
+      "None",
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's High-Waisted Flare Leggings  (1 image)
+  op33_WomensHighWaistedFlareLeggings: productDeleteMedia(
+    productId: "gid://shopify/Product/9572304683240"
+    mediaIds: [
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's Pleated A-Line Tennis Skirt  (5 images)
+  op34_WomensPleatedALineTennisSkirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9571294511336"
+    mediaIds: [
+      "None",
+      "None",
+      "None",
+      "None",
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's Raglan Training T-Shirt  (3 images)
+  op35_WomensRaglanTrainingTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9572281286888"
+    mediaIds: [
+      "None",
+      "None",
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's Slim Fit Full-Zip Yoga Jacket  (1 image)
+  op36_WomensSlimFitFullZipYogaJacket: productDeleteMedia(
+    productId: "gid://shopify/Product/9571274621160"
+    mediaIds: [
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's Smooth Color Block Yoga Shorts  (1 image)
+  op37_WomensSmoothColorBlockYogaShorts: productDeleteMedia(
+    productId: "gid://shopify/Product/9571286515944"
+    mediaIds: [
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's Twist Front V-Neck Sports Bra  (5 images)
+  op38_WomensTwistFrontVNeckSportsBra: productDeleteMedia(
+    productId: "gid://shopify/Product/9571285663976"
+    mediaIds: [
+      "None",
+      "None",
+      "None",
+      "None",
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+}
