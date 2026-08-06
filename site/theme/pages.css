@@ -196,6 +196,11 @@
 .cf__err-l li{margin-bottom:5px}
 .cf__err-l li:last-child{margin-bottom:0}
 
+/* ── FAQ band, on a policy page ────────────────────────────── */
+/* Muted text on the .faq band is handled at the root by --on-ink-1/2,
+   which are color-mixed from the --paper/--ink pair and so track the
+   band's inversion. No per-page override is needed. */
+
 /* ── closing question line ─────────────────────────────────── */
 .pg__qw{padding-block:clamp(34px,5vw,60px) var(--band)}
 .pg__q{

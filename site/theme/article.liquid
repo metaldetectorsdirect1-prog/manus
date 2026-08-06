@@ -151,7 +151,7 @@
 
         {%- form 'new_comment', article -%}
           {%- if form.posted_successfully? -%}
-            <p class="cf__msg cf__msg--ok" role="status">
+            <p class="cmtf__msg cf__msg--ok" role="status">
               {%- if blog.moderated? -%}
                 Comment received. It appears here once we have read it.
               {%- else -%}
@@ -161,7 +161,7 @@
           {%- endif -%}
 
           {%- if form.errors -%}
-            <div class="cf__msg cf__msg--err" role="alert">
+            <div class="cmtf__msg cf__msg--err" role="alert">
               <p class="mono cf__msg-k">Comment not posted</p>
               <ul>
                 {%- for field in form.errors -%}
@@ -171,30 +171,30 @@
             </div>
           {%- endif -%}
 
-          <div class="cf" id="comment-form">
+          <div class="cmtf" id="comment-form">
             <p class="mono cf__h">Leave a comment</p>
 
-            <div class="cf__grid">
-              <div class="cf__f">
+            <div class="cmtf__grid">
+              <div class="cmtf__f">
                 <label class="mono cf__lab" for="comment-author">Name</label>
-                <input class="cf__in" type="text" name="comment[author]" id="comment-author"
+                <input class="cmtf__in" type="text" name="comment[author]" id="comment-author"
                        value="{{ form.author }}" autocomplete="name" required>
               </div>
-              <div class="cf__f">
+              <div class="cmtf__f">
                 <label class="mono cf__lab" for="comment-email">Email</label>
-                <input class="cf__in" type="email" name="comment[email]" id="comment-email"
+                <input class="cmtf__in" type="email" name="comment[email]" id="comment-email"
                        value="{{ form.email }}" autocomplete="email"
                        autocapitalize="off" spellcheck="false" required>
               </div>
             </div>
 
-            <div class="cf__f">
+            <div class="cmtf__f">
               <label class="mono cf__lab" for="comment-body">Comment</label>
-              <textarea class="cf__in cf__ta" name="comment[body]" id="comment-body"
+              <textarea class="cmtf__in cf__ta" name="comment[body]" id="comment-body"
                         rows="6" required>{{ form.body }}</textarea>
             </div>
 
-            <p class="cf__note mono">
+            <p class="cmtf__note mono">
               {%- if blog.moderated? -%}
                 Comments are read before they are published. Your email is not shown and is not
                 added to any mailing list.
