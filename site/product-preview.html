@@ -19,6 +19,14 @@
   --rule:#C6C2BA;
   --blueprint:#1B36C4;
   --on-blueprint:#F4F3EF;
+  /* Text on the var(--ink) band. The band's ground inverts between themes,
+     so these are mixed from the pair rather than fixed greys — a fixed grey
+     chosen against the dark band drops to ~2:1 when the band goes light. */
+  --on-ink-2:color-mix(in srgb, var(--paper) 66%, var(--ink));
+  --on-ink-1:color-mix(in srgb, var(--paper) 80%, var(--ink));
+  /* The accent sitting ON the ink band is the opposite theme's blueprint:
+     the band ground inverts, so the accent must invert against it. */
+  --blueprint-on-ink:#8FA0FF;
 
   --grot:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Segoe UI",Arial,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
@@ -29,16 +37,16 @@
 @media (prefers-color-scheme:dark){
   :root{
     --paper:#121417; --paper-2:#191C21; --ink:#E7E5E0; --ink-2:#CFCCC5;
-    --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013;
+    --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013; --blueprint-on-ink:#1B36C4;
   }
 }
 :root[data-theme="dark"]{
   --paper:#121417; --paper-2:#191C21; --ink:#E7E5E0; --ink-2:#CFCCC5;
-  --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013;
+  --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013; --blueprint-on-ink:#1B36C4;
 }
 :root[data-theme="light"]{
   --paper:#E9E7E2; --paper-2:#DFDCD5; --ink:#16181C; --ink-2:#22252B;
-  --steel:#6B6F76; --rule:#C6C2BA; --blueprint:#1B36C4; --on-blueprint:#F4F3EF;
+  --steel:#6B6F76; --rule:#C6C2BA; --blueprint:#1B36C4; --on-blueprint:#F4F3EF; --blueprint-on-ink:#8FA0FF;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -119,16 +127,19 @@ a{color:inherit}
 
 /* ── the comparator: signature element ─────────────────────── */
 .band-ink{background:var(--ink);color:var(--paper)}
-.band-ink .spec__k,.band-ink .spec__n{color:#9AA0A8}
+.band-ink .spec__k,.band-ink .spec__n{color:var(--on-ink-2)}
 .cmp{padding-block:var(--band)}
 .cmp__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,76px);align-items:center}
 @media (max-width:900px){.cmp__grid{grid-template-columns:1fr}}
 .cmp__h{font-size:clamp(28px,4.2vw,50px);line-height:1.02;letter-spacing:-.025em;
   font-weight:800;text-transform:uppercase;margin:16px 0 0;text-wrap:balance}
-.cmp__p{max-width:52ch;color:#B9BEC6;margin:20px 0 0;line-height:1.62}
-.cmp__eyebrow{color:#8FA0FF}
+.cmp__p{max-width:52ch;color:var(--on-ink-1);margin:20px 0 0;line-height:1.62}
+.cmp__eyebrow{color:var(--blueprint-on-ink)}
 
-/* Fabric laid over a printed card — how opacity is actually tested. */
+/* Fabric laid over a printed card — how opacity is actually tested.
+   These colours are deliberately fixed, not tokens: the panel depicts a dark
+   knit over a light print card, and inverting it by theme would destroy the
+   demonstration. It is an illustration, not chrome. */
 .swatch{position:relative;aspect-ratio:4/3;border:1px solid #33373F;overflow:hidden;background:#D9D5CD}
 .swatch__print{position:absolute;inset:0;padding:22px 24px;display:flex;flex-direction:column;
   justify-content:center;gap:9px;color:#23262C;font-family:var(--mono)}
@@ -149,10 +160,10 @@ a{color:inherit}
   font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;padding:7px 12px}
 .cmp__ctl{margin-top:22px}
 .cmp__read{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;
-  letter-spacing:.12em;text-transform:uppercase;color:#9AA0A8;margin-bottom:10px}
+  letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-2);margin-bottom:10px}
 .cmp__read b{color:var(--paper);font-variant-numeric:tabular-nums}
 input[type=range]{width:100%;accent-color:var(--blueprint);height:26px}
-.cmp__note{font-family:var(--mono);font-size:10.5px;color:#868C94;margin-top:14px;line-height:1.7}
+.cmp__note{font-family:var(--mono);font-size:10.5px;color:var(--on-ink-2);margin-top:14px;line-height:1.7}
 
 /* ── catalogue ─────────────────────────────────────────────── */
 .cat{padding-block:var(--band)}
@@ -224,9 +235,9 @@ input[type=range]{width:100%;accent-color:var(--blueprint);height:26px}
 .faq summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;
   gap:20px;align-items:center;font-size:15.5px;font-weight:600;letter-spacing:.01em}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:var(--mono);font-size:17px;color:#8FA0FF;flex:none}
+.faq summary::after{content:"+";font-family:var(--mono);font-size:17px;color:var(--blueprint-on-ink);flex:none}
 .faq details[open] summary::after{content:"–"}
-.faq__a{padding:0 0 22px;color:#B9BEC6;max-width:72ch;margin:0;line-height:1.66;font-size:14.5px}
+.faq__a{padding:0 0 22px;color:var(--on-ink-1);max-width:72ch;margin:0;line-height:1.66;font-size:14.5px}
 .faq__list{margin-top:30px}
 
 /* ── footer ────────────────────────────────────────────────── */
@@ -234,14 +245,14 @@ input[type=range]{width:100%;accent-color:var(--blueprint);height:26px}
 .foot__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:34px}
 @media (max-width:860px){.foot__grid{grid-template-columns:1fr 1fr}}
 .foot h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:#868C94;margin:0 0 14px;font-weight:400}
+  color:var(--on-ink-2);margin:0 0 14px;font-weight:400}
 .foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-.foot a{font-size:13.5px;text-decoration:none;color:#C6CAD1}
-.foot a:hover{color:#8FA0FF}
+.foot a{font-size:13.5px;text-decoration:none;color:var(--on-ink-1)}
+.foot a:hover{color:var(--blueprint-on-ink)}
 .foot__legal{margin-top:40px;padding-top:20px;border-top:1px solid #2E323A;
   display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#868C94}
-.foot__addr{font-size:13.5px;color:#C6CAD1;line-height:1.7;margin:0}
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-2)}
+.foot__addr{font-size:13.5px;color:var(--on-ink-1);line-height:1.7;margin:0}
 
 /* utility used by index.liquid for the range-slider label */
 .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
@@ -328,7 +339,6 @@ th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--stee
   background:var(--paper-2)}
 th:first-child,td:first-child{text-align:left}
 tbody tr:last-child td{border-bottom:0}
-
 </style>
 
 </head>

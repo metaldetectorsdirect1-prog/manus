@@ -140,12 +140,13 @@
 
 <a class="skip" href="#main">Skip to content</a>
 
-{%- comment -%} ── menus: linklist first, hardcoded fallback second ─────── {%- endcomment -%}
 {%- comment -%}
-  `size | plus: 0` coerces a missing linklist, a missing `links`, and an empty
-  `links` all to 0, so the count is always an integer and the `> 0` test can
-  never raise on nil. `x != blank` is NOT equivalent — it reads a missing
-  linklist as present and renders an empty menu.
+  ── menus: linklist first, hardcoded fallback second ──────────────────
+  `size | plus: 0` coerces a missing linklist, a missing `links`, and an
+  empty `links` all to 0, so the count is always an integer and the `> 0`
+  test can never raise on nil. Do not "simplify" this to `!= blank`: that
+  reads a MISSING linklist as present and silently renders an empty menu,
+  and `.size > 0` on its own raises on nil.
 {%- endcomment -%}
 {%- assign main_links = linklists['main-menu'].links -%}
 {%- assign main_count = main_links.size | plus: 0 -%}
@@ -161,7 +162,11 @@
 {%- assign foot_co_t = 'About,Contact,Privacy,Terms' | split: ',' -%}
 {%- assign foot_co_u = '/pages/about,/pages/contact,/policies/privacy-policy,/policies/terms-of-service' | split: ',' -%}
 
-{%- comment -%} settings.show_ticker is defined in settings_schema.json. Fails on. {%- endcomment -%}
+{%- comment -%}
+  settings.show_ticker comes from settings_schema.json. Tested against false
+  rather than for truth, so the ticker still renders on a store where the
+  setting was never saved.
+{%- endcomment -%}
 {%- unless settings.show_ticker == false -%}
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">

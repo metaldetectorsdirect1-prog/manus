@@ -149,18 +149,18 @@
 
       {%- else -%}
         <!-- ── empty ───────────────────────────────────────────── -->
-        <div class="blog__empty">
+        <div class="empty">
           {%- if current_tags.size > 0 -%}
-            <p class="blog__empty-h">No article is tagged “{{ current_tags.first }}”.</p>
-            <p class="blog__empty-p">
+            <p class="empty__h">No article is tagged “{{ current_tags.first }}”.</p>
+            <p class="empty__p">
               {{ blog.title }} holds {{ blog.articles_count }} article{% if blog.articles_count != 1 %}s{% endif %}
               in total. Drop the tag to read all of them.
             </p>
-            <p class="blog__empty-act"><a class="btn btn--ghost" href="{{ blog.url }}">All articles</a></p>
+            <p class="empty__act"><a class="btn btn--ghost" href="{{ blog.url }}">All articles</a></p>
           {%- else -%}
-            <p class="blog__empty-h">Nothing is published in {{ blog.title }} yet.</p>
-            <p class="blog__empty-p">The catalogue is here in the meantime.</p>
-            <p class="blog__empty-act"><a class="btn btn--ghost" href="{{ routes.all_products_collection_url }}">Shop the range</a></p>
+            <p class="empty__h">Nothing is published in {{ blog.title }} yet.</p>
+            <p class="empty__p">The catalogue is here in the meantime.</p>
+            <p class="empty__act"><a class="btn btn--ghost" href="{{ routes.all_products_collection_url }}">Shop the range</a></p>
           {%- endif -%}
         </div>
       {%- endif -%}

@@ -1,0 +1,210 @@
+/* ─────────────────────────────────────────────────────────────
+   HIVOLT — content & policy pages
+   Serves templates/page.liquid, page.about.liquid,
+   page.contact.liquid, page.shipping.liquid, page.returns.liquid.
+
+   Additive only. Loads AFTER theme-hivolt.css, defines no tokens and
+   no colour literals — every value is var(--token), so the dark theme
+   is inherited rather than re-implemented.
+
+   Install as assets/hivolt-pages.css and link it from layout/theme.liquid
+   after hivolt.css.
+
+   Two rules here exist because of a specific failure mode:
+     · .rte holds a 68ch measure. Admin-entered body copy has no other
+       constraint on it, and a 1440px line length is unreadable.
+     · .rte table scrolls inside itself. The rich-text editor can emit a
+       table wider than a phone, and the page must never scroll sideways.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── page shell ────────────────────────────────────────────── */
+/* Sections carry top spacing only; the closing .pg__qw supplies the
+   page's bottom band, so consecutive sections never double up. */
+.pg{padding-block:clamp(32px,4.5vw,60px) 0}
+.pg>.rte{margin-top:clamp(26px,3vw,38px)}
+
+/* page.liquid is a single section with nothing after it, so it owns its
+   own bottom band. */
+.pg--solo{padding-bottom:var(--band)}
+
+/* The FAQ band is full-bleed ink. Without this the last line of prose sits
+   flush against its top edge. */
+.pg + .faq{margin-top:clamp(28px,4vw,52px)}
+
+/* Two-up: prose at a readable measure, facts as data beside it. */
+.pg__cols{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);
+  gap:clamp(28px,4vw,68px);
+  align-items:start;
+  margin-top:clamp(26px,3vw,38px);
+}
+.pg__cols>*{min-width:0}
+@media (max-width:940px){
+  .pg__cols{grid-template-columns:1fr;gap:clamp(30px,5vw,46px)}
+}
+
+.pg__aside{min-width:0}
+.pg__aside .sheet{margin-top:0}
+.pg__aside-h{display:block;color:var(--steel);margin:0 0 12px}
+.pg__aside-h--gap{margin-top:36px}
+
+/* Policy headlines are documents, not the homepage. Same type, less shout. */
+.hero--doc{padding-block:clamp(30px,4.5vw,58px) clamp(24px,3.4vw,40px)}
+.hero--doc .hero__h{font-size:clamp(34px,6.4vw,84px);line-height:.94}
+.hero--doc .hero__sub{max-width:64ch;margin-top:26px}
+
+/* ── rich text ─────────────────────────────────────────────── */
+/* Everything the Shopify rich-text editor can emit, styled once. */
+.rte{max-width:68ch;color:var(--ink-2);font-size:15.5px;line-height:1.7}
+.rte>*:first-child{margin-top:0}
+.rte>*:last-child{margin-bottom:0}
+
+.rte p{margin:0 0 1.05em}
+
+.rte h2{
+  font-size:clamp(19px,2.2vw,25px);font-weight:800;line-height:1.15;
+  letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);
+  margin:2em 0 .6em;
+}
+.rte h3{
+  font-size:16px;font-weight:700;line-height:1.3;letter-spacing:.03em;
+  text-transform:uppercase;color:var(--ink);margin:1.9em 0 .55em;
+}
+.rte h4,.rte h5,.rte h6{
+  font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--steel);margin:1.8em 0 .5em;
+}
+
+.rte a{
+  color:var(--blueprint);text-decoration:underline;
+  text-underline-offset:3px;text-decoration-thickness:1px;
+}
+.rte a:hover{text-decoration-thickness:2px}
+.rte strong,.rte b{color:var(--ink);font-weight:700}
+.rte em,.rte i{font-style:italic}
+
+.rte ul,.rte ol{margin:0 0 1.05em;padding-left:1.15em}
+.rte li{margin-bottom:.5em}
+.rte li:last-child{margin-bottom:0}
+.rte li::marker{color:var(--steel)}
+
+.rte blockquote{
+  margin:1.5em 0;padding:2px 0 2px 18px;
+  border-left:2px solid var(--blueprint);color:var(--ink);
+}
+.rte blockquote p:last-child{margin-bottom:0}
+
+.rte hr{border:0;border-top:1px solid var(--rule);margin:2em 0}
+.rte img{margin:1.4em 0;height:auto}
+.rte figure{margin:1.4em 0}
+.rte figcaption{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+  color:var(--steel);margin-top:8px;
+}
+
+.rte code,.rte kbd,.rte samp{
+  font-family:var(--mono);font-size:.9em;background:var(--paper-2);padding:1px 5px;
+}
+.rte pre{
+  font-family:var(--mono);font-size:12.5px;line-height:1.7;
+  background:var(--paper-2);border:1px solid var(--rule);
+  padding:16px 18px;margin:1.4em 0;overflow-x:auto;
+}
+.rte pre code{background:transparent;padding:0}
+
+/* An editor table can be any width. Scroll the table, not the document.
+   Overrides the global table{width:100%;min-width:520px} from hivolt.css. */
+.rte table{
+  display:block;width:max-content;max-width:100%;min-width:0;
+  overflow-x:auto;margin:1.5em 0;
+}
+.rte th,.rte td{text-align:left}
+
+/* Sidebar variant: same rules, smaller, no measure to hold. */
+.rte--tight{max-width:none;font-size:14px;line-height:1.65}
+.rte--tight ul,.rte--tight ol{padding-left:1.05em}
+.rte--tight li{margin-bottom:.6em}
+
+/* ── contact form ──────────────────────────────────────────── */
+.cf__grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(30px,4vw,68px);
+  align-items:start;
+  margin-top:clamp(26px,3vw,38px);
+}
+.cf__grid>*{min-width:0}
+@media (max-width:940px){
+  .cf__grid{grid-template-columns:1fr;gap:clamp(32px,5vw,48px)}
+}
+
+/* A 1440px-wide text input is not a form, it's a runway. */
+.cf{max-width:560px}
+
+.cf__f{margin-bottom:20px}
+.cf__l{
+  display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--steel);margin-bottom:8px;
+}
+.cf__req{color:var(--blueprint);margin-left:7px}
+
+/* appearance:none + border-radius:0 — iOS Safari rounds inputs and buttons
+   by default, and this design has no radius anywhere. */
+.cf__in,.cf__ta{
+  display:block;width:100%;
+  font-family:var(--mono);font-size:13px;line-height:1.6;
+  padding:13px 14px;
+  border:1px solid var(--rule);border-radius:0;
+  background:var(--paper);color:var(--ink);
+  -webkit-appearance:none;appearance:none;
+}
+.cf__in:hover,.cf__ta:hover{border-color:var(--ink)}
+.cf__in::placeholder,.cf__ta::placeholder{color:var(--steel)}
+.cf__ta{resize:vertical;min-height:180px}
+
+.cf__h{
+  font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+  color:var(--steel);line-height:1.65;margin:8px 0 0;
+}
+
+.cf__go{width:100%;border-radius:0;-webkit-appearance:none;appearance:none}
+@media (min-width:520px){
+  .cf__go{width:auto;min-width:230px}
+}
+
+.cf__note{
+  font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+  color:var(--steel);line-height:1.75;margin:18px 0 0;
+}
+
+/* Confirmation and errors are panels with text in them, not a colour
+   change — a colour change says nothing to a screen reader. */
+.cf__ok,.cf__err{
+  padding:18px 20px;margin-bottom:26px;
+  background:var(--paper-2);border:1px solid var(--rule);
+}
+.cf__ok{border-left:3px solid var(--ink)}
+.cf__err{border-left:3px solid var(--blueprint)}
+.cf__ok:focus,.cf__err:focus{outline:2px solid var(--blueprint);outline-offset:3px}
+.cf__ok-h,.cf__err-h{color:var(--blueprint);margin:0 0 9px}
+.cf__ok-b{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.65}
+.cf__err-l{
+  margin:0;padding-left:1.1em;font-size:14.5px;
+  color:var(--ink-2);line-height:1.6;
+}
+.cf__err-l li{margin-bottom:5px}
+.cf__err-l li:last-child{margin-bottom:0}
+
+/* ── closing question line ─────────────────────────────────── */
+.pg__qw{padding-block:clamp(34px,5vw,60px) var(--band)}
+.pg__q{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:18px 28px;border-top:1px solid var(--ink);padding-top:22px;
+}
+.pg__q-t{
+  margin:0;max-width:62ch;min-width:0;
+  font-size:15px;line-height:1.65;color:var(--ink-2);
+}
+.pg__q-t .mono{display:block;color:var(--steel);margin-bottom:6px}
+.pg__q .btn{flex:none}

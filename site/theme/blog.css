@@ -1,0 +1,238 @@
+/* ─────────────────────────────────────────────────────────────
+   HIVOLT — blog, article, collection index
+   Additive only. Loads AFTER hivolt.css (theme-hivolt.css) and
+   after collection.css, both of which are concatenated ahead of
+   this file into assets/hivolt.css by site/build-theme.py.
+
+   Nothing here redefines a token, a colour literal, or a class
+   that already exists upstream. Components reused as-is, not
+   duplicated: .wrap .mono .btn .btn--ghost .sec__head .sec__h
+   .crumb from hivolt.css, and .pager / .empty from collection.css.
+
+   New here: the tag filter row, the ruled article list, the
+   article page furniture, the long-form .rte, previous/next
+   article navigation, the comment thread and form, and the
+   ruled collection index.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── blog index ────────────────────────────────────────────── */
+.blog{padding-block:clamp(26px,4vw,44px) var(--band)}
+
+/* tag filter — a row of chips, current state visible without hovering */
+.tags{display:flex;flex-wrap:wrap;align-items:center;gap:7px;
+  padding:14px 0;border-bottom:1px solid var(--rule)}
+.tags__k{color:var(--steel);flex:none;margin-right:5px}
+.tags__a{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-2);border:1px solid var(--rule);padding:6px 9px;
+  transition:background .16s ease,color .16s ease,border-color .16s ease}
+.tags__a:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tags__a--on{background:var(--blueprint);border-color:var(--blueprint);color:var(--on-blueprint)}
+.tags__a--on:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tags__rss{margin-left:auto;color:var(--steel);text-decoration:none;
+  border-bottom:1px solid var(--rule);padding-bottom:2px}
+.tags__rss:hover{color:var(--blueprint);border-bottom-color:var(--blueprint)}
+@media (max-width:560px){.tags__rss{margin-left:0}}
+
+/* the list itself — a table of contents, not a feed of cards */
+.posts{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--rule)}
+.post{display:grid;grid-template-columns:136px 1fr;gap:6px 28px;
+  padding:22px 4px;border-bottom:1px solid var(--rule);transition:background .16s ease}
+.post > *{min-width:0}
+.post:last-child{border-bottom:0}
+.post:hover{background:var(--paper-2)}
+.post__when{display:flex;flex-direction:column;gap:5px}
+.post__date{color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.post__read{color:var(--steel);letter-spacing:.06em;text-transform:none}
+.post__t{margin:0;font-size:16px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  line-height:1.32;text-wrap:balance}
+.post__t a{text-decoration:none}
+.post__t a:hover{color:var(--blueprint)}
+.post__x{margin:9px 0 0;max-width:74ch;color:var(--ink-2);font-size:14.5px;line-height:1.62}
+.post__tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+@media (max-width:640px){
+  .post{grid-template-columns:1fr;gap:9px;padding:20px 2px}
+  .post__when{flex-direction:row;align-items:baseline;gap:14px}
+}
+
+/* tag pills, shared by the list rows and the article header */
+.post__tag,.art__tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;color:var(--steel);
+  border:1px solid var(--rule);padding:4px 7px;
+  transition:color .16s ease,border-color .16s ease}
+.post__tag:hover,.art__tag:hover{color:var(--ink);border-color:var(--ink)}
+.post__tag--on{color:var(--blueprint);border-color:var(--blueprint)}
+
+/* .empty comes from collection.css; it only needs air under the tag row here */
+.blog .empty,.cols-page .empty{margin-top:26px}
+
+/* the reading-time divisor is stated, so the estimate can be checked */
+.blog__note,.art__note{color:var(--steel);font-size:10.5px;letter-spacing:.05em;
+  text-transform:none;line-height:1.7}
+.blog__note{margin:14px 0 0}
+
+/* ── article page ──────────────────────────────────────────── */
+.art{padding-block:clamp(26px,4vw,44px) var(--band)}
+.art__head{padding-bottom:20px;border-bottom:1px solid var(--ink)}
+.art__k{color:var(--steel)}
+.art__h{margin:14px 0 0;max-width:22ch;font-size:clamp(28px,4.6vw,54px);line-height:1.02;
+  letter-spacing:-.03em;font-weight:800;text-transform:uppercase;text-wrap:balance}
+.art__meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;
+  margin:18px 0 0;color:var(--steel)}
+.art__meta time{font-variant-numeric:tabular-nums}
+.art__tags{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0}
+
+.art__fig{margin:clamp(24px,4vw,40px) 0 0;max-width:900px}
+.art__fig img{width:100%;height:auto;border:1px solid var(--rule)}
+
+.art__rte{margin-top:clamp(26px,4vw,42px)}
+.art__note{max-width:68ch;margin:28px 0 0;padding-top:14px;border-top:1px solid var(--rule)}
+.art__back{margin:26px 0 0}
+
+/* ── long-form body ────────────────────────────────────────── *
+   .rte wraps HTML written in Shopify's editor: it cannot be
+   changed from a template, so every element it may contain is
+   styled here. Measure is capped near 68ch — past that the eye
+   loses the start of the next line.                            */
+.rte{max-width:68ch;color:var(--ink-2);font-size:16.5px;line-height:1.75}
+.rte > :first-child{margin-top:0}
+.rte > :last-child{margin-bottom:0}
+.rte p{margin:0 0 1.3em}
+
+.rte h2{margin:2.1em 0 .6em;padding-top:.7em;border-top:1px solid var(--rule);
+  color:var(--ink);font-size:clamp(19px,2.4vw,25px);font-weight:800;
+  letter-spacing:-.012em;text-transform:uppercase;line-height:1.16;text-wrap:balance}
+.rte h2:first-child{margin-top:0;padding-top:0;border-top:0}
+.rte h3{margin:1.8em 0 .5em;color:var(--ink);font-size:16.5px;font-weight:700;
+  letter-spacing:.03em;text-transform:uppercase;line-height:1.3}
+.rte h4,.rte h5,.rte h6{margin:1.6em 0 .5em;color:var(--ink);font-family:var(--mono);
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:400}
+
+.rte a{color:var(--blueprint);text-decoration:underline;text-underline-offset:3px;
+  text-decoration-thickness:1px}
+.rte a:hover{text-decoration-thickness:2px}
+.rte strong,.rte b{color:var(--ink);font-weight:700}
+.rte em,.rte i{font-style:italic}
+.rte small{font-size:.86em;color:var(--steel)}
+
+.rte ul,.rte ol{margin:0 0 1.3em;padding-left:1.45em}
+.rte li{margin:0 0 .5em}
+.rte li::marker{color:var(--steel)}
+.rte li > ul,.rte li > ol{margin:.5em 0 0}
+.rte dl{margin:0 0 1.3em}
+.rte dt{color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;margin-top:1em}
+.rte dd{margin:.35em 0 0}
+
+.rte blockquote{margin:1.9em 0;padding:2px 0 2px 22px;border-left:2px solid var(--blueprint);
+  color:var(--ink);font-size:17.5px;line-height:1.6}
+.rte blockquote p:last-child{margin-bottom:0}
+.rte blockquote cite{display:block;margin-top:10px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;font-style:normal;color:var(--steel)}
+
+.rte hr{border:0;border-top:1px solid var(--rule);margin:2.2em 0}
+.rte figure{margin:1.9em 0}
+.rte figure img{margin:0}
+.rte img{height:auto;margin:1.9em 0;border:1px solid var(--rule)}
+.rte figcaption{margin-top:9px;font-family:var(--mono);font-size:10.5px;line-height:1.65;
+  color:var(--steel)}
+
+.rte code{font-family:var(--mono);font-size:.85em;background:var(--paper-2);
+  border:1px solid var(--rule);padding:1px 5px}
+.rte pre{margin:1.9em 0;padding:16px 18px;max-width:100%;overflow-x:auto;white-space:pre;
+  background:var(--paper-2);border:1px solid var(--rule);
+  font-family:var(--mono);font-size:12.5px;line-height:1.65}
+.rte pre code{background:transparent;border:0;padding:0;font-size:inherit}
+
+/* A table inside article HTML has no wrapper div to scroll, and none can be
+   added from a template — so the table becomes its own scroll container.
+   min-width:0 overrides the 520px floor the shared size-chart rule sets;
+   without it the table would push the page sideways instead of scrolling. */
+.rte table{display:block;width:100%;max-width:100%;min-width:0;overflow-x:auto;
+  margin:1.9em 0;border:1px solid var(--rule)}
+.rte th,.rte td{text-align:left;min-width:8ch;overflow-wrap:anywhere;
+  font-size:12.5px;white-space:normal}
+.rte caption{caption-side:bottom;margin-top:9px;font-family:var(--mono);font-size:10.5px;
+  color:var(--steel);text-align:left}
+
+@media (max-width:560px){
+  .rte{font-size:16px;line-height:1.7}
+  .rte blockquote{font-size:16.5px;padding-left:16px}
+}
+
+/* ── previous / next ───────────────────────────────────────── */
+.artnav{display:grid;grid-template-columns:1fr 1fr;margin-top:clamp(34px,5vw,58px);
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+.artnav > *{min-width:0}
+.artnav__a{display:flex;flex-direction:column;gap:9px;padding:20px 18px;
+  text-decoration:none;transition:background .16s ease}
+.artnav__a--prev{border-right:1px solid var(--rule)}
+.artnav__a--next{align-items:flex-end;text-align:right}
+a.artnav__a:hover{background:var(--paper-2)}
+a.artnav__a:hover .artnav__t{color:var(--blueprint)}
+.artnav__k{color:var(--steel)}
+.artnav__t{font-size:14.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  line-height:1.32}
+.artnav__a--off .artnav__t{font-family:var(--mono);font-size:11px;font-weight:400;
+  letter-spacing:.06em;text-transform:none;color:var(--steel)}
+@media (max-width:640px){
+  .artnav{grid-template-columns:1fr}
+  .artnav__a--prev{border-right:0;border-bottom:1px solid var(--rule)}
+  .artnav__a--next{align-items:flex-start;text-align:left}
+}
+
+/* ── comments ──────────────────────────────────────────────── */
+.cmt-sec{margin-top:clamp(40px,6vw,72px)}
+.cmts{list-style:none;margin:26px 0 0;padding:0;border-bottom:1px solid var(--rule)}
+.cmt{padding:18px 2px;border-bottom:1px solid var(--rule)}
+.cmt:last-child{border-bottom:0}
+.cmt__k{margin:0 0 8px;color:var(--steel)}
+.cmt__b{font-size:14.5px;line-height:1.65}
+.cmt__b p{margin:0 0 .8em}
+
+.cf{max-width:720px;margin-top:clamp(26px,4vw,40px);padding:clamp(20px,3vw,30px);
+  border:1px solid var(--rule);background:var(--paper-2)}
+.cf__h{margin:0 0 18px;color:var(--steel)}
+.cf__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.cf__grid > *{min-width:0}
+@media (max-width:560px){.cf__grid{grid-template-columns:1fr}}
+.cf__f{display:flex;flex-direction:column;gap:7px}
+.cf > .cf__f{margin-bottom:16px}
+.cf__lab{color:var(--steel)}
+.cf__in{width:100%;min-width:0;padding:12px 13px;border:1px solid var(--rule);
+  background:var(--paper);color:var(--ink);
+  font-family:var(--mono);font-size:13px;letter-spacing:.02em}
+.cf__in:hover{border-color:var(--ink)}
+.cf__in:focus{border-color:var(--ink);outline-offset:-3px}
+.cf__ta{line-height:1.6;resize:vertical}
+.cf__note{max-width:60ch;margin:0 0 18px;color:var(--steel);font-size:10.5px;
+  letter-spacing:.05em;text-transform:none;line-height:1.7}
+.cf__go{padding:15px 26px}
+
+.cf__msg{max-width:720px;margin:26px 0 0;padding:14px 16px;border:1px solid var(--blueprint);
+  color:var(--ink-2);font-size:14px;line-height:1.6}
+.cf__msg--err{background:var(--paper-2)}
+.cf__msg-k{margin:0 0 8px;color:var(--blueprint)}
+.cf__msg ul{margin:0;padding-left:1.2em}
+.cf__msg li{margin-bottom:.35em}
+
+/* ── collection index ──────────────────────────────────────── */
+.cols-page{padding-block:clamp(26px,4vw,44px) var(--band)}
+.cols{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--rule)}
+.cols__i{border-bottom:1px solid var(--rule)}
+.cols__i:last-child{border-bottom:0}
+.cols__a{display:grid;grid-template-columns:1fr auto;gap:6px 24px;align-items:baseline;
+  padding:20px 4px;text-decoration:none;transition:background .16s ease}
+.cols__a > *{min-width:0}
+.cols__a:hover{background:var(--paper-2)}
+.cols__a:hover .cols__t{color:var(--blueprint)}
+.cols__t{font-size:16px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  line-height:1.3}
+.cols__n{color:var(--steel);font-variant-numeric:tabular-nums;white-space:nowrap;
+  text-align:right}
+.cols__d{grid-column:1/-1;max-width:78ch;color:var(--ink-2);font-size:14px;line-height:1.6}
+.cols__foot{margin-top:26px}
+@media (max-width:560px){
+  .cols__a{grid-template-columns:1fr}
+  .cols__n{text-align:left}
+  .cols__d{grid-column:1}
+}

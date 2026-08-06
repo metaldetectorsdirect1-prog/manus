@@ -1,0 +1,178 @@
+{%- comment -%}
+  HIVOLT — account overview
+  ─────────────────────────
+  Installs as templates/customers/account.liquid.
+
+  Requires, from layout/theme.liquid:
+      'hivolt.css'  | asset_url | stylesheet_tag
+      'account.css' | asset_url | stylesheet_tag
+
+  No <main> element: layout/theme.liquid already provides one.
+
+  Every value on this page comes from the customer object. Status is never
+  paraphrased — the labels are Shopify's own (financial_status_label,
+  fulfillment_status_label), and the colour on the chip is the only thing this
+  template adds. Colour is redundant with the word, never a replacement for it.
+
+  The order table is wide by nature: it scrolls inside its own container above
+  700px and stacks into labelled rows below that.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Account</li>
+  </ol>
+</nav>
+
+<section class="acct wrap">
+
+  <div class="sec__head">
+    <h1 class="sec__h">Account</h1>
+    <span class="mono">
+      {{ customer.orders_count }} {{ customer.orders_count | pluralize: 'order', 'orders' }}
+    </span>
+  </div>
+
+  <div class="acct__bar">
+    <p class="acct__who">
+      {%- if customer.name != blank -%}{{ customer.name }} · {% endif -%}
+      <span class="acct__mail">{{ customer.email }}</span>
+    </p>
+    <a class="frm__link" href="{{ routes.account_logout_url }}">Sign out</a>
+  </div>
+
+  <div class="acct__cols">
+
+    {%- comment -%} ── orders ───────────────────────────────────────────── {%- endcomment -%}
+    <div class="acct__main">
+      <h2 class="acct__sub" id="orders">Order history</h2>
+
+      {%- if customer.orders.size == 0 -%}
+
+        <div class="acct__empty">
+          <p class="acct__empty-t">No orders on this account.</p>
+          <p class="acct__empty-p">
+            Anything ordered with {{ customer.email }} shows up here, with its tracking
+            number as soon as the parcel is handed over.
+          </p>
+          <div class="acct__links">
+            <a class="btn btn--ghost" href="/collections/womens">Women's</a>
+            <a class="btn btn--ghost" href="/collections/mens">Men's</a>
+            <a class="btn btn--ghost" href="/collections/training">Training</a>
+          </div>
+        </div>
+
+      {%- else -%}
+
+        {%- paginate customer.orders by 20 -%}
+          <div class="tbl__scroll">
+            <table class="tbl tbl--orders">
+              <caption class="visually-hidden">Orders placed on this account, newest first</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Fulfilment</th>
+                  <th scope="col">Payment</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for order in customer.orders -%}
+
+                  {%- assign ftone = 'warn' -%}
+                  {%- case order.fulfillment_status -%}
+                    {%- when 'fulfilled' -%}{%- assign ftone = 'ok' -%}
+                    {%- when 'partial' -%}{%- assign ftone = 'warn' -%}
+                    {%- when 'restocked' -%}{%- assign ftone = 'mute' -%}
+                  {%- endcase -%}
+
+                  {%- assign ptone = 'warn' -%}
+                  {%- case order.financial_status -%}
+                    {%- when 'paid' -%}{%- assign ptone = 'ok' -%}
+                    {%- when 'refunded' -%}{%- assign ptone = 'mute' -%}
+                    {%- when 'partially_refunded' -%}{%- assign ptone = 'mute' -%}
+                    {%- when 'voided' -%}{%- assign ptone = 'crit' -%}
+                    {%- when 'unpaid' -%}{%- assign ptone = 'crit' -%}
+                  {%- endcase -%}
+
+                  {%- if order.cancelled -%}
+                    {%- assign ftone = 'crit' -%}
+                  {%- endif -%}
+
+                  <tr>
+                    <td data-l="Order">
+                      <a class="tbl__link" href="{{ order.customer_url }}">{{ order.name }}</a>
+                    </td>
+                    <td data-l="Date">
+                      <time datetime="{{ order.created_at | date: '%Y-%m-%d' }}">{{ order.created_at | date: '%d %b %Y' }}</time>
+                    </td>
+                    <td data-l="Fulfilment">
+                      {%- if order.cancelled -%}
+                        <span class="chp chp--crit">Cancelled</span>
+                      {%- else -%}
+                        <span class="chp chp--{{ ftone }}">{{ order.fulfillment_status_label }}</span>
+                      {%- endif -%}
+                    </td>
+                    <td data-l="Payment">
+                      <span class="chp chp--{{ ptone }}">{{ order.financial_status_label }}</span>
+                    </td>
+                    <td data-l="Total" class="tbl__num">{{ order.total_price | money }}</td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="acct__pager" aria-label="Order history pages">
+              {%- if paginate.previous -%}
+                <a class="acct__pg" href="{{ paginate.previous.url }}" rel="prev">Newer</a>
+              {%- else -%}
+                <span class="acct__pg acct__pg--off">Newer</span>
+              {%- endif -%}
+              <span class="acct__pgc mono">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+              {%- if paginate.next -%}
+                <a class="acct__pg" href="{{ paginate.next.url }}" rel="next">Older</a>
+              {%- else -%}
+                <span class="acct__pg acct__pg--off">Older</span>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ── default address ──────────────────────────────────── {%- endcomment -%}
+    <aside class="acct__side" aria-labelledby="default-address">
+      <h2 class="acct__sub" id="default-address">Default address</h2>
+
+      {%- if customer.default_address -%}
+        <div class="ad ad--flat">
+          <div class="ad__body">{{ customer.default_address | format_address }}</div>
+          <div class="ad__acts">
+            <a class="frm__link" href="{{ routes.account_addresses_url }}#addr-{{ customer.default_address.id }}">Edit this address</a>
+          </div>
+        </div>
+        <p class="acct__note mono">
+          {{ customer.addresses_count }} {{ customer.addresses_count | pluralize: 'address', 'addresses' }} saved
+        </p>
+      {%- else -%}
+        <div class="ad ad--flat">
+          <p class="acct__p">No address saved. Add one and checkout fills itself in.</p>
+        </div>
+      {%- endif -%}
+
+      <a class="btn btn--ghost acct__wide" href="{{ routes.account_addresses_url }}">Manage addresses</a>
+
+      <div class="sheet acct__facts">
+        <div class="sheet__row"><span class="sheet__k">Shipping</span><span class="sheet__v">Free in the US, no minimum</span></div>
+        <div class="sheet__row"><span class="sheet__k">Delivery</span><span class="sheet__v">8–14 business days</span></div>
+        <div class="sheet__row"><span class="sheet__k">Returns</span><span class="sheet__v">60 days, unworn with tags</span></div>
+      </div>
+    </aside>
+
+  </div>
+</section>

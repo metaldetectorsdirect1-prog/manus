@@ -140,7 +140,7 @@
             rows="9"
             autocomplete="off"
             required
-            aria-describedby="contact-body-h">{{ form.body }}</textarea>
+            aria-describedby="contact-body-h">{{ form.body | escape }}</textarea>
           <p class="cf__h" id="contact-body-h">
             If it is about an order, the order number gets it answered in one
             reply instead of three.
