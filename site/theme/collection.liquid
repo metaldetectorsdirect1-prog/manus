@@ -3,13 +3,10 @@
   ────────────────────────────
   Drop-in replacement for templates/collection.liquid.
 
-  Requires two stylesheets linked from layout/theme.liquid:
-
-      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-      {{ 'hivolt-collection.css' | asset_url | stylesheet_tag }}
-
-  (theme-hivolt.css → assets/hivolt.css, theme/collection.css →
-   assets/hivolt-collection.css)
+  Styles for the new components live in site/theme/collection.css.
+  site/build-theme.py concatenates that file into assets/hivolt.css after
+  theme-hivolt.css, and layout/theme.liquid already links hivolt.css — there is
+  nothing extra to wire up.
 
   Product tiles are the same .grid/.item markup as index.liquid — same classes,
   same image handling, same rules. The fabric-weight badge is rendered only when
@@ -256,9 +253,9 @@
             <p class="empty__h">Nothing is published in {{ collection.title }} yet.</p>
             <p class="empty__p">The rest of the range is here:</p>
             <ul class="empty__links">
-              <li><a href="/collections/womens">Women's</a></li>
-              <li><a href="/collections/mens">Men's</a></li>
-              <li><a href="/collections/training">Training</a></li>
+              {%- unless collection.handle == 'womens' -%}<li><a href="/collections/womens">Women's</a></li>{%- endunless -%}
+              {%- unless collection.handle == 'mens' -%}<li><a href="/collections/mens">Men's</a></li>{%- endunless -%}
+              {%- unless collection.handle == 'training' -%}<li><a href="/collections/training">Training</a></li>{%- endunless -%}
               <li><a href="{{ routes.all_products_collection_url }}">Everything</a></li>
             </ul>
           {%- endif -%}

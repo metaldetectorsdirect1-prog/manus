@@ -1,0 +1,205 @@
+{%- comment -%}
+  HIVOLT — templates/page.shipping.liquid
+  ───────────────────────────────────────
+  Alternate page template. In the admin: Pages → Shipping → Template suffix →
+  "shipping". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Requires:
+      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+
+  Every figure on this page is one the store has published elsewhere and can
+  stand behind: free on every US order with no minimum, 8-14 business days,
+  dispatched from Illinois, tracked from dispatch, continental US only.
+
+  There is no expedited tier, no free-shipping threshold, no international rate
+  card and no carrier named, because none of those exist. Where a fact is
+  missing it is left out rather than filled in.
+
+  The FAQPage JSON-LD at the foot mirrors the visible questions word for word.
+  Marking up an answer that is not on the page is a structured-data violation
+  and, more to the point, a lie in a machine-readable format.
+{%- endcomment -%}
+
+{%- assign contact_url = pages.contact.url | default: '/pages/contact' -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Shipping' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Shipping policy</p>
+  <h1 class="hero__h">Free, tracked,<br>and slower than<br><em>you would like.</em></h1>
+  <p class="hero__sub">
+    Every order inside the United States ships free with no minimum to reach,
+    and takes 8&ndash;14 business days. That is the entire policy. There is no
+    expedited tier to upsell you and no spend threshold to unlock.
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">The terms</h2>
+    <span class="mono">No asterisks</span>
+  </div>
+
+  <div class="pg__cols">
+    <div class="rte">
+      <h3>Why 8&ndash;14 days and not 2</h3>
+      <p>
+        Orders are picked, packed and dispatched by a fulfilment partner rather
+        than out of a warehouse we run ourselves. That adds a handling step
+        between your order landing and the parcel moving, and the handling step
+        is where the days go.
+      </p>
+      <p>
+        We could print two-day delivery on this page. We would then miss it on
+        most orders, and you would find out at the door rather than here. Quoting
+        a window we can actually hit is worth more than quoting one we cannot, so
+        8&ndash;14 business days is what we publish and what we plan against. If
+        that is too slow for what you need it for, this is the page that tells
+        you so before you pay rather than after.
+      </p>
+
+      <h3>What business days means</h3>
+      <p>
+        Monday to Friday, not counting public holidays. An order placed on a
+        Friday evening starts its count the following week.
+      </p>
+
+      <h3>Tracking</h3>
+      <p>
+        Every order is tracked from dispatch. The tracking number is emailed to
+        the address on the order as soon as the parcel is handed over, and it is
+        the same number you can hand to the carrier if something goes wrong. If
+        you have not received it, write to us and we will send it again.
+      </p>
+
+      <h3>Where we ship</h3>
+      <p>
+        The continental United States only. We do not ship internationally, and
+        we would rather say no here than take an order we cannot deliver
+        properly. If that changes, it will be announced on this page first.
+      </p>
+    </div>
+
+    <aside class="pg__aside">
+      <p class="mono pg__aside-h">Shipping, as data</p>
+      <div class="sheet">
+        <div class="sheet__row">
+          <span class="sheet__k">Cost</span>
+          <span class="sheet__v"><em>Free</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Order minimum</span>
+          <span class="sheet__v">None</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Delivery window</span>
+          <span class="sheet__v">8&ndash;14 business days</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Dispatched from</span>
+          <span class="sheet__v">Illinois, USA</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Tracking</span>
+          <span class="sheet__v">From dispatch</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Ships to</span>
+          <span class="sheet__v">Continental US</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">International</span>
+          <span class="sheet__v">Not available</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Expedited option</span>
+          <span class="sheet__v">None</span>
+        </div>
+      </div>
+      <p class="sheet__src">
+        Business days are Monday to Friday, excluding public holidays.
+      </p>
+    </aside>
+  </div>
+</section>
+
+{%- if page.content != blank -%}
+  <section class="pg wrap">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </section>
+{%- endif -%}
+
+<!-- ── FAQ: mirrored exactly by the JSON-LD below ──────────── -->
+<section class="faq">
+  <div class="wrap">
+    <h2 class="faq__h">Shipping questions</h2>
+    <div class="faq__list">
+      <details>
+        <summary>How much is shipping?</summary>
+        <p class="faq__a">Nothing. Every order inside the United States ships free,
+          with no minimum spend and no threshold to unlock.</p>
+      </details>
+      <details>
+        <summary>How long does delivery take?</summary>
+        <p class="faq__a">8&ndash;14 business days. Business days are Monday to
+          Friday, excluding public holidays.</p>
+      </details>
+      <details>
+        <summary>Why does it take 8&ndash;14 days?</summary>
+        <p class="faq__a">Orders are dispatched by a fulfilment partner rather than
+          from a warehouse we run ourselves, and that handling step is where the
+          days go. We would rather quote a window we can hit than a shorter one we
+          would miss on most orders.</p>
+      </details>
+      <details>
+        <summary>Where does my order ship from?</summary>
+        <p class="faq__a">A fulfilment facility in Illinois.</p>
+      </details>
+      <details>
+        <summary>Do I get tracking?</summary>
+        <p class="faq__a">Yes. Every order is tracked from dispatch and the tracking
+          number is emailed to the address on the order.</p>
+      </details>
+      <details>
+        <summary>Do you ship outside the United States?</summary>
+        <p class="faq__a">No. Continental United States only. If that changes it
+          will be announced on this page first.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How much is shipping?","acceptedAnswer":{"@type":"Answer","text":"Nothing. Every order inside the United States ships free, with no minimum spend and no threshold to unlock."}},
+    {"@type":"Question","name":"How long does delivery take?","acceptedAnswer":{"@type":"Answer","text":"8-14 business days. Business days are Monday to Friday, excluding public holidays."}},
+    {"@type":"Question","name":"Why does it take 8-14 days?","acceptedAnswer":{"@type":"Answer","text":"Orders are dispatched by a fulfilment partner rather than from a warehouse we run ourselves, and that handling step is where the days go. We would rather quote a window we can hit than a shorter one we would miss on most orders."}},
+    {"@type":"Question","name":"Where does my order ship from?","acceptedAnswer":{"@type":"Answer","text":"A fulfilment facility in Illinois."}},
+    {"@type":"Question","name":"Do I get tracking?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every order is tracked from dispatch and the tracking number is emailed to the address on the order."}},
+    {"@type":"Question","name":"Do you ship outside the United States?","acceptedAnswer":{"@type":"Answer","text":"No. HIVOLT ships to the continental United States only."}}
+  ]
+}
+</script>
+
+<!-- ── questions ───────────────────────────────────────────── -->
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Questions?</span>
+      If your question about an order or a delivery is not answered above, ask us
+      directly. Replies within one business day.
+    </p>
+    <a class="btn btn--ghost" href="{{ contact_url }}">Contact us</a>
+  </div>
+</section>

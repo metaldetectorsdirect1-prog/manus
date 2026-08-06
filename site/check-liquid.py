@@ -76,7 +76,23 @@ def check(path):
                 continue
             errs.append(f'line {line}: {why} — "{src[m.start():m.end()][:40]}"')
 
-    # 4. images need dimensions
+    # 4. shell duplication.
+    # layout/theme.liquid owns <main>, the ticker, the masthead and the footer.
+    # A page template that emits any of them produces nested landmarks. Agents
+    # working in parallel wrote several templates before the layout existed, so
+    # this is checked rather than trusted.
+    if 'layout-theme' not in path and path.endswith('.liquid'):
+        nocomment = re.sub(r'\{%-?\s*comment\s*-?%\}.*?\{%-?\s*endcomment\s*-?%\}',
+                           '', src, flags=re.S)
+        for pat, what in ((r'<main\b', '<main>'),
+                          (r'<header class="mast"', 'masthead'),
+                          (r'<footer class="foot"', 'footer'),
+                          (r'<div class="ticker"', 'ticker')):
+            for m in re.finditer(pat, nocomment):
+                errs.append(f'line {nocomment[:m.start()].count(chr(10))+1}: '
+                            f'{what} belongs to layout/theme.liquid — page templates are content-only')
+
+    # 5. images need dimensions
     for m in re.finditer(r'<img\b[^>]*>', src, re.S):
         tag = m.group(0)
         line = src[:m.start()].count('\n') + 1
@@ -85,7 +101,7 @@ def check(path):
         if 'alt=' not in tag:
             errs.append(f'line {line}: <img> missing alt')
 
-    # 5. JSON-LD validity
+    # 6. JSON-LD validity
     for m in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', src, re.S):
         body = m.group(1)
         line = src[:m.start()].count('\n') + 1

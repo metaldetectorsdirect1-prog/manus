@@ -140,3 +140,8 @@
 }
 
 .fab__note{max-width:88ch; margin-top:24px}
+
+/* ── questions (reuses .faq) ───────────────────────────────── */
+/* .faq is an always-ink band in both themes, so the muted sub-line is
+   var(--paper) held back with opacity rather than a hard-coded grey. */
+.faq .fab__faqnote{color:var(--paper); opacity:.58; margin:0}

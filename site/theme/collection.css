@@ -1,13 +1,11 @@
 /* ─────────────────────────────────────────────────────────────
    HIVOLT — collection + search
-   Additive only. Loads AFTER hivolt.css (theme-hivolt.css), which
-   owns every token and every shared class used below. Nothing here
-   redefines a token or a colour literal, and nothing here edits
-   theme-hivolt.css.
+   Additive only. build-theme.py concatenates this file into
+   assets/hivolt.css AFTER theme-hivolt.css, which owns every token
+   and every shared class used below. Nothing here redefines a token
+   or a colour literal, and nothing here edits theme-hivolt.css.
 
-     layout/theme.liquid, in this order:
-       {{ 'hivolt.css'            | asset_url | stylesheet_tag }}
-       {{ 'hivolt-collection.css' | asset_url | stylesheet_tag }}
+   Serves templates/collection.liquid and templates/search.liquid.
 
    New components only: the facet bar, the active-filter chips, the
    numbered pager, the empty state, the search field, and the plain
@@ -141,6 +139,9 @@ a.pager__a:hover{background:var(--ink);border-color:var(--ink);color:var(--paper
   background:var(--paper);color:var(--ink);padding:14px 16px}
 .srch__in::placeholder{color:var(--steel)}
 .srch__go{flex:none;border:0;border-left:1px solid var(--ink);padding:14px 22px;font-size:11px}
+/* the search grid has no facet bar above it, so it needs its own top rule —
+   on the collection page that job is done by the bottom edge of .facets */
+.srch + .grid{margin-top:clamp(24px,3.5vw,40px);border-top:1px solid var(--ink)}
 
 /* ── article / page hits ───────────────────────────────────── */
 .hits__head{margin-top:clamp(30px,4vw,48px);padding-bottom:12px;border-bottom:1px solid var(--ink)}

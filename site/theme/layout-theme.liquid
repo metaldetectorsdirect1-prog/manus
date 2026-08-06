@@ -34,7 +34,7 @@
   <script>document.documentElement.className=document.documentElement.className.replace('no-js','js');</script>
 
   <link rel="canonical" href="{{ canonical_url }}">
-  {%- if settings.favicon != blank %}
+  {%- if settings.favicon %}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
   {%- endif %}
 
@@ -59,7 +59,7 @@
     {%- assign og_image = collection.featured_image -%}
   {%- elsif request.page_type == 'article' and article.image -%}
     {%- assign og_image = article.image -%}
-  {%- elsif settings.share_image != blank -%}
+  {%- elsif settings.share_image -%}
     {%- assign og_image = settings.share_image -%}
   {%- endif -%}
 
@@ -141,11 +141,19 @@
 <a class="skip" href="#main">Skip to content</a>
 
 {%- comment -%} ── menus: linklist first, hardcoded fallback second ─────── {%- endcomment -%}
+{%- comment -%}
+  `size | plus: 0` coerces a missing linklist, a missing `links`, and an empty
+  `links` all to 0, so the count is always an integer and the `> 0` test can
+  never raise on nil. `x != blank` is NOT equivalent — it reads a missing
+  linklist as present and renders an empty menu.
+{%- endcomment -%}
 {%- assign main_links = linklists['main-menu'].links -%}
+{%- assign main_count = main_links.size | plus: 0 -%}
 {%- assign nav_titles = 'Women,Men,Training,Fabric,About' | split: ',' -%}
 {%- assign nav_urls = '/collections/womens,/collections/mens,/collections/training,/pages/fabric,/pages/about' | split: ',' -%}
 
 {%- assign footer_links = linklists.footer.links -%}
+{%- assign footer_count = footer_links.size | plus: 0 -%}
 {%- assign foot_shop_t = 'Women,Men,Training,Everything' | split: ',' -%}
 {%- assign foot_shop_u = '/collections/womens,/collections/mens,/collections/training,/collections/all' | split: ',' -%}
 {%- assign foot_info_t = 'Fabric & specifications,Shipping,Returns & refunds,Materials' | split: ',' -%}
@@ -173,7 +181,7 @@
     <a href="{{ routes.root_url }}" class="logo">{{ shop.name }}</a>
 
     <nav class="nav" aria-label="Primary">
-      {%- if main_links != blank -%}
+      {%- if main_count > 0 -%}
         {%- for link in main_links -%}
           <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
         {%- endfor -%}
@@ -185,18 +193,23 @@
     </nav>
 
     <div class="mast__act">
-      <button type="button" class="mnav__toggle" id="nav-toggle"
-              aria-expanded="false" aria-controls="nav-panel">Menu</button>
       <a href="{{ routes.search_url }}" class="mono mast__search">Search</a>
       <a href="{{ routes.cart_url }}" class="mono"
          aria-label="Bag, {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}">Bag ({{ cart.item_count }})</a>
+      {%- comment -%}
+        The toggle is last so it is the element immediately before #nav-panel in
+        the tab order: Tab straight after opening lands on the first menu link,
+        not on the bag. It is hidden above 860px, so desktop order is unchanged.
+      {%- endcomment -%}
+      <button type="button" class="mnav__toggle" id="nav-toggle"
+              aria-expanded="false" aria-controls="nav-panel">Menu</button>
     </div>
   </div>
 
   <div class="mnav" id="nav-panel" hidden>
     <nav class="wrap mnav__in" aria-label="Primary, mobile">
       <ul class="mnav__list">
-        {%- if main_links != blank -%}
+        {%- if main_count > 0 -%}
           {%- for link in main_links -%}
             <li><a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
           {%- endfor -%}
@@ -227,12 +240,13 @@
         </p>
       </div>
 
-      {%- if footer_links != blank -%}
+      {%- if footer_count > 0 -%}
         {%- for column in footer_links limit: 3 -%}
           <div>
             <h4>{{ column.title | escape }}</h4>
             <ul>
-              {%- if column.links != blank -%}
+              {%- assign col_count = column.links.size | plus: 0 -%}
+              {%- if col_count > 0 -%}
                 {%- for link in column.links -%}
                   <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
                 {%- endfor -%}

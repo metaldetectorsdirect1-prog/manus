@@ -1,0 +1,225 @@
+{%- comment -%}
+  HIVOLT — templates/page.contact.liquid
+  ──────────────────────────────────────
+  Alternate page template. In the admin: Pages → Contact → Template suffix →
+  "contact". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Requires:
+      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+
+  Uses Shopify's native contact form tag — form 'contact'. Field names matter:
+
+      contact[name]     → sender name
+      contact[email]    → reply-to address, validated by Shopify
+      contact[Subject]  → any field that is not name/email/phone/body is passed
+                          through to the notification email under its own label
+      contact[body]     → the message
+
+  form.posted_successfully? is only true on the redirect after a successful
+  send, so the confirmation renders above a fresh, empty form. form.errors is
+  rendered as a real list with role="alert" rather than a colour change, because
+  a colour change is invisible to a screen reader and to anyone who cannot see
+  it.
+
+  There is no phone number on this page. The store does not run a phone line and
+  printing one it cannot answer is worse than printing none.
+{%- endcomment -%}
+
+{%- assign support_email = shop.email | default: 'support@hivolt-usa.com' -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Contact' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Contact</p>
+  <h1 class="hero__h">One inbox.<br>Read by<br><em>a person.</em></h1>
+  <p class="hero__sub">
+    Write about an order, a size, or a specification you want confirmed before
+    you buy. Replies come within one business day. There is no phone line — we
+    would rather answer properly in writing than badly on hold.
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">Send a message</h2>
+    <span class="mono">Replies within one business day</span>
+  </div>
+
+  <div class="cf__grid">
+
+    <!-- ── the form ──────────────────────────────────────────── -->
+    <div class="cf">
+      {%- form 'contact' -%}
+
+        {%- if form.posted_successfully? -%}
+          <div class="cf__ok" role="status" tabindex="-1" id="contact-sent">
+            <p class="mono cf__ok-h">Message sent</p>
+            <p class="cf__ok-b">
+              It has arrived at {{ support_email }}. You will get a reply within
+              one business day, from a person, to the address you entered.
+            </p>
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="cf__err" role="alert" tabindex="-1" id="contact-errors">
+            <p class="mono cf__err-h">That did not send</p>
+            <ul class="cf__err-l">
+              {%- for field in form.errors -%}
+                <li>
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    {{ form.errors.translated_fields[field] | capitalize }}
+                    {{ form.errors.messages[field] }}
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="cf__f">
+          <label class="cf__l" for="contact-name">Your name</label>
+          <input
+            class="cf__in"
+            type="text"
+            id="contact-name"
+            name="contact[name]"
+            value="{{ form.name | escape }}"
+            autocomplete="name"
+            autocapitalize="words"
+            spellcheck="false">
+        </div>
+
+        <div class="cf__f">
+          <label class="cf__l" for="contact-email">
+            Email <span class="cf__req" aria-hidden="true">required</span>
+          </label>
+          <input
+            class="cf__in"
+            type="email"
+            id="contact-email"
+            name="contact[email]"
+            value="{{ form.email | escape }}"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            required
+            aria-describedby="contact-email-h">
+          <p class="cf__h" id="contact-email-h">The reply goes here. Nothing else.</p>
+        </div>
+
+        <div class="cf__f">
+          <label class="cf__l" for="contact-subject">Subject</label>
+          <input
+            class="cf__in"
+            type="text"
+            id="contact-subject"
+            name="contact[Subject]"
+            value=""
+            autocomplete="off"
+            placeholder="Order number, size question, fabric weight">
+        </div>
+
+        <div class="cf__f">
+          <label class="cf__l" for="contact-body">
+            Message <span class="cf__req" aria-hidden="true">required</span>
+          </label>
+          <textarea
+            class="cf__ta"
+            id="contact-body"
+            name="contact[body]"
+            rows="9"
+            autocomplete="off"
+            required
+            aria-describedby="contact-body-h">{{ form.body }}</textarea>
+          <p class="cf__h" id="contact-body-h">
+            If it is about an order, the order number gets it answered in one
+            reply instead of three.
+          </p>
+        </div>
+
+        <button class="btn cf__go" type="submit">Send message</button>
+
+        <p class="cf__note">
+          Your name, email and message are sent to {{ support_email }} so we can
+          reply. Nothing here subscribes you to anything.
+        </p>
+
+      {%- endform -%}
+    </div>
+
+    <!-- ── the same answers, without the form ────────────────── -->
+    <aside class="pg__aside">
+      <p class="mono pg__aside-h">Direct</p>
+      <div class="sheet">
+        <div class="sheet__row">
+          <span class="sheet__k">Email</span>
+          <span class="sheet__v">{{ support_email }}</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Reply window</span>
+          <span class="sheet__v"><em>1 business day</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Phone</span>
+          <span class="sheet__v">None</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Dispatched from</span>
+          <span class="sheet__v">Illinois, USA</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Ships to</span>
+          <span class="sheet__v">United States only</span>
+        </div>
+      </div>
+      <p class="sheet__src">
+        Business days are Monday to Friday, excluding public holidays.
+      </p>
+
+      <p class="mono pg__aside-h pg__aside-h--gap">Answered already</p>
+      <div class="rte rte--tight">
+        <ul>
+          <li><a href="/pages/shipping">Shipping</a> — cost, the 8&ndash;14 business day window, and where orders leave from.</li>
+          <li><a href="/pages/returns">Returns</a> — the 60-day window, the condition, and who pays return postage.</li>
+          <li><a href="/pages/fabric">Fabric</a> — what fabric weight in g/m² means and how it is measured.</li>
+        </ul>
+        <p>
+          To start a return, use the link in your order email rather than this
+          form — it is faster and it reaches the same inbox.
+        </p>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+{%- if page.content != blank -%}
+  <section class="pg wrap">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </section>
+{%- endif -%}
+
+<!-- ── questions ───────────────────────────────────────────── -->
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Questions?</span>
+      This page is the answer to that one. Use the form above, or write straight
+      to {{ support_email }} — either way it reaches the same inbox and gets a
+      reply within one business day.
+    </p>
+    <a class="btn btn--ghost" href="mailto:{{ support_email }}">Email us</a>
+  </div>
+</section>

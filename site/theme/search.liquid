@@ -3,10 +3,8 @@
   ────────────────────────
   Drop-in replacement for templates/search.liquid.
 
-  Requires two stylesheets linked from layout/theme.liquid:
-
-      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
-      {{ 'hivolt-collection.css' | asset_url | stylesheet_tag }}
+  Styles are shared with collection.liquid and live in site/theme/collection.css,
+  which site/build-theme.py folds into assets/hivolt.css.
 
   Product hits use the same .grid/.item tiles as index.liquid and
   collection.liquid — same classes, same image handling. Article and page hits

@@ -1,0 +1,214 @@
+{%- comment -%}
+  HIVOLT — templates/page.returns.liquid
+  ──────────────────────────────────────
+  Alternate page template. In the admin: Pages → Returns → Template suffix →
+  "returns". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Requires:
+      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+
+  Published terms only: 60 days, unworn with tags attached, no restocking fee,
+  no reason required, started from the order email.
+
+  Return postage is stated as the customer's cost unless the item is faulty or
+  wrong. It is written that way because free return postage has not been
+  confirmed, and a returns page that promises one and delivers the other is the
+  single most expensive sentence a store can print. If prepaid labels are
+  arranged later, this page is where it gets said.
+
+  Nothing about refund timing, refund method or exchanges appears here. Those
+  terms have not been set, and inventing them would put a number in front of a
+  customer that nobody has agreed to honour.
+
+  The FAQPage JSON-LD at the foot mirrors the visible questions word for word.
+{%- endcomment -%}
+
+{%- assign contact_url = pages.contact.url | default: '/pages/contact' -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Returns' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Returns policy</p>
+  <h1 class="hero__h">60 days.<br>Tags on.<br><em>No explanation.</em></h1>
+  <p class="hero__sub">
+    Send anything back within 60 days as long as it is unworn with the tags
+    still attached. There is no restocking fee and you do not have to tell us
+    why. Start it from your order email. Return postage is yours to pay unless
+    the item arrived faulty or we sent the wrong one.
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">The terms</h2>
+    <span class="mono">Including the part that costs you</span>
+  </div>
+
+  <div class="pg__cols">
+    <div class="rte">
+      <h3>Who pays return postage</h3>
+      <p>
+        You do, unless the item arrived faulty or we sent the wrong thing — in
+        which case it is our mistake and our cost. We are writing that plainly
+        rather than advertising free returns in large type and qualifying it in
+        small type further down the page. If the fault is ours, it is ours to
+        pay for. If you simply changed your mind, the postage back is yours.
+      </p>
+
+      <h3>The condition</h3>
+      <p>
+        Unworn, with the tags still attached. That is the only condition, and it
+        is the only one because it is the only one we can check. Try things on.
+        Do not train in them and then send them back — a worn garment cannot go
+        to the next customer, and pretending otherwise would mean selling
+        somebody a used pair as new.
+      </p>
+
+      <h3>No reason required</h3>
+      <p>
+        We do not ask why, and there is no drop-down of approved reasons to pick
+        from. It did not fit, you did not like the colour, you changed your mind
+        on the way to the door — all the same to us, and none of it changes the
+        outcome.
+      </p>
+
+      <h3>How to start one</h3>
+      <p>
+        Use the link in your order confirmation email. It is tied to your order,
+        so nothing has to be looked up and nobody has to ask you for a number you
+        no longer have. If you cannot find the email, write to us and we will
+        start it from our side.
+      </p>
+
+      <h3>The 60 days</h3>
+      <p>
+        Sixty days is longer than the category norm of 30, and it is longer for a
+        reason: this store is new, you have no reviews to read, and the fabric
+        weight we publish is a number until you have the garment in your hands.
+        A short return window would be asking you to take that on trust. A long
+        one is us taking the risk instead.
+      </p>
+    </div>
+
+    <aside class="pg__aside">
+      <p class="mono pg__aside-h">Returns, as data</p>
+      <div class="sheet">
+        <div class="sheet__row">
+          <span class="sheet__k">Window</span>
+          <span class="sheet__v"><em>60 days</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Condition</span>
+          <span class="sheet__v">Unworn, tags on</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Restocking fee</span>
+          <span class="sheet__v">None</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Reason required</span>
+          <span class="sheet__v">No</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Started from</span>
+          <span class="sheet__v">Your order email</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Return postage</span>
+          <span class="sheet__v">Paid by you</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Faulty or wrong item</span>
+          <span class="sheet__v"><em>Paid by us</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Returns accepted from</span>
+          <span class="sheet__v">United States only</span>
+        </div>
+      </div>
+      <p class="sheet__src">
+        These are the store's published terms. Anything not listed here has not
+        been set, and we will not print a figure we have not agreed to honour.
+      </p>
+    </aside>
+  </div>
+</section>
+
+{%- if page.content != blank -%}
+  <section class="pg wrap">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </section>
+{%- endif -%}
+
+<!-- ── FAQ: mirrored exactly by the JSON-LD below ──────────── -->
+<section class="faq">
+  <div class="wrap">
+    <h2 class="faq__h">Returns questions</h2>
+    <div class="faq__list">
+      <details>
+        <summary>How long do I have to return something?</summary>
+        <p class="faq__a">60 days.</p>
+      </details>
+      <details>
+        <summary>What condition does it have to be in?</summary>
+        <p class="faq__a">Unworn, with the tags still attached. That is the only
+          condition.</p>
+      </details>
+      <details>
+        <summary>Is there a restocking fee?</summary>
+        <p class="faq__a">No.</p>
+      </details>
+      <details>
+        <summary>Do I have to give a reason?</summary>
+        <p class="faq__a">No. We do not ask, and there is no list of approved
+          reasons to choose from.</p>
+      </details>
+      <details>
+        <summary>How do I start a return?</summary>
+        <p class="faq__a">From the link in your order confirmation email. If you
+          cannot find it, write to us and we will start it from our side.</p>
+      </details>
+      <details>
+        <summary>Who pays for return postage?</summary>
+        <p class="faq__a">You do, unless the item arrived faulty or we sent the
+          wrong one — then we cover it. We would rather state that here than
+          advertise free returns and qualify it in the small print.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How long do I have to return something?","acceptedAnswer":{"@type":"Answer","text":"60 days from the order."}},
+    {"@type":"Question","name":"What condition does it have to be in?","acceptedAnswer":{"@type":"Answer","text":"Unworn, with the tags still attached. That is the only condition."}},
+    {"@type":"Question","name":"Is there a restocking fee?","acceptedAnswer":{"@type":"Answer","text":"No. There is no restocking fee on a HIVOLT return."}},
+    {"@type":"Question","name":"Do I have to give a reason?","acceptedAnswer":{"@type":"Answer","text":"No. We do not ask, and there is no list of approved reasons to choose from."}},
+    {"@type":"Question","name":"How do I start a return?","acceptedAnswer":{"@type":"Answer","text":"From the link in your order confirmation email. If you cannot find it, write to us and we will start it from our side."}},
+    {"@type":"Question","name":"Who pays for return postage?","acceptedAnswer":{"@type":"Answer","text":"The customer pays return postage, unless the item arrived faulty or the wrong item was sent, in which case HIVOLT covers it."}}
+  ]
+}
+</script>
+
+<!-- ── questions ───────────────────────────────────────────── -->
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Questions?</span>
+      If your return is not covered by anything above, ask us directly. Replies
+      within one business day.
+    </p>
+    <a class="btn btn--ghost" href="{{ contact_url }}">Contact us</a>
+  </div>
+</section>

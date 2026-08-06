@@ -1,0 +1,213 @@
+{%- comment -%}
+  HIVOLT — templates/page.about.liquid
+  ────────────────────────────────────
+  Alternate page template. In the admin: Pages → About → Template suffix →
+  "about". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Requires:
+      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+      {{ 'hivolt-pages.css' | asset_url | stylesheet_tag }}
+
+  The copy here is the honest version, and it is deliberately the honest
+  version. HIVOLT selects manufacturer blanks; it does not own a factory. That
+  is stated in the first paragraph rather than buried, because the entire
+  argument of the site — we publish the specification while the category
+  publishes adjectives — only works if the unflattering part is published too.
+
+  Nothing on this page is invented: no founding date, no founder, no team, no
+  factory visit, no mill tour. Every fact below is one the store can stand
+  behind. If a fact is not here, it is because we do not have it.
+
+  Any body copy entered on the page in the admin renders after the sections, so
+  the template can be extended without editing this file.
+{%- endcomment -%}
+
+{%- assign contact_url = pages.contact.url | default: '/pages/contact' -%}
+{%- assign support_email = shop.email | default: 'support@hivolt-usa.com' -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'About' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">About HIVOLT</p>
+  <h1 class="hero__h">We don't own<br>the factory.<br><em>We publish the spec.</em></h1>
+  <p class="hero__sub">
+    HIVOLT sells manufacturer blanks. We choose them, specify them and list them
+    under our own name — we do not make them in a factory we own, and we are not
+    going to imply otherwise. What we do that the category does not is tell you
+    exactly what the garment is: fibre composition, and fabric weight in grams
+    per square metre.
+  </p>
+  <div class="hero__cta">
+    <a class="btn" href="{{ routes.all_products_collection_url }}">Shop the range</a>
+    <a class="btn btn--ghost" href="/pages/fabric">How we measure</a>
+  </div>
+</section>
+
+<!-- ── the position ────────────────────────────────────────── -->
+<section class="pg wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">The position</h2>
+    <span class="mono">Why this store exists</span>
+  </div>
+
+  <div class="pg__cols">
+    <div class="rte">
+      <p>
+        Most activewear under a hundred dollars is the same trade. A brand picks
+        garments from a manufacturer's existing range, puts a name on them and
+        sells them. That is what we do. The part almost nobody does is publish the
+        specification of what they picked.
+      </p>
+      <p>
+        Read the category and you will be told a legging is soft, sculpting,
+        weightless, made for movement. You will rarely be told what it is made of
+        by percentage, and almost never what the fabric weighs. Fabric weight —
+        grams per square metre — is knit density, and knit density is what decides
+        whether a legging stays opaque when it is stretched across a squat. It is
+        the one number that answers the question everybody actually has, and it is
+        the number the category leaves off.
+      </p>
+      <p>
+        So that is the whole position. Every style we list carries its fibre
+        composition and its fabric weight in g/m², copied from the supplier's
+        specification sheet without editing. If a figure is unflattering it stays
+        on the page. If we do not have a figure, the row is left out rather than
+        filled with a guess.
+      </p>
+      <p>
+        Being a selector rather than a manufacturer is not a weakness we are
+        hiding — it is the reason the specification matters. We cannot tell you
+        about looms we do not operate. We can tell you precisely what we selected
+        and what it measures, and you can hold that number against anything else
+        you are considering. Nobody in this price range makes that comparison
+        easy, which is exactly why it is worth publishing.
+      </p>
+      <p>
+        HIVOLT is new. There are no customer reviews on this site because no
+        customer has written one yet. We ship within the United States only, out
+        of a facility in Illinois, and orders take 8&ndash;14 business days. All
+        three of those sentences would read better if they were untrue. They are
+        not, so they stay.
+      </p>
+    </div>
+
+    <aside class="pg__aside">
+      <p class="mono pg__aside-h">HIVOLT, stated plainly</p>
+      <div class="sheet">
+        <div class="sheet__row">
+          <span class="sheet__k">Model</span>
+          <span class="sheet__v">Manufacturer blanks</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Published per style</span>
+          <span class="sheet__v"><em>Composition + g/m²</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Customer reviews</span>
+          <span class="sheet__v">None yet</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Dispatched from</span>
+          <span class="sheet__v">Illinois, USA</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Delivery</span>
+          <span class="sheet__v">8&ndash;14 business days</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Shipping</span>
+          <span class="sheet__v">Free, no minimum</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Ships to</span>
+          <span class="sheet__v">United States only</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Returns</span>
+          <span class="sheet__v">60 days, unworn</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Checkout</span>
+          <span class="sheet__v">Shopify Checkout</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Support</span>
+          <span class="sheet__v">{{ support_email }}</span>
+        </div>
+      </div>
+      <p class="sheet__src">
+        Specification values come from the supplier's sheet. Shipping and returns
+        figures are the store's own published terms.
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ── what we won't do ────────────────────────────────────── -->
+<section class="pg wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">What we won't do</h2>
+    <span class="mono">The absences are deliberate</span>
+  </div>
+  <div class="trust__grid">
+    <div class="trust__c">
+      <div class="trust__k">Not here</div>
+      <p class="trust__v">Reviews we don't have</p>
+      <p class="trust__d">
+        HIVOLT is new and nobody has written one. There is no widget on this site
+        pretending otherwise. When real ones exist we will publish them, including
+        the ones that are not kind.
+      </p>
+    </div>
+    <div class="trust__c">
+      <div class="trust__k">Not here</div>
+      <p class="trust__v">Urgency</p>
+      <p class="trust__d">
+        No timers, no stock counters, no offer that resets when you reload the
+        page. The price on the product is the price at checkout.
+      </p>
+    </div>
+    <div class="trust__c">
+      <div class="trust__k">Not here</div>
+      <p class="trust__v">Health claims</p>
+      <p class="trust__d">
+        A legging is clothing. Nothing on this site will tell you it treats a
+        condition, and we will not sell one as though it does.
+      </p>
+    </div>
+    <div class="trust__c">
+      <div class="trust__k">Not here</div>
+      <p class="trust__v">A founder myth</p>
+      <p class="trust__d">
+        No garage, no origin story, no dated milestones we cannot evidence. The
+        specification is the argument. It either holds up against what you compare
+        it to or it does not.
+      </p>
+    </div>
+  </div>
+</section>
+
+{%- if page.content != blank -%}
+  <section class="pg wrap">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </section>
+{%- endif -%}
+
+<!-- ── questions ───────────────────────────────────────────── -->
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Questions?</span>
+      Anything this page does not answer, ask and we will answer it in writing.
+      Replies within one business day.
+    </p>
+    <a class="btn btn--ghost" href="{{ contact_url }}">Contact us</a>
+  </div>
+</section>
