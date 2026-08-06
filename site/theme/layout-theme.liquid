@@ -1,0 +1,313 @@
+{%- comment -%}
+  HIVOLT — layout/theme.liquid
+  ────────────────────────────
+  The shared shell for every page. Drop-in replacement for layout/theme.liquid.
+
+  Requires two assets:
+      assets/hivolt.css   (theme-hivolt.css, renamed)
+      assets/layout.css   (site/theme/layout.css, renamed — mobile nav + skip link)
+
+  Chrome lifted from the built design:
+      ticker   — site/index.liquid
+      masthead — site/index.html
+      footer   — site/index.html
+
+  Menus are read from linklists. If a linklist is empty or absent the hardcoded
+  links below render instead, so the header and footer are never blank on a
+  store where the menus have not been wired up yet.
+
+      linklists['main-menu']  — masthead + mobile panel (flat, one level)
+      linklists.footer        — footer columns. Each TOP-LEVEL link becomes a
+                                column heading; its CHILD links become the list.
+                                Capped at 3 columns to hold the 2fr 1fr 1fr 1fr
+                                grid.
+
+  sameAs in the Organization block is deliberately empty. Fill it in only with
+  social profiles that actually exist — a dead URL is worse than no URL.
+{%- endcomment -%}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.className=document.documentElement.className.replace('no-js','js');</script>
+
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank %}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif %}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; tagged {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+  {%- assign meta_desc = page_description | default: shop.description | default: shop.name -%}
+  {%- if meta_desc != blank %}
+    <meta name="description" content="{{ meta_desc | strip_html | truncate: 320 | escape }}">
+  {%- endif %}
+
+  {%- comment -%} Open Graph / Twitter — real values only, no invented handles {%- endcomment -%}
+  {%- assign og_type = 'website' -%}
+  {%- if request.page_type == 'product' -%}
+    {%- assign og_type = 'product' -%}
+  {%- elsif request.page_type == 'article' -%}
+    {%- assign og_type = 'article' -%}
+  {%- endif -%}
+  {%- assign og_image = false -%}
+  {%- if request.page_type == 'product' and product.featured_image -%}
+    {%- assign og_image = product.featured_image -%}
+  {%- elsif request.page_type == 'collection' and collection.featured_image -%}
+    {%- assign og_image = collection.featured_image -%}
+  {%- elsif request.page_type == 'article' and article.image -%}
+    {%- assign og_image = article.image -%}
+  {%- elsif settings.share_image != blank -%}
+    {%- assign og_image = settings.share_image -%}
+  {%- endif -%}
+
+  <meta property="og:site_name" content="{{ shop.name | escape }}">
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  {%- if meta_desc != blank %}
+    <meta property="og:description" content="{{ meta_desc | strip_html | truncate: 320 | escape }}">
+  {%- endif %}
+  {%- if og_image %}
+    {%- assign og_image_src = og_image | image_url: width: 1200 | prepend: 'https:' %}
+    <meta property="og:image" content="{{ og_image_src }}">
+    <meta property="og:image:secure_url" content="{{ og_image_src }}">
+    <meta property="og:image:alt" content="{{ og_image.alt | default: page_title | escape }}">
+  {%- endif %}
+  {%- if request.page_type == 'product' %}
+    <meta property="product:price:amount" content="{{ product.price | divided_by: 100.0 }}">
+    <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+    <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+  {%- endif %}
+
+  <meta name="twitter:card" content="{% if og_image %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  {%- if meta_desc != blank %}
+    <meta name="twitter:description" content="{{ meta_desc | strip_html | truncate: 200 | escape }}">
+  {%- endif %}
+  {%- if og_image %}
+    <meta name="twitter:image" content="{{ og_image | image_url: width: 1200 | prepend: 'https:' }}">
+    <meta name="twitter:image:alt" content="{{ og_image.alt | default: page_title | escape }}">
+  {%- endif %}
+
+  {{ content_for_header }}
+
+  {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+  {{ 'layout.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%} Brand entity + sitelinks search box. Renders on every page. {%- endcomment -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "description": "HIVOLT makes performance activewear with published fabric specifications - exact fibre composition and fabric weight taken from the supplier specification.",
+    {%- if settings.logo %}
+    "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {%- endif %}
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": {{ shop.email | default: 'support@hivolt-usa.com' | json }},
+      "areaServed": "US",
+      "availableLanguage": "English"
+    },
+    "sameAs": []
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</head>
+
+<body class="template-{{ request.page_type | handle }}">
+
+<a class="skip" href="#main">Skip to content</a>
+
+{%- comment -%} ── menus: linklist first, hardcoded fallback second ─────── {%- endcomment -%}
+{%- assign main_links = linklists['main-menu'].links -%}
+{%- assign nav_titles = 'Women,Men,Training,Fabric,About' | split: ',' -%}
+{%- assign nav_urls = '/collections/womens,/collections/mens,/collections/training,/pages/fabric,/pages/about' | split: ',' -%}
+
+{%- assign footer_links = linklists.footer.links -%}
+{%- assign foot_shop_t = 'Women,Men,Training,Everything' | split: ',' -%}
+{%- assign foot_shop_u = '/collections/womens,/collections/mens,/collections/training,/collections/all' | split: ',' -%}
+{%- assign foot_info_t = 'Fabric & specifications,Shipping,Returns & refunds,Materials' | split: ',' -%}
+{%- assign foot_info_u = '/pages/fabric,/pages/shipping,/pages/returns-refunds,/pages/materials-sustainability' | split: ',' -%}
+{%- assign foot_co_t = 'About,Contact,Privacy,Terms' | split: ',' -%}
+{%- assign foot_co_u = '/pages/about,/pages/contact,/policies/privacy-policy,/policies/terms-of-service' | split: ',' -%}
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    {%- for i in (1..2) -%}
+      <span>Free US shipping · no minimum</span>
+      <span>60-day returns</span>
+      <span>Every fabric weight published</span>
+      <span>Ships from Illinois</span>
+      <span>US orders only</span>
+    {%- endfor -%}
+  </div>
+</div>
+
+<header class="mast">
+  <div class="wrap mast__in">
+    <a href="{{ routes.root_url }}" class="logo">{{ shop.name }}</a>
+
+    <nav class="nav" aria-label="Primary">
+      {%- if main_links != blank -%}
+        {%- for link in main_links -%}
+          <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for title in nav_titles -%}
+          <a href="{{ nav_urls[forloop.index0] }}">{{ title }}</a>
+        {%- endfor -%}
+      {%- endif -%}
+    </nav>
+
+    <div class="mast__act">
+      <button type="button" class="mnav__toggle" id="nav-toggle"
+              aria-expanded="false" aria-controls="nav-panel">Menu</button>
+      <a href="{{ routes.search_url }}" class="mono mast__search">Search</a>
+      <a href="{{ routes.cart_url }}" class="mono"
+         aria-label="Bag, {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}">Bag ({{ cart.item_count }})</a>
+    </div>
+  </div>
+
+  <div class="mnav" id="nav-panel" hidden>
+    <nav class="wrap mnav__in" aria-label="Primary, mobile">
+      <ul class="mnav__list">
+        {%- if main_links != blank -%}
+          {%- for link in main_links -%}
+            <li><a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for title in nav_titles -%}
+            <li><a href="{{ nav_urls[forloop.index0] }}">{{ title }}</a></li>
+          {%- endfor -%}
+        {%- endif -%}
+        <li><a href="{{ routes.search_url }}">Search</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  {{ content_for_layout }}
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a href="{{ routes.root_url }}" class="logo" style="font-size:17px">{{ shop.name }}</a>
+        <p class="foot__addr" style="margin-top:16px">
+          Technical activewear, specified in public.<br>
+          Shipping within the United States.<br>
+          {{ shop.email | default: 'support@hivolt-usa.com' }}
+        </p>
+      </div>
+
+      {%- if footer_links != blank -%}
+        {%- for column in footer_links limit: 3 -%}
+          <div>
+            <h4>{{ column.title | escape }}</h4>
+            <ul>
+              {%- if column.links != blank -%}
+                {%- for link in column.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                {%- endfor -%}
+              {%- else -%}
+                <li><a href="{{ column.url }}">{{ column.title | escape }}</a></li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            {%- for title in foot_shop_t -%}
+              <li><a href="{{ foot_shop_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div>
+          <h4>Information</h4>
+          <ul>
+            {%- for title in foot_info_t -%}
+              <li><a href="{{ foot_info_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            {%- for title in foot_co_t -%}
+              <li><a href="{{ foot_co_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="foot__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <span>Free US shipping · 60-day returns · US orders only</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn   = document.getElementById('nav-toggle');
+  var panel = document.getElementById('nav-panel');
+  if(!btn || !panel) return;
+
+  var wide = window.matchMedia('(min-width: 861px)');
+
+  function isOpen(){ return btn.getAttribute('aria-expanded') === 'true'; }
+
+  function setOpen(open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.textContent = open ? 'Close' : 'Menu';
+    panel.hidden = !open;
+  }
+
+  btn.addEventListener('click', function(){ setOpen(!isOpen()); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape' && e.key !== 'Esc') return;
+    if(!isOpen()) return;
+    setOpen(false);
+    btn.focus();
+  });
+
+  // A resize past the breakpoint hides the panel in CSS; keep state honest.
+  function sync(){ if(wide.matches && isOpen()) setOpen(false); }
+  if(wide.addEventListener) { wide.addEventListener('change', sync); }
+  else if(wide.addListener) { wide.addListener(sync); }
+
+  setOpen(false);
+})();
+</script>
+
+</body>
+</html>

@@ -59,19 +59,24 @@
 
         {%- comment -%} Wide by nature — its own scroll container, and it stacks under 640px {%- endcomment -%}
         <div class="ct__scroll">
-          <div class="ct__tbl" role="table" aria-label="Cart line items">
+          <div class="ct__tbl">
 
-            <div class="ln ln--head" role="row">
-              <span class="ln__fig" aria-hidden="true"></span>
-              <span class="ln__desc" role="columnheader">Item</span>
-              <span class="ln__unit" role="columnheader">Unit</span>
-              <span class="ln__qty" role="columnheader">Qty</span>
-              <span class="ln__tot" role="columnheader">Line total</span>
-              <span class="ln__rm" role="columnheader"><span class="visually-hidden">Remove</span></span>
+            {%- comment -%}
+              Column headings are decoration: every cell carries its own label,
+              visually hidden until the row stacks. Hidden from assistive tech so
+              the label is not announced twice.
+            {%- endcomment -%}
+            <div class="ln ln--head" aria-hidden="true">
+              <span class="ln__fig"></span>
+              <span class="ln__desc">Item</span>
+              <span class="ln__unit">Unit</span>
+              <span class="ln__qty">Qty</span>
+              <span class="ln__tot">Line total</span>
+              <span class="ln__rm">Remove</span>
             </div>
 
             {%- for item in cart.items -%}
-              <div class="ln" role="row">
+              <div class="ln">
 
                 <span class="ln__fig">
                   {%- if item.image -%}
@@ -88,7 +93,7 @@
                   {%- endif -%}
                 </span>
 
-                <span class="ln__desc" role="cell">
+                <span class="ln__desc">
                   <a class="ln__name" href="{{ item.url }}">{{ item.product.title }}</a>
                   {%- unless item.product.has_only_default_variant -%}
                     <span class="ln__var">{{ item.variant.title }}</span>
@@ -101,7 +106,7 @@
                   {%- endfor -%}
                 </span>
 
-                <span class="ln__unit" role="cell">
+                <span class="ln__unit">
                   <span class="ln__lab">Unit</span>
                   <span class="ln__num">
                     {%- if item.original_price > item.final_price -%}
@@ -111,7 +116,7 @@
                   </span>
                 </span>
 
-                <span class="ln__qty" role="cell">
+                <span class="ln__qty">
                   <label class="ln__lab" for="updates_{{ item.key }}">Qty</label>
                   <input
                     type="number"
@@ -125,12 +130,12 @@
                     aria-label="Quantity for {{ item.product.title | escape }}">
                 </span>
 
-                <span class="ln__tot" role="cell">
+                <span class="ln__tot">
                   <span class="ln__lab">Line total</span>
                   <span class="ln__num">{{ item.final_line_price | money }}</span>
                 </span>
 
-                <span class="ln__rm" role="cell">
+                <span class="ln__rm">
                   <a href="{{ item.url_to_remove }}"
                      aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a>
                 </span>
