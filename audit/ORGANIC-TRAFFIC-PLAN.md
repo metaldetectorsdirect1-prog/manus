@@ -172,17 +172,46 @@ Two generation artifacts in titles:
 - "Best Tennis Skirts **for Tennis**" → "for **Match Play**" (the tautology sat
   beside sibling articles for Pickleball, Golf and Casual Summer Outfits)
 
-### Recommended, not yet done
+### Done — the 103 formula titles are stripped
+
+**106 titles rewritten**, zero errors, verified by re-reading the first 250
+rather than trusting the mutation responses. Not one of the six suffixes
+survives in the formula block.
+
+The timing is what made this cheap, and it is the transferable lesson: the
+articles are **8 days old and not yet indexed**, so Google's first crawl never
+sees the duplicate pattern. After indexing, the same fix needs 301s and a
+re-crawl. **Audit bulk-generated content for duplicate title patterns before
+the first crawl, not after.**
+
+Stripping the suffix beat rewriting each title on its own merits — it pulls
+every title under the SERP display limit and leaves exactly the phrase people
+search:
+
+| Before | After |
+|---|---|
+| Best Leggings for CrossFit: Features That Actually Matter | Best Leggings for CrossFit |
+| Best Sports Bras for Low-Impact Workouts: A Complete Buying Guide | Best Sports Bras for Low-Impact Workouts |
+| Best Gym Shorts for Leg Day: How to Choose | Best Gym Shorts for Leg Day |
+
+**Handles were deliberately left untouched**, so no redirects are needed and
+no link equity moves. The genuinely distinctive suffixes that were never part
+of the rotation are intact — "The Best Black Leggings: Why Every Wardrobe
+Starts Here", "Best Matching Workout Sets: How to Build Yours".
+
+The verification pass also caught a straggler: the tennis-skirt article
+renamed earlier for its "for Tennis" tautology had kept its boilerplate
+suffix. Now "Best Tennis Skirts for Match Play".
+
+### Still recommended, not done
 
 **Do not noindex. Do not mass-delete.** ~465 articles are fine as they are.
 
-1. **Retitle the 103 formula articles** to break the six-suffix rotation. This
-   is the loudest bulk signal visible to both readers and Google, and the
-   cheapest item on this list.
-2. **Consolidate the 25–35 cannibalising articles** into canonical versions
-   with 301 redirects.
-3. **Never repeat the 1h55m burst.** Stagger all future publishing.
-4. **Re-measure organic in 60–90 days.** Judging this blog at 8 days old tells
+1. **Consolidate the 25–35 cannibalising articles** into canonical versions
+   with 301 redirects — the shorts overlap, the four-article legging-opacity
+   cluster, the odour trio, the leggings/yoga-pants pairs.
+2. **Never repeat the 1h55m burst.** Stagger all future publishing.
+3. **Re-measure organic in 60–90 days.** Judging this blog at 8 days old tells
    you nothing.
 
 ## What is not in place
