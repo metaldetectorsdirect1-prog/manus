@@ -42,6 +42,11 @@ MAP = {
     'theme/page.track-order.liquid':   'templates/page.track-order.liquid',
     'theme/page.drops.liquid':         'templates/page.drops.liquid',
     'theme/page.membership.liquid':    'templates/page.membership.liquid',
+    # One-product landing page for the Voltcore set. Reads price, sizes, stock
+    # and spec straight off the live product, so the saving arithmetic cannot
+    # drift out of step with the component prices the way the hand-typed
+    # "$10.98" in the product description did.
+    'theme/page.voltcore.liquid':      'templates/page.voltcore.liquid',
     'theme/layout-theme.liquid':       'layout/theme.liquid',
 }
 # customers-<name>.liquid -> templates/customers/<name>.liquid
