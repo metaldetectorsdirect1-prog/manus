@@ -105,9 +105,9 @@ audit/fabricated-image-removal.json
   → 38 products, 80 media IDs
 ```
 
-**This has not been executed.** The Shopify connection expired partway through
-this audit and cannot be re-authorised from a non-interactive session. Re-connect
-Shopify in your claude.ai connector settings and it runs immediately.
+**Executed 2026-08-06.** See the "Executed" section at the end of this document
+for what actually ran, which was more than this plan predicted. The manifest
+above is retained as the original plan, not as a description of the final state.
 
 ---
 
