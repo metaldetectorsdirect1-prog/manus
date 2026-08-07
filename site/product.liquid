@@ -224,7 +224,30 @@
   "name": {{ product.title | json }},
   "description": {{ product.description | strip_html | truncate: 500 | json }},
   "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+  {%- if product.selected_or_first_available_variant.sku != blank %}
+  "mpn": {{ product.selected_or_first_available_variant.sku | json }},
+  {%- endif %}
   "brand": {"@type":"Brand","name":"HIVOLT"},
+  "itemCondition": "https://schema.org/NewCondition",
+  {%- comment -%}
+    material and the fabric-weight property are emitted only where the spec
+    metafield actually holds a value. Google reads material for apparel; the
+    weight goes in additionalProperty because schema.org "weight" means the
+    mass of the item, not the mass per square metre of its fabric — using it
+    for g/m² would be a wrong statement in a machine-readable field.
+  {%- endcomment -%}
+  {%- if product.metafields.spec.composition != blank %}
+  "material": {{ product.metafields.spec.composition | json }},
+  {%- endif %}
+  {%- if product.metafields.spec.gsm != blank %}
+  "additionalProperty": [{
+    "@type": "PropertyValue",
+    "name": "Fabric weight",
+    "value": {{ product.metafields.spec.gsm | json }},
+    "unitCode": "GM",
+    "unitText": "g/m²"
+  }],
+  {%- endif %}
   {%- if product.featured_image %}
   "image": [{{ product.featured_image | image_url: width: 1200 | prepend: "https:" | json }}],
   {%- endif %}
@@ -234,7 +257,20 @@
     "priceCurrency": {{ cart.currency.iso_code | json }},
     "price": {{ product.price | divided_by: 100.0 | json }},
     "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
-    "seller": {"@type":"Organization","name":"HIVOLT"}
+    "seller": {"@type":"Organization","name":"HIVOLT"},
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {"@type":"MonetaryAmount","value":0,"currency":"USD"},
+      "shippingDestination": {"@type":"DefinedRegion","addressCountry":"US"}
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "US",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 60,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    }
   }
 }
 </script>
