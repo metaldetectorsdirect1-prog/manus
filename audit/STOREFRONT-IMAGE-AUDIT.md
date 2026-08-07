@@ -75,6 +75,13 @@ logos across a catalogue that has none.
 
 ---
 
+## STATUS: EXECUTED 2026-08-06
+
+All of this has now been carried out against the live store and verified by
+re-reading all 110 active products. What follows is the original finding; the
+"Executed" section at the end records what actually ran, including three
+products and ten collection images this audit missed.
+
 ## Recommended action
 
 **Delete all 80 images. Keep every product.**
@@ -167,3 +174,102 @@ defect did, but it caps everything downstream:
 The catalogue's genuine supplier photography is adequate: 1400×1400, two angles,
 consistent treatment across all 105 active products. It is less exciting than an
 AI model in a studio. It is also true, which is the whole proposition.
+
+
+---
+
+# Executed — 2026-08-06
+
+## Products
+
+**102 fabricated images removed across 41 active products.** Verified by
+re-reading every one of the 110 active products afterwards: every remaining
+image is a 32-hex-GUID supplier photograph.
+
+That is more than the 80 this audit predicted. Three products were missing from
+the manifest entirely and were caught only by re-auditing the live catalogue
+rather than trusting the file:
+
+| Product | Fabricated images |
+|---|---|
+| Women's Colour Block Ruched V-Neck Sports Bra | 5 |
+| Women's Faux Denim Sports Bra | 5 |
+| Women's Faux Denim Zip-Fly Leggings | 3 |
+
+These came from the `c5-*` reference-element generations, which used a real
+supplier photo as the garment reference. They were classified separately during
+the audit and never made it into the removal manifest. Same defect, same fix.
+
+## The hero product
+
+The **Voltcore 2-Piece Set** held 5 fabricated images and only 1 genuine one, so
+removing them would have left it nearly bare. It now carries 4 real photographs:
+the flare leggings plus the twist-front bra's own supplier shots — which is what
+the set actually contains.
+
+## Collections — missed by the original audit entirely
+
+**10 collection images were still fabricated**, from the same generation
+pipeline. The audit only ever examined products. All ten now use supplier
+photography taken from a product inside that collection:
+
+`mens-activewear` · `womens-activewear` · `outerwear-hoodies` · `training` ·
+`yoga-studio` · `drop-04-voltcore` · `sports-bras` · `leggings` · `shorts` ·
+`tennis-and-court`
+
+## A spec contradiction
+
+The **Drop 04 — Voltcore** collection description claimed **210gsm**. Every
+product page states **220 g/m²**. On a store whose entire proposition is
+"published, not claimed", two pages disagreeing about the one number the brand
+rests on is worse than saying nothing. Rewritten to 220, stated against the
+180–200 category norm, with the source named.
+
+## Three manifest defects found during execution
+
+1. **8 products carried `null` media IDs.** A saved query hadn't requested the
+   media `id` field, so `.get('id')` yielded `None`. Those entries would have
+   fired `mediaIds: ["None"]`. Re-derived from live data with an assertion that
+   every product retains at least 2 genuine photographs before mutating.
+2. **A stale read.** A page-3 response still listed media that earlier batches
+   had already deleted; the delete failed with "do not exist", which is how it
+   surfaced.
+3. **I used a product ID taken from a pagination cursor.** It resolved to the
+   Unisex Paneled Long Sleeve Jersey, not the Voltcore set — and three
+   sports-bra and legging photographs were added to a men's top. Caught by
+   querying what had actually been modified, reverted, and redone against the
+   correct ID. The delete half of that mutation failed loudly; the add half
+   succeeded silently. Trusting the response instead of re-reading the store
+   would have left it in place.
+
+## Two Shopify behaviours worth recording
+
+- `productsCount(query: "-has_image:true")` returns the full catalogue count.
+  `has_image` is not a supported filter — the positive and negated forms both
+  return 110, so it is silently ignored. It looks exactly like a catastrophic
+  finding and is not one.
+- `collectionUpdate` with `image: {src: ...}` against a collection that already
+  has an image **returns success and changes nothing** — only the cache-busting
+  timestamp moves. `ImageInput` is keyed on `id`. The image must be cleared to
+  `null` first, then set in a second call.
+
+## Verified after execution
+
+- All 110 active products re-read: no fabricated imagery remains.
+- Checkout re-tested with `draftOrderCalculate` across three carts — hero
+  product, Tapstitch-line product, mixed cart — to New York, Cupertino and
+  Chicago. Free US shipping quoted on all three.
+- Both delivery profiles still hold their location assignment, so the defect
+  that made the store unable to compute a shipping rate remains fixed.
+
+## Still outstanding
+
+- Two active products carry a single image: `women-s-color-block-yoga-tank-top`
+  and `womens-ruched-halter-neck-sports-bra`. Both are missing the alternate
+  view the Tapstitch import supplied for everything else. Re-pull from the
+  supplier; do not generate a replacement.
+- No `spec.*` metafields exist. The v15 product template renders a specification
+  row only where a metafield has a value, so those sheets will be empty until
+  real fabric weights are entered. That is deliberate — a placeholder would
+  break the page's only claim.
+- The store has never processed a payment.

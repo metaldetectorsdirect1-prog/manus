@@ -30,3 +30,5 @@ HIVOLT-theme.zip
 .claude-flow/policy/
 .claude/proven-config.json
 .claude/.proven-config-version
+.claude-flow/daemon.pid
+*.pid
