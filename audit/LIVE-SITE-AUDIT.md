@@ -148,6 +148,61 @@ repository. Recorded here instead.
    `page.fabric.liquid`, the largest template in the theme, and previously had
    no path to it from anywhere in the navigation.
 
+## Catalogue-wide claim audit — all 110 active products
+
+Run 2026-08-07 by a fan-out agent under Ruflo swarm
+`swarm-1786132607056-ejnvn1`. Every product description was cross-checked
+against `spec.gsm`, `spec.composition` and `priceRangeV2`.
+
+**The catalogue is clean.** Counts by defect class:
+
+| Class | Instances |
+|---|---|
+| A — numeric contradiction (stated g/m² vs metafield, oz/yd² conversion) | **0** |
+| B — composition contradiction | **1** |
+| C — arithmetic on savings or price comparisons | **0** |
+| D — return/shipping claims contradicting US-only, free, 60-day worn-included | **0** |
+| E — unsupported superlatives or health claims | **0** |
+
+Every stated g/m² matches its metafield exactly, every intro figure matches
+its Details block, and all 26 distinct oz/yd² ↔ g/m² pairs convert correctly
+at 33.906. Every percentage set sums to exactly 100%, including 87.5/12.5,
+79.2/20.8, 90.6/9.4, 61.9/38.1 and 47/47/6. The two hard comparative claims in
+the range both check out against live data: "the heaviest thing we make" on
+`two-tone-fleeced-varsity-jacket` (380 g/m², joint-highest in the store) and
+"among the lightest shorts in the range" on
+`mens-regular-fit-performance-shorts` (120 g/m², joint-lowest shorts weight).
+
+### The one defect, and it was mine
+
+`women-s-high-waisted-flare-leggings` still read:
+
+> "Pairs with the Twist Front Bra in the Voltcore Set — **same fabric run,
+> guaranteed colour match**."
+
+That is the surviving residue of the "cut from one fabric" story. Earlier the
+same claim was corrected on the Voltcore **set** product — and missed on the
+**component**. The leggings are 80% nylon / 20% spandex; the bra is 75/25.
+They are not one fabric run.
+
+Corrected to state what is true: both knit at 220 g/m², in the same matte
+black, with the blends differing because a support piece and a compression
+piece are engineered differently.
+
+**The lesson, recorded in Ruflo memory:** a claim about a *relationship*
+between two products lives on both sides of that relationship. Fixing the hero
+page is half a fix — the catalogue has to be searched for the claim's wording.
+
+### Two metafield omissions closed
+
+Not false claims, but incomplete spec sheets — a fabric named in the
+description was absent from `spec.composition`:
+
+- `women-s-color-block-yoga-tank-top` — cup lining 95% polyamide, 5% elastane
+- `womens-criss-cross-band-sports-bra` — mesh 94% polyester, 6% elastane
+
+Both now appear on the spec sheet.
+
 ## Still outstanding
 
 ### Blocking, and only the owner can clear them
