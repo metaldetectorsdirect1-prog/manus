@@ -105,6 +105,49 @@ wrongly reported as one.
 
 ---
 
+## Second pass — the customer account portal
+
+`shop.customerAccountsV2.url` = **`https://account.focusfoxes.shop`**
+
+The store runs `NEW_CUSTOMER_ACCOUNTS`, and the portal hosting them sits on
+**focusfoxes.shop** — the same Focus Foxes brand that appears in the July
+abandoned-checkout records. Every "Log in" and "Account" link, the *log in for
+faster checkout* prompt Shopify shows during checkout, and the account links in
+order confirmation emails all resolve to a domain with nothing to do with
+HIVOLT.
+
+A buyer part-way through checkout on `hivolt-usa.com` who watches
+`focusfoxes.shop` appear in the address bar reads that as a redirect attack.
+This is a live and plausible cause of 24 checkout arrivals and zero
+completions.
+
+**Not fixable from this connector** — it is Settings → Customer accounts in
+admin. `loginRequiredAtCheckout` is `false`, so accounts are at least not
+mandatory to buy.
+
+## Second pass — fixed directly on the store
+
+These were applied through the Admin API, so they leave no diff in this
+repository. Recorded here instead.
+
+1. **Three collections had no image.** `tops` (71 products), `bottoms` (45) and
+   `frontpage` now carry supplier photography taken from a product inside that
+   collection — the same approach used for the ten fabricated collection
+   images. `all` is deliberately left without one; it is the catch-all and
+   renders no hero.
+
+2. **The Returns & Refunds page promised returns it cannot honour.** It offered
+   "Canada: free on orders over $150, otherwise $12 deducted" and
+   "International: customer arranges return shipping" on a store whose shipping
+   policy, delivery profiles and enabled markets all agree it ships to the
+   United States only. Two of the three rows described a service nobody can
+   buy. Replaced with the one true line: US only, free, prepaid label.
+
+3. **The footer About menu linked `/blogs/learn`, which has zero articles.**
+   Replaced with Materials & Sustainability — which now renders through
+   `page.fabric.liquid`, the largest template in the theme, and previously had
+   no path to it from anywhere in the navigation.
+
 ## Still outstanding
 
 ### Blocking, and only the owner can clear them
