@@ -203,16 +203,45 @@ The verification pass also caught a straggler: the tennis-skirt article
 renamed earlier for its "for Tennis" tautology had kept its boilerplate
 suffix. Now "Best Tennis Skirts for Match Play".
 
+### Consolidation — recommended, then withdrawn on inspection
+
+The audit recommended consolidating 25–35 "cannibalising" articles, and I
+repeated that recommendation. **Having since read all 500 titles rather than a
+sample, I am withdrawing it.** The clusters do not look like accidental
+duplication; they look like a deliberately built topic cluster.
+
+Take the four articles flagged as competing on legging opacity:
+
+| Article | Actual intent |
+|---|---|
+| Best Leggings for Squats | commercial — which product to buy |
+| Squat-Proof Leggings: How Opacity Really Works | informational — the mechanism |
+| The Squat Test: How to Check Leggings Before You Buy | how-to — a consumer method |
+| Opacity Ratings: How Brands Test Squat-Proof Claims | informational — industry standards |
+
+That is a pillar plus three supporting angles serving four different search
+intents. Merging them would *destroy* value, not consolidate it. The same
+holds for the odour trio (a fix, a diagnosis, a technology explainer) and the
+walking cluster.
+
+The six genuine near-pairs are `leggings` vs `yoga pants` and `gym shorts` vs
+`workout shorts` variants. Those are **distinct head terms with independent
+search volume**, and targeting both is a normal strategy rather than a defect.
+
+So the trade on offer was: unpublish ~30 substantive articles (660–1,150 words
+each, real specs, valid schema) to chase a marginal and unproven ranking gain,
+on content **that is not even indexed yet**. That is a bad trade, and it is
+close to irreversible. Not doing it.
+
+If any consolidation happens later it should be driven by Search Console data
+showing two URLs actually swapping for the same query — not by title
+similarity read off a list.
+
 ### Still recommended, not done
 
-**Do not noindex. Do not mass-delete.** ~465 articles are fine as they are.
-
-1. **Consolidate the 25–35 cannibalising articles** into canonical versions
-   with 301 redirects — the shorts overlap, the four-article legging-opacity
-   cluster, the odour trio, the leggings/yoga-pants pairs.
-2. **Never repeat the 1h55m burst.** Stagger all future publishing.
-3. **Re-measure organic in 60–90 days.** Judging this blog at 8 days old tells
-   you nothing.
+1. **Never repeat the 1h55m burst.** Stagger all future publishing.
+2. **Re-measure organic in 60–90 days.** Judging this blog at 8 days old tells
+   you nothing — the mistake made twice already in this document.
 
 ## What is not in place
 
