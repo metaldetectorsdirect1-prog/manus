@@ -268,8 +268,11 @@ rests on is worse than saying nothing. Rewritten to 220, stated against the
   and `womens-ruched-halter-neck-sports-bra`. Both are missing the alternate
   view the Tapstitch import supplied for everything else. Re-pull from the
   supplier; do not generate a replacement.
-- No `spec.*` metafields exist. The v15 product template renders a specification
-  row only where a metafield has a value, so those sheets will be empty until
-  real fabric weights are entered. That is deliberate — a placeholder would
-  break the page's only claim.
+- The eight `spec.*` product metafield **definitions now exist** and are pinned,
+  so they appear at the top of every product in admin: `gsm`, `composition`,
+  `rise`, `inseam`, `seams`, `gusset`, `opacity`, `care`. **Every one is empty.**
+  The product template renders a specification row only where a metafield has a
+  value, so the sheets stay blank until real supplier figures are entered. That
+  is deliberate — a placeholder would break the page's only claim. Fill them
+  from the Tapstitch spec, not from memory.
 - The store has never processed a payment.
