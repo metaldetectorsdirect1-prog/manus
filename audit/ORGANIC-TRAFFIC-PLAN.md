@@ -97,6 +97,94 @@ Every prerequisite the organic channels need is done:
   leggings gsm").
 - **A landing page** for the one SKU worth pointing a campaign at.
 
+## The blog — and a hypothesis of mine that was wrong
+
+I suspected the 500-article blog was suppressing the domain in search: 500
+articles on a 37-day-old store looks exactly like bulk spam, and Google's
+helpful-content system demotes site-wide for it. A fan-out audit under Ruflo
+swarm `swarm-1786132607056-ejnvn1` checked it.
+
+**The hypothesis was a timeline error.** The articles were published
+**2026-07-30** — eight days ago. Google has not had time to index them, let
+alone rank or demote them. 63 organic sessions per 14 days on a 37-day-old
+domain with no backlink profile is *normal for a new site*, not a penalty
+signal. The blog cannot be the cause of the low organic traffic, and I should
+not have implied it was.
+
+**Verdict: MIXED — a genuine content asset published with a spam-shaped
+fingerprint.**
+
+### The fingerprint
+
+All 500 articles published in a **1 hour 54 minute window**, 02:15:14Z to
+04:09:54Z on 2026-07-30 — roughly **4.4 articles per minute**. Zero on any
+other date. That is unambiguous bulk generation.
+
+**103 articles (20.6%) share one title formula** — `Best {garment} for {use
+case}: {suffix}` — rotating just **six** suffixes:
+
+| Suffix | Count |
+|---|---|
+| "A Complete Buying Guide" | 22 |
+| "What to Look For" | 21 |
+| "The No-Regrets Guide" | 20 |
+| "How to Choose" | 20 |
+| "Features That Actually Matter" | 19 |
+| "What Actually Matters (2026 Guide)" | 1 |
+
+### The substance, which is better than the fingerprint suggests
+
+Sampled bodies run **660–1,150 words**, median ~850. **Zero under 300 words.**
+No degradation at the tail — article 498 is as substantive as article 1. They
+cite real fibre blends and g/m² figures, link to real product handles, carry
+valid `Article` + `FAQPage` JSON-LD, and show editorial judgment: the
+postpartum article defers to medical providers, and several explicitly tell
+the reader not to buy.
+
+They share a structural skeleton, but the substance genuinely differs — "Best
+Leggings for Squats" is about opacity under 30–50% stretch and waistband
+anchoring, while "Best Leggings for Running" is about chafe, slippage and
+moisture over 5,000 foot strikes. Different failure modes, different guidance,
+different products cited.
+
+**No cross-brand contamination.** A body search for `collagen OR YUBBEX OR
+Foxes` returned zero hits against a working control. The contamination
+documented elsewhere on this store never reached the blog.
+
+### Real keyword cannibalisation — about 25–35 articles
+
+Pairs and clusters competing for the same query:
+
+- "Best Gym Shorts for Running" vs "Best Workout Shorts for Running" (same for
+  HIIT, and Summer Heat vs Summer Workouts)
+- "Best Leggings for Hot Yoga" vs "Best Yoga Pants for Hot Yoga" (same for
+  Pilates, Tall Women, Petite Women)
+- **Four** articles on legging opacity: "Best Leggings for Squats" /
+  "Squat-Proof Leggings: How Opacity Really Works" / "The Squat Test" /
+  "Opacity Ratings"
+- **Three** on odour, **three** on 10,000 steps
+
+### Fixed
+
+Two generation artifacts in titles:
+
+- "Your First 10K: **An** 10-Week Training Plan" → "**A** 10-Week Training Plan"
+- "Best Tennis Skirts **for Tennis**" → "for **Match Play**" (the tautology sat
+  beside sibling articles for Pickleball, Golf and Casual Summer Outfits)
+
+### Recommended, not yet done
+
+**Do not noindex. Do not mass-delete.** ~465 articles are fine as they are.
+
+1. **Retitle the 103 formula articles** to break the six-suffix rotation. This
+   is the loudest bulk signal visible to both readers and Google, and the
+   cheapest item on this list.
+2. **Consolidate the 25–35 cannibalising articles** into canonical versions
+   with 301 redirects.
+3. **Never repeat the 1h55m burst.** Stagger all future publishing.
+4. **Re-measure organic in 60–90 days.** Judging this blog at 8 days old tells
+   you nothing.
+
 ## What is not in place
 
 1. **The Google & YouTube sales channel is not installed.** Free Shopping
