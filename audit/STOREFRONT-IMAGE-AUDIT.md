@@ -268,11 +268,31 @@ rests on is worse than saying nothing. Rewritten to 220, stated against the
   and `womens-ruched-halter-neck-sports-bra`. Both are missing the alternate
   view the Tapstitch import supplied for everything else. Re-pull from the
   supplier; do not generate a replacement.
-- The eight `spec.*` product metafield **definitions now exist** and are pinned,
-  so they appear at the top of every product in admin: `gsm`, `composition`,
-  `rise`, `inseam`, `seams`, `gusset`, `opacity`, `care`. **Every one is empty.**
-  The product template renders a specification row only where a metafield has a
-  value, so the sheets stay blank until real supplier figures are entered. That
-  is deliberate — a placeholder would break the page's only claim. Fill them
-  from the Tapstitch spec, not from memory.
+- The eight `spec.*` product metafield definitions exist, are pinned, and are
+  **populated from the supplier copy already published in each product's own
+  description** — 296 values across 108 of the 110 active products:
+
+  | Field | Products | Source |
+  |---|---|---|
+  | `gsm` | 107 | the g/m² figure stated in the description |
+  | `composition` | 108 | the fibre content stated in the description |
+  | `care` | 79 | the Tapstitch care line, byte-identical across all 79 |
+  | `seams` | 2 | only where the copy says "Flatlock seams" |
+  | `rise` `inseam` `gusset` `opacity` | 0 | no product publishes these |
+
+  Nothing was inferred or converted. Three products are deliberately short:
+  `performance-short-sleeve-t-shirt` and `womens-open-back-tennis-dress`
+  publish no spec at all, and `soft-hooded-sports-jacket` publishes
+  `3.8 oz/yd²` but never a g/m² figure — that converts to 130, which is what
+  the same supplier calls 3.8 oz/yd² elsewhere in this catalogue, but a
+  conversion is not a quotation, so it is left blank. Rebuild the payload with
+  `audit/build-spec-metafields.py`; the provenance rules are in its docstring.
+
+- **The v16 theme is missing six page templates that the live v14 theme has.**
+  Pages carrying these template suffixes exist on the store and would fall back
+  to the generic `templates/page.liquid`, losing their designed layout:
+  `faq` (Help Center) · `help` (Trust & Help Center) · `size-guide` ·
+  `track-order` · `drops` (Drop Calendar) · `membership` (HIVOLT Circuit).
+  v16 also drops `gift_card.liquid`, `password.liquid`, and the two
+  `llms*.txt.liquid` AI-crawler files. Confirm in preview before publishing.
 - The store has never processed a payment.
