@@ -1,0 +1,156 @@
+{%- comment -%}
+  HIVOLT — templates/page.membership.liquid
+  ─────────────────────────────────────────
+  Alternate page template. In the admin: Pages → HIVOLT Circuit — Membership →
+  Template suffix → "membership". Renders inside layout/theme.liquid, which
+  supplies <main>.
+
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
+
+  Uses Shopify's native customer form — form 'customer'. Field names matter:
+
+      contact[email]       → the address, validated by Shopify
+      contact[first_name]  → optional, used only to address the email
+      contact[tags]        → applied to the created customer record; "newsletter"
+                             is the tag Shopify's own marketing surfaces read
+
+  form.posted_successfully? is only true on the redirect after a successful
+  submit, so the confirmation renders above a fresh, empty form. form.errors is
+  rendered as a real list with role="alert" rather than a colour change, because
+  a colour change is invisible to a screen reader.
+
+  The page states no member discount, no points balance and no tier. The store
+  operates none of those, and a benefit that does not exist is the one thing a
+  signup page must not print.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Membership' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">The Circuit</p>
+  <h1 class="hero__h">Told first.<br>Nothing<br><em>else sent.</em></h1>
+  <p class="hero__sub">
+    Free to join. One email when a drop is coming, one when it's live. No weekly
+    newsletter, because there isn't one.
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="cf__grid">
+
+    <div>
+      {%- if form.posted_successfully? -%}
+        <div class="cf__ok" tabindex="-1" role="status">
+          <p class="mono cf__ok-h">You're on the list</p>
+          <p class="cf__ok-b">
+            Nothing else to do. The next message you get from us will be a drop
+            going live — every email carries an unsubscribe link.
+          </p>
+        </div>
+      {%- endif -%}
+
+      {%- form 'customer', id: 'circuit-signup' -%}
+
+        {%- if form.errors -%}
+          <div class="cf__err" tabindex="-1" role="alert">
+            <p class="mono cf__err-h">That didn't go through</p>
+            <ul class="cf__err-l">
+              {%- for field in form.errors -%}
+                <li>
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    {{ form.errors.translated_fields[field] }} — {{ form.errors.messages[field] }}
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="cf">
+          <input type="hidden" name="contact[tags]" value="newsletter, circuit">
+
+          <div class="cf__f">
+            <label class="cf__l" for="circuit-name">First name</label>
+            <input class="cf__in" type="text" id="circuit-name"
+                   name="contact[first_name]" autocomplete="given-name"
+                   value="{{ form.first_name }}">
+            <p class="cf__h">Optional. Only used to address the email.</p>
+          </div>
+
+          <div class="cf__f">
+            <label class="cf__l" for="circuit-email">
+              Email<span class="cf__req" aria-hidden="true">required</span>
+            </label>
+            <input class="cf__in" type="email" id="circuit-email"
+                   name="contact[email]" autocomplete="email" required
+                   value="{{ form.email }}"
+                   placeholder="you@example.com">
+          </div>
+
+          <button class="btn cf__go" type="submit">Join the Circuit</button>
+
+          <p class="cf__note">
+            Unsubscribe from any email. The address is used for drop notices and
+            nothing else — it is not sold, and it is not passed to an advertiser.
+          </p>
+        </div>
+
+      {%- endform -%}
+    </div>
+
+    <aside class="pg__aside">
+      <p class="mono pg__aside-h">What you get</p>
+      <div class="rte rte--tight">
+        {%- if page.content != blank -%}
+          {{ page.content }}
+        {%- else -%}
+          <ul>
+            <li>Notice before a drop goes live.</li>
+            <li>First access while a limited run lasts.</li>
+            <li>Nothing between drops.</li>
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <p class="mono pg__aside-h pg__aside-h--gap">What it isn't</p>
+      <div class="rte rte--tight">
+        <p>
+          There is no members' discount, no points balance and no tier to climb.
+          The Circuit is a notification list. Saying otherwise would be the
+          easiest thing on this page to write and the first thing to be untrue.
+        </p>
+      </div>
+
+      <p class="mono pg__aside-h pg__aside-h--gap">Already have an account?</p>
+      <div class="rte rte--tight">
+        <p>
+          An account and the Circuit are separate. <a href="{{ routes.account_url }}">Your
+          account</a> holds orders and addresses; this list holds nothing but an
+          email address.
+        </p>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Want to see what's live first?</span>
+      The current drop is on the calendar, with every style's fibre composition
+      and fabric weight published against it.
+    </p>
+    {%- assign drops_page = pages['drops'] -%}
+    <a class="btn btn--ghost" href="{{ drops_page.url | default: '/pages/drops' }}">Drop calendar</a>
+  </div>
+</section>

@@ -1,0 +1,145 @@
+{%- comment -%}
+  HIVOLT — templates/page.track-order.liquid
+  ──────────────────────────────────────────
+  Alternate page template. In the admin: Pages → Track Your Order → Template
+  suffix → "track-order". Renders inside layout/theme.liquid, which supplies
+  <main>.
+
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
+
+  There is no tracking-number lookup box on this page, and that is deliberate.
+
+  A form here could only take a number and hand it to a carrier — it cannot
+  read the order, because Shopify does not expose order lookup by number to a
+  logged-out storefront. A box that pretends to search and then redirects is a
+  worse experience than the two routes that genuinely work:
+
+    · signed in  → the real order list, rendered below from customer.orders,
+                   each row linking to its own live status page
+    · signed out → the status link in the confirmation email, which is
+                   authenticated by the token in it
+
+  So the page shows whichever of those two applies, and says plainly why there
+  is nothing to type into.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Track your order' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Order status</p>
+  <h1 class="hero__h">Two ways<br>to find<br><em>your order.</em></h1>
+  <p class="hero__sub">
+    {%- if customer -%}
+      You're signed in, so your orders are listed below with their live status.
+    {%- else -%}
+      Sign in for the full list, or use the status link in your confirmation
+      email — it works without an account.
+    {%- endif -%}
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="pg__cols">
+
+    <div class="rte">
+      {%- if page.content != blank -%}
+        {{ page.content }}
+      {%- else -%}
+        <p>
+          Every order ships with tracking. The status page updates as the order
+          is made, dispatched and scanned by the carrier.
+        </p>
+      {%- endif -%}
+    </div>
+
+    <aside class="pg__aside">
+
+      {%- if customer -%}
+        <p class="mono pg__aside-h">Your orders</p>
+
+        {%- if customer.orders.size > 0 -%}
+          <div class="sheet">
+            {%- for order in customer.orders limit: 8 -%}
+              <div class="sheet__row">
+                <span class="sheet__k">
+                  <a href="{{ order.customer_url }}">{{ order.name }}</a>
+                </span>
+                <span class="sheet__v">
+                  <em>{{ order.fulfillment_status_label | default: 'Not fulfilled' }}</em>
+                </span>
+              </div>
+              <div class="sheet__row">
+                <span class="sheet__k">Placed</span>
+                <span class="sheet__v">{{ order.created_at | date: '%d %b %Y' }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+          <p class="sheet__src">
+            Each order number links to its own live status page. Statuses come
+            from the carrier and can lag a scan by a few hours.
+          </p>
+          {%- if customer.orders.size > 8 -%}
+            <div class="rte rte--tight" style="margin-top:14px">
+              <p><a href="{{ routes.account_url }}">See all {{ customer.orders.size }} orders</a></p>
+            </div>
+          {%- endif -%}
+
+        {%- else -%}
+          <div class="rte rte--tight">
+            <p>
+              There are no orders on this account yet. When you place one, it
+              appears here with its status.
+            </p>
+            <p><a href="{{ routes.all_products_collection_url }}">Browse the catalogue</a></p>
+          </div>
+        {%- endif -%}
+
+      {%- else -%}
+        <p class="mono pg__aside-h">Signed out</p>
+        <div class="rte rte--tight">
+          <p>
+            <strong>From the confirmation email.</strong> The order confirmation
+            carries a status link unique to that order. It opens the live status
+            page without an account and without a password.
+          </p>
+          <p>
+            <strong>From an account.</strong> Signing in lists every order placed
+            with the same email address, each with its own status.
+          </p>
+        </div>
+        <div class="rte rte--tight" style="margin-top:18px">
+          <p><a href="{{ routes.account_login_url }}">Sign in</a> &nbsp;·&nbsp; <a href="{{ routes.account_register_url }}">Create an account</a></p>
+        </div>
+      {%- endif -%}
+
+      <p class="mono pg__aside-h pg__aside-h--gap">Can't find the email?</p>
+      <div class="rte rte--tight">
+        <p>
+          Check the spam folder first, then write in with the email address used
+          at checkout. That is enough to locate the order.
+        </p>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Tracking hasn't moved?</span>
+      A label can be created a day or two before the carrier scans it, so a
+      stationary number early on is normal. If it hasn't moved after that, write
+      in with the order number.
+    </p>
+    {%- assign contact_page = pages['contact-us'] | default: pages['contact'] -%}
+    <a class="btn" href="{{ contact_page.url | default: '/pages/contact-us' }}">Ask about an order</a>
+  </div>
+</section>

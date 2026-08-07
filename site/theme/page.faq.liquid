@@ -1,0 +1,101 @@
+{%- comment -%}
+  HIVOLT — templates/page.faq.liquid
+  ──────────────────────────────────
+  Alternate page template. In the admin: Pages → Help Center → Template suffix →
+  "faq". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
+
+  The questions and answers are admin-entered and render through .rte. This
+  template does not restate any of them — a second copy of an answer is a
+  second thing to keep true, and the two drift.
+
+  What it adds is the exit: the five pages someone lands here looking for. Each
+  card renders only if that page actually exists, because a dead link on the
+  help page is worse than a shorter list. Handles are checked in pairs since
+  the store carries some duplicates from an earlier build.
+
+  No FAQPage JSON-LD. Emitting it would mean parsing question/answer pairs out
+  of admin HTML and asserting to Google that the split is correct. It is a
+  structured claim about content this template cannot actually read.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Help' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Help centre</p>
+  <h1 class="hero__h">Answers,<br>not a<br><em>ticket queue.</em></h1>
+  <p class="hero__sub">
+    Most of what gets asked is below. If it isn't, one inbox handles the rest and
+    a person reads it.
+  </p>
+</section>
+
+<section class="pg wrap">
+  {%- if page.content != blank -%}
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  {%- else -%}
+    <div class="rte">
+      <p>
+        Nothing has been published here yet. The pages below cover shipping,
+        returns, sizing and order tracking.
+      </p>
+    </div>
+  {%- endif -%}
+</section>
+
+<section class="pub">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="sec__h">Go straight to it</h2>
+      <span class="mono">Five pages</span>
+    </div>
+
+    {%- comment -%}
+      handle_a,handle_b|Label|Description — handle_b is the fallback where the
+      store holds two pages for one job.
+    {%- endcomment -%}
+    {%- assign rows = 'shipping-delivery,shipping|Shipping|What it costs, how long it takes, where it goes.||returns-refunds,returns|Returns|The window, the condition, and how to start one.||size-guide,size-guide|Sizing|How to read the measured table on each product.||track-order,track-order|Tracking|Where your order is and how to find it.||contact-us,contact|Contact|One inbox. Read by a person.' | split: '||' -%}
+
+    <div class="pub__grid">
+      {%- assign n = 0 -%}
+      {%- for row in rows -%}
+        {%- assign parts = row | split: '|' -%}
+        {%- assign handles = parts[0] | split: ',' -%}
+        {%- assign target = pages[handles[0]] -%}
+        {%- if target == blank or target.handle == blank -%}
+          {%- assign target = pages[handles[1]] -%}
+        {%- endif -%}
+        {%- if target != blank and target.handle != blank -%}
+          {%- assign n = n | plus: 1 -%}
+          <a class="pub__c" href="{{ target.url }}">
+            <p class="pub__n">{{ n | prepend: '0' | slice: -2, 2 }}</p>
+            <h3 class="pub__t">{{ parts[1] }}</h3>
+            <p class="pub__d">{{ parts[2] }}</p>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Not covered above?</span>
+      Write in. Include the order number if there is one — it saves a round trip,
+      and there is no phone line to call instead.
+    </p>
+    {%- assign contact_page = pages['contact-us'] | default: pages['contact'] -%}
+    <a class="btn" href="{{ contact_page.url | default: '/pages/contact-us' }}">Contact us</a>
+  </div>
+</section>

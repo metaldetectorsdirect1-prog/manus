@@ -33,6 +33,15 @@ MAP = {
     'theme/page.contact.liquid':       'templates/page.contact.liquid',
     'theme/page.shipping.liquid':      'templates/page.shipping.liquid',
     'theme/page.returns.liquid':       'templates/page.returns.liquid',
+    # Suffixes carried by live pages that would otherwise fall back to the
+    # generic page.liquid and lose their layout. Checked against the store:
+    # faq / size-guide / track-order / drops / membership all resolve to a
+    # real page with content.
+    'theme/page.faq.liquid':           'templates/page.faq.liquid',
+    'theme/page.size-guide.liquid':    'templates/page.size-guide.liquid',
+    'theme/page.track-order.liquid':   'templates/page.track-order.liquid',
+    'theme/page.drops.liquid':         'templates/page.drops.liquid',
+    'theme/page.membership.liquid':    'templates/page.membership.liquid',
     'theme/layout-theme.liquid':       'layout/theme.liquid',
 }
 # customers-<name>.liquid -> templates/customers/<name>.liquid

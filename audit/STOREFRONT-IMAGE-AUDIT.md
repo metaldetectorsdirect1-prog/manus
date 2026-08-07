@@ -288,11 +288,37 @@ rests on is worse than saying nothing. Rewritten to 220, stated against the
   conversion is not a quotation, so it is left blank. Rebuild the payload with
   `audit/build-spec-metafields.py`; the provenance rules are in its docstring.
 
-- **The v16 theme is missing six page templates that the live v14 theme has.**
-  Pages carrying these template suffixes exist on the store and would fall back
-  to the generic `templates/page.liquid`, losing their designed layout:
-  `faq` (Help Center) · `help` (Trust & Help Center) · `size-guide` ·
-  `track-order` · `drops` (Drop Calendar) · `membership` (HIVOLT Circuit).
-  v16 also drops `gift_card.liquid`, `password.liquid`, and the two
-  `llms*.txt.liquid` AI-crawler files. Confirm in preview before publishing.
+- **The missing page templates are closed.** Superseded by
+  `HIVOLT v17 — all pages (PREVIEW)`, `OnlineStoreTheme/158306992360`, 32 files,
+  role `UNPUBLISHED`. Five templates were written and five of the six suffixes
+  now resolve to a dedicated layout: `faq`, `size-guide`, `track-order`,
+  `drops`, `membership`.
+
+  Four of the five add function rather than styling: Track Your Order renders
+  the signed-in customer's real order list from `customer.orders` with a live
+  status link per row; Drop Calendar generates itself from any collection whose
+  handle begins `drop-`, so creating Drop 05 in the admin puts it on the page
+  with no template change; Membership carries a working `form 'customer'`
+  signup tagged `newsletter, circuit`; Help Center links only to pages that
+  actually resolve, checked in pairs because the store holds duplicates.
+
+  The sixth suffix, `help` (Trust & Help Center), was deliberately left without
+  a template. That page has an **empty body** and duplicates `faq` (Help
+  Center), which does have content — it is a leftover from an earlier build,
+  alongside `halal`, `ingredients`, `ambassador` and `share-photo`, which
+  reference a different brand entirely. The generic `page.liquid` already
+  handles an empty page correctly. Delete it or redirect it to `faq`.
+
+  Size Guide deliberately carries **no size table**. Every product description
+  already holds the supplier's measured table for that exact style in both
+  units; a second copy here is the one that goes stale and starts contradicting
+  the garment. The page explains how to read the table and where it is.
+
+  Still not carried, and each needs a decision rather than a template:
+  `gift_card.liquid` and `password.liquid` both require their own layout file
+  (`layout/gift_card.liquid`, `layout/password.liquid`) — neither feature is
+  active on the store, so Shopify's defaults apply until one is switched on.
+  The two `llms*.txt.liquid` files from v14 are a 152 KB static catalogue dump;
+  regenerating them lean and Liquid-driven is worth doing, but they are not a
+  storefront regression.
 - The store has never processed a payment.
