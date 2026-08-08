@@ -34,6 +34,17 @@
   <script>document.documentElement.className=document.documentElement.className.replace('no-js','js');</script>
 
   <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- comment -%}
+    The Google Search Console verification page is a published page whose entire
+    body is the verification token. It is not a destination, it has no content
+    to rank, and an indexed copy of it is a thin-content page competing against
+    the pages that matter. Search engines still need to fetch it, so noindex
+    rather than disallow, and follow so it passes nothing on to a dead end.
+  {%- endcomment -%}
+  {%- if page.handle == 'google-site-verification' -%}
+    <meta name="robots" content="noindex,follow">
+  {%- endif -%}
   {%- if settings.favicon %}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
   {%- endif %}
