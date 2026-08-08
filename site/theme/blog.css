@@ -256,3 +256,17 @@ a.artnav__a:hover .artnav__t{color:var(--blueprint)}
   .cols__n{text-align:left}
   .cols__d{grid-column:1}
 }
+
+
+/* ── shop the subject ───────────────────────────────────────
+   Sits between the article body and the prev/next nav. Reuses .grid and
+   .item from theme-hivolt.css so a product tile in an article is the same
+   tile as one in a collection — no second card design to keep in step. */
+.art__shop{margin-top:clamp(38px,6vw,64px);padding-top:clamp(26px,4vw,38px);
+  border-top:1px solid var(--rule)}
+.art__shop .sec__head{margin-bottom:0}
+.art__shop .sec__head a{color:var(--blueprint);text-decoration:none}
+.art__shop .sec__head a:hover{text-decoration:underline}
+.art__shop .grid{border-left:1px solid var(--rule);margin-top:0}
+@media (max-width:900px){.art__shop .grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.art__shop .grid{grid-template-columns:1fr}}
