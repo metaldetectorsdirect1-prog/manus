@@ -304,3 +304,62 @@ All **499 in-scope articles** repaired (500 minus the one handled by hand in §4
 `bulkOperationRunMutation` was refused by the connector's safety policy. That is
 a legitimate guardrail; the work went through batched `metafieldsSet` instead
 and no attempt was made to route around it.
+
+---
+
+## 11. Pricing — margin floor applied, and the sourcing problem it exposed
+
+`inventoryItem.unitCost` is populated on all 110 active products, so margin here
+is measured, not estimated.
+
+Margin ran from **32.4% to 83.4%**, median 64.3%. That 51-point spread is the
+real defect: price was never derived from cost. Three tees shared the $34 shelf
+at costs of $22.98, $8.98 and $7.48 — 32%, 74% and 78% margin on the same rail.
+
+A 60% floor was applied, snapped up to the existing ladder. Products already
+above the floor were untouched; this raises the floor rather than hiking the
+store.
+
+| | Before | After |
+|---|---|---|
+| mean margin | 64.1% | **65.6%** |
+| products below 60% | 40 | **10** |
+| mean price | $44.78 | $46.80 (+4.5%) |
+| prices ending .99 | 7 | **0** |
+
+**10 products were deliberately not repriced.** They need a 42–74% rise to clear
+60%, which would make them unsellable rather than profitable. A $22.98 unisex
+colour-block tee costs more than most of the leggings — that is a sourcing
+decision (re-source or drop), not a pricing one.
+
+No elasticity data exists behind any of this: the store has never taken an
+order. HIVOLT also already prices above LSKD, which sells its oversized tee at
+roughly US$19 against HIVOLT's $34–42 tees. Raising thin items to a floor is
+defensible; a further across-the-board rise would not be.
+
+Prior prices are recorded in `audit/pricing.py`, so this reverses cleanly.
+
+## 12. Sport collections — 11 products had nowhere to live
+
+Nike's information architecture is sport-first. HIVOLT had `training`,
+`yoga-studio` and `tennis-and-court`, but was **selling into two sports with no
+collection to hold them**:
+
+- **8 football/soccer jerseys** — raglan, paneled, collared, long-sleeve
+- **3 basketball shorts** — mesh and woven
+
+All 11 were reachable only through `/collections/all` or a gender collection.
+A shopper looking for a soccer jersey could not navigate to one.
+
+Created `/collections/football-soccer` (8) and `/collections/basketball` (3),
+both with descriptions and SEO metadata in the published-not-claimed voice, and
+both published to Online Store, Shop and Facebook & Instagram.
+
+**Basketball is thin at 3 products** and was left thin deliberately rather than
+padded with tank tops that are not court kit — the miscategorisation this audit
+has been removing everywhere else. It needs product, not reclassification.
+
+Neither collection copies Nike branding, imagery or copy. Organising a catalogue
+by sport is a standard retail pattern; the Nike-specific things — its identity,
+its franchise names, its photography — are not reproducible and were not
+attempted.
