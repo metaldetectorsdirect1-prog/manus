@@ -423,3 +423,104 @@ Also fixed: `theme_support_url` pointed at `/pages/contact`, one of the dead
 handles from §10. Now `/pages/contact-us`.
 
 Deployed as theme v23.
+
+---
+
+## 14. Account-level audit — the menus, and a correction to §10
+
+### The theme's hardcoded navigation has never rendered
+
+`layout/theme.liquid` reads `linklists['main-menu']` and falls back to hardcoded
+arrays only when it is empty. **Both menus exist and are populated**, so the
+fallback arrays have never been what visitors see.
+
+`main-menu` — 8 items, **all resolving**:
+
+    Women, Men, Drop 04, Sports Bras, Leggings, Shorts, Tennis & Court, Circuit
+
+**This corrects §10 of this document.** That section reported "6 dead nav
+targets, three of five header links 404" and framed it as live breakage that
+shoppers were hitting. It was not. Those dead handles were in the *fallback*
+arrays, which `main_count > 0` has been short-circuiting. The repair was still
+correct — a fallback that 404s is a real latent defect, and it would fire the
+moment a menu were deleted — but the claim that the live header was broken, and
+the reasoning built on it about social visitors hitting dead links, was wrong.
+
+### The footer menu was live and genuinely broken
+
+`footer` had **5 top-level items, every one with zero children**:
+
+    Shop → /collections/all      About → /pages/about-us
+    Help → /pages/faq            Legal → /policies/privacy-policy
+    Your Privacy Choices → /pages/data-sharing-opt-out
+
+The theme renders each top-level item as a column heading, then its children as
+the list — or, when there are no children, a single link repeating the heading.
+So the live footer was **four columns each containing one link with the same
+text as its own heading**, and "Your Privacy Choices" — a CCPA-required link —
+was silently dropped by `limit: 4`.
+
+Four fully-populated menus already existed for this — `footer-shop`,
+`footer-about`, `footer-help`, `footer-legal` — and **nothing referenced any of
+them.** The theme reads `linklists.footer`, not those.
+
+Rebuilt `footer` with proper nesting: 4 columns, **28 nested links**, matching
+the hardcoded fallback so live and fallback now agree. Every target verified
+against the live handle list.
+
+The four orphan menus are now redundant. They are harmless and were left alone.
+
+### Other account-level findings
+
+| Finding | Detail |
+|---|---|
+| **Address mismatch** | The only location is `10s225 Kaye Ln, Willowbrook, IL`. Every policy and the Contact page say `Addison, IL 60101`. One of the two is wrong. |
+| **3 active discount codes, none expiring** | "Welcome 10% off first order", "Abandoned Cart — 10% Comeback Offer", "Launch Offer — 20% Off First Order". The 20% and 10% welcome offers overlap. A 20% code against the new 65.6% blended margin lands around 56%. |
+| **`learn` blog: 0 articles** | Still exists, no longer linked from the footer (`footer-about` correctly points at `/blogs/news`). |
+| Markets | US enabled and primary, International disabled. Correct. |
+| Metaobject definitions | None. Nothing orphaned. |
+
+---
+
+## 15. Product imagery — measured, and one defect I caused
+
+The proxy in this session blocks Shopify's CDN, so the images could not be
+viewed. Aesthetic judgement was not possible; what follows is what the data
+supports.
+
+**All 110 active products: 1400×1400, descriptive alt text, no missing images.**
+The 102 fabricated images removed in the earlier remediation have not been
+replaced by anything similar. Two products carry a single image
+(`women-s-color-block-yoga-tank-top`, `womens-ruched-halter-neck-sports-bra`);
+both need an alternate view from the supplier.
+
+### A shared media object, and the alt text I corrupted through it
+
+`MediaImage/40137363292392` was attached to **two products at once** — the
+standalone `women-s-high-waisted-flare-leggings` and the Voltcore set. It is one
+media object, not two copies, so its alt text is shared.
+
+When §12 work set the Voltcore set's featured alt to *"Voltcore 2-Piece Set —
+high-waisted flare leggings…"*, that rewrote the standalone leggings product's
+alt too. For some hours the flare leggings described itself as a 2-piece set.
+
+It also means the set's hero image was literally the leggings product's photo,
+shared — which is the mechanical reason the set has no image of the set.
+
+Fixed in four steps, each verified:
+
+1. Alt on the shared media restored to *"Women's High-Waisted Flare Leggings in
+   Black — HIVOLT"*, correct for the product that owns it.
+2. A **copy** of that image created on the Voltcore set via `productCreateMedia`
+   with `originalSource` pointing at the existing CDN URL — so Shopify fetched it
+   server-side, no download needed.
+3. The shared media detached from the set with `productDeleteMedia`.
+4. The copy moved to position 0.
+
+**The delete was the risky step** and was verified immediately on both products,
+because the earlier image remediation hit exactly this failure mode — a paired
+mutation where one half succeeded silently. Result: leggings still has 2 images
+with its own alt; the set has 4, all its own, none shared.
+
+The set still has no photograph showing both pieces together. That needs a
+camera, not an API.
