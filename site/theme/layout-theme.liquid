@@ -19,8 +19,9 @@
       linklists['main-menu']  — masthead + mobile panel (flat, one level)
       linklists.footer        — footer columns. Each TOP-LEVEL link becomes a
                                 column heading; its CHILD links become the list.
-                                Capped at 3 columns to hold the 2fr 1fr 1fr 1fr
-                                grid.
+                                Capped at 4 columns, matching the four
+                                hardcoded columns and the 1.5fr+4x1fr grid.
+                                A 5th would overflow the row.
 
   sameAs in the Organization block is deliberately empty. Fill it in only with
   social profiles that actually exist — a dead URL is worse than no URL.
@@ -259,7 +260,7 @@
       </div>
 
       {%- if footer_count > 0 -%}
-        {%- for column in footer_links limit: 3 -%}
+        {%- for column in footer_links limit: 4 -%}
           <div>
             <h4>{{ column.title | escape }}</h4>
             <ul>
