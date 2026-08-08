@@ -162,16 +162,16 @@
 {%- assign main_links = linklists['main-menu'].links -%}
 {%- assign main_count = main_links.size | plus: 0 -%}
 {%- assign nav_titles = 'Women,Men,Training,Fabric,About' | split: ',' -%}
-{%- assign nav_urls = '/collections/womens,/collections/mens,/collections/training,/pages/fabric,/pages/about-us' | split: ',' -%}
+{%- assign nav_urls = '/collections/womens-activewear,/collections/mens-activewear,/collections/training,/pages/materials-sustainability,/pages/about-us' | split: ',' -%}
 
 {%- assign footer_links = linklists.footer.links -%}
 {%- assign footer_count = footer_links.size | plus: 0 -%}
 {%- assign foot_shop_t = 'Women,Men,Training,Everything' | split: ',' -%}
-{%- assign foot_shop_u = '/collections/womens,/collections/mens,/collections/training,/collections/all' | split: ',' -%}
-{%- assign foot_info_t = 'Fabric & specifications,Shipping,Returns & refunds,Materials' | split: ',' -%}
-{%- assign foot_info_u = '/pages/fabric,/pages/shipping,/pages/returns-refunds,/pages/materials-sustainability' | split: ',' -%}
+{%- assign foot_shop_u = '/collections/womens-activewear,/collections/mens-activewear,/collections/training,/collections/all' | split: ',' -%}
+{%- assign foot_info_t = 'Fabric & specifications,Size guide,Shipping,Returns & refunds' | split: ',' -%}
+{%- assign foot_info_u = '/pages/materials-sustainability,/pages/size-guide,/pages/shipping-delivery,/pages/returns-refunds' | split: ',' -%}
 {%- assign foot_co_t = 'About,Contact,Privacy,Terms' | split: ',' -%}
-{%- assign foot_co_u = '/pages/about,/pages/contact,/policies/privacy-policy,/policies/terms-of-service' | split: ',' -%}
+{%- assign foot_co_u = '/pages/about-us,/pages/contact-us,/policies/privacy-policy,/pages/terms-of-service' | split: ',' -%}
 
 {%- comment -%}
   settings.show_ticker comes from settings_schema.json. Tested against false
