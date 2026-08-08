@@ -73,10 +73,11 @@
       </p>
       <h1 class="buy__h">{{ product.title }}</h1>
 
+      {%- assign pv = product.selected_or_first_available_variant -%}
       <p class="buy__price" id="price">
-        {{ product.selected_or_first_available_variant.price | money }}
-        {%- if product.compare_at_price > product.price -%}
-          <s style="color:var(--steel);margin-left:8px">{{ product.compare_at_price | money }}</s>
+        {{ pv.price | money }}
+        {%- if pv.compare_at_price > pv.price -%}
+          <s id="was" style="color:var(--steel);margin-left:8px">{{ pv.compare_at_price | money }}</s>
         {%- endif -%}
       </p>
       <p class="buy__ship">Free US shipping · arrives in 8–14 business days</p>
@@ -146,7 +147,8 @@
             <option value="{{ v.id }}"
                     {% if v == product.selected_or_first_available_variant %}selected{% endif %}
                     {% unless v.available %}disabled{% endunless %}
-                    data-price="{{ v.price | money }}">
+                    data-price="{{ v.price | money }}"
+                    data-was="{% if v.compare_at_price > v.price %}{{ v.compare_at_price | money }}{% endif %}">
               {{ v.title }}
             </option>
           {%- endfor -%}
@@ -310,6 +312,9 @@
           sel.dispatchEvent(new Event('change',{bubbles:true}));
           var p=sel.options[i].dataset.price;
           if(price&&p) price.firstChild.nodeValue=p+' ';
+          // Keep the strikethrough on the same variant as the price beside it.
+          var was=document.getElementById('was'), w=sel.options[i].dataset.was;
+          if(was){ if(w){ was.textContent=w; was.hidden=false; } else { was.hidden=true; } }
           if(btnPrice&&p) btnPrice.textContent=p;
           var add=document.getElementById('add');
           if(add){

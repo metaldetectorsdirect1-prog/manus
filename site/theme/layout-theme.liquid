@@ -213,8 +213,7 @@
 
     <div class="mast__act">
       <a href="{{ routes.search_url }}" class="mono mast__search">Search</a>
-      <a href="{{ routes.cart_url }}" class="mono"
-         aria-label="Bag, {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}">Bag ({{ cart.item_count }})</a>
+      <a href="{{ routes.cart_url }}" class="mono">Bag ({{ cart.item_count }})</a>
       {%- comment -%}
         The toggle is last so it is the element immediately before #nav-panel in
         the tab order: Tab straight after opening lands on the first menu link,
@@ -262,7 +261,7 @@
       {%- if footer_count > 0 -%}
         {%- for column in footer_links limit: 4 -%}
           <div>
-            <h4>{{ column.title | escape }}</h4>
+            <h2 class="foot__h">{{ column.title | escape }}</h2>
             <ul>
               {%- assign col_count = column.links.size | plus: 0 -%}
               {%- if col_count > 0 -%}
@@ -277,7 +276,7 @@
         {%- endfor -%}
       {%- else -%}
         <div>
-          <h4>Shop</h4>
+          <h2 class="foot__h">Shop</h2>
           <ul>
             {%- for title in foot_shop_t -%}
               <li><a href="{{ foot_shop_u[forloop.index0] }}">{{ title | escape }}</a></li>
@@ -285,7 +284,7 @@
           </ul>
         </div>
         <div>
-          <h4>Sport</h4>
+          <h2 class="foot__h">Sport</h2>
           <ul>
             {%- for title in foot_sport_t -%}
               <li><a href="{{ foot_sport_u[forloop.index0] }}">{{ title | escape }}</a></li>
@@ -293,7 +292,7 @@
           </ul>
         </div>
         <div>
-          <h4>Information</h4>
+          <h2 class="foot__h">Information</h2>
           <ul>
             {%- for title in foot_info_t -%}
               <li><a href="{{ foot_info_u[forloop.index0] }}">{{ title | escape }}</a></li>
@@ -301,7 +300,7 @@
           </ul>
         </div>
         <div>
-          <h4>Company</h4>
+          <h2 class="foot__h">Company</h2>
           <ul>
             {%- for title in foot_co_t -%}
               <li><a href="{{ foot_co_u[forloop.index0] }}">{{ title | escape }}</a></li>

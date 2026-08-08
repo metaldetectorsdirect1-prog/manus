@@ -40,6 +40,7 @@
     </div>
 
     {%- if collections.size > 0 -%}
+      {%- paginate collections by: 24 -%}
       <ol class="cols">
         {%- for collection in collections -%}
           <li class="cols__i">
@@ -56,6 +57,13 @@
           </li>
         {%- endfor -%}
       </ol>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pager" aria-label="Collections pagination">
+          {{- paginate | default_pagination -}}
+        </nav>
+      {%- endif -%}
+      {%- endpaginate -%}
 
       <p class="cols__foot">
         <a class="btn btn--ghost" href="{{ routes.all_products_collection_url }}">Every style, unsorted</a>

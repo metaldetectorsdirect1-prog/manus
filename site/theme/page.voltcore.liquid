@@ -340,8 +340,14 @@
   <div class="pg__q">
     <p class="pg__q-t">
       <span class="mono">{{ set.price | money }}{% if saving > 0 %} · {{ saving | money }} less than the pieces{% endif %}</span>
-      Sizes S–XL, matte black. Free US shipping, and 60 days to decide after
-      you have actually trained in it.
+      {%- for o in set.options_with_values -%}
+        {%- if o.values.size > 1 -%}
+          {{ o.name }} {{ o.values.first }}–{{ o.values.last }}.
+        {%- else -%}
+          {{ o.name }} {{ o.values.first }}.
+        {%- endif -%}
+      {%- endfor -%}
+      Free US shipping, and 60 days to decide after you have actually trained in it.
     </p>
     <a class="btn" href="{{ set.url }}">Go to the product page</a>
   </div>
