@@ -524,3 +524,48 @@ with its own alt; the set has 4, all its own, none shared.
 
 The set still has no photograph showing both pieces together. That needs a
 camera, not an API.
+
+---
+
+## 16. Three live discount codes, zero uses, nothing on the site mentioning them
+
+| Code | Offer | Live since | Uses |
+|---|---|---|---|
+| `WELCOME10` | 10% first order | 22 Jul | **0** |
+| `COMEBACK10` | 10% abandoned cart | 24 Jul | **0** |
+| **`VOLT20`** | **20% first order** | **5 Aug** | **0** |
+
+All three are ACTIVE with no end date and no minimum spend. `asyncUsageCount` is
+zero on every one. Nothing anywhere on the storefront named any of them — the
+ticker ran five standing trust lines and no offer at all.
+
+`VOLT20` surfaced in the ticker, as three theme settings rather than hardcoded
+copy: `promo_enabled`, `promo_text`, `promo_code`. Defaults are written into
+`settings_data.json` as well as the schema, because declaring a setting without
+a saved value leaves its `{% if %}` false — the same failure that kept the
+favicon and `share_image` from ever rendering.
+
+It renders only when **both** the text and the code are non-blank. A code with no
+text, or text with no code, sends a shopper hunting for something that isn't
+there. Emptying either field removes it cleanly.
+
+### The ticker could not simply carry it
+
+`.ticker__track` prints its contents twice — that duplication is what makes the
+marquee loop seamlessly — and the whole block was `aria-hidden="true"` for
+exactly that reason. Dropping a discount code into it would have announced the
+offer to sighted visitors only.
+
+The `aria-hidden` moved from the wrapper to the track, and the offer is now also
+stated once in a `visually-hidden` paragraph outside it. Decoration stays
+hidden; the one line a shopper is meant to act on is available to everyone.
+
+Margin: 20% against the 65.6% blended margin from §11 lands near **57%**. That is
+the owner's existing decision — the code was already live — and this only makes
+it visible.
+
+`WELCOME10` was left active deliberately. It is strictly worse for the customer
+than `VOLT20` and better for the store, so it costs nothing sitting there, and
+switching off someone else's discount is not a call to make unilaterally.
+
+Deployed as v26.

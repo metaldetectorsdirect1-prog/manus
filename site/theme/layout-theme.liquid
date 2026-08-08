@@ -181,10 +181,32 @@
   rather than for truth, so the ticker still renders on a store where the
   setting was never saved.
 {%- endcomment -%}
+{%- comment -%}
+  The ticker TRACK is aria-hidden because it prints its contents twice — that
+  duplication is what makes the marquee loop seamlessly, and a screen reader
+  would read every line twice. So anything that carries real information, as
+  opposed to decoration, has to be stated once outside it. That is what the
+  visually-hidden paragraph below is for; without it, surfacing a discount code
+  here would announce it to sighted visitors only.
+
+  The offer renders only when BOTH the text and the code are set. A code with no
+  text, or text with no code, is a shopper hunting for something that isn't
+  there.
+{%- endcomment -%}
 {%- unless settings.show_ticker == false -%}
-<div class="ticker" aria-hidden="true">
-  <div class="ticker__track">
+{%- assign promo_on = false -%}
+{%- if settings.promo_enabled and settings.promo_text != blank and settings.promo_code != blank -%}
+  {%- assign promo_on = true -%}
+{%- endif -%}
+<div class="ticker">
+  {%- if promo_on -%}
+    <p class="visually-hidden">{{ settings.promo_text | escape }} — use code {{ settings.promo_code | escape }} at checkout.</p>
+  {%- endif -%}
+  <div class="ticker__track" aria-hidden="true">
     {%- for i in (1..2) -%}
+      {%- if promo_on -%}
+        <span class="ticker__promo">{{ settings.promo_text | escape }} · code {{ settings.promo_code | escape }}</span>
+      {%- endif -%}
       <span>Free US shipping · no minimum</span>
       <span>60-day returns</span>
       <span>Every fabric weight published</span>

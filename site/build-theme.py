@@ -85,6 +85,20 @@ SETTINGS_SCHEMA = [
      "settings": [
          {"type": "checkbox", "id": "show_ticker", "label": "Show announcement ticker",
           "default": True},
+         # The store has had three ACTIVE discount codes since July with zero
+         # uses between them, because nothing on the storefront mentions any of
+         # them. VOLT20 is the strongest (20% first order). Surfaced here as a
+         # setting rather than hardcoded so it can be changed or switched off in
+         # the theme editor without a redeploy — and so it disappears cleanly
+         # rather than advertising a code that has been deleted in admin.
+         {"type": "checkbox", "id": "promo_enabled", "label": "Show offer in ticker",
+          "default": True},
+         {"type": "text", "id": "promo_text", "label": "Offer text",
+          "default": "20% off your first order",
+          "info": "Leave blank to hide. Must describe a discount that actually exists."},
+         {"type": "text", "id": "promo_code", "label": "Discount code",
+          "default": "VOLT20",
+          "info": "Must match a live code in Discounts. A dead code here is worse than no offer."},
      ]},
 ]
 
@@ -128,6 +142,9 @@ def main():
         json.dumps(SETTINGS_SCHEMA, indent=2) + '\n')
     (OUT / 'config/settings_data.json').write_text(
         json.dumps({"current": {"show_ticker": True,
+                                "promo_enabled": True,
+                                "promo_text": "20% off your first order",
+                                "promo_code": "VOLT20",
                                 "support_email": "support@hivolt-usa.com"}},
                    indent=2) + '\n')
     (OUT / 'locales/en.default.json').write_text(json.dumps({"general": {

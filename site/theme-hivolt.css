@@ -75,6 +75,11 @@ textarea,button{-webkit-appearance:none;appearance:none;border-radius:0}
 .ticker__track{display:flex;gap:44px;white-space:nowrap;width:max-content;
   animation:slide 34s linear infinite}
 .ticker__track span{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.92}
+/* The offer is the one line in the ticker a shopper is meant to act on, so
+   it carries the accent rather than sitting at the same weight as the
+   standing trust lines. --blueprint-on-ink is the accent built for this
+   ground and it inverts with the theme. */
+.ticker__track .ticker__promo{color:var(--blueprint-on-ink);opacity:1;font-weight:600}
 @keyframes slide{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){
   .ticker__track{animation:none;width:100%;justify-content:center;flex-wrap:wrap;white-space:normal}
