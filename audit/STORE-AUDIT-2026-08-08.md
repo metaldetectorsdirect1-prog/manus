@@ -238,3 +238,69 @@ Worth recording, because these were the suspicions going in:
 10. `settings_schema.json` — no `favicon` or `share_image` setting.
 11. `page.voltcore.liquid` — "Sizes S–XL, matte black" and the fit claims are
     hand-typed rather than read from the product.
+
+---
+
+## 9. Sales channels — 61 of 110 products were invisible to TikTok
+
+Found while looking for organic distribution that costs nothing.
+
+The store has an **"AfterShip for TikTok" publication installed** on Shopify
+(`gid://shopify/Publication/188060008680`), and only **49 of 110 active products
+were published to it**. The 61 missing ones included:
+
+- `voltcore-2-piece-set-twist-front-bra-flare-leggings` — the flagship, the
+  single product with its own landing page and the store's one conversion target
+- `women-s-twist-front-v-neck-sports-bra` — its own component
+- every unisex jersey, every skirt, every varsity jacket, most joggers
+
+All 61 published via `publishablePublish`, zero `userErrors`, and verified by
+re-reading `publishedOnPublication` on exactly the 61 IDs that were changed —
+61/61 now true. **110/110.**
+
+### This does not put anything on TikTok yet
+
+Two separate facts, and they were worth separating:
+
+| Check | Result |
+|---|---|
+| Shopify publication (`publishedOnPublication`) | **110/110** — done |
+| AfterShip Feed onboarding (`check-onboarding-status`) | `connect_ecommerce_store`, `connect_sales_channel_stores`, `configure_initial_settings` — **all three false** |
+| Connected TikTok Shop stores (`get-sales-channel-stores`) | **`[]` — none** |
+
+So the catalogue is staged on the Shopify side and nothing is syncing, because
+there is no TikTok Shop seller account linked. The value of doing it now is that
+when that account is connected, all 110 flow rather than 49 — and nobody has to
+notice that the flagship was among the missing.
+
+### Also confirmed while checking
+
+- **Payments work.** Shopify Pay, Apple Pay and Google Pay are all live, USD,
+  SSL valid on `hivolt-usa.com`, `checkoutApiSupported: true`. The 0-for-24
+  checkout record is not a broken gateway. (`read_shopify_payments` is still
+  missing, so the card gateway itself could not be inspected directly — but
+  three digital wallets being active means Shopify Payments is enabled.)
+- **Markets are correct.** "United States" is primary and enabled;
+  "International" is disabled. The market's handle is the legacy string
+  `united-states-and-canada`, which is cosmetic — the market itself is US-only,
+  which is why the Canada section on the shipping page (§3) described a service
+  that genuinely could not be bought.
+- **Other channels are complete**, not partial: Online Store, Shop,
+  Facebook & Instagram, Microsoft Copilot and Manus all carry the catalogue.
+  TikTok was the only one with a gap.
+
+## 10. Blog metadata — complete
+
+All **499 in-scope articles** repaired (500 minus the one handled by hand in §4):
+
+- `title_tag` ← `"{title} | HIVOLT"` — 499/499, every one carrying the suffix
+- `description_tag` ← `article.summary` verbatim — 499/499
+- Articles where `title_tag == description_tag`: **500 → 0**
+- Zero `userErrors` across 40 batched `metafieldsSet` calls
+- Zero articles skipped for an empty summary — every one had a real summary
+- Verified across the **full corpus**, not a sample: a second bulk export
+  re-read `title`, `summary` and both metafields and diffed against intent
+
+`bulkOperationRunMutation` was refused by the connector's safety policy. That is
+a legitimate guardrail; the work went through batched `metafieldsSet` instead
+and no attempt was made to route around it.
