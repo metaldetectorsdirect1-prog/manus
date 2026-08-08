@@ -146,6 +146,7 @@
   background:var(--rule);border:1px solid var(--rule);
   margin-top:clamp(30px,4vw,52px);
 }
+.ct__assure>*{min-width:0}
 .ct__assure-c{background:var(--paper);padding:18px 16px}
 .ct__assure-k{
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;

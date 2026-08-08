@@ -142,6 +142,8 @@
 .fab__note{max-width:88ch; margin-top:24px}
 
 /* ── questions (reuses .faq) ───────────────────────────────── */
-/* .faq is an always-ink band in both themes, so the muted sub-line is
-   var(--paper) held back with opacity rather than a hard-coded grey. */
-.faq .fab__faqnote{color:var(--paper); opacity:.58; margin:0}
+/* The .faq band is --ink in both themes, but --ink itself inverts, so a
+   --paper sub-line held back with opacity is only legible in one of them
+   (5.57:1 light, 4.19:1 dark). --on-ink-2 is derived for this ground and
+   tracks the inversion: 6.85:1 / 5.40:1. */
+.faq .fab__faqnote{color:var(--on-ink-2); margin:0}

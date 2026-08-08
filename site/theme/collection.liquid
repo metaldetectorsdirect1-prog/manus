@@ -253,8 +253,8 @@
             <p class="empty__h">Nothing is published in {{ collection.title }} yet.</p>
             <p class="empty__p">The rest of the range is here:</p>
             <ul class="empty__links">
-              {%- unless collection.handle == 'womens' -%}<li><a href="/collections/womens">Women's</a></li>{%- endunless -%}
-              {%- unless collection.handle == 'mens' -%}<li><a href="/collections/mens">Men's</a></li>{%- endunless -%}
+              {%- unless collection.handle == 'womens' -%}<li><a href="/collections/womens-activewear">Women's</a></li>{%- endunless -%}
+              {%- unless collection.handle == 'mens' -%}<li><a href="/collections/mens-activewear">Men's</a></li>{%- endunless -%}
               {%- unless collection.handle == 'training' -%}<li><a href="/collections/training">Training</a></li>{%- endunless -%}
               <li><a href="{{ routes.all_products_collection_url }}">Everything</a></li>
             </ul>

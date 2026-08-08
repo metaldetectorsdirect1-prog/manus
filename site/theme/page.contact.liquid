@@ -124,7 +124,7 @@
             type="text"
             id="contact-subject"
             name="contact[Subject]"
-            value=""
+            value="{{ form.Subject | escape }}"
             autocomplete="off"
             placeholder="Order number, size question, fabric weight">
         </div>
@@ -189,9 +189,9 @@
       <p class="mono pg__aside-h pg__aside-h--gap">Answered already</p>
       <div class="rte rte--tight">
         <ul>
-          <li><a href="/pages/shipping">Shipping</a> — cost, the 8&ndash;14 business day window, and where orders leave from.</li>
-          <li><a href="/pages/returns">Returns</a> — the 60-day window, the condition, and who pays return postage.</li>
-          <li><a href="/pages/fabric">Fabric</a> — what fabric weight in g/m² means and how it is measured.</li>
+          <li><a href="/pages/shipping-delivery">Shipping</a> — cost, the 8&ndash;14 business day window, and where orders leave from.</li>
+          <li><a href="/pages/returns-refunds">Returns</a> — the 60-day window, the condition, and who pays return postage.</li>
+          <li><a href="/pages/materials-sustainability">Fabric</a> — what fabric weight in g/m² means and how it is measured.</li>
         </ul>
         <p>
           To start a return, use the link in your order email rather than this

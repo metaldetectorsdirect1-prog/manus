@@ -134,39 +134,34 @@
       {%- form 'product', set, id: 'voltcore-buy', class: 'opt' -%}
         {%- unless set.has_only_default_variant -%}
           <div class="opt__lab">
-            <span class="mono">Size</span>
+            <label class="mono" for="voltcore-size">Size</label>
             {%- assign sg = pages['size-guide'] -%}
             {%- if sg != blank and sg.handle != blank -%}
               <a href="{{ sg.url }}">Size guide</a>
             {%- endif -%}
           </div>
-          <div class="sizes">
-            {%- for option in set.options_with_values -%}
-              {%- for value in option.values -%}
-                <label class="sz">
-                  <input type="radio" name="opt-{{ forloop.parentloop.index }}"
-                         value="{{ value | escape }}" class="visually-hidden"
-                         {% if option.selected_value == value %}checked{% endif %}>
-                  <span>{{ value }}</span>
-                </label>
-              {%- endfor -%}
-            {%- endfor -%}
-          </div>
         {%- endunless -%}
 
-        <select name="id" class="visually-hidden" aria-label="Size">
+        {%- comment -%}
+          The select IS the control. An earlier version rendered radio buttons
+          named opt-1 beside a hidden select and wired nothing between them —
+          so choosing L submitted whatever variant happened to be selected by
+          default. A picker that silently adds the wrong size is worse than a
+          plain select, and this page ships no JavaScript to bridge them.
+        {%- endcomment -%}
+        <select name="id" id="voltcore-size" class="cf__in" style="max-width:220px">
           {%- for variant in set.variants -%}
             <option value="{{ variant.id }}"
                     {% if variant == v %}selected{% endif %}
                     {% unless variant.available %}disabled{% endunless %}>
-              {{ variant.title }}
+              {{ variant.title }}{% unless variant.available %} — sold out{% endunless %}
             </option>
           {%- endfor -%}
         </select>
 
         <button class="btn add" type="submit" name="add"
-                {% unless set.available %}disabled{% endunless %}>
-          {%- if set.available -%}Add the set — {{ set.price | money }}{%- else -%}Sold out{%- endif -%}
+                {% unless v.available %}disabled{% endunless %}>
+          {%- if v.available -%}Add the set — {{ set.price | money }}{%- else -%}Sold out{%- endif -%}
         </button>
       {%- endform -%}
 

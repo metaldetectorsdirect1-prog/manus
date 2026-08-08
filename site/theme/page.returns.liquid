@@ -8,7 +8,8 @@
   the single assets/hivolt.css that layout/theme.liquid already links, after
   theme-hivolt.css — so there is no second stylesheet to add.
 
-  Published terms only: 60 days, unworn with tags attached, no restocking fee,
+  Published terms only: 60 days INCLUDING worn and washed items, free prepaid
+  US label, no restocking fee,
   no reason required, started from the order email.
 
   Return postage is stated as the customer's cost unless the item is faulty or
@@ -24,7 +25,7 @@
   The FAQPage JSON-LD at the foot mirrors the visible questions word for word.
 {%- endcomment -%}
 
-{%- assign contact_url = pages.contact.url | default: '/pages/contact' -%}
+{%- assign contact_url = pages.contact.url | default: '/pages/contact-us' -%}
 
 <nav class="crumb wrap" aria-label="Breadcrumb">
   <ol>
@@ -35,12 +36,12 @@
 
 <section class="hero hero--doc wrap">
   <p class="mono hero__eyebrow">Returns policy</p>
-  <h1 class="hero__h">60 days.<br>Tags on.<br><em>No explanation.</em></h1>
+  <h1 class="hero__h">60 days.<br>Train in it.<br><em>Send it back.</em></h1>
   <p class="hero__sub">
-    Send anything back within 60 days as long as it is unworn with the tags
-    still attached. There is no restocking fee and you do not have to tell us
-    why. Start it from your order email. Return postage is yours to pay unless
-    the item arrived faulty or we sent the wrong one.
+    Send anything back within 60 days — including items you have worn and
+    washed. There is no restocking fee and you do not have to tell us why.
+    Start it from your order email and we send a prepaid label within one
+    business day. Returns inside the US are free.
   </p>
 </section>
 
@@ -63,11 +64,11 @@
 
       <h3>The condition</h3>
       <p>
-        Unworn, with the tags still attached. That is the only condition, and it
-        is the only one because it is the only one we can check. Try things on.
-        Do not train in them and then send them back — a worn garment cannot go
-        to the next customer, and pretending otherwise would mean selling
-        somebody a used pair as new.
+        Train in it. Wash it. Put it through real sessions. You cannot judge
+        performance apparel in a fitting room, so the 60 days start once you
+        have actually used it, and a worn garment is still returnable. The only
+        exclusions are damage beyond normal wear — tears, burns, or staining the
+        garment did not cause — plus final-sale items and gift cards.
       </p>
 
       <h3>No reason required</h3>
@@ -105,7 +106,7 @@
         </div>
         <div class="sheet__row">
           <span class="sheet__k">Condition</span>
-          <span class="sheet__v">Unworn, tags on</span>
+          <span class="sheet__v">Worn and washed is fine</span>
         </div>
         <div class="sheet__row">
           <span class="sheet__k">Restocking fee</span>
@@ -159,8 +160,9 @@
       </details>
       <details>
         <summary>What condition does it have to be in?</summary>
-        <p class="faq__a">Unworn, with the tags still attached. That is the only
-          condition.</p>
+        <p class="faq__a">Worn and washed is fine — that is the point of the
+          guarantee. The only exclusions are damage beyond normal wear, final-sale
+          items and gift cards.</p>
       </details>
       <details>
         <summary>Is there a restocking fee?</summary>
@@ -192,7 +194,7 @@
   "@type": "FAQPage",
   "mainEntity": [
     {"@type":"Question","name":"How long do I have to return something?","acceptedAnswer":{"@type":"Answer","text":"60 days from the order."}},
-    {"@type":"Question","name":"What condition does it have to be in?","acceptedAnswer":{"@type":"Answer","text":"Unworn, with the tags still attached. That is the only condition."}},
+    {"@type":"Question","name":"What condition does it have to be in?","acceptedAnswer":{"@type":"Answer","text":"Worn and washed is fine. The only exclusions are damage beyond normal wear, final-sale items and gift cards."}},
     {"@type":"Question","name":"Is there a restocking fee?","acceptedAnswer":{"@type":"Answer","text":"No. There is no restocking fee on a HIVOLT return."}},
     {"@type":"Question","name":"Do I have to give a reason?","acceptedAnswer":{"@type":"Answer","text":"No. We do not ask, and there is no list of approved reasons to choose from."}},
     {"@type":"Question","name":"How do I start a return?","acceptedAnswer":{"@type":"Answer","text":"From the link in your order confirmation email. If you cannot find it, write to us and we will start it from our side."}},

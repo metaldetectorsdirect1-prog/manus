@@ -204,8 +204,8 @@ a.artnav__a:hover .artnav__t{color:var(--blueprint)}
 .cmt{padding:18px 2px;border-bottom:1px solid var(--rule)}
 .cmt:last-child{border-bottom:0}
 .cmt__k{margin:0 0 8px;color:var(--steel)}
-.cmt__b{font-size:14.5px;line-height:1.65}
-.cmt__b p{margin:0 0 .8em}
+.cmt .rte{max-width:none;font-size:14.5px;line-height:1.65}
+.cmt .rte p{margin:0 0 .8em}
 
 .cmtf{max-width:720px;margin-top:clamp(26px,4vw,40px);padding:clamp(20px,3vw,30px);
   border:1px solid var(--rule);background:var(--paper-2)}
@@ -220,7 +220,7 @@ a.artnav__a:hover .artnav__t{color:var(--blueprint)}
   background:var(--paper);color:var(--ink);
   font-family:var(--mono);font-size:13px;letter-spacing:.02em}
 .cmtf__in:hover{border-color:var(--ink)}
-.cmtf__in:focus{border-color:var(--ink);outline-offset:-3px}
+.cmtf__in:focus{border-color:var(--ink);outline:2px solid var(--blueprint);outline-offset:2px}
 .cmtf__ta{line-height:1.6;resize:vertical}
 .cmtf__note{max-width:60ch;margin:0 0 18px;color:var(--steel);font-size:10.5px;
   letter-spacing:.05em;text-transform:none;line-height:1.7}
@@ -229,6 +229,8 @@ a.artnav__a:hover .artnav__t{color:var(--blueprint)}
 .cmtf__msg{max-width:720px;margin:26px 0 0;padding:14px 16px;border:1px solid var(--blueprint);
   color:var(--ink-2);font-size:14px;line-height:1.6}
 .cmtf__msg--err{background:var(--paper-2)}
+.cmtf__msg--ok{background:var(--paper-2);border-color:var(--ok)}
+.cmtf__msg--ok .cmtf__msg-k{color:var(--ok)}
 .cmtf__msg-k{margin:0 0 8px;color:var(--blueprint)}
 .cmtf__msg ul{margin:0;padding-left:1.2em}
 .cmtf__msg li{margin-bottom:.35em}

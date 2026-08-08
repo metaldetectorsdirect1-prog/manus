@@ -23,6 +23,11 @@
 .col__desc > :first-child{margin-top:0}
 .col__desc > :last-child{margin-bottom:0}
 .col__desc p{margin:0 0 12px}
+/* Same guard as .rte table in pages.css: an editor table can be any width,
+   so scroll the table, not the document. */
+.col__desc table{display:block;width:max-content;max-width:100%;min-width:0;
+  overflow-x:auto;margin:1.2em 0}
+.col__desc th,.col__desc td{text-align:left}
 .col__desc a{color:var(--blueprint)}
 
 /* ── facet + sort bar ──────────────────────────────────────── */

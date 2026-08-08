@@ -41,6 +41,7 @@
 
     <!-- gallery: supplier studio photography only -->
     <div class="gal">
+      {%- capture gallery -%}
       {%- for media in product.media limit: 5 -%}
         {%- if media.media_type == 'image' -%}
           <div class="gal__f">
@@ -56,9 +57,13 @@
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
           </div>
         {%- endif -%}
+      {%- endfor -%}
+      {%- endcapture -%}
+      {%- if gallery != blank -%}
+        {{ gallery }}
       {%- else -%}
         <div class="gal__f"><div class="ph--lg"><span>No image</span></div></div>
-      {%- endfor -%}
+      {%- endif -%}
     </div>
 
     <!-- buy column -->
@@ -118,7 +123,10 @@
             <div class="opt">
               <div class="opt__lab">
                 <span class="mono">{{ option.name }}</span>
-                {%- if option.name == 'Size' -%}<a href="#sizes">Size guide</a>{%- endif -%}
+                {%- if option.name == 'Size' -%}
+                  {%- assign sg = pages['size-guide'] -%}
+                  {%- if sg != blank and sg.handle != blank -%}<a href="{{ sg.url }}">Size guide</a>{%- endif -%}
+                {%- endif -%}
               </div>
               <div class="sizes">
                 {%- for value in option.values -%}
@@ -133,7 +141,7 @@
           {%- endfor -%}
         {%- endunless -%}
 
-        <select name="id" id="variant-select" class="visually-hidden" aria-hidden="true" tabindex="-1">
+        <select name="id" id="variant-select" class="visually-hidden" aria-label="Select size">
           {%- for v in product.variants -%}
             <option value="{{ v.id }}"
                     {% if v == product.selected_or_first_available_variant %}selected{% endif %}
@@ -144,9 +152,10 @@
           {%- endfor -%}
         </select>
 
+        {%- assign sel_v = product.selected_or_first_available_variant -%}
         <button type="submit" class="btn add" id="add"
-                {% unless product.available %}disabled{% endunless %}>
-          {%- if product.available -%}
+                {% unless sel_v.available %}disabled{% endunless %}>
+          {%- if sel_v.available -%}
             Add to bag — <span id="btn-price">{{ product.selected_or_first_available_variant.price | money }}</span>
           {%- else -%}
             Sold out
@@ -157,7 +166,7 @@
       <div class="assure">
         <ul>
           <li><b>Ship</b><span>Free, no minimum. Dispatched from Illinois, tracked. 8–14 business days.</span></li>
-          <li><b>Return</b><span>60 days, unworn with tags. No restocking fee, no explanation required.</span></li>
+          <li><b>Return</b><span>60 days, including worn and washed. Free prepaid US label, no restocking fee.</span></li>
           <li><b>Pay</b><span>Shopify Checkout. Card details never touch our servers.</span></li>
         </ul>
       </div>
@@ -304,8 +313,15 @@
           if(btnPrice&&p) btnPrice.textContent=p;
           var add=document.getElementById('add');
           if(add){
-            add.disabled=sel.options[i].disabled;
-            if(sel.options[i].disabled) add.textContent='Sold out';
+            var out=sel.options[i].disabled;
+            add.disabled=out;
+            // Rebuild the label both ways. Assigning textContent destroys the
+            // #btn-price span, so the old code could go to "Sold out" and never
+            // come back when the shopper picked an in-stock size.
+            add.innerHTML = out
+              ? 'Sold out'
+              : 'Add to bag \u2014 <span id="btn-price">'+(p||'')+'</span>';
+            btnPrice=document.getElementById('btn-price');
           }
           break;
         }

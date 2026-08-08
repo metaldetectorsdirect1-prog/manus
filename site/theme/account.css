@@ -20,14 +20,14 @@
 
 :root{
   --ok:#1E6B45;
-  --warn:#8A5A12;
+  --warn:#87570F;
   --crit:#9A2B22;
 }
 @media (prefers-color-scheme:dark){
   :root{ --ok:#5FBE8B; --warn:#D9A441; --crit:#E0736A; }
 }
 :root[data-theme="dark"]{ --ok:#5FBE8B; --warn:#D9A441; --crit:#E0736A; }
-:root[data-theme="light"]{ --ok:#1E6B45; --warn:#8A5A12; --crit:#9A2B22; }
+:root[data-theme="light"]{ --ok:#1E6B45; --warn:#87570F; --crit:#9A2B22; }
 
 /* ── page shell ────────────────────────────────────────────── */
 .acct{padding-block:clamp(26px,4vw,44px) var(--band)}
@@ -88,7 +88,7 @@
    iOS does not zoom on focus. */
 .fld{margin-top:20px}
 .fld__lab{display:block;color:var(--steel);margin-bottom:8px}
-.fld__opt{color:var(--steel);opacity:.75}
+.fld__opt{color:var(--steel)}
 
 .fld__in{
   width:100%;min-height:50px;padding:13px 14px;

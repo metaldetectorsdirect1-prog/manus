@@ -85,9 +85,9 @@
             Each order number links to its own live status page. Statuses come
             from the carrier and can lag a scan by a few hours.
           </p>
-          {%- if customer.orders.size > 8 -%}
+          {%- if customer.orders_count > 8 -%}
             <div class="rte rte--tight" style="margin-top:14px">
-              <p><a href="{{ routes.account_url }}">See all {{ customer.orders.size }} orders</a></p>
+              <p><a href="{{ routes.account_url }}">See all {{ customer.orders_count }} orders</a></p>
             </div>
           {%- endif -%}
 

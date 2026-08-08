@@ -15,7 +15,7 @@
   background:var(--ink);color:var(--paper);padding:13px 18px;text-decoration:none;
 }
 .skip:focus{left:0}
-#main:focus{outline:none}
+#main:focus:not(:focus-visible){outline:none}
 
 /* ── mobile nav disclosure ─────────────────────────────────── */
 /* The toggle sits inside .mast__act and is the only thing that opens
