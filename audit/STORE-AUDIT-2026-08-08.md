@@ -363,3 +363,63 @@ Neither collection copies Nike branding, imagery or copy. Organising a catalogue
 by sport is a standard retail pattern; the Nike-specific things — its identity,
 its franchise names, its photography — are not reproducible and were not
 attempted.
+
+---
+
+## 13. 11 of 16 collections had no link anywhere in the theme
+
+Found while wiring in the two sport collections from §12 — the problem was much
+larger than the two I had just created.
+
+The footer listed four collections and the header five links. Everything else
+was reachable only by typing the URL:
+
+| Unreachable | Products |
+|---|---|
+| `tops`, `bottoms` | the two top-level category collections |
+| `sports-bras`, `leggings`, `shorts`, `outerwear-hoodies` | the four buyable sub-categories |
+| `yoga-studio`, `tennis-and-court` | two existing sport collections |
+| `drop-04-voltcore` | **the drop the whole brand narrative is built around** |
+| `football-soccer`, `basketball` | created in §12 |
+
+This is the same defect class as the orphaned `page.fabric.liquid` template
+found earlier: content that exists, renders correctly, and reaches nobody.
+
+It also compounds the traffic pattern. 76 sessions a week arrive from Facebook
+and Instagram and land **directly on the Voltcore product page** — not the
+homepage. From there the only routes out were Women, Men, Training, Fabric and
+About. A shopper who wanted to see other leggings, or the rest of Drop 04, had
+no link to follow.
+
+Footer rebuilt as a real catalogue map, split the way the catalogue is actually
+organised:
+
+- **Shop** — Women, Men, Tops, Bottoms, Sports bras, Leggings, Shorts,
+  Outerwear & hoodies, Everything
+- **Sport** — Training, Yoga & studio, Tennis & court, Football & soccer,
+  Basketball, Drop 04 — Voltcore
+- **Information** and **Company** unchanged
+
+Grid widened 4 → 5 columns with a 3-up step at 1080px before the existing 2-up
+at 860px. Internal link targets went 48 → **59, all resolving** under
+`check-links.py`, which now also knows the two new collection handles.
+
+### Two theme settings were referenced but never declared
+
+`layout/theme.liquid` reads `settings.favicon` and `settings.share_image`, and
+each is wrapped in an `{% if %}`. Neither was declared in `settings_schema.json`,
+so both conditions were permanently false:
+
+- **No favicon rendered at all** — the browser tab fell back to a globe.
+- **`og:image` had no store-wide fallback.** For any page without an image of
+  its own, Facebook and Instagram had nothing to render in the link preview —
+  and those two are where essentially all of this store's real traffic comes
+  from.
+
+Both now declared as `image_picker` settings with sizing guidance. They still
+need an image uploaded in the theme editor to take effect.
+
+Also fixed: `theme_support_url` pointed at `/pages/contact`, one of the dead
+handles from §10. Now `/pages/contact-us`.
+
+Deployed as theme v23.

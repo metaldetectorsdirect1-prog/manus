@@ -166,8 +166,10 @@
 
 {%- assign footer_links = linklists.footer.links -%}
 {%- assign footer_count = footer_links.size | plus: 0 -%}
-{%- assign foot_shop_t = 'Women,Men,Training,Everything' | split: ',' -%}
-{%- assign foot_shop_u = '/collections/womens-activewear,/collections/mens-activewear,/collections/training,/collections/all' | split: ',' -%}
+{%- assign foot_shop_t = 'Women,Men,Tops,Bottoms,Sports bras,Leggings,Shorts,Outerwear & hoodies,Everything' | split: ',' -%}
+{%- assign foot_shop_u = '/collections/womens-activewear,/collections/mens-activewear,/collections/tops,/collections/bottoms,/collections/sports-bras,/collections/leggings,/collections/shorts,/collections/outerwear-hoodies,/collections/all' | split: ',' -%}
+{%- assign foot_sport_t = 'Training,Yoga & studio,Tennis & court,Football & soccer,Basketball,Drop 04 — Voltcore' | split: ',' -%}
+{%- assign foot_sport_u = '/collections/training,/collections/yoga-studio,/collections/tennis-and-court,/collections/football-soccer,/collections/basketball,/collections/drop-04-voltcore' | split: ',' -%}
 {%- assign foot_info_t = 'Fabric & specifications,Size guide,Shipping,Returns & refunds' | split: ',' -%}
 {%- assign foot_info_u = '/pages/materials-sustainability,/pages/size-guide,/pages/shipping-delivery,/pages/returns-refunds' | split: ',' -%}
 {%- assign foot_co_t = 'About,Contact,Privacy,Terms' | split: ',' -%}
@@ -278,6 +280,14 @@
           <ul>
             {%- for title in foot_shop_t -%}
               <li><a href="{{ foot_shop_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div>
+          <h4>Sport</h4>
+          <ul>
+            {%- for title in foot_sport_t -%}
+              <li><a href="{{ foot_sport_u[forloop.index0] }}">{{ title | escape }}</a></li>
             {%- endfor -%}
           </ul>
         </div>

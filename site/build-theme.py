@@ -63,10 +63,21 @@ SETTINGS_SCHEMA = [
      "theme_version": "1.0.0",
      "theme_author": "HIVOLT",
      "theme_documentation_url": "https://hivolt-usa.com",
-     "theme_support_url": "https://hivolt-usa.com/pages/contact"},
+     # /pages/contact does not exist and 404s. The live page is contact-us.
+     "theme_support_url": "https://hivolt-usa.com/pages/contact-us"},
     {"name": "Brand",
      "settings": [
          {"type": "image_picker", "id": "logo", "label": "Logo"},
+         # layout/theme.liquid reads settings.favicon and settings.share_image,
+         # but neither was declared here — so the {% if %} guarding each one
+         # never fired. No favicon rendered at all, and og:image had no
+         # store-wide fallback, which is what Facebook and Instagram show when
+         # a page without its own image is shared. Most of this store's real
+         # traffic arrives from exactly those two.
+         {"type": "image_picker", "id": "favicon", "label": "Favicon",
+          "info": "Square PNG. Rendered at 32x32."},
+         {"type": "image_picker", "id": "share_image", "label": "Social share image",
+          "info": "Fallback og:image for pages with no image of their own. 1200x630."},
          {"type": "text", "id": "support_email", "label": "Support email",
           "default": "support@hivolt-usa.com"},
      ]},

@@ -50,6 +50,7 @@ COLLECTIONS = {
     'frontpage', 'all', 'mens-activewear', 'womens-activewear', 'tops',
     'bottoms', 'outerwear-hoodies', 'training', 'yoga-studio',
     'drop-04-voltcore', 'sports-bras', 'leggings', 'shorts', 'tennis-and-court',
+    'football-soccer', 'basketball',
 }
 
 # Shopify serves these itself; they are not theme-authored handles.
