@@ -203,6 +203,41 @@ description was absent from `spec.composition`:
 
 Both now appear on the spec sheet.
 
+## Delivery time: the storefront and the shipping policy disagree
+
+Found while auditing hardcoded factual claims in template copy against live
+store data.
+
+| Source | Claim |
+|---|---|
+| Homepage FAQ (`index.liquid`) | "Why does shipping take **8–14 days**?" |
+| Homepage `FAQPage` JSON-LD | "**8-14 business days** is the real window, tracked from dispatch." |
+| `page.shipping.liquid` body | "free on every US order with no minimum, **8-14 business days**" |
+| `page.shipping.liquid` JSON-LD | "**8-14 business days.** Business days are Monday to Friday." |
+| **Shopify Shipping Policy** (`/policies/shipping-policy`) | "**Standard Shipping (Free): 5-8 business days** after processing" + "Orders are processed within **1-2 business days**" |
+
+The theme is internally consistent at 8–14. The binding policy document says
+5–8 after 1–2 days of processing — so roughly 6–10 door to door. **Those are
+different promises**, and both are emitted as structured data, so Google can
+surface either as a rich result.
+
+Delivery time is one of the top reasons a shopper abandons and one of the top
+causes of a dispute afterwards. Under-promising at 8–14 while the policy says
+5–8 is the safer direction of the two, but they still have to agree.
+
+**Which figure is true is a question only the merchant can answer** — it
+depends on the fulfilment partner's actual performance. Whichever it is, it
+has to be the same in four places: the homepage FAQ, its JSON-LD, the shipping
+page, and the shipping policy.
+
+### This corrects an earlier claim of mine
+
+`LEGAL-POLICY-REWRITE.md` states "The Shipping Policy is the one that is
+already correct… and needs no change." That was wrong. It is correct in the
+sense that it describes shipping rather than a collagen supplement
+subscription — but its transit window contradicts every storefront surface,
+and I did not check that when I cleared it.
+
 ## Still outstanding
 
 ### Blocking, and only the owner can clear them

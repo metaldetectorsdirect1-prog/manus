@@ -64,8 +64,20 @@ recurring billing of any kind.
    subscription policy on an apparel feed is a review failure, on top of the
    `age_group`/`gender` gap already fixed.
 
-The Shipping Policy is the one that is already correct — free US shipping,
-United States only, 5–8 business days — and needs no change.
+The Shipping Policy is the only one not describing a supplement business — but
+**it is not "fine", and an earlier version of this document wrongly said it
+was.** Its transit window contradicts every storefront surface:
+
+| Source | Claim |
+|---|---|
+| Shipping Policy | **5-8 business days** after 1-2 days processing |
+| Homepage FAQ + its JSON-LD | **8-14 business days** |
+| Shipping page + its JSON-LD | **8-14 business days** |
+
+Both are emitted as structured data, so Google can surface either. Decide which
+window the fulfilment partner actually hits, then make it identical in all four
+places. Free US shipping with no minimum, and United States only, are
+consistent everywhere and need no change.
 
 ---
 
