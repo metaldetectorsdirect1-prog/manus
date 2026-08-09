@@ -22,11 +22,35 @@
 
 {%- assign m = product.metafields.spec -%}
 
+{%- comment -%}
+  One breadcrumb, used twice: once as the visible nav below and once as
+  BreadcrumbList structured data further down. They are derived from the same
+  `crumb` so they cannot disagree — Google treats structured data that claims a
+  path the page does not show as a markup mismatch.
+
+  `collection` is only in scope when the shopper arrived through a collection.
+  On a direct /products/<handle> hit — which is what a search result opens, and
+  therefore the case that matters for ranking — it is unset, and the page used
+  to show a bare "Home > Product" with no category at all. Falling back to the
+  product's own first real collection gives the page its category in both
+  cases. `all` and `frontpage` are skipped: neither is a category a shopper
+  would recognise as a step in the path.
+{%- endcomment -%}
+{%- assign crumb = collection -%}
+{%- unless crumb.handle -%}
+  {%- for c in product.collections -%}
+    {%- unless c.handle == 'all' or c.handle == 'frontpage' -%}
+      {%- assign crumb = c -%}
+      {%- break -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endunless -%}
+
 <nav class="crumb wrap" aria-label="Breadcrumb">
   <ol>
     <li><a href="{{ routes.root_url }}">Home</a></li>
-    {%- if collection -%}
-      <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+    {%- if crumb.handle -%}
+      <li><a href="{{ crumb.url }}">{{ crumb.title }}</a></li>
     {%- endif -%}
     <li aria-current="page">{{ product.title }}</li>
   </ol>
@@ -259,14 +283,31 @@
     "unitText": "g/m²"
   }],
   {%- endif %}
-  {%- if product.featured_image %}
-  "image": [{{ product.featured_image | image_url: width: 1200 | prepend: "https:" | json }}],
+  {%- comment -%}
+    Every image, not just the featured one. Google picks the best aspect ratio
+    for a given surface from the list it is given, so sending one image means
+    it has nothing to pick from — and Shopping listings prefer merchants who
+    supply more than a single shot.
+  {%- endcomment -%}
+  {%- if product.images.size > 0 %}
+  "image": [
+    {%- for img in product.images limit: 10 -%}
+      {{ img | image_url: width: 1200 | prepend: "https:" | json }}
+      {%- unless forloop.last %},{% endunless -%}
+    {%- endfor -%}
+  ],
   {%- endif %}
   "offers": {
     "@type": "Offer",
     "url": {{ shop.url | append: product.url | json }},
     "priceCurrency": {{ cart.currency.iso_code | json }},
     "price": {{ product.price | divided_by: 100.0 | json }},
+    {%- comment -%}
+      Rolling one year out. Google treats a missing priceValidUntil as a reason
+      to age out the offer, and a date in the past suppresses the rich result
+      outright — so this must always be in the future, never a fixed literal.
+    {%- endcomment -%}
+    "priceValidUntil": {{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' | json }},
     "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
     "seller": {"@type":"Organization","name":"HIVOLT"},
     "shippingDetails": {
@@ -283,6 +324,34 @@
       "returnFees": "https://schema.org/FreeReturn"
     }
   }
+}
+</script>
+
+{%- comment -%}
+  Breadcrumb structured data, mirroring the visible nav at the top of the page
+  from the same `crumb`. The comment above the Product block has promised a
+  breadcrumb since this template was written, but none was ever emitted —
+  product pages were the only templates without one, and they are the pages
+  that actually rank.
+
+  The product crumb points at the canonical /products/<handle> rather than
+  `product.url`, which carries the collection prefix when one is in scope.
+  A breadcrumb that disagrees with the canonical tag is worse than none.
+{%- endcomment -%}
+{%- assign canon = shop.url | append: '/products/' | append: product.handle -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":{{ shop.url | json }}},
+    {%- if crumb.handle %}
+    {"@type":"ListItem","position":2,"name":{{ crumb.title | json }},"item":{{ shop.url | append: crumb.url | json }}},
+    {"@type":"ListItem","position":3,"name":{{ product.title | json }},"item":{{ canon | json }}}
+    {%- else %}
+    {"@type":"ListItem","position":2,"name":{{ product.title | json }},"item":{{ canon | json }}}
+    {%- endif %}
+  ]
 }
 </script>
 
