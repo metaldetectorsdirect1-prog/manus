@@ -44,3 +44,9 @@ site/sm-shot-*.jpg
 #   git clone --depth 1 https://github.com/Vincentwei1021/video-shotcraft.git
 #   cp -r video-shotcraft/assets/audio .claude/skills/video-shotcraft/assets/
 .claude/skills/video-shotcraft/assets/audio/
+
+# Python bytecode. Build artefacts, never source — two of these were committed
+# by accident earlier (audit/__pycache__) and are untracked in the same commit
+# that adds this rule.
+__pycache__/
+*.pyc
