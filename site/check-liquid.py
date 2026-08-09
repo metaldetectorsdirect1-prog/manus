@@ -81,7 +81,17 @@ def check(path):
     # A page template that emits any of them produces nested landmarks. Agents
     # working in parallel wrote several templates before the layout existed, so
     # this is checked rather than trusted.
-    if 'layout-theme' not in path and path.endswith('.liquid'):
+    # A file that carries its own <!doctype html> is a standalone document, not
+    # a page template: layout/password.liquid is its own shell, and
+    # templates/gift_card.liquid declares `layout none` because a gift-card
+    # recipient has no session and needs none of the storefront chrome. Both
+    # legitimately own a <main>. Exempting them by CONTENT rather than by
+    # filename means a future standalone document is covered automatically, and
+    # a page template that grows a stray <main> is still caught.
+    standalone = ('<!doctype html' in src.lower()
+                  or re.search(r'\{%-?\s*layout\s+none\s*-?%\}', src) is not None)
+
+    if 'layout-theme' not in path and path.endswith('.liquid') and not standalone:
         nocomment = re.sub(r'\{%-?\s*comment\s*-?%\}.*?\{%-?\s*endcomment\s*-?%\}',
                            '', src, flags=re.S)
         for pat, what in ((r'<main\b', '<main>'),

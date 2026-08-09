@@ -1,0 +1,126 @@
+{%- comment -%}
+  HIVOLT — templates/gift_card.liquid
+  ──────────────────────────────────
+  The page a recipient lands on from a gift card email. It uses `layout none`
+  and carries its own document, which is Shopify's convention here — the
+  recipient is not a shopper yet, has no cart and no session, and the full
+  masthead and footer would be furniture around the one thing they came for:
+  the code.
+
+  Without this template the page falls back to Shopify's generic one. Nothing
+  breaks today because no gift card has ever been issued, but the first one
+  ever sent would arrive looking like it came from a different company.
+
+  Shopify supplies `gift_card`. Everything shown is read from it:
+
+      gift_card.balance / .initial_value   Money, in the card's own currency
+      gift_card.code                       formatted by the format_code filter
+      gift_card.expires_on                 nil when the card never expires
+      gift_card.enabled                    false once disabled in admin
+      gift_card.qr_identifier              the QR payload for POS
+
+  Partial balance, expiry and disabled state are all rendered rather than
+  assumed away, because a recipient who sees a full balance on a spent card
+  will contact support, and that is the expensive outcome.
+{%- endcomment -%}
+{% layout none %}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- if settings.favicon %}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif %}
+  <title>{{ shop.name | escape }} gift card</title>
+  {%- comment -%} A gift card URL is a bearer token. It must never be indexed. {%- endcomment -%}
+  <meta name="robots" content="noindex,nofollow">
+  {{ content_for_header }}
+  {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+</head>
+<body class="template-giftcard">
+<main id="main" class="gc">
+  <section class="gc__in">
+
+    <p class="mono gc__eyebrow">{{ shop.name | escape }}</p>
+
+    {%- if gift_card.enabled == false -%}
+      <h1 class="gc__h">This card<br><em>is disabled.</em></h1>
+      <div class="rte rte--tight">
+        <p>
+          This gift card is no longer active. If you believe that is a mistake,
+          reply to the email it arrived in, or write to
+          {{ settings.support_email | default: shop.email | default: 'support@hivolt-usa.com' }}.
+        </p>
+      </div>
+
+    {%- elsif gift_card.expired -%}
+      <h1 class="gc__h">This card<br><em>has expired.</em></h1>
+      <div class="rte rte--tight">
+        <p>
+          It expired on {{ gift_card.expires_on | date: '%d %B %Y' }}. Write to
+          {{ settings.support_email | default: shop.email | default: 'support@hivolt-usa.com' }}
+          and we will see what we can do.
+        </p>
+      </div>
+
+    {%- else -%}
+      <h1 class="gc__h">{{ gift_card.balance | money }}<br><em>to spend.</em></h1>
+
+      <div class="sheet gc__sheet">
+        {%- if gift_card.balance != gift_card.initial_value -%}
+          <div class="sheet__row">
+            <span class="sheet__k">Originally</span>
+            <span class="sheet__v">{{ gift_card.initial_value | money }}</span>
+          </div>
+          <div class="sheet__row">
+            <span class="sheet__k">Remaining</span>
+            <span class="sheet__v"><em>{{ gift_card.balance | money }}</em></span>
+          </div>
+        {%- endif -%}
+        {%- if gift_card.expires_on -%}
+          <div class="sheet__row">
+            <span class="sheet__k">Expires</span>
+            <span class="sheet__v">{{ gift_card.expires_on | date: '%d %b %Y' }}</span>
+          </div>
+        {%- endif -%}
+        <div class="sheet__row">
+          <span class="sheet__k">Ships to</span>
+          <span class="sheet__v">United States</span>
+        </div>
+      </div>
+
+      <p class="mono gc__k">Your code</p>
+      <p class="gc__code">{{ gift_card.code | format_code }}</p>
+
+      {%- if gift_card.qr_identifier -%}
+        <img class="gc__qr" width="160" height="160" loading="lazy"
+             src="{{ gift_card.qr_identifier | generate_qr_code: size: 160 }}"
+             alt="QR code for gift card {{ gift_card.code | format_code }}">
+      {%- endif -%}
+
+      <div class="gc__cta">
+        <a class="btn" href="{{ shop.url }}{{ routes.all_products_collection_url }}?gift_card_code={{ gift_card.code }}">
+          Spend it
+        </a>
+        <button class="btn btn--ghost" type="button" onclick="window.print()">Print</button>
+      </div>
+
+      <div class="rte rte--tight gc__note">
+        <p>
+          Enter the code at checkout. It works across as many orders as it
+          takes to use up — the balance carries over, and nothing expires
+          between them{% unless gift_card.expires_on %}, because this card has no expiry date{% endunless %}.
+        </p>
+      </div>
+    {%- endif -%}
+
+    <p class="gc__foot mono">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}
+      {%- if shop.email != blank %} · {{ shop.email }}{% endif -%}
+    </p>
+
+  </section>
+</main>
+</body>
+</html>

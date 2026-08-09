@@ -18,6 +18,14 @@ ZIP = ROOT.parent / 'HIVOLT-theme.zip'
 
 # flat authored file  ->  path inside the theme
 MAP = {
+    # Password protection and gift cards each need their OWN document.
+    # Shopify renders templates/password.liquid inside layout/password.liquid,
+    # and gift_card.liquid declares `layout none` and carries its own <html>.
+    # Neither shipped, so enabling either feature fell back to Shopify's
+    # generic pages — a first gift card would have looked like another brand.
+    'theme/layout-password.liquid':    'layout/password.liquid',
+    'theme/password.liquid':           'templates/password.liquid',
+    'theme/gift-card.liquid':          'templates/gift_card.liquid',
     'index.liquid':                    'templates/index.liquid',
     'product.liquid':                  'templates/product.liquid',
     'theme/collection.liquid':         'templates/collection.liquid',
