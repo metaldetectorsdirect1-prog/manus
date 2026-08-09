@@ -36,3 +36,11 @@ site/sm-shot-*.jpg
 .claude/.proven-config-version
 .claude-flow/daemon.pid
 *.pid
+
+# video-shotcraft ships a 36MB / 154-file MP3 sound-design library. The skill
+# itself (shot cards, references, template, demos, components) is tracked; the
+# audio is not, because git keeps binary blobs in history permanently and this
+# would roughly quintuple the repo. Re-fetch when sound design is needed:
+#   git clone --depth 1 https://github.com/Vincentwei1021/video-shotcraft.git
+#   cp -r video-shotcraft/assets/audio .claude/skills/video-shotcraft/assets/
+.claude/skills/video-shotcraft/assets/audio/
