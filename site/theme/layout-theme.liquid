@@ -49,6 +49,29 @@
   {%- if page.handle == 'google-site-verification' -%}
     <meta name="robots" content="noindex,follow">
   {%- endif -%}
+
+  {%- comment -%}
+    Search Console verification, meta-tag method.
+
+    The store already holds a token for the HTML-FILE method
+    (google6945ed5c46bc40d8), served by redirecting /google<token>.html to
+    /pages/google-site-verification. Google's own instructions say not to
+    redirect the verification file, and Shopify gives no way to serve a real
+    file at the site root — so that route cannot be relied on.
+
+    The meta tag is the method that works on Shopify, because the theme owns
+    the <head>. Its token is NOT the same string as the file token: Search
+    Console issues a separate one per method. Paste that one here.
+
+    It renders on every page, which is harmless and means verification does
+    not break if the homepage template is ever swapped.
+  {%- endcomment -%}
+  {%- if settings.google_site_verification != blank -%}
+    <meta name="google-site-verification" content="{{ settings.google_site_verification | escape }}">
+  {%- endif -%}
+  {%- if settings.bing_site_verification != blank -%}
+    <meta name="msvalidate.01" content="{{ settings.bing_site_verification | escape }}">
+  {%- endif -%}
   {%- if settings.favicon %}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
   {%- endif %}

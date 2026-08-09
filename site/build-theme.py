@@ -97,6 +97,21 @@ SETTINGS_SCHEMA = [
     # could be verified (page id 482588221614644, "Hivolt USA"). The rest are
     # left blank deliberately: each one is emitted only when it holds a value,
     # and claiming a profile that does not exist is worse than claiming none.
+    # Search Console verification. Left blank on purpose: the token has to come
+    # from the owner's own Search Console property, and a wrong or invented
+    # value fails verification rather than doing nothing. The meta-tag token is
+    # a different string from the HTML-file token already in the store.
+    {"name": "Search engine verification",
+     "settings": [
+         {"type": "text", "id": "google_site_verification",
+          "label": "Google Search Console token",
+          "info": "Search Console > Add property > URL prefix > HTML tag. Paste "
+                  "ONLY the content=\"...\" value, not the whole tag."},
+         {"type": "text", "id": "bing_site_verification",
+          "label": "Bing Webmaster Tools token",
+          "info": "Optional. Bing Webmaster Tools > Add site > Meta tag. Paste "
+                  "only the content value."},
+     ]},
     {"name": "Social profiles",
      "settings": [
          {"type": "text", "id": "social_facebook", "label": "Facebook page URL",
