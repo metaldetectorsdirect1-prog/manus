@@ -12,7 +12,14 @@ picture of a product someone can buy is not worth the reach.
 import base64, pathlib, subprocess, sys
 from PIL import Image
 
-OUT = pathlib.Path(__file__).parent
+# Render targets are build output, not source. Writing them next to the script
+# dropped fifteen slide*.{html,png,jpg} into scripts/ on every run, where they
+# were one `git add -A` away from being committed — and worse, a stale copy of
+# the same filenames elsewhere on disk is indistinguishable from a fresh one.
+# That nearly put a pre-ladder "$54" slide on TikTok.
+OUT = pathlib.Path("/tmp/claude-0/-home-user-manus/"
+                   "f9f720c1-823b-5cd8-aec8-e4501793ee60/scratchpad/carousel")
+OUT.mkdir(parents=True, exist_ok=True)
 CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 W, H = 1080, 1920
 
