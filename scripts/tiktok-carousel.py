@@ -79,7 +79,7 @@ SLIDES = [
        <div class="rows">
          <div class="row"><span>Composition</span><span>89% polyester</span></div>
          <div class="row"><span></span><span>11% spandex</span></div>
-         <div class="row"><span>Price</span><span>$54</span></div>
+         <div class="row"><span>Price</span><span>$59</span></div>
        </div>""",
     # 4 — the challenge
     """<p class="eyebrow">Try it yourself</p>
