@@ -232,7 +232,11 @@ FILMS = {
                  "t": "89% polyester &#183; 11% spandex"},
             ]},
             {"in": 9.4, "out": 13.4, "top": 560, "els": [
-                {"k": "row", "at": 0.0, "top": 0, "l": "$92",
+                # $97, not $92. The leggings in this set are the 230 g/m² pair
+                # the weight ladder moved from $54 to $59, so the separate
+                # total moved with it. A stale compare-at here is a false
+                # savings claim on a public post, not a stale number.
+                {"k": "row", "at": 0.0, "top": 0, "l": "$97",
                  "r": "bought separately"},
                 {"k": "row", "at": 0.7, "top": 170, "l": "$79",
                  "r": "as a set"},
@@ -278,6 +282,249 @@ FILMS = {
                  "t": "Not pretending to be."},
             ]},
             {"in": 13.0, "out": 14.5, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── the question, handed to the viewer to use on someone else ───────
+    # No figure in this one, which is why it can be the hook: nothing to
+    # verify, nothing to go stale, and it works on a viewer who has never
+    # heard of us.
+    "ask": {
+        "dur": 14.5,
+        "beats": [
+            {"in": 0.3, "out": 4.2, "top": 620, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Ask any brand"},
+                {"k": "slab", "at": 0.35, "cls": "line", "h": 100, "top": 100,
+                 "t": "one question."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.4, "out": 8.2, "top": 560, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "&#8220;What is the"},
+                {"k": "slab", "at": 0.3, "cls": "line", "h": 100, "top": 110,
+                 "t": '<span class="accent">fabric weight?&#8221;</span>'},
+                {"k": "rule", "at": 1.2, "top": 250, "d": 0.9},
+                {"k": "slab", "at": 1.7, "cls": "meta", "h": 62, "top": 300,
+                 "t": "Grams per square metre"},
+            ]},
+            {"in": 8.4, "out": 12.0, "top": 600, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "They know it."},
+                {"k": "slab", "at": 1.3, "cls": "line", "h": 100, "top": 140,
+                 "t": "It is on the"},
+                {"k": "slab", "at": 1.5, "cls": "line", "h": 100, "top": 240,
+                 "t": "spec they ordered."},
+            ]},
+            {"in": 12.2, "out": 13.0, "top": 660, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Ours is printed."},
+            ]},
+            {"in": 13.0, "out": 14.5, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── the whole ladder, five rungs ────────────────────────────────────
+    # Every pair is from audit/LEGGINGS-PRICE-LADDER-2026-08-09.md and live
+    # on the store.
+    #
+    # A `row` stacks its two halves — the weight above, the price below — so
+    # one row is ~150px of ink, not a line. Five of them at 150px spacing left
+    # no gap at all: each price sat against the next weight and the column read
+    # as one list rather than five choices. 170 is the same spacing the three
+    # rows in "weights" use, and it is the figure that works.
+    #
+    # Five rows at 170 also pushed the closing couplet off the bottom of the
+    # frame — "to make." rendered with its descenders sliced by the 1920 edge.
+    # The beat starts at 300 rather than 380 to buy that back. Anything laid
+    # out from a beat top has to be checked against 1920, not against the
+    # numbers of the beat above it.
+    "ladder": {
+        "dur": 17.0,
+        "beats": [
+            {"in": 0.3, "out": 4.0, "top": 620, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Our leggings"},
+                {"k": "slab", "at": 0.35, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "are not one price."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.2, "out": 12.6, "top": 300, "els": [
+                {"k": "slab", "at": 0.0, "cls": "meta", "h": 60,
+                 "t": "WEIGHT &#183; PRICE"},
+                {"k": "row", "at": 0.5, "top": 110, "l": "200 g/m&#178;",
+                 "r": "$49"},
+                {"k": "row", "at": 1.1, "top": 280, "l": "220 g/m&#178;",
+                 "r": "$54"},
+                {"k": "row", "at": 1.6, "top": 450, "l": "230 g/m&#178;",
+                 "r": "$59"},
+                {"k": "row", "at": 2.0, "top": 620, "l": "250 g/m&#178;",
+                 "r": "$64"},
+                {"k": "row", "at": 2.3, "top": 790, "l": "270 g/m&#178;",
+                 "r": "$69"},
+                {"k": "slab", "at": 3.8, "cls": "line", "h": 100, "top": 1010,
+                 "t": "Heavier costs more"},
+                {"k": "slab", "at": 4.0, "cls": "line", "h": 100, "top": 1110,
+                 "t": '<span class="accent">to make.</span>'},
+            ]},
+            {"in": 12.8, "out": 15.4, "top": 640, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "So it costs more"},
+                {"k": "slab", "at": 0.3, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "to buy."},
+                {"k": "slab", "at": 1.3, "cls": "line", "h": 100, "top": 240,
+                 "t": "That is the"},
+                {"k": "slab", "at": 1.5, "cls": "line", "h": 100, "top": 340,
+                 "t": '<span class="accent">whole system.</span>'},
+            ]},
+            {"in": 15.5, "out": 17.0, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── what the number buys you, said without promising it ─────────────
+    # Deliberately does NOT say "squat-proof". Opacity is a property of a
+    # given knit at a given weight on a given body; the number is a fact and
+    # the guarantee is a fact, so the film ships both and claims neither.
+    "opacity": {
+        "dur": 16.0,
+        "beats": [
+            {"in": 0.3, "out": 4.2, "top": 620, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "&#8220;Is it opaque?&#8221;"},
+                {"k": "slab", "at": 0.9, "cls": "line dim", "h": 100,
+                 "top": 110, "t": "Wrong question."},
+                {"k": "rule", "at": 1.5, "top": 236, "d": 1.1},
+            ]},
+            {"in": 4.4, "out": 8.0, "top": 620, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "Every brand says"},
+                {"k": "slab", "at": 0.3, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "yes to that."},
+                {"k": "slab", "at": 1.5, "cls": "line", "h": 100, "top": 240,
+                 "t": "Ask for the"},
+                {"k": "slab", "at": 1.7, "cls": "line", "h": 100, "top": 340,
+                 "t": '<span class="accent">number instead.</span>'},
+            ]},
+            {"in": 8.2, "out": 13.4, "top": 500, "els": [
+                {"k": "count", "at": 0.0, "to": 270, "d": 2.1, "h": 370},
+                {"k": "slab", "at": 2.0, "cls": "unit", "h": 126, "top": 372,
+                 "t": "g/m&#178;"},
+                {"k": "rule", "at": 2.5, "top": 530, "d": 0.9},
+                {"k": "slab", "at": 2.9, "cls": "meta", "h": 62, "top": 580,
+                 "t": "The heaviest knit we sell"},
+                {"k": "slab", "at": 3.1, "cls": "meta", "h": 62, "top": 648,
+                 "t": "$69 &#183; 60 days to disagree"},
+            ]},
+            {"in": 13.6, "out": 14.6, "top": 660, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Judge it in a squat."},
+            ]},
+            {"in": 14.6, "out": 16.0, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── men, who nothing else in this set addresses ─────────────────────
+    "mens": {
+        "dur": 15.5,
+        "beats": [
+            {"in": 0.3, "out": 4.0, "top": 640, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Men's training set."},
+                {"k": "slab", "at": 0.4, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "Tee and shorts."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.2, "out": 9.6, "top": 480, "els": [
+                {"k": "slab", "at": 0.0, "cls": "meta", "h": 60,
+                 "t": "PIECE &#183; WEIGHT"},
+                {"k": "row", "at": 0.5, "top": 120, "l": "Tee",
+                 "r": "130 g/m&#178; &#183; 100% polyester"},
+                {"k": "row", "at": 1.2, "top": 290, "l": "Shorts",
+                 "r": "165 g/m&#178; &#183; 77% nylon"},
+                {"k": "slab", "at": 2.6, "cls": "line", "h": 100, "top": 470,
+                 "t": "Two garments."},
+                {"k": "slab", "at": 2.8, "cls": "line", "h": 100, "top": 570,
+                 "t": '<span class="accent">Two specs.</span>'},
+            ]},
+            {"in": 9.8, "out": 13.6, "top": 580, "els": [
+                {"k": "row", "at": 0.0, "top": 0, "l": "$76",
+                 "r": "bought separately"},
+                {"k": "row", "at": 0.7, "top": 170, "l": "$65",
+                 "r": "as a set"},
+                {"k": "slab", "at": 1.9, "cls": "line dim", "h": 100,
+                 "top": 360, "t": "Light tee. Heavier"},
+                {"k": "slab", "at": 2.1, "cls": "line", "h": 100, "top": 460,
+                 "t": "short. On purpose."},
+            ]},
+            {"in": 13.8, "out": 15.5, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── the yoga set: two fibres, both printed ──────────────────────────
+    "yoga": {
+        "dur": 15.5,
+        "beats": [
+            {"in": 0.3, "out": 4.0, "top": 640, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Halter bra."},
+                {"k": "slab", "at": 0.35, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "High-rise pants."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.2, "out": 9.4, "top": 520, "els": [
+                {"k": "count", "at": 0.0, "to": 220, "d": 1.8, "h": 370},
+                {"k": "slab", "at": 1.7, "cls": "unit", "h": 126, "top": 372,
+                 "t": "g/m&#178;"},
+                {"k": "rule", "at": 2.2, "top": 530, "d": 0.9},
+                {"k": "slab", "at": 2.6, "cls": "meta", "h": 62, "top": 578,
+                 "t": "Bra 78% polyamide, 22% elastane"},
+                {"k": "slab", "at": 2.8, "cls": "meta", "h": 62, "top": 646,
+                 "t": "Pants 80% nylon, 20% spandex"},
+            ]},
+            {"in": 9.6, "out": 13.4, "top": 580, "els": [
+                {"k": "row", "at": 0.0, "top": 0, "l": "$103",
+                 "r": "bought separately"},
+                {"k": "row", "at": 0.7, "top": 170, "l": "$89",
+                 "r": "as a set"},
+                {"k": "slab", "at": 1.9, "cls": "line dim", "h": 100,
+                 "top": 360, "t": "Different fibres."},
+                {"k": "slab", "at": 2.1, "cls": "line", "h": 100, "top": 460,
+                 "t": '<span class="accent">Both printed.</span>'},
+            ]},
+            {"in": 13.6, "out": 15.5, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── Voltcore. No compare-at on this one, so no saving is claimed ────
+    "voltcore": {
+        "dur": 15.0,
+        "beats": [
+            {"in": 0.3, "out": 4.0, "top": 640, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Drop 04."},
+                {"k": "slab", "at": 0.35, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "Voltcore."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.2, "out": 9.6, "top": 520, "els": [
+                {"k": "count", "at": 0.0, "to": 220, "d": 1.8, "h": 370},
+                {"k": "slab", "at": 1.7, "cls": "unit", "h": 126, "top": 372,
+                 "t": "g/m&#178;"},
+                {"k": "rule", "at": 2.2, "top": 530, "d": 0.9},
+                {"k": "slab", "at": 2.6, "cls": "meta", "h": 62, "top": 578,
+                 "t": "Twist front bra &#183; flare leggings"},
+                {"k": "slab", "at": 2.8, "cls": "meta", "h": 62, "top": 646,
+                 "t": "$79 &#183; free US shipping"},
+            ]},
+            {"in": 9.8, "out": 13.0, "top": 620, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "Matte black."},
+                {"k": "slab", "at": 1.2, "cls": "line", "h": 100, "top": 140,
+                 "t": "No logo, no print,"},
+                {"k": "slab", "at": 1.4, "cls": "line", "h": 100, "top": 240,
+                 "t": '<span class="accent">no story.</span>'},
+            ]},
+            {"in": 13.2, "out": 15.0, "top": 760, "els": SIGNOFF},
         ],
     },
 }
