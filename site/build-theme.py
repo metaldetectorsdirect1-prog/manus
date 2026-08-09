@@ -89,6 +89,26 @@ SETTINGS_SCHEMA = [
          {"type": "text", "id": "support_email", "label": "Support email",
           "default": "support@hivolt-usa.com"},
      ]},
+    # These four feed sameAs in the Organization JSON-LD, which is how Google
+    # links a social profile to this website as one brand entity. sameAs was
+    # previously a hardcoded empty array, so it asserted nothing.
+    #
+    # Only the Facebook page is filled in, because it is the only profile that
+    # could be verified (page id 482588221614644, "Hivolt USA"). The rest are
+    # left blank deliberately: each one is emitted only when it holds a value,
+    # and claiming a profile that does not exist is worse than claiming none.
+    {"name": "Social profiles",
+     "settings": [
+         {"type": "text", "id": "social_facebook", "label": "Facebook page URL",
+          "default": "https://www.facebook.com/482588221614644",
+          "info": "Full URL. Feeds sameAs in structured data."},
+         {"type": "text", "id": "social_instagram", "label": "Instagram profile URL",
+          "info": "e.g. https://www.instagram.com/yourhandle — leave blank if none."},
+         {"type": "text", "id": "social_tiktok", "label": "TikTok profile URL",
+          "info": "e.g. https://www.tiktok.com/@yourhandle — leave blank if none."},
+         {"type": "text", "id": "social_youtube", "label": "YouTube channel URL",
+          "info": "Leave blank if none."},
+     ]},
     {"name": "Announcements",
      "settings": [
          {"type": "checkbox", "id": "show_ticker", "label": "Show announcement ticker",
@@ -153,7 +173,12 @@ def main():
                                 "promo_enabled": True,
                                 "promo_text": "20% off your first order",
                                 "promo_code": "VOLT20",
-                                "support_email": "support@hivolt-usa.com"}},
+                                "support_email": "support@hivolt-usa.com",
+                                # Only the verified profile. The other three
+                                # social_* settings stay unset so sameAs omits
+                                # them rather than asserting a dead URL.
+                                "social_facebook":
+                                    "https://www.facebook.com/482588221614644"}},
                    indent=2) + '\n')
     (OUT / 'locales/en.default.json').write_text(json.dumps({"general": {
         "meta": {"tags": "Tagged {{ tags }}", "page": "Page {{ page }}"}}}, indent=2) + '\n')

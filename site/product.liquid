@@ -274,6 +274,42 @@
   {%- if product.metafields.spec.composition != blank %}
   "material": {{ product.metafields.spec.composition | json }},
   {%- endif %}
+  {%- comment -%}
+    Colour, size and audience are all read by Google for apparel, and all three
+    were already in the store — colour and size as variant options, gender as
+    an mm-google-shopping metafield. Those metafields were built for the
+    Merchant Center feed and were invisible to the organic crawler, so the same
+    facts are now stated in both places.
+
+    Captured rather than piped straight from the metafield: the namespace
+    contains a hyphen, so it can only be reached by bracket lookup, and
+    capturing forces the drop to render as its plain value before it is
+    JSON-encoded.
+  {%- endcomment -%}
+  {%- assign v_color = '' -%}
+  {%- assign v_size = '' -%}
+  {%- for opt in product.options_with_values -%}
+    {%- assign oname = opt.name | downcase -%}
+    {%- if oname == 'color' or oname == 'colour' -%}
+      {%- assign v_color = opt.selected_value -%}
+    {%- elsif oname == 'size' -%}
+      {%- assign v_size = opt.selected_value -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if v_color != blank %}
+  "color": {{ v_color | json }},
+  {%- endif %}
+  {%- if v_size != blank %}
+  "size": {{ v_size | json }},
+  {%- endif %}
+  {%- capture gender_str -%}{{ product.metafields['mm-google-shopping']['gender'] }}{%- endcapture -%}
+  {%- assign gender_str = gender_str | strip -%}
+  {%- if gender_str != blank %}
+  "audience": {
+    "@type": "PeopleAudience",
+    "suggestedGender": {{ gender_str | json }}
+  },
+  {%- endif %}
   {%- if product.metafields.spec.gsm != blank %}
   "additionalProperty": [{
     "@type": "PropertyValue",
