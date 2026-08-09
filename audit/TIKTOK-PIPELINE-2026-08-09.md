@@ -30,6 +30,39 @@ local render
 this chain requires us to read it back. Byte-exactness is confirmed instead by
 comparing `originalFileSize` on the Shopify file against the local file.
 
+## Photo posts: two extra walls, both cleared
+
+Videos go straight through the route above. Photos hit two more checks, and the
+fix for both is the same detour.
+
+**TikTok reads the file extension, not the bytes.** `media_import_url` on a
+`.jpg` renames the stored asset to `.png`, and the publish call then fails with
+`"png" is not supported by TikTok; allowed formats: WebP, JPEG` even though the
+content was JPEG all along. Importing from a URL whose path ends `.jpg` — with
+the query string after it — preserves the extension:
+`6234beb4-…jpg`, `content_type: image/jpeg`.
+
+**Higgsfield's 2K output is too big.** 1792×2400 exceeds the 1080×1920 frame
+TikTok accepts, and `_min.webp` is *not* a downscale — it is the same 1792×2400
+re-encoded. The generated images cannot be fetched into this container to be
+resized locally, so the resize has to happen on a server.
+
+Shopify does both at once. Upload with `contentType: IMAGE` rather than `FILE`
+— that produces a `MediaImage`, whose URL takes transform arguments:
+
+```graphql
+image { url(transform: {maxWidth: 1080, maxHeight: 1900, preferredContentType: JPG}) }
+→ …_1080x1900.png.jpg   # 1080×1446, JPEG, inside TikTok's frame
+```
+
+`fileCreate` fetches the source URL server-side, so the picture never has to
+reach this container at all. Feed that Shopify URL to `media_import_url` and
+the round trip ends with a Higgsfield-hosted `.jpg` at a legal size.
+
+Note that `photo_images` will not take the Shopify URL directly —
+`"cdn.shopify.com is not a host we can publish from"`. The import step is not
+optional, it is what makes the asset publishable.
+
 ## Why these films carry no AIGC label
 
 `is_aigc: false` is a factual claim, not a convenience. The films are rendered
