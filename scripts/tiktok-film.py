@@ -165,6 +165,121 @@ FILMS = {
             {"in": 14.8, "out": 16.5, "top": 760, "els": SIGNOFF},
         ],
     },
+
+    # ── the return policy as a claim about the product ──────────────────
+    "returns": {
+        "dur": 15.5,
+        "beats": [
+            {"in": 0.3, "out": 4.0, "top": 660, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Sixty days."},
+                {"k": "slab", "at": 0.35, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "Worn and washed."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.2, "out": 8.0, "top": 580, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "Train in them."},
+                {"k": "slab", "at": 0.3, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "Wash them."},
+                {"k": "slab", "at": 1.4, "cls": "line", "h": 100, "top": 240,
+                 "t": '<span class="accent">Send them back.</span>'},
+                {"k": "rule", "at": 2.1, "top": 372, "d": 0.9},
+                {"k": "slab", "at": 2.5, "cls": "meta", "h": 62, "top": 420,
+                 "t": "Free prepaid US label"},
+                {"k": "slab", "at": 2.7, "cls": "meta", "h": 62, "top": 480,
+                 "t": "No restocking fee"},
+            ]},
+            {"in": 8.2, "out": 11.6, "top": 600, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "You can't judge"},
+                {"k": "slab", "at": 0.3, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "leggings in a shop."},
+                {"k": "slab", "at": 1.5, "cls": "line", "h": 100, "top": 240,
+                 "t": "You judge them"},
+                {"k": "slab", "at": 1.7, "cls": "line", "h": 100, "top": 340,
+                 "t": '<span class="accent">in a squat.</span>'},
+            ]},
+            {"in": 11.8, "out": 13.6, "top": 660, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "Not generosity."},
+                {"k": "slab", "at": 0.35, "cls": "line", "h": 100, "top": 100,
+                 "t": "Just confidence."},
+            ]},
+            {"in": 13.8, "out": 15.5, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── the set: matched fabric is the whole point ──────────────────────
+    "sets": {
+        "dur": 15.5,
+        "beats": [
+            {"in": 0.3, "out": 4.0, "top": 660, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Two pieces."},
+                {"k": "slab", "at": 0.35, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "One fabric."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.2, "out": 9.2, "top": 540, "els": [
+                {"k": "count", "at": 0.0, "to": 230, "d": 1.8, "h": 370},
+                {"k": "slab", "at": 1.7, "cls": "unit", "h": 126, "top": 372,
+                 "t": "g/m&#178;"},
+                {"k": "rule", "at": 2.2, "top": 530, "d": 0.9},
+                {"k": "slab", "at": 2.6, "cls": "meta", "h": 62, "top": 578,
+                 "t": "Bra and leggings &#183; the same knit"},
+                {"k": "slab", "at": 2.8, "cls": "meta", "h": 62, "top": 646,
+                 "t": "89% polyester &#183; 11% spandex"},
+            ]},
+            {"in": 9.4, "out": 13.4, "top": 560, "els": [
+                {"k": "row", "at": 0.0, "top": 0, "l": "$92",
+                 "r": "bought separately"},
+                {"k": "row", "at": 0.7, "top": 170, "l": "$79",
+                 "r": "as a set"},
+                {"k": "slab", "at": 1.9, "cls": "line", "h": 100, "top": 360,
+                 "t": "Matched fabric"},
+                {"k": "slab", "at": 2.1, "cls": "line", "h": 100, "top": 460,
+                 "t": '<span class="accent">wears the same.</span>'},
+            ]},
+            {"in": 13.6, "out": 15.5, "top": 760, "els": SIGNOFF},
+        ],
+    },
+
+    # ── shipping, said before checkout instead of after ─────────────────
+    "shipping": {
+        "dur": 14.5,
+        "beats": [
+            {"in": 0.3, "out": 4.0, "top": 660, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line", "h": 100,
+                 "t": "Eight to fourteen"},
+                {"k": "slab", "at": 0.3, "cls": "line", "h": 100, "top": 100,
+                 "t": "business days."},
+                {"k": "rule", "at": 0.95, "top": 226, "d": 1.1},
+            ]},
+            {"in": 4.2, "out": 7.6, "top": 640, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "We say that here,"},
+                {"k": "slab", "at": 0.35, "cls": "line", "h": 100, "top": 100,
+                 "t": '<span class="accent">not at checkout.</span>'},
+            ]},
+            {"in": 7.8, "out": 11.0, "top": 600, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "It ships from a"},
+                {"k": "slab", "at": 0.3, "cls": "line dim", "h": 100,
+                 "top": 100, "t": "partner facility."},
+                {"k": "rule", "at": 1.1, "top": 236, "d": 0.9},
+                {"k": "slab", "at": 1.5, "cls": "meta", "h": 62, "top": 286,
+                 "t": "Free, no minimum &#183; tracked"},
+            ]},
+            {"in": 11.2, "out": 12.8, "top": 660, "els": [
+                {"k": "slab", "at": 0.0, "cls": "line dim", "h": 100,
+                 "t": "Not two-day."},
+                {"k": "slab", "at": 0.35, "cls": "line", "h": 100, "top": 100,
+                 "t": "Not pretending to be."},
+            ]},
+            {"in": 13.0, "out": 14.5, "top": 760, "els": SIGNOFF},
+        ],
+    },
 }
 
 HTML = r"""<!doctype html><meta charset="utf-8"><style>
@@ -175,14 +290,18 @@ body{font-family:"DejaVu Sans","Liberation Sans",Arial,sans-serif;color:#F2F4F7}
    reads as a camera rather than as elements moving independently. */
 #cam{position:absolute;inset:0;transform-origin:50% 45%}
 .mask{overflow:hidden;position:absolute;left:96px;right:150px}
-.mask .in{display:block;will-change:transform}
+/* nowrap belongs here, on every slab, not on .line alone. A mask is a
+   single-line window with overflow hidden; anything that wraps loses its
+   second line and the next slab overlaps the remains. Worse, a wrapped line
+   never overflows horizontally, so fit() below cannot see it — putting the
+   rule on .line only left .meta silently clipping "no restocking fee". */
+.mask .in{display:block;will-change:transform;white-space:nowrap}
 /* nowrap is load-bearing, not cosmetic. A slab is a fixed-height window with
    overflow hidden; if a line wraps, the second line is silently clipped and
    the next slab overlaps the remains. That shipped once and looked like
    corruption. With nowrap the text can only ever overflow horizontally, which
    fit() below detects and corrects. */
-.line{font-size:72px;line-height:1.12;letter-spacing:-.025em;font-weight:700;
-  white-space:nowrap}
+.line{font-size:72px;line-height:1.12;letter-spacing:-.025em;font-weight:700}
 .line.dim{color:#8A97AB;font-weight:400}
 .accent{color:#6E9BFF}
 .num{font-family:"DejaVu Sans Mono","Liberation Mono",monospace;
