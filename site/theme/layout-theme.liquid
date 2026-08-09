@@ -12,6 +12,11 @@
       masthead — site/index.html
       footer   — site/index.html
 
+  The footer opens with snippets/newsletter.liquid — Shopify's native
+  form 'customer', which sets accepts_marketing and needs no app. Before it,
+  the only signup in the store was on /pages/membership, a page almost nobody
+  navigates to, so every other page gave a visitor no way to leave an address.
+
   Menus are read from linklists. If a linklist is empty or absent the hardcoded
   links below render instead, so the header and footer are never blank on a
   store where the menus have not been wired up yet.
@@ -310,6 +315,16 @@
 
 <footer class="foot">
   <div class="wrap">
+    {%- comment -%}
+      The signup is skipped on /pages/membership, which renders its own
+      form 'customer'. form.posted_successfully? is scoped to the form TYPE,
+      not to a particular element, so both forms would report success after one
+      submit and the page would print the confirmation twice.
+    {%- endcomment -%}
+    {%- unless page.handle == 'membership' -%}
+      {%- render 'newsletter' -%}
+    {%- endunless -%}
+
     <div class="foot__grid">
       <div>
         <a href="{{ routes.root_url }}" class="logo" style="font-size:17px">{{ shop.name }}</a>

@@ -21,7 +21,7 @@ from liquid import Environment
 from liquid.ast import Node
 from liquid.parser import get_parser
 from liquid.tag import Tag
-from liquid.token import TOKEN_EOF, TOKEN_TAG
+from liquid.token import TOKEN_EOF, TOKEN_EXPRESSION, TOKEN_TAG
 
 
 class _BodyNode(Node):
@@ -76,7 +76,16 @@ def _inline_tag(tag_name):
 
         def parse(self, stream):
             token = stream.eat(TOKEN_TAG)
-            stream.into_inner(tag=token)
+            # eat=False is the convention every built-in inline tag follows
+            # (see liquid.builtin.tags.include_tag): the tag leaves the stream
+            # ON its expression token and the enclosing block parser advances.
+            # Consuming it here instead puts the outer stream one token ahead,
+            # which is invisible at top level — EOF forgives it — and breaks
+            # the moment the tag appears inside a block, where the parser then
+            # reads the expression as the block's terminator and reports
+            # "expected tag endunless, found end of expression".
+            if stream.current.kind == TOKEN_EXPRESSION:
+                stream.into_inner(tag=token, eat=False)
             return _EmptyNode(token)
 
     _T.__name__ = f"{tag_name.title()}Tag"
@@ -97,8 +106,45 @@ def make_env():
     return env
 
 
+# (source, should_parse). A harness that only ever says "ok" proves nothing —
+# these run before the templates do, so a green report means the parser both
+# accepts valid Shopify Liquid AND still rejects broken Liquid.
+SELFTEST = [
+    ("{% render 'x' %}", True),
+    # The shape that exposed the eat=True bug: an inline pass-through tag
+    # nested inside a block.
+    ("{% unless a == 'b' %}{% render 'x' %}{% endunless %}", True),
+    ("{% if a %}{% section 'y' %}{% endif %}", True),
+    ("{% form 'customer', id: 'z' %}{% render 'x' %}{% endform %}", True),
+    # Genuinely broken: unterminated block, unknown filter syntax, bad operator.
+    ("{% unless a %}no end", False),
+    ("{{ a | | b }}", False),
+    ("{% if a =! b %}x{% endif %}", False),
+]
+
+
+def selftest(env):
+    bad = 0
+    for src, should_parse in SELFTEST:
+        try:
+            env.from_string(src)
+            parsed = True
+        except Exception:                             # noqa: BLE001
+            parsed = False
+        if parsed != should_parse:
+            bad += 1
+            want = "parse" if should_parse else "be rejected"
+            print(f"SELFTEST FAILED — expected {want}: {src}")
+    if bad:
+        print(f"\nharness is unsound ({bad}/{len(SELFTEST)}); "
+              f"template results below cannot be trusted")
+    return bad
+
+
 def main():
     env = make_env()
+    if selftest(env):
+        return 2
     paths = sys.argv[1:] or sorted(
         glob.glob("site/*.liquid") + glob.glob("site/theme/*.liquid"))
     bad = 0

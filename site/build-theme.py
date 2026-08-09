@@ -56,6 +56,10 @@ MAP = {
     # "$10.98" in the product description did.
     'theme/page.voltcore.liquid':      'templates/page.voltcore.liquid',
     'theme/layout-theme.liquid':       'layout/theme.liquid',
+    # Footer email capture, rendered by layout/theme.liquid on every page.
+    # A snippet rather than a section because the layout is not sectioned and
+    # {% render %} is the only include the shell can use.
+    'theme/newsletter.liquid':         'snippets/newsletter.liquid',
 }
 # customers-<name>.liquid -> templates/customers/<name>.liquid
 CUSTOMER_RE = re.compile(r'^customers-(.+)\.liquid$')
