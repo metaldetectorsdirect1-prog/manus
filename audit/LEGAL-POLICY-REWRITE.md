@@ -8,6 +8,32 @@ completed orders.
 replacement text is below; it has to be pasted in manually at
 **Settings → Policies**.
 
+> Retried 2026-08-09. Still `Access denied for shopPolicyUpdate field. Required
+> access: write_legal_policies`. Nothing has changed; all four policies are
+> still live in their original form.
+
+**The text to paste now lives as four files in `audit/policies/`** — copy those,
+not the code blocks below, which are kept for the diff they document. Three
+corrections were made when the files were written:
+>
+> - **The mailing address was wrong in both directions.** The live Contact
+>   policy says `Addison, IL 60101`; the draft below repeated it. The store's
+>   billing address and its only fulfilment location are both
+>   `10s225 Kaye Ln, Willowbrook, IL 60527`. The file says
+>   **Willowbrook, IL 60527** — city and ZIP only, the same granularity the
+>   live policy already publishes, so correcting it does not newly expose a
+>   street address.
+> - **The draft Terms kept the 5–8 day window** this very document flags as
+>   wrong four paragraphs later. Every storefront surface says 8–14, including
+>   two JSON-LD blocks, and 8–14 is the window the store deliberately chose to
+>   quote. The file says **8–14 business days**.
+> - **A shipping policy was missing.** The live one is the only policy not
+>   describing a supplement business, which is why the first pass skipped it —
+>   but its 5–8 day window contradicts all four storefront surfaces, so it
+>   needs replacing too. `audit/policies/shipping-policy.html` is aligned to
+>   the storefront: free, no minimum, continental US, 8–14 days, tracked from
+>   dispatch, no expedited option.
+
 ---
 
 ## What is live right now
