@@ -167,6 +167,74 @@ there is no performance signal behind these offers yet either. What changed is
 that a query for "black high rise leggings 230 gsm" now has something to match
 on where before it had a title with neither the colour nor the number in it.
 
+## The feed itself — built, so the missing channel stops being a blocker
+
+The Google & YouTube channel is owner-only. A **file-based primary feed is
+not**: Merchant Center accepts an uploaded TSV directly, which bypasses the
+channel entirely. `scripts/google-shopping-feed.py` builds one.
+
+**541 offers across all 113 active products**, 844 KB. Source is a Shopify
+`bulkOperationRunQuery` export rather than paged GraphQL — 2,210 records in one
+request, and the result URL sits on `storage.googleapis.com`, which is
+reachable from here even though `cdn.shopify.com` is not. Nothing needed
+fetching; the CDN URLs only have to be *written into* the feed, not read.
+
+Every offer carries brand, colour, size, gender, age_group, condition, a
+variant-specific link, a cdn.shopify.com image, availability and price. 17
+carry a `sale_price` — the four sets, where `price` is the compare-at and
+`sale_price` what is actually charged (Google's convention is the reverse of
+Shopify's, and getting it backwards would advertise a price increase). 532
+carry `product_highlights`.
+
+The script refuses to write a feed at all if any offer is missing one of the
+twelve fields Google rejects an Apparel listing over, rather than emitting it
+and letting Merchant Center find out.
+
+### Three details that would each have broken something quietly
+
+- **Multi-value attributes in a text feed separate on a comma.** The first
+  build joined `product_highlights` with a pipe, and worse, the bullets
+  themselves contained commas — "Composition: 89% polyester, 11% spandex" would
+  have arrived as two mangled highlights. Internal commas now become middots
+  before the join.
+- **A single highlight is worse than none.** Google asks for at least two, so
+  the nine products with only one usable fact send the attribute empty rather
+  than half-filled.
+- **`additional_image_link` is comma-separated too**, which is safe only
+  because Shopify CDN URLs contain no commas — checked rather than assumed.
+
+### Two things deliberately left out of the feed
+
+**`google_product_category`.** Google validates it against its own taxonomy and
+`www.google.com` is blocked at this proxy, so the strings cannot be verified
+from here. The store does carry `mc-facebook.google_product_category = 5322` —
+but **the same value on all 113 products**, covering dresses, skirts and
+varsity jackets alike, which is one blanket assignment from the Meta channel
+rather than a per-product judgement. Omitting the field makes Google assign it
+per product from the title and description, which beats a broad ID applied to
+everything. Shopify's own category path goes into `product_type` instead, which
+is free-text and validated against nothing — 17 distinct paths.
+
+**`gtin` and `mpn`, with `identifier_exists: no`.** These are unbranded
+manufacturer blanks with no manufacturer-assigned identifier, which is already
+what `custom_product: TRUE` says in Shopify; the feed must not contradict the
+store. It also keeps the offers unclustered, so they are never lined up beside
+the identical blank from a cheaper seller.
+
+### It is a stopgap, and the reason matters
+
+A file feed is a snapshot. The moment a price or a stock level moves in
+Shopify, the uploaded copy is stale, and Google starts disapproving offers for
+mismatching their landing page — the same class of defect as the $92/$97 one
+above, arriving by a different route. Re-run the script and re-upload after any
+catalogue change, or install the channel and let it sync continuously. The
+channel is still the destination; this is how the catalogue reaches Google in
+the meantime.
+
+`custom_label_0` carries the fabric-weight band (light / mid / heavy /
+heaviest) and `custom_label_1` the price band, so a future campaign can bid on
+them without a re-feed.
+
 ## What is still owner-gated
 
 1. **Install the Google & YouTube channel in Shopify** and link it to
