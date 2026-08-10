@@ -17,6 +17,18 @@
         "CLAUDE_FLOW_MEMORY_BACKEND": "hybrid"
       },
       "autoStart": false
+    },
+    "mcp-search-console": {
+      "command": "uvx",
+      "args": [
+        "mcp-search-console"
+      ],
+      "env": {
+        "GSC_OAUTH_CLIENT_SECRETS_FILE": "",
+        "GSC_CREDENTIALS_PATH": "",
+        "GSC_DATA_STATE": "all"
+      },
+      "autoStart": false
     }
   }
 }
