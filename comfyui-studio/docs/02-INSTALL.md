@@ -118,8 +118,13 @@ See [05-MCP.md](05-MCP.md).
 
 ## Windows
 
+> **Do not paste the bash commands into PowerShell.** `&&` is not a statement
+> separator in Windows PowerShell 5.1, and `.sh` files are not executable there.
+> You will get `The token '&&' is not a valid statement separator in this version.`
+> Run one command per line, and use the `.ps1` scripts below.
+
 ```powershell
-cd comfyui-studio\scripts\windows
+cd $HOME\comfyui-studio\scripts\windows
 powershell -ExecutionPolicy Bypass -File .\Check-Hardware.ps1
 powershell -ExecutionPolicy Bypass -File .\Install-Studio.ps1
 powershell -ExecutionPolicy Bypass -File .\Start-Studio.ps1
@@ -129,10 +134,32 @@ powershell -ExecutionPolicy Bypass -File .\Start-Studio.ps1
 plus `-ComfyHome`, `-AssumeYes`. Downloads use BITS (resumable) with an
 `Invoke-WebRequest` fallback.
 
-> These PowerShell scripts mirror the bash logic but **were not executed during
-> authoring** — no Windows host was available. They are the least-tested part of
-> this pack. On Windows, prefer WSL2 + the bash scripts if you want the path that
-> was actually exercised.
+### Windows PowerShell 5.1
+
+5.1 (the blue `powershell.exe` that ships with Windows) is supported. Two things
+it needs that PowerShell 7 does not, both handled automatically:
+
+- **TLS 1.2.** 5.1 negotiates TLS 1.0 by default, which GitHub and HuggingFace
+  both refuse — every download would fail with *"Could not create SSL/TLS secure
+  channel."* Each script now forces TLS 1.2 when running under 5.1.
+- **JSON merging.** `ConvertFrom-Json -AsHashtable` is PowerShell 6+ only, so the
+  `~/.claude/settings.json` merge is done through the venv's Python instead —
+  the same merge the bash installer performs.
+
+PowerShell 7 (`pwsh`) also works and is a nicer shell (it supports `&&`), but is
+not required: <https://aka.ms/powershell>
+
+Check which you're on:
+
+```powershell
+$PSVersionTable.PSVersion
+```
+
+> **Testing status.** These scripts are AST-parse-clean on PowerShell 7.6.4 and
+> were audited for 5.1-incompatible constructs, but **were never executed on a
+> Windows host** — no Windows machine was available. They are the least-tested
+> part of this pack. If you want the path that was actually run end-to-end, use
+> WSL2 + the bash scripts.
 
 ## Launch and check
 

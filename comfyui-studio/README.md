@@ -29,7 +29,7 @@ git clone <this repo> && cd comfyui-studio
 ```
 
 ```powershell
-# Windows
+# Windows - one command per line; '&&' is not valid in PowerShell 5.1
 cd comfyui-studio\scripts\windows
 powershell -ExecutionPolicy Bypass -File .\Check-Hardware.ps1
 powershell -ExecutionPolicy Bypass -File .\Install-Studio.ps1

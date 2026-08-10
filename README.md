@@ -26,11 +26,22 @@ ready-made e-commerce workflows.
 
 **→ [`comfyui-studio/`](comfyui-studio/README.md)**
 
+**Linux / macOS**
+
 ```bash
 cd comfyui-studio
 ./scripts/install.sh        # hardware check → ComfyUI → PyTorch → models → MCP
 ./scripts/start-studio.sh   # one-click launch
 ./scripts/verify.sh         # health check
+```
+
+**Windows** (PowerShell — one command per line; `&&` is not valid in PowerShell 5.1)
+
+```powershell
+cd comfyui-studio\scripts\windows
+powershell -ExecutionPolicy Bypass -File .\Check-Hardware.ps1
+powershell -ExecutionPolicy Bypass -File .\Install-Studio.ps1
+powershell -ExecutionPolicy Bypass -File .\Start-Studio.ps1
 ```
 
 No paid APIs, no cloud services, no accounts. Every model is permissively

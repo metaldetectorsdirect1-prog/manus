@@ -25,6 +25,14 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+# Windows PowerShell 5.1 negotiates TLS 1.0 by default, which GitHub and
+# HuggingFace both refuse. Without this every download below fails with
+# "The request was aborted: Could not create SSL/TLS secure channel."
+if ($PSVersionTable.PSVersion.Major -lt 6) {
+    [Net.ServicePointManager]::SecurityProtocol =
+        [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+}
+
 function Write-Info { param($m) Write-Host "==> $m" -ForegroundColor Blue }
 function Write-Ok   { param($m) Write-Host "  ok $m" -ForegroundColor Green }
 function Write-Warn { param($m) Write-Host "warn $m" -ForegroundColor Yellow }
@@ -257,22 +265,40 @@ function Step-Mcp {
 
     if (-not $registered) {
         New-Item -ItemType Directory -Force -Path (Split-Path $settings) | Out-Null
-        $data = @{}
         if (Test-Path $settings) {
             # This is a real user config file - back it up and merge, never overwrite.
             Copy-Item $settings "$settings.bak.$(Get-Date -Format yyyyMMdd-HHmmss)"
             Write-Ok "backed up existing settings.json"
-            try { $data = Get-Content $settings -Raw | ConvertFrom-Json -AsHashtable }
-            catch { Die "settings.json is not valid JSON - refusing to touch it: $settings" }
         }
-        if (-not $data.ContainsKey('mcpServers')) { $data['mcpServers'] = @{} }
-        if ($data['mcpServers'].ContainsKey('comfyui')) {
-            Write-Ok "'comfyui' entry already present - left unchanged"
-        } else {
-            $data['mcpServers']['comfyui'] = @{ command = 'npx'; args = @('-y','comfyui-mcp') }
-            $data | ConvertTo-Json -Depth 10 | Set-Content -Encoding UTF8 $settings
-            Write-Ok "added mcpServers.comfyui to $settings"
-        }
+        # Done in Python rather than PowerShell: ConvertFrom-Json -AsHashtable is
+        # PowerShell 6+ only, and on 5.1 ConvertFrom-Json returns PSCustomObjects
+        # that round-trip badly. This is the same merge the bash installer does.
+        $merge = @'
+import json, os, sys
+path = sys.argv[1]
+data = {}
+if os.path.exists(path):
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except json.JSONDecodeError:
+        print("  settings.json is not valid JSON - refusing to touch it")
+        sys.exit(1)
+servers = data.setdefault("mcpServers", {})
+if "comfyui" in servers:
+    print("  'comfyui' entry already present - left unchanged")
+else:
+    servers["comfyui"] = {"command": "npx", "args": ["-y", "comfyui-mcp"]}
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+        f.write("\n")
+    print("  added mcpServers.comfyui to " + path)
+'@
+        $tmp = Join-Path $env:TEMP "comfyui-mcp-merge.py"
+        Set-Content -Path $tmp -Value $merge -Encoding UTF8
+        & $VenvPy $tmp $settings
+        if ($LASTEXITCODE -ne 0) { Die "could not update $settings" }
+        Remove-Item $tmp -ErrorAction SilentlyContinue
     }
     Write-Warn "Restart Claude Code (or run /mcp) so it picks up the new server."
 }

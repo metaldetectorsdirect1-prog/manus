@@ -17,6 +17,11 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+if ($PSVersionTable.PSVersion.Major -lt 6) {
+    [Net.ServicePointManager]::SecurityProtocol =
+        [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+}
+
 function Write-Info { param($m) Write-Host "==> $m" -ForegroundColor Blue }
 function Write-Ok   { param($m) Write-Host "  ok $m" -ForegroundColor Green }
 function Write-Warn { param($m) Write-Host "warn $m" -ForegroundColor Yellow }
