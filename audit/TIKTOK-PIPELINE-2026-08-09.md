@@ -95,9 +95,31 @@ rejection.
 Confirmed `PUBLISH_COMPLETE` on the first; the rest returned publish ids and
 TikTok takes a few minutes to process.
 
-Imported and ready, not yet posted: `weights`, `sets`, `returns`. Staged but not
-yet imported: `factory`, `shipping`, `mens`, `yoga`, `voltcore` — their signed
-upload targets expire 2026-08-10T22:46Z.
+## Posted 2026-08-10 — the set is complete
+
+The remaining eight films went out over the following day, inside the 13/24h
+rolling cap: `weights`, `returns`, `sets`, `factory`, `shipping`, `mens`, and
+finally these two, both confirmed `PUBLISH_COMPLETE`:
+
+| Film | publish_id | Caption hook |
+|---|---|---|
+| yoga | `…7672301989161781262` (post `7672302133147979021`) | Halter bra and high-rise pants. 220 g/m² |
+| voltcore | `…7672302212588128269` | Drop 04. Matte black, 220 g/m² |
+
+Both figures were re-read off the live store before rendering: the yoga set is
+ACTIVE at **$89 against a $103 compare-at**, and Voltcore is ACTIVE at **$79
+with `compareAtPrice: null`** — so its caption deliberately claims no saving.
+
+**All twelve films are now published. There is nothing left in the queue**, and
+that is the point at which posting stops being the useful activity. The next
+question is not "what else can we render" but "did any of this move a number",
+which is what the follow-up cadence watches.
+
+One thing worth carrying forward: `tiktok_prepare_publish` fails with a bare
+`not found` when the `connector_id` is wrong — not "unknown connector", just
+`not found`, which reads like the *media* is missing. Call `tiktok_accounts`
+and copy the id rather than trusting one from memory. The live account is
+`hivoltusa` / `fc0c0987-dbbc-4adf-a865-be94f1bd2663`.
 
 ## One defect caught before it went public
 
