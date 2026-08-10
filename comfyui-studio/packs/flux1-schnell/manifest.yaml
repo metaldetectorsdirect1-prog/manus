@@ -1,0 +1,55 @@
+# FLUX.1 Schnell install manifest - consumable by comfyui-mcp's apply_manifest.
+#
+# Mirrors comfyui-studio/config/model-profiles.json (profile: balanced).
+# Directory mapping matches ComfyUI's own blueprints/Text to Image (Flux.1 Dev).json.
+#
+# TIER: this manifest ships the fp8 tier active (16GB+ VRAM).
+#   24GB+  -> swap t5xxl_fp8_e4m3fn for the t5xxl_fp16 line below
+#   6-9GB  -> comment out the safetensors UNet + T5 and uncomment the GGUF pair,
+#             and add city96/ComfyUI-GGUF to custom_nodes below.
+
+pip: []
+
+# None of the eight bundled workflows needs a custom node - BiRefNet background
+# removal is ComfyUI core since 0.30.0. ComfyUI-Manager is convenience only.
+custom_nodes:
+  - https://github.com/Comfy-Org/ComfyUI-Manager
+  # Low-VRAM (GGUF) tier only:
+  # - https://github.com/city96/ComfyUI-GGUF
+
+models:
+  # --- Text encoders ---
+  # CLIP-L (always required)
+  - url: https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors
+    local_path: text_encoders/clip_l.safetensors
+  # T5-XXL fp8 - 16GB+ tier (ACTIVE)
+  - url: https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors
+    local_path: text_encoders/t5xxl_fp8_e4m3fn.safetensors
+  # T5-XXL fp16 - 24GB+ tier (uncomment, and comment the fp8 line above)
+  # - url: https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors
+  #   local_path: text_encoders/t5xxl_fp16.safetensors
+
+  # --- VAE ---
+  - url: https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors
+    local_path: vae/ae.safetensors
+
+  # --- Diffusion UNet (Apache-2.0) ---
+  - url: https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors
+    local_path: diffusion_models/flux1-schnell.safetensors
+
+  # --- Background removal (BiRefNet, ComfyUI core node) ---
+  - url: https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors
+    local_path: background_removal/birefnet.safetensors
+
+  # --- Upscaler (BSD-3-Clause) ---
+  - url: https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth
+    local_path: upscale_models/RealESRGAN_x4plus.pth
+
+  # --- Low-VRAM GGUF tier (6-9GB) - uncomment BOTH, comment the safetensors
+  #     UNet and T5 above, and enable ComfyUI-GGUF in custom_nodes.
+  #     ComfyUI-GGUF aliases unet_gguf -> diffusion_models and
+  #     clip_gguf -> text_encoders, so these paths are correct as written.
+  # - url: https://huggingface.co/city96/FLUX.1-schnell-gguf/resolve/main/flux1-schnell-Q4_K_S.gguf
+  #   local_path: diffusion_models/flux1-schnell-Q4_K_S.gguf
+  # - url: https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q5_K_M.gguf
+  #   local_path: text_encoders/t5-v1_1-xxl-encoder-Q5_K_M.gguf

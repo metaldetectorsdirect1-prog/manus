@@ -1,0 +1,201 @@
+{
+  "_comment": [
+    "Hardware profiles for FLUX.1 Schnell in ComfyUI.",
+    "00-check-hardware.sh picks a profile; 03-download-models.sh fetches its files;",
+    "apply-profile.py rewrites workflows/*.json to reference them.",
+    "",
+    "'verified: true' means the file was confirmed to EXIST at that exact path, with",
+    "the recorded size, via the HuggingFace Hub API (or an HTTP HEAD for GitHub).",
+    "Every size_gb below is the real byte count / 1e9, rounded to 2dp.",
+    "03-download-models.sh still HEAD-checks every URL at install time and refuses",
+    "to start downloading if any of them fails.",
+    "",
+    "GATING: black-forest-labs/FLUX.1-schnell is a GATED repo. Its files return",
+    "401/403 without a HUGGINGFACE_TOKEN whose account has accepted the licence.",
+    "Each gated entry therefore carries an ungated 'mirror' hosting a byte-identical",
+    "file, and the preflight falls back to it automatically."
+  ],
+  "license_note": "FLUX.1 Schnell is Apache-2.0: commercial use of the model and its outputs is permitted. FLUX.1 dev is NOT (non-commercial licence) and is deliberately excluded from this pack.",
+  "common_models": [
+    {
+      "name": "clip_l.safetensors",
+      "dir": "text_encoders",
+      "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors",
+      "size_gb": 0.25,
+      "license": "Apache-2.0 (OpenAI CLIP-L repackage)",
+      "verified": true,
+      "size_bytes": 246144152
+    },
+    {
+      "name": "ae.safetensors",
+      "dir": "vae",
+      "url": "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors",
+      "mirror": "https://huggingface.co/Comfy-Org/Lumina_Image_2.0_Repackaged/resolve/main/split_files/vae/ae.safetensors",
+      "size_gb": 0.34,
+      "size_bytes": 335304388,
+      "license": "Apache-2.0 (Black Forest Labs, FLUX.1-schnell repo)",
+      "gated": true,
+      "verified": true,
+      "mirror_verified": true,
+      "note": "mirror is byte-identical (335304388) and ungated"
+    },
+    {
+      "name": "birefnet.safetensors",
+      "dir": "background_removal",
+      "url": "https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors",
+      "size_gb": 0.44,
+      "size_bytes": 444473596,
+      "license": "MIT (BiRefNet)",
+      "verified": true,
+      "used_by": [
+        "03-product-background-replace",
+        "05-transparent-product"
+      ]
+    },
+    {
+      "name": "RealESRGAN_x4plus.pth",
+      "dir": "upscale_models",
+      "url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
+      "size_gb": 0.07,
+      "size_bytes": 67040989,
+      "license": "BSD-3-Clause (commercial use permitted)",
+      "verified": true,
+      "used_by": [
+        "04-upscale"
+      ]
+    }
+  ],
+  "profiles": {
+    "high": {
+      "description": "24 GB+ VRAM. Full bf16 UNet and fp16 T5 - best quality.",
+      "min_vram_gb": 24,
+      "launch_flags": [],
+      "weight_dtype": "default",
+      "unet_name": "flux1-schnell.safetensors",
+      "t5_name": "t5xxl_fp16.safetensors",
+      "gguf": false,
+      "models": [
+        {
+          "name": "flux1-schnell.safetensors",
+          "dir": "diffusion_models",
+          "url": "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors",
+          "mirror": "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell.safetensors",
+          "size_gb": 23.78,
+          "license": "Apache-2.0",
+          "verified": true,
+          "size_bytes": 23782506688,
+          "gated": true,
+          "mirror_verified": true,
+          "note": "mirror is byte-identical (23782506688) and ungated"
+        },
+        {
+          "name": "t5xxl_fp16.safetensors",
+          "dir": "text_encoders",
+          "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors",
+          "size_gb": 9.79,
+          "license": "Apache-2.0 (Google T5-v1.1-XXL)",
+          "verified": true,
+          "size_bytes": 9787841024
+        }
+      ]
+    },
+    "balanced": {
+      "description": "16-23 GB VRAM. bf16 UNet cast to fp8 at load time, fp8 T5.",
+      "min_vram_gb": 16,
+      "launch_flags": [],
+      "weight_dtype": "fp8_e4m3fn",
+      "unet_name": "flux1-schnell.safetensors",
+      "t5_name": "t5xxl_fp8_e4m3fn.safetensors",
+      "gguf": false,
+      "models": [
+        {
+          "name": "flux1-schnell.safetensors",
+          "dir": "diffusion_models",
+          "url": "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors",
+          "mirror": "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/main/flux1-schnell.safetensors",
+          "size_gb": 23.78,
+          "license": "Apache-2.0",
+          "verified": true,
+          "size_bytes": 23782506688,
+          "gated": true,
+          "mirror_verified": true,
+          "note": "mirror is byte-identical (23782506688) and ungated"
+        },
+        {
+          "name": "t5xxl_fp8_e4m3fn.safetensors",
+          "dir": "text_encoders",
+          "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors",
+          "size_gb": 4.89,
+          "license": "Apache-2.0 (Google T5-v1.1-XXL)",
+          "verified": true,
+          "size_bytes": 4893934904
+        }
+      ]
+    },
+    "low": {
+      "description": "10-15 GB VRAM. Same weights as balanced, launched with --lowvram.",
+      "min_vram_gb": 10,
+      "launch_flags": [
+        "--lowvram"
+      ],
+      "weight_dtype": "fp8_e4m3fn",
+      "unet_name": "flux1-schnell.safetensors",
+      "t5_name": "t5xxl_fp8_e4m3fn.safetensors",
+      "gguf": false,
+      "inherits_models_from": "balanced"
+    },
+    "gguf": {
+      "description": "6-9 GB VRAM. Q4_K_S quantised UNet + quantised T5 via ComfyUI-GGUF.",
+      "min_vram_gb": 6,
+      "launch_flags": [
+        "--lowvram"
+      ],
+      "weight_dtype": null,
+      "unet_name": "flux1-schnell-Q4_K_S.gguf",
+      "t5_name": "t5-v1_1-xxl-encoder-Q5_K_M.gguf",
+      "gguf": true,
+      "requires_custom_nodes": [
+        "ComfyUI-GGUF"
+      ],
+      "models": [
+        {
+          "name": "flux1-schnell-Q4_K_S.gguf",
+          "dir": "diffusion_models",
+          "url": "https://huggingface.co/city96/FLUX.1-schnell-gguf/resolve/main/flux1-schnell-Q4_K_S.gguf",
+          "size_gb": 6.78,
+          "license": "Apache-2.0 (quantisation of FLUX.1-schnell)",
+          "verified": true,
+          "size_bytes": 6783943712
+        },
+        {
+          "name": "t5-v1_1-xxl-encoder-Q5_K_M.gguf",
+          "dir": "text_encoders",
+          "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q5_K_M.gguf",
+          "size_gb": 3.39,
+          "license": "Apache-2.0 (Google T5-v1.1-XXL)",
+          "verified": true,
+          "size_bytes": 3386856640
+        }
+      ]
+    },
+    "cpu": {
+      "description": "No usable GPU. Works, but expect minutes per image, not seconds.",
+      "min_vram_gb": 0,
+      "launch_flags": [
+        "--cpu"
+      ],
+      "weight_dtype": "default",
+      "unet_name": "flux1-schnell.safetensors",
+      "t5_name": "t5xxl_fp8_e4m3fn.safetensors",
+      "gguf": false,
+      "inherits_models_from": "balanced"
+    }
+  },
+  "optional_qwen_image": {
+    "description": "Qwen-Image 20B for typography-heavy work. Only offered when VRAM >= 12 GB and >= 80 GB free disk. Installed via the comfyui-mcp 'qwen-image' pack rather than duplicated here.",
+    "min_vram_gb": 12,
+    "min_disk_gb": 80,
+    "install": "npx -y comfyui-mcp  ->  ask Claude: \"install the qwen-image pack\"",
+    "upstream": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI"
+  }
+}
