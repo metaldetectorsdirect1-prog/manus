@@ -156,6 +156,31 @@ for d in "$WORK"/mcp-gsc/skills/*/; do
   install_skill "${d%/}" "gsc-$(basename "${d%/}")"
 done
 
+# Agent-Reach — an internet-reading CLI plus skill (Twitter, Reddit, YouTube,
+# GitHub, Bilibili, XiaoHongShu, Facebook, Instagram, LinkedIn, V2EX, RSS, and
+# any web page via Jina Reader).
+#
+# Installed on request, and worth being blunt about: **every data channel it
+# reads is blocked by this container's proxy.** Measured 2026-08-11 —
+# r.jina.ai, youtube.com, the V2EX API, two unrelated RSS feeds and
+# mcp.exa.ai all return 000 at the tunnel. `agent-reach doctor` reports RSS and
+# "any web page" as available because it checks that curl exists, not that the
+# host resolves. The only reachable host in the whole set is registry.npmjs.org,
+# which just installs more tooling that then cannot reach anything.
+#
+# It is not wasted: the same skill runs fully on a normal machine, and the
+# cookie-based platforms need a real Chrome session that a sandbox never has
+# anyway. Install it here for parity; use it from the desktop.
+#
+# Note for HIVOLT specifically: the platform list has **no TikTok**.
+if [ "${WITH_AGENT_REACH:-0}" = "1" ]; then
+  clone Panniantong/Agent-Reach
+  pip install -q -e "$WORK/Agent-Reach" && agent-reach skill --install
+  mkdir -p "$HOME/.config/yt-dlp"
+  grep -qxF -- '--js-runtimes node' "$HOME/.config/yt-dlp/config" 2>/dev/null \
+    || printf '%s\n' '--js-runtimes node' >> "$HOME/.config/yt-dlp/config"
+fi
+
 # Repos that are tools rather than skills — cloned for reference, not installed.
 # None of them run unattended; each needs a credential or a target URL.
 #   google/rubik                  Merchant Center offer repair (Google Shopping
