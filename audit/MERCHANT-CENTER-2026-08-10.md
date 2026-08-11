@@ -235,6 +235,29 @@ the meantime.
 heaviest) and `custom_label_1` the price band, so a future campaign can bid on
 them without a re-feed.
 
+## 2026-08-11T10:45Z — the channel is installed, and the TSV is now the wrong tool
+
+**Google & YouTube is live in publications**, and **all 113 active products are
+already published to it** — the channel auto-published the catalogue, so there
+was nothing left to do by hand.
+
+That changes the advice above. A channel sync and an uploaded file are both
+*primary* feeds, and running them together gives Merchant Center two sources
+for the same offer ids — duplicate offers at best, and at worst the stale
+snapshot's prices overriding the live ones and disapproving the lot for
+mismatching their landing pages. **The TSV should not be uploaded now.** The
+sync is strictly better than the snapshot: it is continuous, so a price change
+in Shopify reaches Google without anyone re-running a script.
+
+`scripts/google-shopping-feed.py` stays useful for two things — auditing what
+Google will receive without waiting for the channel to sync, and as a fallback
+if the channel is ever removed. It is no longer the delivery mechanism.
+
+What the channel does not do by itself: claiming and verifying the domain,
+Merchant Center shipping settings, and business information. Those are still
+owner actions in the Merchant Center UI, and undeclared shipping suspends items
+however clean the feed is.
+
 ## What is still owner-gated
 
 1. **Install the Google & YouTube channel in Shopify** and link it to
