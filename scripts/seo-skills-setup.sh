@@ -81,9 +81,69 @@ echo "Installing into $DEST"
 # Bing Webmaster); they are installed too so they are ready the day a key
 # exists, and install_skill's present-check keeps the two copies of
 # seo-image-gen / seo-dataforseo from fighting.
+# claude-seo ships more than skills, and the first pass took only the skills.
+# Its own install.sh does four further things, and skipping them left 26 of the
+# 30 installed skills calling a `claude-seo run …` command that resolved to
+# nothing — the skills read fine and their tooling was simply absent.
+#
+#   1. The payload — 53 Python scripts, the bin/claude-seo CLI, schema/, pdf/
+#      and hooks/ — lands *inside* the umbrella skill at ~/.claude/skills/seo/.
+#   2. agents/*.md become real subagent types in ~/.claude/agents/.
+#   3. Every installed .md gets `claude-seo run|setup|doctor` rewritten to the
+#      absolute bin path. A manual install gets none of the PATH injection a
+#      plugin install would, so without this the commands are dead text.
+#   4. requirements.txt covers what those scripts import.
+#
+# hooks/ is copied for parity but stays inert: upstream's installer never
+# writes settings.json, so nothing registers them. That is the right default —
+# a hook is a behaviour change and should be an explicit choice.
+#
+# Two things measured here that are worth not rediscovering:
+#
+#   * `claude-seo setup` FAILS in this container — "dependency installation
+#     failed with exit code 1" while building its isolated venv. The packages
+#     themselves are fine: `pip install -r requirements.txt` succeeds, and
+#     bs4, lxml, playwright, trafilatura, htmldate, matplotlib, numpy,
+#     openpyxl, googleapiclient and google.auth all import. So when a skill's
+#     rewritten `claude-seo run foo.py` fails, the fallback that works is
+#     `python3 ~/.claude/skills/seo/scripts/foo.py` — verified against
+#     parse_html.py. `claude-seo doctor` also reports Chromium missing; it is
+#     not, it is at $PLAYWRIGHT_BROWSERS_PATH (/opt/pw-browsers).
+#   * Several scripts fetch a URL, and hivolt-usa.com is blocked at this
+#     proxy. They run; they cannot reach the store they would analyse. Same
+#     constraint as Agent-Reach below — these are desktop tools.
+install_claude_seo_payload() {
+  local src="$WORK/claude-seo" dest="$DEST/seo"
+  [ -d "$src" ] && [ -d "$dest" ] || return 0
+  for part in scripts bin schema pdf hooks; do
+    [ -d "$src/$part" ] && cp -r "$src/$part" "$dest/"
+  done
+  [ -f "$dest/bin/claude-seo" ] && chmod +x "$dest/bin/claude-seo"
+
+  mkdir -p "$HOME/.claude/agents"
+  cp "$src"/agents/*.md "$HOME/.claude/agents/" 2>/dev/null || true
+  cp "$src"/extensions/*/agents/*.md "$HOME/.claude/agents/" 2>/dev/null || true
+
+  # Rewrite only the skills that came from this pack. mk-* and geo-* never
+  # mention claude-seo, and rewriting them would be a silent edit to somebody
+  # else's file.
+  local n=0
+  while IFS= read -r doc; do
+    sed -i -e 's#claude-seo run#"$HOME/.claude/skills/seo/bin/claude-seo" run#g' \
+           -e 's#claude-seo setup#"$HOME/.claude/skills/seo/bin/claude-seo" setup#g' \
+           -e 's#claude-seo doctor#"$HOME/.claude/skills/seo/bin/claude-seo" doctor#g' "$doc"
+    n=$((n + 1))
+  done < <(grep -rl 'claude-seo \(run\|setup\|doctor\)' "$DEST"/seo "$DEST"/seo-* 2>/dev/null)
+  echo "  payload: $(ls "$src/scripts" | wc -l) scripts, $(ls "$HOME/.claude/agents" | wc -l) agents, $n docs rewritten"
+
+  [ -f "$src/requirements.txt" ] && pip install -q -r "$src/requirements.txt" 2>&1 | tail -2
+}
+
 for d in "$WORK"/claude-seo/skills/*/ "$WORK"/claude-seo/extensions/*/skills/*/; do
   [ -d "$d" ] && install_skill "${d%/}" "$(basename "$d")"
 done
+install_claude_seo_payload
+
 
 # geo-seo-claude — namespaced geo-*, plus the umbrella skill at geo/.
 for d in "$WORK"/geo-seo-claude/skills/*/ "$WORK"/geo-seo-claude/geo/; do
