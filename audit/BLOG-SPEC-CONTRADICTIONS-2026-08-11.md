@@ -31,8 +31,34 @@ argument is *published, not claimed*, and it publishes two different
 compositions for the same garment in two places Google reads.
 
 The archived links are the bigger problem and the less visible one. 180 anchors
-resolve to 404. Shopify will not accept a redirect for those paths — an
-archived product still owns its handle — so the only fix is to move the link.
+point at products that no longer exist. Shopify will not accept a redirect for
+those paths, so the only fix available here is to move the link.
+
+> **Correction, 2026-08-12.** The line above originally said those 180 anchors
+> "resolve to 404", and that the redirect was refused because an archived
+> product still owns its handle. **Both halves were wrong.** `urlRedirectCreate`
+> was refused because **a redirect already existed on every one of the 21
+> paths** — an SEO app on this store had already created them. Checked one by
+> one: all 21 resolve to a live product. Nothing 404s.
+>
+> The reasoning that produced the error is worth keeping. A `urlRedirects`
+> search with `query: "path:/products/"` returned zero rows, so the paths looked
+> clear; then the create failed with "Path has already been taken", and that got
+> read as *the archived product owns the handle* rather than the simpler *a
+> redirect is already there*. The query was the broken part — that filter does
+> not prefix-match — and a wrong answer from it was used to interpret the error
+> instead of being tested against it. A single `urlRedirects(query:
+> "path:/products/<handle>")` per handle, which is what finally settled it,
+> would have shown the truth immediately.
+>
+> Independent corroboration worth noting: the app's targets and the ones chosen
+> by hand in `REDIRECTS` below agree on **16 of 21**. The five that differ are
+> near-ties between similar garments.
+>
+> What this changes: rewriting the links is now a **quality** fix, not a
+> **breakage** fix. It removes a redirect hop and makes the anchor text name the
+> product the reader actually lands on. It is no longer urgent. The 56 wrong
+> figures below are unaffected and remain real defects.
 
 ## The 137 are not the same kind of error
 
