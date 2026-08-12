@@ -8,15 +8,22 @@
   the single assets/hivolt.css that layout/theme.liquid already links, after
   theme-hivolt.css — so there is no second stylesheet to add.
 
-  Published terms only: 60 days INCLUDING worn and washed items, free prepaid
-  US label, no restocking fee,
-  no reason required, started from the order email.
+  Published terms only, and they are the ones in the store's Return & Refund
+  Policy: 60 days from delivery, UNWORN with tags attached, free prepaid US
+  label, no restocking fee, no reason required, started from the order email.
 
-  Return postage is stated as the customer's cost unless the item is faulty or
-  wrong. It is written that way because free return postage has not been
-  confirmed, and a returns page that promises one and delivers the other is the
-  single most expensive sentence a store can print. If prepaid labels are
-  arranged later, this page is where it gets said.
+  On 2026-08-12 this template contradicted that policy in three places at once.
+  The hero offered "including items you have worn and washed"; the condition
+  section said "Train in it. Wash it… a worn garment is still returnable"; and
+  the postage section said "You do" pay. All three were wrong. The refund
+  policy, the terms of service, this page's own data sheet, its own FAQ, its own
+  FAQPage JSON-LD and every product page said unworn-with-tags and free postage.
+  Six surfaces against three, and the three were the promise a customer reads
+  first.
+
+  This template's own header used to warn that "a returns page that promises one
+  and delivers the other is the single most expensive sentence a store can
+  print." It was describing itself.
 
   Nothing about refund timing, refund method or exchanges appears here. Those
   terms have not been set, and inventing them would put a number in front of a
@@ -36,10 +43,10 @@
 
 <section class="hero hero--doc wrap">
   <p class="mono hero__eyebrow">Returns policy</p>
-  <h1 class="hero__h">60 days.<br>Train in it.<br><em>Send it back.</em></h1>
+  <h1 class="hero__h">60 days.<br>Try it on.<br><em>Send it back.</em></h1>
   <p class="hero__sub">
-    Send anything back within 60 days — including items you have worn and
-    washed. There is no restocking fee and you do not have to tell us why.
+    Send anything back within 60 days of delivery, unworn and with the tags
+    attached. There is no restocking fee and you do not have to tell us why.
     Start it from your order email and we send a prepaid label within one
     business day. Returns inside the US are free.
   </p>
@@ -48,27 +55,27 @@
 <section class="pg wrap">
   <div class="sec__head">
     <h2 class="sec__h">The terms</h2>
-    <span class="mono">Including the part that costs you</span>
+    <span class="mono">The same terms as the Return &amp; Refund Policy</span>
   </div>
 
   <div class="pg__cols">
     <div class="rte">
       <h3>Who pays return postage</h3>
       <p>
-        You do, unless the item arrived faulty or we sent the wrong thing — in
-        which case it is our mistake and our cost. We are writing that plainly
-        rather than advertising free returns in large type and qualifying it in
-        small type further down the page. If the fault is ours, it is ours to
-        pay for. If you simply changed your mind, the postage back is yours.
+        We do. You get a prepaid US label and there is no restocking fee, so
+        sending something back costs you nothing. That applies whether the item
+        was faulty, wrong, or simply not what you wanted — we do not make you
+        argue a reason to earn the label.
       </p>
 
       <h3>The condition</h3>
       <p>
-        Train in it. Wash it. Put it through real sessions. You cannot judge
-        performance apparel in a fitting room, so the 60 days start once you
-        have actually used it, and a worn garment is still returnable. The only
-        exclusions are damage beyond normal wear — tears, burns, or staining the
-        garment did not cause — plus final-sale items and gift cards.
+        Unworn, with the tags still attached. Try it on, move in it, check the
+        fit against the size guide — that is what the 60 days are for. Training
+        in it, washing it or cutting the tags off puts it outside the window,
+        because at that point we cannot sell it to anyone else. Faulty or wrong
+        items are separate and always covered. Final-sale items and gift cards
+        are excluded.
       </p>
 
       <h3>No reason required</h3>
@@ -132,7 +139,7 @@
         </div>
         <div class="sheet__row">
           <span class="sheet__k">Faulty or wrong item</span>
-          <span class="sheet__v"><em>Paid by us</em></span>
+          <span class="sheet__v"><em>Replaced or refunded in full</em></span>
         </div>
         <div class="sheet__row">
           <span class="sheet__k">Returns accepted from</span>
@@ -162,7 +169,7 @@
     <div class="faq__list">
       <details>
         <summary>How long do I have to return something?</summary>
-        <p class="faq__a">60 days.</p>
+        <p class="faq__a">60 days from delivery.</p>
       </details>
       <details>
         <summary>What condition does it have to be in?</summary>
@@ -200,7 +207,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"How long do I have to return something?","acceptedAnswer":{"@type":"Answer","text":"60 days from the order."}},
+    {"@type":"Question","name":"How long do I have to return something?","acceptedAnswer":{"@type":"Answer","text":"60 days from delivery."}},
     {"@type":"Question","name":"What condition does it have to be in?","acceptedAnswer":{"@type":"Answer","text":"Unworn, with the tags still attached. Trying it on is fine. Training in it, washing it or removing the tags puts it outside the window. Faulty or wrong items are separate and always covered."}},
     {"@type":"Question","name":"Is there a restocking fee?","acceptedAnswer":{"@type":"Answer","text":"No. There is no restocking fee on a HIVOLT return."}},
     {"@type":"Question","name":"Do I have to give a reason?","acceptedAnswer":{"@type":"Answer","text":"No. We do not ask, and there is no list of approved reasons to choose from."}},
