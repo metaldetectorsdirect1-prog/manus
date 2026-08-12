@@ -143,7 +143,14 @@
       <section class="art__shop" aria-labelledby="art-shop-h">
         <div class="sec__head">
           <h2 class="sec__h" id="art-shop-h">{{ picked.title | escape }}</h2>
-          <a class="mono" href="{{ picked.url }}">All {{ picked.products.size }} &rarr;</a>
+          {%- comment -%}
+            all_products_count, not products.size. Outside a paginate block
+            Shopify caps collection.products at 50, so products.size printed
+            "All 50" for womens-activewear (108), training (83), tops (71) and
+            yoga-studio (55) alike. A hardcoded-looking wrong number, on a store
+            whose whole argument is that its published figures are measured.
+          {%- endcomment -%}
+          <a class="mono" href="{{ picked.url }}">All {{ picked.all_products_count }} &rarr;</a>
         </div>
         <div class="grid">
           {%- for product in picked.products limit: 4 -%}

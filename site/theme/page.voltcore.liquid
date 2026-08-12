@@ -55,9 +55,20 @@
 {%- else -%}
 
 {%- assign v = set.selected_or_first_available_variant -%}
+{%- comment -%}
+  Both components must resolve, or the comparison is not made at all.
+
+  This summed whichever of the two happened to load. Either is looked up by a
+  hardcoded handle, so archiving or renaming one dropped its term silently and
+  the page went on printing "Bought separately $X" and "You save $Y" computed
+  from a single garment — a smaller, wrong saving, stated with total
+  confidence. That is precisely the hand-typed-number failure this page was
+  written to avoid, arrived at by arithmetic instead of by typing.
+{%- endcomment -%}
 {%- assign parts_total = 0 -%}
-{%- if bra.price > 0 -%}{%- assign parts_total = parts_total | plus: bra.price -%}{%- endif -%}
-{%- if legs.price > 0 -%}{%- assign parts_total = parts_total | plus: legs.price -%}{%- endif -%}
+{%- if bra.price > 0 and legs.price > 0 -%}
+  {%- assign parts_total = bra.price | plus: legs.price -%}
+{%- endif -%}
 {%- assign saving = parts_total | minus: set.price -%}
 
 <nav class="crumb wrap" aria-label="Breadcrumb">

@@ -10,8 +10,14 @@
   masthead: womens, mens, training.
 {%- endcomment -%}
 
-{%- assign c_womens = collections['womens'] -%}
-{%- assign c_mens = collections['mens'] -%}
+{%- comment -%}
+  Handles carry the -activewear suffix in this store. Looking up 'womens' and
+  'mens' returned nil on every render, so the `| default:` fallback below was
+  doing all the work and the live collection titles this block exists to follow
+  never appeared.
+{%- endcomment -%}
+{%- assign c_womens = collections['womens-activewear'] -%}
+{%- assign c_mens = collections['mens-activewear'] -%}
 {%- assign c_training = collections['training'] -%}
 
 <section class="hero wrap">

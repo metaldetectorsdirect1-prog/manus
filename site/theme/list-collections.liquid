@@ -40,7 +40,8 @@
     </div>
 
     {%- if collections.size > 0 -%}
-      {%- paginate collections by: 24 -%}
+      {%- comment -%} `by 24`, not `by: 24` — the colon form does not parse. {%- endcomment -%}
+      {%- paginate collections by 24 -%}
       <ol class="cols">
         {%- for collection in collections -%}
           <li class="cols__i">
