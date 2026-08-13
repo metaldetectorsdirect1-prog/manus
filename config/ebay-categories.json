@@ -38,6 +38,9 @@
     "155183": "Men's Hoodies & Sweatshirts, activewear — /b/Active-Hoodies-Sweatshirts-for-Men/155183/",
     "185708": "Men's Tracksuits & Sets — /b/Mens-Tracksuits-Sets/185708/",
     "123490": "Men's Soccer Clothing, jerseys — /b/Jerseys-Soccer-Clothing-for-Men/123490/",
+    "3009": "Women's Jumpsuits & Rompers — /b/Womens-Jumpsuits-Rompers/3009/. Bodysuits sit here too: /b/Bodysuit-Black-Jumpsuits-Rompers-for-Women/3009/",
+    "63861": "Women's Dresses — /b/Womens-Dresses/63861/, also /b/Sports-Dresses-for-Women/63861/",
+    "185702": "Men's Activewear Jackets — /b/Mens-Activewear-Jackets/185702/. eBay's own browse name /b/Unbranded-Athletic-Activewear-Jackets-for-Men/185702/ describes these exactly.",
     "260954": "Women's Activewear Pants — /b/Womens-Activewear-Pants/260954/",
     "260955": "Women's Activewear Shorts — /b/Womens-Activewear-Shorts/260955/",
     "260956": "Men's Activewear Pants — /b/Sports-Men-Activewear-Breathable-Mens-Activewear/260956/",
@@ -78,11 +81,12 @@
     "unisex:Shorts": 260957,
     "unisex:Hoodie": 155183,
 
-    "womens:Romper": null,
-    "womens:Bodysuit": null,
-    "womens:Dress": null,
-    "unisex:Jersey": null,
-    "unisex:Jacket": null
+    "womens:Romper": 3009,
+    "womens:Bodysuit": 3009,
+    "womens:Dress": 63861,
+    "unisex:Jacket": 185702,
+
+    "unisex:Jersey": null
   },
 
   "_overrides_README": [

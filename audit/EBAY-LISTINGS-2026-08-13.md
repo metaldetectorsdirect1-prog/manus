@@ -125,20 +125,38 @@ so the config gained **per-handle overrides** that win over the
 it is typed **T-Shirt**, so it routes to Men's Activewear Tops correctly. The
 handle contains "jersey"; the product type is what decides.
 
-**Seven pairs remain null, covering 12 of 113 products**: women's sets,
-rompers, bodysuit and dress, and unisex hoodies, jackets and the polo. They are
-not guessed. The script still refuses to emit a row for them — the same
-abort-rather-than-mangle rule as `article-spec-fix.py`.
+### Finished: all 27 pairs resolved
 
-## What it produces today
+The remaining ids were researched in three further passes rather than left as
+homework, each read off an eBay browse URL:
 
-    101 listings / 588 rows -> ebay-seller-hub-upload.csv
+| id | category | covers |
+|---|---|---|
+| 185084 | Women's Tracksuits & Sets | women's sets |
+| 155183 | Men's Hoodies & Sweatshirts, activewear | unisex hoodies |
+| 3009 | Women's Jumpsuits & Rompers | rompers **and** the bodysuit — eBay files bodysuits here, per `/b/Bodysuit-Black-Jumpsuits-Rompers-for-Women/3009/` |
+| 63861 | Women's Dresses | the tennis dress, via `/b/Sports-Dresses-for-Women/63861/` |
+| 185702 | Men's Activewear Jackets | unisex varsity jackets. eBay's own browse name for this node is `/b/Unbranded-Athletic-Activewear-Jackets-for-Men/185702/`, which describes these exactly |
 
-Verified on the output, not inferred: `*Action` is the first column, all **101
-parents** carry the matrix with empty price and quantity, all **487 variation
-rows** carry a price, 0 descriptions contain a URL, an email or an `<a>` tag,
-0 titles exceed 80 characters, 0 parents are missing a category, a picture or a
-Department, and all 113 active products have at least one image for `PicURL`.
+`unisex:Polo Shirt` routes to 185076 under the documented unisex rule — a polo
+is an activewear top, the category describes the garment, and `C:Department`
+carries "Unisex Adult".
+
+**Nothing is null and nothing was guessed.** `unisex:Jersey` stays null in the
+map on purpose: it is resolved per-handle by `overrides`, because the pair
+covers four soccer jerseys and three generic ones.
+
+## What it produces
+
+    113 listings / 654 rows -> ebay-seller-hub-upload.csv
+
+Verified on the output, not inferred: `*Action` is the first column, all **113
+parents** carry the matrix with empty price and quantity, all **541 variation
+rows** — every variant in the catalogue — carry a price, **18 distinct eBay
+categories** are in use, and the counts for URLs, emails, `<a>` tags,
+over-length titles, missing categories, missing pictures, missing titles, blank
+Departments, priced parents, unpriced variations, worn-and-washed promises and
+30-day return claims are **all zero**.
 
 Terms are set to match what the store already publishes rather than eBay's
 defaults: free shipping, `ShippingCostPaidByOption: Seller` because the refund
