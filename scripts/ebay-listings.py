@@ -175,6 +175,9 @@ def main():
     econ_name = sys.argv[2] if len(sys.argv) > 2 else "econ.jsonl"
     cfg = json.loads(pathlib.Path("config/ebay-categories.json").read_text())
     cats, departments = cfg["categories"], cfg["department"]
+    # Per-handle, and they win. 'unisex:Jersey' covers four soccer jerseys and
+    # three generic training jerseys; one id for both would mis-file three.
+    overrides = cfg.get("overrides", {})
 
     products, variants, desc, spec, media, mtags = load(root, econ_name)
 
@@ -190,7 +193,9 @@ def main():
         if not vs or not pics:
             skipped.append((p["handle"], "no variants" if not vs else "no image"))
             continue
-        if key not in cats or cats[key] is None:
+
+        category = overrides.get(p["handle"]) or cats.get(key)
+        if category is None:
             unresolved[key].append(p["handle"])
             continue
 
@@ -204,7 +209,7 @@ def main():
             skipped.append((p["handle"], "no description"))
             continue
 
-        common = base_row(cats[key], title, body, pics)
+        common = base_row(category, title, body, pics)
         common.update({
             "C:Department": departments.get(g, ""),
             "C:Type": ptype,

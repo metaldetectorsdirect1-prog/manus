@@ -72,39 +72,73 @@ ordinary prose — *"on our"*, *"at"*, *"see"* before punctuation. The heuristic
 was noise, the same false-positive trap as the "96 of 113 superlatives" figure
 that turned out to be 17. The real number is **3 links and 0 emails**.
 
-## The category ids, and why 24 are blank
+## The category ids
 
 eBay needs a **leaf** category id per listing. There is no derivation from a
 Shopify product type, and a wrong id either rejects the row or files the
 garment where no buyer looks.
 
-Verified from eBay's own browse URLs, so used:
+The first pass verified two and left 24 pairs null, which put 99 of 113
+products behind a manual lookup. That was friction I had created, so the
+remaining ids were researched rather than left to the owner. **Thirteen are now
+verified**, each read off an eBay browse URL of the form
+`ebay.com/b/<name>/<ID>/`:
 
-| id | category | mapped from |
+| id | category | covers |
 |---|---|---|
-| 169001 | Activewear Leggings for Women | `womens:Leggings` |
-| 260954 | Women's Activewear Pants | `womens:Yoga Pants`, `womens:Pants` |
+| 185076 | Men's Activewear Tops | mens + unisex tees, tanks, 3 generic jerseys |
+| 59315 | Women's Sports Bras | 17 products, the largest single bucket |
+| 185082 | Women's Activewear Tops | women's tanks and tees |
+| 169001 | Activewear Leggings for Women | leggings |
+| 260954 / 260955 / 260957 | Women's Pants / Women's Shorts / Men's Shorts | |
+| 155226 | Activewear Hoodies & Sweatshirts for Women | |
+| 123490 | Men's Soccer Clothing, jerseys | the 4 soccer jerseys |
+| 261046 | Women's Activewear Skirts & Skorts | |
+| 260956 | Men's Activewear Pants | joggers, sweatpants |
+| 185079 | Women's Activewear Jackets | |
+| 185708 | Men's Tracksuits & Sets | |
 
-`185082` (Active Athletic Apparel for Women) and `185098` (Women's Activewear)
-also turned up, but they are **browse parents, not leaves**, so listing into
-them would fail. Recorded in the config as a warning rather than used.
+### A correction to my own file
 
-The other **24 pairs are null**, covering 99 of 113 products. They are not
-guessed. `scripts/ebay-listings.py` refuses to emit a row whose category is
-still null and prints exactly which pairs need one — the same abort-rather-
-than-mangle rule as `article-spec-fix.py`.
+The first version recorded **185082 as a browse parent not to be listed into**.
+That was wrong. `/b/Womens-Activewear-Tops/185082/` and
+`/b/Active-Athletic-Apparel-for-Women/185082/` are **the same category** —
+eBay serves many marketing names off one node, and a different display name is
+not a different id. 185082 is the leaf for Women's Activewear Tops and is now
+used. `185098` and `185099` do look like true parents and are still avoided.
 
-Filling them is about fifteen minutes in eBay's category picker: the id is the
-number in the resulting `ebay.com/b/<name>/<ID>/` URL.
+### Two ids deliberately not used
+
+**2887** — International Club Soccer **Fan** Jerseys. HIVOLT's jerseys are
+unbranded blanks. Listing them there puts them in front of people shopping for
+a team, which is the wrong audience and arguably a misrepresentation.
+
+### Where the key was not good enough
+
+`unisex:Jersey` covers **two different garments**: four are explicitly soccer
+jerseys and belong in Men's Soccer Clothing, three are generic long-sleeve
+training jerseys and do not. One id for the pair would have mis-filed three,
+so the config gained **per-handle overrides** that win over the
+`(gender, productType)` map, rather than stretching one key over both.
+
+`men-s-lightweight-sport-jersey` looked like an eighth jersey and is not —
+it is typed **T-Shirt**, so it routes to Men's Activewear Tops correctly. The
+handle contains "jersey"; the product type is what decides.
+
+**Seven pairs remain null, covering 12 of 113 products**: women's sets,
+rompers, bodysuit and dress, and unisex hoodies, jackets and the polo. They are
+not guessed. The script still refuses to emit a row for them — the same
+abort-rather-than-mangle rule as `article-spec-fix.py`.
 
 ## What it produces today
 
-    14 listings / 78 rows -> ebay-seller-hub-upload.csv
+    101 listings / 588 rows -> ebay-seller-hub-upload.csv
 
-Verified on the output, not inferred: `*Action` is the first column, 14 parents
-carry the matrix with empty price and quantity, 64 variation rows each carry a
-price, 0 descriptions contain a URL, an email or an `<a>` tag, 0 titles exceed
-80 characters, and all 113 active products have at least one image for `PicURL`.
+Verified on the output, not inferred: `*Action` is the first column, all **101
+parents** carry the matrix with empty price and quantity, all **487 variation
+rows** carry a price, 0 descriptions contain a URL, an email or an `<a>` tag,
+0 titles exceed 80 characters, 0 parents are missing a category, a picture or a
+Department, and all 113 active products have at least one image for `PicURL`.
 
 Terms are set to match what the store already publishes rather than eBay's
 defaults: free shipping, `ShippingCostPaidByOption: Seller` because the refund
