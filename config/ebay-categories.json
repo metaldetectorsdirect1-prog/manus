@@ -34,6 +34,8 @@
     "185076": "Men's Sportswear Activewear / Activewear Tops for Men — /b/Gym-Training-Activewear-Tops-for-Men/185076/",
     "185079": "Women's Activewear Jackets — /b/Womens-Activewear-Jackets/185079/",
     "185082": "Women's Activewear Tops — /b/Womens-Activewear-Tops/185082/",
+    "185084": "Women's Tracksuits & Sets — /b/Womens-Tracksuits-Sets/185084/",
+    "155183": "Men's Hoodies & Sweatshirts, activewear — /b/Active-Hoodies-Sweatshirts-for-Men/155183/",
     "185708": "Men's Tracksuits & Sets — /b/Mens-Tracksuits-Sets/185708/",
     "123490": "Men's Soccer Clothing, jerseys — /b/Jerseys-Soccer-Clothing-for-Men/123490/",
     "260954": "Women's Activewear Pants — /b/Womens-Activewear-Pants/260954/",
@@ -69,17 +71,18 @@
     "mens:Sweatpants": 260956,
     "mens:Set": 185708,
 
-    "unisex:T-Shirt": 185076,
-    "unisex:Shorts": 260957,
+    "womens:Set": 185084,
 
-    "womens:Set": null,
+    "unisex:T-Shirt": 185076,
+    "unisex:Polo Shirt": 185076,
+    "unisex:Shorts": 260957,
+    "unisex:Hoodie": 155183,
+
     "womens:Romper": null,
     "womens:Bodysuit": null,
     "womens:Dress": null,
     "unisex:Jersey": null,
-    "unisex:Hoodie": null,
-    "unisex:Jacket": null,
-    "unisex:Polo Shirt": null
+    "unisex:Jacket": null
   },
 
   "_overrides_README": [
