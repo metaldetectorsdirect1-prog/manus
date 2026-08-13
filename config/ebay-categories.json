@@ -1,0 +1,63 @@
+{
+  "_README": [
+    "eBay leaf category IDs, keyed by '<gender>:<Shopify productType>'.",
+    "",
+    "eBay requires a LEAF category id on every listing. There is no way to",
+    "derive one from a Shopify product type, and a wrong id either rejects the",
+    "row or files the garment somewhere no buyer looks. So the ids below are",
+    "either verified or null, never guessed, and scripts/ebay-listings.py",
+    "refuses to emit any row whose category is still null.",
+    "",
+    "TO FILL A NULL: open eBay Seller Hub -> Listings -> Create listing, type",
+    "the garment name into the category search, and take the id from the end of",
+    "the resulting browse URL (ebay.com/b/<name>/<ID>/...). Paste it here as a",
+    "number, then re-run the script.",
+    "",
+    "NOTE 185082 'Active Athletic Apparel for Women' and 185098 'Women's",
+    "Activewear' are browse parents, not leaves. Do not list into them."
+  ],
+
+  "_verified": {
+    "169001": "Activewear Leggings for Women — confirmed from ebay.com/b/Activewear-Leggings-for-Women/169001",
+    "260954": "Women's Activewear Pants — confirmed from ebay.com/b/Womens-Activewear-Pants/260954"
+  },
+
+  "categories": {
+    "womens:Leggings": 169001,
+    "womens:Yoga Pants": 260954,
+    "womens:Pants": 260954,
+
+    "womens:Sports Bra": null,
+    "womens:Tank Top": null,
+    "womens:T-Shirt": null,
+    "womens:Shorts": null,
+    "womens:Skirt": null,
+    "womens:Hoodie": null,
+    "womens:Jacket": null,
+    "womens:Sweatshirt": null,
+    "womens:Romper": null,
+    "womens:Bodysuit": null,
+    "womens:Dress": null,
+    "womens:Set": null,
+
+    "mens:T-Shirt": null,
+    "mens:Tank Top": null,
+    "mens:Shorts": null,
+    "mens:Joggers": null,
+    "mens:Sweatpants": null,
+    "mens:Set": null,
+
+    "unisex:T-Shirt": null,
+    "unisex:Jersey": null,
+    "unisex:Polo Shirt": null,
+    "unisex:Shorts": null,
+    "unisex:Hoodie": null,
+    "unisex:Jacket": null
+  },
+
+  "department": {
+    "womens": "Women",
+    "mens": "Men",
+    "unisex": "Unisex Adult"
+  }
+}
