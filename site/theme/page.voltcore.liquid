@@ -30,9 +30,20 @@
       so every one of them would be fabricated.
     · There is no urgency furniture of any kind — no timer, no stock warning,
       no viewer count. All three would be inventions.
-    · There is no "unworn" condition on returns. The 60-Day Love-It Guarantee
-      explicitly covers worn and washed items, and the product copy had been
-      contradicting it in the customer-unfriendly direction.
+    · There are no invented delivery promises. Shipping and returns are stated
+      exactly as the published policies state them.
+
+  CORRECTED 2026-08-13. This list used to carry a fourth entry claiming "there
+  is no 'unworn' condition on returns — the 60-Day Love-It Guarantee explicitly
+  covers worn and washed items." That was false, and the page contradicted it
+  twice in its own body, which already said "unworn with tags". The binding
+  Return & Refund Policy reads: "Items must be unworn and returned with the
+  original tags attached. Trying a garment on is fine. Training in it, washing
+  it, or removing the tags places it outside the window." The FAQ below still
+  promised returns "including after you have trained and washed it" — a
+  customer-facing promise the business does not honour, on the hero product's
+  own landing page. Both are fixed. This is the same defect found in
+  page.returns.liquid on 2026-08-12; this file was the second site of it.
 
   check-liquid.py enforces most of that list.
 {%- endcomment -%}
@@ -319,9 +330,9 @@
         <summary>What if the fit is wrong?</summary>
         <p class="faq__a">
           Both pieces run true to size. Between sizes, size up for the bra and
-          stay true for the leggings. If it is still wrong, you have 60 days —
-          including after you have trained and washed it — and returns inside
-          the US are free with a prepaid label.
+          stay true for the leggings. If it is still wrong, you have 60 days
+          from delivery to send it back unworn with the tags on, and returns
+          inside the US are free with a prepaid label.
         </p>
       </details>
 

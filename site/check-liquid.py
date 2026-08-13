@@ -19,7 +19,46 @@ BANNED = [
     (r'★|⭐|\bstar rating\b|\breview_count\b|\brating_count\b', 'star rating / review count'),
     (r'\bcellulite\b|\bvaricose\b|\blipedema\b|\blymphatic\b|\bmedical[- ]grade\b', 'health / medical claim'),
     (r'\bbuttery\b|\bluxurious\b|\bsecond[- ]skin\b', 'banned marketing adjective'),
+
+    # Added 2026-08-13, after this exact contradiction shipped twice and this
+    # file caught neither. The binding Return & Refund Policy says: "Items must
+    # be unworn and returned with the original tags attached. Trying a garment
+    # on is fine. Training in it, washing it, or removing the tags places it
+    # outside the window."
+    #
+    # page.returns.liquid promised the opposite in its hero AND its condition
+    # section; page.voltcore.liquid promised it in the hero product's FAQ. A
+    # returns promise the business does not honour is the most expensive
+    # sentence on the site, and structural checks will never find it — so it
+    # is a content rule now.
+    #
+    # Matches only the affirmative promise. "Training in it, washing it or
+    # removing the tags puts it outside the window" is the CORRECT sentence and
+    # must not trip: the negation guard below excludes it.
+    (r'\b(?:worn\s+and\s+washed'
+     r'|including\s+(?:items\s+)?(?:you\s+have\s+)?(?:worn|trained|washed)'
+     r'|after\s+you\s+have\s+(?:trained|worn|washed)'
+     r'|a\s+worn\s+garment\s+is\s+still\s+returnable'
+     r'|train\s+in\s+it\.\s*wash\s+it)\b',
+     'returns promise contradicting the refund policy (unworn, tags attached)'),
+
+    # 30 days is the category norm and the store deliberately publishes 60.
+    # A stray "30-day return" is a policy contradiction, not a typo. The
+    # damaged/defective photo window IS 30 days, so only match returns.
+    (r'\b30[- ]days?\b(?=[^.]{0,40}\b(?:return|refund|guarantee)\b)',
+     '30-day return window (the published policy is 60 days from delivery)'),
 ]
+
+# Phrases that legitimately contain a banned string because they DENY it.
+# check-liquid.py has been negation-aware since it was written; these keep the
+# new returns rule from flagging the correct sentence.
+NEGATED = re.compile(
+    r'(?:puts?|places?)\s+it\s+outside\s+the\s+window'
+    r'|outside\s+the\s+(?:60[- ]day\s+)?window'
+    r'|used\s+to\s+(?:say|read|carry|claim|promise)'
+    r'|that\s+was\s+false'
+    r'|contradict', re.I)
+
 COLOUR = re.compile(r'#[0-9a-fA-F]{3,8}\b')
 
 def check(path):
@@ -59,7 +98,17 @@ def check(path):
     NEG = re.compile(r"(\bno\b|\bnot\b|\bnever\b|\bwon't\b|\bdon't\b|\bwithout\b|"
                      r"\bthere are no\b|\bhiding (it )?behind\b|\bnothing\b|\brather than\b|"
                      r"\bfake\b|\bnot here\b|\bwe('ll)? (won't|refuse)\b)[^.;]{0,90}$")
-    low = src.lower()
+    # A {% comment %} block never reaches a customer, so a banned phrase inside
+    # one cannot mislead anybody — and these files deliberately quote the exact
+    # wording of defects they have fixed. Blanking comment BODIES (keeping the
+    # newlines, so reported line numbers stay true) is the structural answer.
+    # The alternative was another list of "used to say"-style excuse phrases,
+    # which is the false-positive trap that produced "96 of 113 superlatives"
+    # when the real figure was 17.
+    visible = re.sub(r'\{%-?\s*comment\s*-?%\}.*?\{%-?\s*endcomment\s*-?%\}',
+                     lambda m: re.sub(r'[^\n]', ' ', m.group(0)), src, flags=re.S)
+
+    low = visible.lower()
     for pat, why in BANNED:
         for m in re.finditer(pat, low):
             line = low[:m.start()].count(chr(10)) + 1
@@ -69,6 +118,14 @@ def check(path):
             # treatments for cellulite. We won't."
             if NEG.search(before) or re.search(r"\b(we won't|we don't|we do not|not here|never)\b", after):
                 continue          # disavowal, not a claim
+            # The returns rule needs a wider window than NEG's single clause:
+            # "Training in it, washing it or removing the tags puts it outside
+            # the window" is the CORRECT sentence, and its disqualifier sits
+            # after the match rather than before it. Comment blocks recording a
+            # past defect ("used to say", "that was false") are excluded the
+            # same way — documenting a contradiction is not making one.
+            if NEGATED.search(before[-200:]) or NEGATED.search(after):
+                continue
             # a term inside quotation marks is being cited, not claimed:
             #   'why "compression" and "buttery" answer nothing'
             if re.search(r'["\u201c\u2018\u2019\u201d]\s*$', src[:m.start()]) and \
