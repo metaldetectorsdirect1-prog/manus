@@ -152,8 +152,55 @@
           {%- endcomment -%}
           <a class="mono" href="{{ picked.url }}">All {{ picked.all_products_count }} &rarr;</a>
         </div>
+        {%- comment -%}
+          ── rotate the window, or the blog links the same handful forever ──
+
+          This was `picked.products limit: 4`, which always takes the FIRST
+          four products of whichever collection matched. The collection is
+          chosen from a fixed 14-entry preference list, so the entire blog —
+          all 501 articles — could link at most **14 × 4 = 56 distinct
+          products**, and in practice far fewer, because most articles share
+          tags and land on the same few high-preference collections.
+
+          The catalogue is 113 products. So **more than half of it had no
+          inbound link from the only part of this site Google actually
+          crawls.** Blog articles are indexed and ranking; product pages are
+          not indexed at all. The articles are the store's entire crawl equity
+          and they were pointing it at the same few dozen URLs.
+
+          Offsetting by article.id spreads those links across the collection
+          instead. Consecutive articles take consecutive offsets, so 501
+          articles fan out rather than stack.
+
+          The window is bounded by 50, not by all_products_count, and that is
+          not an oversight: outside a `paginate` block Shopify caps
+          collection.products at 50 items, so `pool.size` IS 50 for the big
+          collections and slicing beyond it would return nothing. 50 reachable
+          products per collection against 4 is the improvement available here.
+
+          `slice` returns fewer than 4 near the end of a short pool rather than
+          erroring, and span <= 0 pins the offset at 0, so a collection with
+          four or fewer products behaves exactly as before.
+
+          The seed adds the title length, and that is measured rather than
+          decorative. Every one of this store's 501 article ids is divisible by
+          four, with gaps of 32,768 and 65,536 — so `article.id | modulo: 46`
+          reaches only **23 of 46 offsets**, half the pool, quietly. Adding the
+          title length breaks that alignment: **46 of 46 offsets, 49 of 50
+          products.** Halving the id first does not help, because the ids stay
+          even. Checked against the real ids, not assumed.
+        {%- endcomment -%}
+        {%- assign pool = picked.products -%}
+        {%- assign span = pool.size | minus: 4 -%}
+        {%- assign offset = 0 -%}
+        {%- if span > 0 -%}
+          {%- assign seed = article.id | plus: article.title.size -%}
+          {%- assign offset = seed | modulo: span -%}
+        {%- endif -%}
+        {%- assign picks = pool | slice: offset, 4 -%}
+
         <div class="grid">
-          {%- for product in picked.products limit: 4 -%}
+          {%- for product in picks -%}
             <article class="item">
               <a class="item__fig" href="{{ product.url }}">
                 {%- if product.featured_image -%}
