@@ -9,6 +9,29 @@ Online Store → Themes → Add theme → Upload zip will accept.
 
 Run:  python3 site/build-theme.py
 Out:  HIVOLT-theme.zip
+
+DEPLOYING WITHOUT THE ZIP
+─────────────────────────
+Writes to the live theme are refused, so the route is: themeDuplicate (the
+payload field is `newTheme`, not `theme`), push files into the copy, then a
+human publishes it. Pushing the files does NOT need base64 pasted through the
+API — that costs ~4/3 of the file size in the request for every deploy. Instead:
+
+    stagedUploadsCreate(resource: FILE, httpMethod: POST)   -> signed target
+    curl -F ... -F file=@<path> <target url>                -> HTTP 201
+    themeFilesUpsert(body: {type: URL, value: <resourceUrl>})
+
+themeFilesUpsert returns an EMPTY upsertedThemeFiles list with no userErrors
+even when it worked, so success is confirmed by re-reading checksumMd5 on the
+theme file and comparing it to md5sum of the local build. The checksums match
+exactly — there is no normalisation step to allow for.
+
+DO NOT UPLOAD THIS ZIP OVER A THEME THAT HAS APPS INSTALLED
+────────────────────────────────────────────────────────────
+locales/en.default.json is written below as a two-key stub. The live theme's
+copy is ~9x larger because GemPages writes its own strings into it. Uploading
+the zip wholesale would delete them. The zip is for a fresh theme; an existing
+theme takes individual file pushes, and locales/ is left alone.
 """
 import json, pathlib, re, shutil, sys, zipfile
 
