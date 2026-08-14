@@ -19,6 +19,14 @@ HIVOLT-storefront.zip
 .claude-flow/metrics/
 .claude-flow/security/
 .swarm/
+# A gitignore pattern containing a slash is anchored to this file's directory,
+# so the five above only ever matched .claude-flow/ at the repo root. Ruflo
+# writes its state next to whatever directory a command runs in -- a Bash call
+# with cwd site/theme/ left site/theme/.claude-flow/ untracked. These are
+# session and policy state for the tooling, not store work, so they are ignored
+# wherever they land rather than committed.
+**/.claude-flow/
+**/.swarm/
 ruvector.db
 ruvector.db-journal
 
