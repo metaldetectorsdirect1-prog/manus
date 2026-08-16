@@ -69,15 +69,25 @@ Further along than a fresh store on every axis except catalogue size:
    handling + 8–14 day transit. Longer than their 7–12 example; consistency
    matters more than the number, and the policy is already published.
 
-## Title work prepared, not yet applied
+## Title work — already done, and my audit of it was stale
 
-All 113 titles lead with "HIVOLT" — the highest-value characters spent on a
-brand nobody searches, while the brand already reaches Google through the
-feed's brand attribute. The method's pattern is keyword-first
-("Women's High-Rise Flared Yoga Leggings …"). Moving the brand off the front
-is a bulk `productUpdate` sweep, prepared once Shopify is back. If it
-happens, now is the time — title edits trigger item re-review, which costs
-days of serving, and the account currently serves nothing.
+The first version of this section claimed all 113 titles led with "HIVOLT"
+and prepared a sweep to fix it. **That was measured on a two-day-old
+catalogue export.** The fresh pull (2026-08-16, all 113 read back live)
+shows the retitle already happened, in the right shape: **0 leading-HIVOLT,
+113 trailing** ("Women's Cropped Sports Bra, Black — HIVOLT"), keyword
+first, gender word in 113/113, median 58 chars. No sweep needed; the CSV was
+never generated and no product was touched.
+
+The same stale-input trap is recorded in the PR body's verification list.
+Rule restated: a catalogue fact is only current if read back the same day
+it is acted on.
+
+Remaining title nit, low priority: **9 titles exceed 70 characters** (the
+Shopping-tile truncation point) — the four outfit sets and five long-sleeve
+styles, worst at 87 chars. The overflow is the ", Colour, NNN GSM — HIVOLT"
+tail, so the keywords still fit; tightening is cosmetic, deferred until ads
+data shows those items underperforming.
 
 ## Divergences, chosen deliberately
 
