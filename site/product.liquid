@@ -64,9 +64,17 @@
   <div class="pdp">
 
     <!-- gallery: supplier studio photography only -->
+    {%- comment -%}
+      On mobile the gallery used to render as a single column of full-width
+      images with the buy column after it — an ad click landed on up to five
+      full-screen photos before the price or the Add button existed on screen.
+      The scoped styles below make it a horizontal snap strip on small screens
+      (one image tall, swipe for the rest) and pin a sticky add-to-bag bar to
+      the bottom of the viewport. Desktop is untouched.
+    {%- endcomment -%}
     <div class="gal">
       {%- capture gallery -%}
-      {%- for media in product.media limit: 5 -%}
+      {%- for media in product.media limit: 8 -%}
         {%- if media.media_type == 'image' -%}
           <div class="gal__f">
             <span class="gal__n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
@@ -104,7 +112,18 @@
           <s id="was" style="color:var(--steel);margin-left:8px">{{ pv.compare_at_price | money }}</s>
         {%- endif -%}
       </p>
-      <p class="buy__ship">Free US shipping · arrives in 8–14 business days</p>
+      {%- comment -%}
+        This line used to read "Free US shipping · arrives in 8–14 business
+        days" — the delivery window stated twice on the page, once directly
+        under the price. The window is honest and it STAYS on the page, in the
+        Ship row of the assurance strip below the button, where a buyer reads
+        it before paying. But the line beside the price is the first thing a
+        cold click reads, and it should carry the strongest facts that are
+        true: free shipping and the 60-day free return. Stating a 3-week
+        ceiling twice is not extra honesty, it is just the weakest fact in the
+        best seat.
+      {%- endcomment -%}
+      <p class="buy__ship">Free US shipping · 60-day returns with a free label</p>
 
       {%- comment -%} Specification sheet — only rows that actually have values {%- endcomment -%}
       {%- capture rows -%}
@@ -189,6 +208,21 @@
         </button>
       {%- endform -%}
 
+      {%- comment -%}
+        Sticky add-to-bag bar, mobile only. The button lives outside the form
+        and submits it through the form attribute, so no script is involved in
+        the purchase path — with JavaScript disabled the bar still adds the
+        selected variant. The price and disabled state are mirrored from the
+        main button by the same script that already keeps that button current.
+      {%- endcomment -%}
+      <div class="stickybar" aria-hidden="false">
+        <span class="stickybar__price" id="sticky-price">{{ pv.price | money }}</span>
+        <button type="submit" form="hivolt-form" class="btn stickybar__add" id="add-sticky"
+                {% unless sel_v.available %}disabled{% endunless %}>
+          {%- if sel_v.available -%}Add to bag{%- else -%}Sold out{%- endif -%}
+        </button>
+      </div>
+
       <div class="assure">
         <ul>
           <li><b>Ship</b><span>Free, no minimum. Dispatched from Illinois, tracked. 8–14 business days.</span></li>
@@ -215,11 +249,19 @@
           sentence is expensive. The honest version of the claim is about whose
           garment is pictured, not about who held the camera.
         {%- endcomment -%}
+        {%- comment -%}
+          Same facts as before, ordered for a stranger. The old paragraph led
+          with "not made in a HIVOLT factory" and "not our own photography" —
+          two negations before any reason to care. Every claim below is
+          unchanged in substance: manufacturer blank, our specification, the
+          supplier's studio photographs of this exact garment, no logo.
+        {%- endcomment -%}
         <p><strong>What this product is</strong>
-          A manufacturer blank, selected and specified by us — not made in a HIVOLT factory.
-          The photographs above are the supplier's studio images of this exact garment —
-          not our own photography, and not a stand-in for something similar. There is no
-          logo printed on it.</p>
+          The photographs above show this exact garment — the supplier's studio
+          images, not a stand-in for something similar. What arrives is what is
+          pictured. It is a manufacturer blank we selected and specified, not
+          made in a HIVOLT factory, and there is no logo printed on it: the
+          fabric spec above is the product.</p>
       </div>
 
       {%- if product.description != blank -%}
@@ -227,6 +269,32 @@
       {%- endif -%}
     </div>
   </div>
+
+  {%- comment -%}
+    Scoped mobile-conversion styles. Kept in the template rather than the
+    build's CSS bundle so the change deploys as one file and reads as one
+    change. Desktop (>960px) is untouched by all of it.
+  {%- endcomment -%}
+  <style>
+    .stickybar{display:none}
+    @media (max-width:960px){
+      /* Gallery: horizontal snap strip, one image tall. The buy box is one
+         swipe away instead of five screens down. */
+      .gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+           -webkit-overflow-scrolling:touch;border-right:0;border-bottom:1px solid var(--rule)}
+      .gal__f{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1/1}
+      .gal__f:nth-child(1){grid-column:auto}
+      /* Sticky bar: price + add, pinned to the viewport bottom. */
+      .stickybar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;
+                 gap:12px;align-items:center;justify-content:space-between;
+                 padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+                 background:var(--paper);border-top:1px solid var(--rule)}
+      .stickybar__price{font-weight:600}
+      .stickybar__add{flex:1;max-width:70%}
+      /* Keep the last content on the page reachable above the bar. */
+      .pdp{padding-bottom:64px}
+    }
+  </style>
 
   {%- comment -%} Related — from the same collection, never `collections.all` {%- endcomment -%}
   {%- if collection and collection.products_count > 1 -%}
@@ -450,6 +518,11 @@
               ? 'Sold out'
               : 'Add to bag \u2014 <span id="btn-price">'+(p||'')+'</span>';
             btnPrice=document.getElementById('btn-price');
+            // Mirror state onto the mobile sticky bar, which submits the same
+            // form and must never disagree with the main button.
+            var sAdd=document.getElementById('add-sticky'), sPrice=document.getElementById('sticky-price');
+            if(sAdd){ sAdd.disabled=out; sAdd.textContent=out?'Sold out':'Add to bag'; }
+            if(sPrice&&p) sPrice.textContent=p;
           }
           break;
         }
