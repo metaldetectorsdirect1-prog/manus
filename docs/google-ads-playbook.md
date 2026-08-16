@@ -25,6 +25,28 @@ sale — so budget concentrates on winners. Feed quality drives CPC (target
 shipping/return numbers everywhere, real contact details, social profiles
 linked, sales under 50%, no price mismatch between store and feed.
 
+## The margin check the supplier video forces, and HIVOLT narrowly fails it
+
+Their pricing floor is **3.5× cost of goods**, sized to absorb returns,
+disputes, reshipments *and* the ~$30 CPA. HIVOLT's catalogue averages
+price $48.89 against cost $16.18 — **3.02×**, under the floor.
+
+The consequence is concrete, not stylistic. Per-unit contribution on the
+own store after payment fees and $7.00 fulfilment shipping is **$23.99**
+(from the marketplace economics model). At a $30 CPA, a **single-item order
+loses ~$6**. The videos' unit economics only work because their AOV is ~$90 —
+multi-item carts — against the same $30 acquisition cost.
+
+So for HIVOLT the profit line is **AOV, not price**: an order needs roughly
+$60+ of goods in it to clear the CPA with margin. Three levers already exist
+and point the right way — the automatic "Two or more — 15% off", the bundled
+sets ($76–$103), and the related-products row on every PDP. The drafting rule
+inherits a sharper meaning too: a product that only ever sells alone at $34
+is unprofitable *even when it converts*, and the per-product ROAS data
+(Windsor, once authorized) is what will show which products pull multi-item
+carts. Raising prices toward 3.5× is the blunt alternative; it trades
+conversion for margin and should wait for real conversion data.
+
 ## Where HIVOLT already stands
 
 Further along than a fresh store on every axis except catalogue size:
