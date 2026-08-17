@@ -1,5 +1,14 @@
 # The eBay upload file, and what the tooling search actually found
 
+> **SUPERSEDED 2026-08-16 — do not upload this file.** The store was curated
+> to 20 active products and **93 of the file's 113 listings now point at
+> archived products** whose storefront pages no longer resolve. The drift
+> checker confirms: 95 of 95 live variants still price correctly, zero
+> mismatches, but 93 handles are not live — verdict REGENERATE. If eBay
+> becomes a priority again, rerun `scripts/ebay-listings.py` against the
+> curated catalogue; the category config in `config/ebay-categories.json`
+> remains valid.
+
 2026-08-13.
 
 ## The research finding first, because it is not what was expected

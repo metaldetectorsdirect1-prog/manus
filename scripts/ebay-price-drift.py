@@ -41,15 +41,19 @@ def load_live(path):
                 continue
             o = json.loads(line)
             gid = o.get("id", "")
-            # Metafield rows carry no id when the query did not ask for one.
+            # Rows are identified by SHAPE, not by gid: a bulk export only
+            # carries `id` for fields the query asked for, so keying variant
+            # rows off "/ProductVariant/" silently parses zero variants when
+            # the caller left `id` out -- which reports every file handle as
+            # not-live while comparing nothing. Same trap as metafield rows.
             if "namespace" in o and "key" in o:
                 continue
-            if "/ProductVariant/" in gid:
+            if "price" in o and "selectedOptions" in o and "__parentId" in o:
                 opts = {x["name"].strip().lower(): x["value"].strip()
                         for x in o.get("selectedOptions", [])}
                 live[o["__parentId"]][(opts.get("size", ""),
                                        opts.get("color", ""))] = o["price"]
-            elif "/Product/" in gid:
+            elif "/Product/" in gid and "handle" in o:
                 handles[gid] = o["handle"]
     return {handles[g]: v for g, v in live.items() if g in handles}
 
