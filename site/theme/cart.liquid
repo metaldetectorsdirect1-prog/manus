@@ -149,6 +149,61 @@
           </div>
         </div>
 
+        {%- comment -%}
+          ── the two-or-more offer, surfaced at the decision point ──────────
+          "Two or more — 15% off" has been ACTIVE and automatic since launch,
+          but nothing on the storefront ever said so — a shopper only found
+          out at checkout, after deciding. The unit economics make this the
+          page that matters: at a ~$30 acquisition cost a single-item order
+          loses money, so the one honest sentence that turns one item into
+          two is worth more than any redesign.
+
+          Shown only when exactly one item is in the cart. At two or more the
+          discount itself appears in the totals sheet via the existing
+          discount-application rows, which is better proof than a banner.
+
+          Recommendations are gender-aware via the cart item's collections,
+          link to the PDP rather than blind-adding a sized variant (a wrong
+          size added in one click is a return, not a sale), and never render
+          at all if the pools are empty. Nothing here invents a claim: the
+          discount title is read off the store's own automatic discount.
+        {%- endcomment -%}
+        {%- if cart.item_count == 1 -%}
+          {%- assign solo = cart.items.first.product -%}
+          {%- assign pool = collections['sets'] -%}
+          {%- for c in solo.collections -%}
+            {%- if c.handle == 'mens-activewear' -%}
+              {%- assign pool = collections['mens-activewear'] -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <div class="ct__offer">
+            <p class="ct__offer-t">
+              <strong>Add any second item and both get 15% off.</strong>
+              Applied automatically at checkout — no code.
+            </p>
+            {%- assign shown = 0 -%}
+            {%- if pool.handle != blank -%}
+              <div class="ct__offer-grid">
+                {%- for p in pool.products limit: 6 -%}
+                  {%- if p.id != solo.id and p.available and shown < 2 -%}
+                    {%- assign shown = shown | plus: 1 -%}
+                    <a class="ct__offer-item" href="{{ p.url }}">
+                      {%- if p.featured_image -%}
+                        <img src="{{ p.featured_image | image_url: width: 300 }}"
+                             alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                             width="{{ p.featured_image.width }}"
+                             height="{{ p.featured_image.height }}" loading="lazy">
+                      {%- endif -%}
+                      <span class="ct__offer-name">{{ p.title | escape }}</span>
+                      <span class="ct__offer-price mono">{{ p.price | money }}</span>
+                    </a>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
         <div class="ct__foot">
 
           <div class="ct__note">
@@ -213,6 +268,17 @@
     </div>
 
   </section>
+
+<style>
+  .ct__offer{border:1px solid var(--rule);padding:16px;margin:20px 0}
+  .ct__offer-t{margin:0 0 12px}
+  .ct__offer-grid{display:flex;gap:16px;flex-wrap:wrap}
+  .ct__offer-item{display:flex;flex-direction:column;gap:4px;max-width:150px;
+                  text-decoration:none;color:inherit}
+  .ct__offer-item img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}
+  .ct__offer-name{font-size:13px;line-height:1.3}
+  .ct__offer-price{font-size:12px}
+</style>
 
 <script>
 /* Progressive enhancement only. With scripting off, the Update button below
