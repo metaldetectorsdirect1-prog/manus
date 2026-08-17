@@ -1,0 +1,189 @@
+{
+  "sections": {
+    "featured-collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "sets",
+            "title": "Matching Sets",
+            "focal_point": "center center"
+          }
+        },
+        "collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "sports-bras",
+            "title": "Sports Bras",
+            "focal_point": "center center"
+          }
+        },
+        "collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "leggings",
+            "title": "Leggings",
+            "focal_point": "center center"
+          }
+        },
+        "collection-4": {
+          "type": "collection",
+          "settings": {
+            "collection": "outerwear-hoodies",
+            "title": "Hoodies & Jackets",
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": ["collection-1", "collection-2", "collection-3", "collection-4"],
+      "settings": {
+        "title": "Shop by category",
+        "heading_size": "h2",
+        "divider": false,
+        "per_row": 4
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Matching sets — the pieces that sell together",
+        "heading_size": "h2",
+        "home_featured_products": "sets",
+        "per_row": 4,
+        "rows": 1,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": true
+      }
+    },
+    "promo-grid": {
+      "type": "promo-grid",
+      "blocks": {
+        "advanced-1": {
+          "type": "advanced",
+          "settings": {
+            "subheading": "",
+            "heading": "Two or more items — 15% off both",
+            "heading_size": "h2",
+            "textarea": "Applied automatically at checkout. No code to remember.",
+            "cta_text1": "Shop everything",
+            "cta_link1": "shopify://collections/all",
+            "cta_text2": "",
+            "cta_link2": "",
+            "image": "",
+            "video_url": "",
+            "width": "50",
+            "height": 500,
+            "text_align": "vertical-center horizontal-center",
+            "color_accent": "#000000",
+            "boxed": false,
+            "framed": false
+          }
+        },
+        "advanced-2": {
+          "type": "advanced",
+          "settings": {
+            "subheading": "",
+            "heading": "Published, not claimed",
+            "heading_size": "h2",
+            "textarea": "Every garment lists its fabric weight in g/m² and its fibre composition, taken from the mill's specification sheet.",
+            "cta_text1": "Fabric Weight Index",
+            "cta_link1": "shopify://pages/fabric-weight-index",
+            "cta_text2": "",
+            "cta_link2": "",
+            "image": "",
+            "video_url": "",
+            "width": "50",
+            "height": 500,
+            "text_align": "vertical-center horizontal-center",
+            "color_accent": "#000000",
+            "boxed": false,
+            "framed": false
+          }
+        }
+      },
+      "block_order": ["advanced-1", "advanced-2"],
+      "settings": {
+        "full_width": true,
+        "gutter_size": 0,
+        "space_above": false,
+        "space_below": false
+      }
+    },
+    "featured-collection-2": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Sports bras",
+        "heading_size": "h2",
+        "home_featured_products": "sports-bras",
+        "per_row": 5,
+        "rows": 1,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "featured-collection-3": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Leggings & yoga pants",
+        "heading_size": "h2",
+        "home_featured_products": "leggings",
+        "per_row": 5,
+        "rows": 1,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": true
+      }
+    },
+    "text-with-icons": {
+      "type": "text-with-icons",
+      "blocks": {
+        "text-block-1": {
+          "type": "text_block",
+          "settings": {
+            "icon": "truck",
+            "title": "Free US shipping",
+            "text": "<p>Free on every order, no minimum. Dispatched from Illinois, tracked, 8–14 business days.</p>"
+          }
+        },
+        "text-block-2": {
+          "type": "text_block",
+          "settings": {
+            "icon": "package",
+            "title": "60-day returns",
+            "text": "<p>60 days from delivery, unworn with tags. Free prepaid return label, no restocking fee.</p>"
+          }
+        },
+        "text-block-3": {
+          "type": "text_block",
+          "settings": {
+            "icon": "cotton",
+            "title": "The spec is the product",
+            "text": "<p>Fabric weight and fibre composition published on every product page — figures from the mill, unedited.</p>"
+          }
+        }
+      },
+      "block_order": ["text-block-1", "text-block-2", "text-block-3"],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "align_text": "left",
+        "desktop_columns_per_row": 3,
+        "icon_color": "#000000",
+        "button_label": "",
+        "button_link": "",
+        "divider": true
+      }
+    }
+  },
+  "order": [
+    "featured-collections",
+    "featured-collection",
+    "promo-grid",
+    "featured-collection-2",
+    "featured-collection-3",
+    "text-with-icons"
+  ]
+}
