@@ -1,36 +1,53 @@
 {
   "sections": {
-    "promo-hero": {
-      "type": "promo-grid",
+    "hero-slideshow": {
+      "type": "slideshow",
       "blocks": {
-        "advanced-hero": {
-          "type": "advanced",
+        "slide-premium": {
+          "type": "image",
           "settings": {
-            "subheading": "",
-            "heading": "Made to move, easy to live in",
-            "heading_size": "h1",
-            "textarea": "Squat-proof leggings, matching sets, knit dresses and loungewear. Free US shipping, no minimum — 60-day returns.",
-            "cta_text1": "Shop new in",
-            "cta_link1": "shopify://collections/all",
-            "cta_text2": "",
-            "cta_link2": "",
-            "image": "",
-            "video_url": "",
-            "width": "100",
-            "height": 520,
+            "top_subheading": "New for the season",
+            "title": "Coats, knits & denim\nhave landed",
+            "title_size": 68,
+            "subheading": "Layer-ready pieces to wear with the line you already love.",
+            "link": "shopify://collections/coats-jackets",
+            "link_text": "Shop Coats & Jackets",
+            "link_2": "shopify://collections/knitwear",
+            "link_text_2": "Shop Knitwear",
+            "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-center horizontal-center",
-            "color_accent": "#000000",
-            "boxed": false,
-            "framed": false
+            "image": "shopify://shop_images/hv-p01-hero.webp",
+            "parallax_direction": "top",
+            "overlay_opacity": 30
+          }
+        },
+        "slide-active": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "Squat-proof, seam-free",
+            "title": "Made to move,\neasy to live in",
+            "title_size": 68,
+            "subheading": "Leggings, sets and sports bras — 15% off any two pieces, automatically.",
+            "link": "shopify://collections/womens-activewear",
+            "link_text": "Shop Activewear",
+            "link_2": "shopify://collections/sets",
+            "link_text_2": "Shop Sets",
+            "color_accent": "rgba(0,0,0,0)",
+            "text_align": "vertical-center horizontal-center",
+            "image": "shopify://shop_images/hv-w09-hero.webp",
+            "parallax_direction": "top",
+            "overlay_opacity": 26
           }
         }
       },
-      "block_order": ["advanced-hero"],
+      "block_order": ["slide-premium", "slide-active"],
       "settings": {
-        "full_width": true,
-        "gutter_size": 0,
-        "space_above": false,
-        "space_below": false
+        "section_height": "650px",
+        "mobile_height": "500px",
+        "parallax": true,
+        "style": "bars",
+        "autoplay": true,
+        "autoplay_speed": 7
       }
     },
     "featured-collections": {
@@ -38,22 +55,38 @@
       "blocks": {
         "collection-1": {
           "type": "collection",
-          "settings": { "collection": "leggings", "title": "Leggings", "focal_point": "center center" }
+          "settings": { "collection": "coats-jackets", "title": "Coats & Jackets", "focal_point": "center center" }
         },
         "collection-2": {
           "type": "collection",
-          "settings": { "collection": "sets", "title": "Matching Sets", "focal_point": "center center" }
+          "settings": { "collection": "knitwear", "title": "Knitwear", "focal_point": "center center" }
         },
         "collection-3": {
           "type": "collection",
-          "settings": { "collection": "sports-bras", "title": "Sports Bras", "focal_point": "center center" }
+          "settings": { "collection": "denim", "title": "Denim", "focal_point": "center center" }
         },
         "collection-4": {
           "type": "collection",
           "settings": { "collection": "dresses", "title": "Dresses", "focal_point": "center center" }
+        },
+        "collection-5": {
+          "type": "collection",
+          "settings": { "collection": "leggings", "title": "Leggings", "focal_point": "center center" }
+        },
+        "collection-6": {
+          "type": "collection",
+          "settings": { "collection": "sets", "title": "Matching Sets", "focal_point": "center center" }
+        },
+        "collection-7": {
+          "type": "collection",
+          "settings": { "collection": "sports-bras", "title": "Sports Bras", "focal_point": "center center" }
+        },
+        "collection-8": {
+          "type": "collection",
+          "settings": { "collection": "loungewear", "title": "Loungewear", "focal_point": "center center" }
         }
       },
-      "block_order": ["collection-1", "collection-2", "collection-3", "collection-4"],
+      "block_order": ["collection-1", "collection-2", "collection-3", "collection-4", "collection-5", "collection-6", "collection-7", "collection-8"],
       "settings": {
         "title": "Shop by category",
         "heading_size": "h2",
@@ -61,17 +94,30 @@
         "per_row": 4
       }
     },
-    "featured-collection": {
+    "featured-collection-coats": {
       "type": "featured-collection",
       "settings": {
-        "title": "Matching sets — 15% off both",
+        "title": "New in: Coats & Jackets",
         "heading_size": "h2",
-        "home_featured_products": "sets",
+        "home_featured_products": "coats-jackets",
         "per_row": 4,
         "rows": 1,
         "mobile_scrollable": true,
         "view_all": true,
         "divider": true
+      }
+    },
+    "featured-collection-knitwear": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Knitwear to live in",
+        "heading_size": "h2",
+        "home_featured_products": "knitwear",
+        "per_row": 5,
+        "rows": 1,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
       }
     },
     "promo-grid": {
@@ -128,6 +174,19 @@
         "space_below": false
       }
     },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Matching sets — 15% off both",
+        "heading_size": "h2",
+        "home_featured_products": "sets",
+        "per_row": 4,
+        "rows": 1,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": true
+      }
+    },
     "featured-collection-2": {
       "type": "featured-collection",
       "settings": {
@@ -144,7 +203,7 @@
     "featured-collection-3": {
       "type": "featured-collection",
       "settings": {
-        "title": "Ribbed-knit dresses",
+        "title": "Dresses for every plan",
         "heading_size": "h2",
         "home_featured_products": "dresses",
         "per_row": 5,
@@ -177,8 +236,8 @@
           "type": "text_block",
           "settings": {
             "icon": "ruler",
-            "title": "True-to-size, S–2XL",
-            "text": "<p>A fit guide on every product page and a full size range. Between sizes? Returns are free — size up or down on us.</p>"
+            "title": "Real photos, real specs",
+            "text": "<p>Every product page shows the item as it ships, with measurements in the size guide. Between sizes? Returns are free.</p>"
           }
         }
       },
@@ -196,10 +255,12 @@
     }
   },
   "order": [
-    "promo-hero",
+    "hero-slideshow",
     "featured-collections",
-    "featured-collection",
+    "featured-collection-coats",
+    "featured-collection-knitwear",
     "promo-grid",
+    "featured-collection",
     "featured-collection-2",
     "featured-collection-3",
     "text-with-icons"
