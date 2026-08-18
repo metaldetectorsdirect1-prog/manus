@@ -1,39 +1,56 @@
 {
   "sections": {
+    "promo-hero": {
+      "type": "promo-grid",
+      "blocks": {
+        "advanced-hero": {
+          "type": "advanced",
+          "settings": {
+            "subheading": "",
+            "heading": "Made to move, easy to live in",
+            "heading_size": "h1",
+            "textarea": "Squat-proof leggings, matching sets, knit dresses and loungewear. Free US shipping, no minimum — 60-day returns.",
+            "cta_text1": "Shop new in",
+            "cta_link1": "shopify://collections/all",
+            "cta_text2": "",
+            "cta_link2": "",
+            "image": "",
+            "video_url": "",
+            "width": "100",
+            "height": 520,
+            "text_align": "vertical-center horizontal-center",
+            "color_accent": "#000000",
+            "boxed": false,
+            "framed": false
+          }
+        }
+      },
+      "block_order": ["advanced-hero"],
+      "settings": {
+        "full_width": true,
+        "gutter_size": 0,
+        "space_above": false,
+        "space_below": false
+      }
+    },
     "featured-collections": {
       "type": "featured-collections",
       "blocks": {
         "collection-1": {
           "type": "collection",
-          "settings": {
-            "collection": "sets",
-            "title": "Matching Sets",
-            "focal_point": "center center"
-          }
+          "settings": { "collection": "leggings", "title": "Leggings", "focal_point": "center center" }
         },
         "collection-2": {
           "type": "collection",
-          "settings": {
-            "collection": "sports-bras",
-            "title": "Sports Bras",
-            "focal_point": "center center"
-          }
+          "settings": { "collection": "sets", "title": "Matching Sets", "focal_point": "center center" }
         },
         "collection-3": {
           "type": "collection",
-          "settings": {
-            "collection": "leggings",
-            "title": "Leggings",
-            "focal_point": "center center"
-          }
+          "settings": { "collection": "sports-bras", "title": "Sports Bras", "focal_point": "center center" }
         },
         "collection-4": {
           "type": "collection",
-          "settings": {
-            "collection": "outerwear-hoodies",
-            "title": "Hoodies & Jackets",
-            "focal_point": "center center"
-          }
+          "settings": { "collection": "dresses", "title": "Dresses", "focal_point": "center center" }
         }
       },
       "block_order": ["collection-1", "collection-2", "collection-3", "collection-4"],
@@ -47,7 +64,7 @@
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Matching sets — the pieces that sell together",
+        "title": "Matching sets — 15% off both",
         "heading_size": "h2",
         "home_featured_products": "sets",
         "per_row": 4,
@@ -64,9 +81,9 @@
           "type": "advanced",
           "settings": {
             "subheading": "",
-            "heading": "Two or more items — 15% off both",
+            "heading": "Two or more — 15% off both",
             "heading_size": "h2",
-            "textarea": "Applied automatically at checkout. No code to remember.",
+            "textarea": "Buy any two pieces and 15% comes off both, automatically at checkout. No code to remember.",
             "cta_text1": "Shop everything",
             "cta_link1": "shopify://collections/all",
             "cta_text2": "",
@@ -85,11 +102,11 @@
           "type": "advanced",
           "settings": {
             "subheading": "",
-            "heading": "Published, not claimed",
+            "heading": "60 days to decide",
             "heading_size": "h2",
-            "textarea": "Every garment lists its fabric weight in g/m² and its fibre composition, taken from the mill's specification sheet.",
-            "cta_text1": "Fabric Weight Index",
-            "cta_link1": "shopify://pages/fabric-weight-index",
+            "textarea": "Try it on at home. If the fit isn't right, send it back free within 60 days — no restocking fee.",
+            "cta_text1": "How returns work",
+            "cta_link1": "shopify://pages/returns-refunds",
             "cta_text2": "",
             "cta_link2": "",
             "image": "",
@@ -114,9 +131,9 @@
     "featured-collection-2": {
       "type": "featured-collection",
       "settings": {
-        "title": "Sports bras",
+        "title": "Squat-proof leggings",
         "heading_size": "h2",
-        "home_featured_products": "sports-bras",
+        "home_featured_products": "leggings",
         "per_row": 5,
         "rows": 1,
         "mobile_scrollable": true,
@@ -127,9 +144,9 @@
     "featured-collection-3": {
       "type": "featured-collection",
       "settings": {
-        "title": "Leggings & yoga pants",
+        "title": "Ribbed-knit dresses",
         "heading_size": "h2",
-        "home_featured_products": "leggings",
+        "home_featured_products": "dresses",
         "per_row": 5,
         "rows": 1,
         "mobile_scrollable": true,
@@ -145,7 +162,7 @@
           "settings": {
             "icon": "truck",
             "title": "Free US shipping",
-            "text": "<p>Free on every order, no minimum. Dispatched from Illinois, tracked, 8–14 business days.</p>"
+            "text": "<p>Free on every order, no minimum. Tracked door to door, 8–14 business days.</p>"
           }
         },
         "text-block-2": {
@@ -159,9 +176,9 @@
         "text-block-3": {
           "type": "text_block",
           "settings": {
-            "icon": "cotton",
-            "title": "The spec is the product",
-            "text": "<p>Fabric weight and fibre composition published on every product page — figures from the mill, unedited.</p>"
+            "icon": "ruler",
+            "title": "True-to-size, S–2XL",
+            "text": "<p>A fit guide on every product page and a full size range. Between sizes? Returns are free — size up or down on us.</p>"
           }
         }
       },
@@ -179,6 +196,7 @@
     }
   },
   "order": [
+    "promo-hero",
     "featured-collections",
     "featured-collection",
     "promo-grid",
