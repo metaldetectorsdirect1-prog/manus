@@ -1,53 +1,57 @@
 {
   "sections": {
-    "hero-slideshow": {
-      "type": "slideshow",
+    "hero-split": {
+      "type": "promo-grid",
       "blocks": {
-        "slide-premium": {
-          "type": "image",
+        "hero-left": {
+          "type": "advanced",
           "settings": {
-            "top_subheading": "New for the season",
-            "title": "Coats, knits & denim\nhave landed",
-            "title_size": 68,
-            "subheading": "Layer-ready pieces to wear with the line you already love.",
-            "link": "shopify://collections/coats-jackets",
-            "link_text": "Shop Coats & Jackets",
-            "link_2": "shopify://collections/knitwear",
-            "link_text_2": "Shop Knitwear",
-            "color_accent": "rgba(0,0,0,0)",
+            "subheading": "New for the season",
+            "heading": "Coats & knits have landed",
+            "heading_size": "h1",
+            "textarea": "Layer-ready pieces to wear with the line you already love.",
+            "cta_text1": "Shop Coats & Jackets",
+            "cta_link1": "shopify://collections/coats-jackets",
+            "cta_text2": "",
+            "cta_link2": "",
+            "image": "shopify://shop_images/hv-p04-hero.webp",
+            "video_url": "",
+            "width": "50",
+            "height": 560,
             "text_align": "vertical-center horizontal-center",
-            "image": "shopify://shop_images/hv-p01-hero.webp",
-            "parallax_direction": "top",
-            "overlay_opacity": 30
+            "color_accent": "#000000",
+            "boxed": false,
+            "framed": false
           }
         },
-        "slide-active": {
-          "type": "image",
+        "hero-right": {
+          "type": "advanced",
           "settings": {
-            "top_subheading": "Squat-proof, seam-free",
-            "title": "Made to move,\neasy to live in",
-            "title_size": 68,
-            "subheading": "Leggings, sets and sports bras — 15% off any two pieces, automatically.",
-            "link": "shopify://collections/womens-activewear",
-            "link_text": "Shop Activewear",
-            "link_2": "shopify://collections/sets",
-            "link_text_2": "Shop Sets",
-            "color_accent": "rgba(0,0,0,0)",
-            "text_align": "vertical-center horizontal-center",
+            "subheading": "Squat-proof, seam-free",
+            "heading": "Made to move, easy to live in",
+            "heading_size": "h1",
+            "textarea": "Leggings, sets and sports bras — 15% off any two pieces, automatically.",
+            "cta_text1": "Shop Activewear",
+            "cta_link1": "shopify://collections/womens-activewear",
+            "cta_text2": "",
+            "cta_link2": "",
             "image": "shopify://shop_images/hv-w09-hero.webp",
-            "parallax_direction": "top",
-            "overlay_opacity": 26
+            "video_url": "",
+            "width": "50",
+            "height": 560,
+            "text_align": "vertical-center horizontal-center",
+            "color_accent": "#000000",
+            "boxed": false,
+            "framed": false
           }
         }
       },
-      "block_order": ["slide-premium", "slide-active"],
+      "block_order": ["hero-left", "hero-right"],
       "settings": {
-        "section_height": "650px",
-        "mobile_height": "500px",
-        "parallax": true,
-        "style": "bars",
-        "autoplay": true,
-        "autoplay_speed": 7
+        "full_width": true,
+        "gutter_size": 0,
+        "space_above": false,
+        "space_below": false
       }
     },
     "featured-collections": {
@@ -255,7 +259,7 @@
     }
   },
   "order": [
-    "hero-slideshow",
+    "hero-split",
     "featured-collections",
     "featured-collection-coats",
     "featured-collection-knitwear",
