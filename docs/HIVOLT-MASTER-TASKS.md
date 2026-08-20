@@ -61,6 +61,42 @@ theme copies**; nothing touches the live theme without approval.
 | T17 | Performance: image sizing, font loading, script audit | P1 | — |
 | T18 | SEO architecture: schema, canonical, OG, breadcrumbs | P2 | catalogue |
 
+
+## Google Commerce readiness (added 2026-08-20)
+
+Source: `HIVOLT-GOOGLE-COMMERCE.md`. **No ads, no campaigns, no spend, no
+Merchant Center activation, no product activation performed.**
+
+### OWNER — blocking Merchant Center
+
+| # | Item | Why blocking |
+|---|---|---|
+| G1 | **Approve correction of live policy contradictions** (§2 P0-1…P0-8) | Live text says we sell sports bras/leggings, publish GSM we do not have, and do not ship internationally. Misrepresentation + trust risk |
+| G2 | Confirm Merchant Center account claim + domain verification (ref 5838274874) | Not verifiable via Shopify API |
+| G3 | Approve product, pricing, fulfilment (see O1–O4) | Gate A + C entirely |
+| G4 | Decide fate of `/pages/fabric-weight-index` and `/pages/voltcore` | Stale/orphaned public pages |
+
+### TECH — product-independent, proceeding
+
+| # | Item | Priority | Note |
+|---|---|---|---|
+| G5 | Google product category metafield + mapping architecture | P1 | `Apparel & Accessories > Clothing > Shirts & Tops` |
+| G6 | `custom.feed_title` metafield — feed titles separate from storefront titles | P1 | Premium PDP naming never degraded for ad relevance |
+| G7 | `identifier_exists: false` handling where no GTIN exists | P1 | Own-brand apparel; never invent GTINs |
+| G8 | Structured data templates: Product, Offer, BreadcrumbList, Organization | P1 | **No Review/AggregateRating** — no real review data exists |
+| G9 | Material / pattern / fit metafields (feeds both PDP and feed) | P1 | Depends on T1 |
+| G10 | Publish `/pages/size-chart` (currently `isPublished: false`, PDP block points at it) | P1 | Broken reference — size guide cannot render |
+| G11 | Feed pre-flight validation checklist as a runnable check | P2 | §7 of Google doc |
+| G12 | Seasonality research doc (polo/golf/Father's Day/BFCM by country) | P2 | Research only — authorises no catalogue or pricing change |
+
+### Destination integrity — flagged, not auto-fixed
+
+| # | Finding | Lane |
+|---|---|---|
+| G13 | **11 of 11 main-menu links resolve to empty collections** | Resolves when catalogue lands; collection taxonomy still needs polo re-architecture (OWNER decides taxonomy) |
+| G14 | Navigation is women's-activewear taxonomy on a men's polo brand | OWNER — merchandising decision |
+| G15 | `/collections/all` shows 3 DRAFT products → renders empty | Expected; correct state |
+
 ## Standing prohibitions
 
 1. No fabricated product imagery.
@@ -70,3 +106,6 @@ theme copies**; nothing touches the live theme without approval.
 5. No publishing to any sales channel without owner approval.
 6. No live theme writes without owner approval.
 7. No brand redesign from the deprecated legacy logo.
+8. No Google Ads, campaigns, ad spend, or Merchant Center activation.
+9. No Review/AggregateRating structured data without real review data.
+10. No invented GTINs, MPNs, or product identifiers.
