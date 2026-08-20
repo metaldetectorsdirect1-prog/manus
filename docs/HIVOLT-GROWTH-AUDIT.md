@@ -29,7 +29,7 @@ Three paths named in the brief were checked and are **absent**:
 
 | Area | Current state (verified) | Problem | Priority | Recommended change |
 |---|---|---|---|---|
-| **Brand identity vs directive** | `site/impulse/hivolt-logo.png` = boxed "HV" + wordmark + **"SPEC-FIRST APPAREL"**. Monochrome black/white | Directive §4/§5 specifies **volt/fluorescent-lime accent**, a **lightning/energy mark**, and slogan **"ACTIVATE YOUR POTENTIAL"**. Current asset carries none of these and states a different tagline | P1 | Re-cut the lockup to the specified identity, or supply the authoritative logo. Existing assets preserved either way |
+| **Brand identity vs directive** | **LEGACY / DEPRECATED** asset at `site/impulse/hivolt-logo.png` = boxed "HV" + wordmark + **"SPEC-FIRST APPAREL"**. Monochrome black/white. Preserved, not deleted. | Directive §4/§5 specifies **volt/fluorescent-lime accent**, a **lightning/energy mark**, and slogan **"ACTIVATE YOUR POTENTIAL"**. Current asset carries none of these and states a different tagline | P1 | **Owner will supply the authoritative logo.** Do not redesign the brand from the legacy asset and do not invent a replacement. Legacy file preserved and marked deprecated. |
 | **Collection architecture** | 13 collections, all women's-activewear semantics (Leggings, Sports Bras, Dresses, Loungewear…). Title-rule based, all published, all imaged | Wrong taxonomy for a polo brand. Directive §19 wants Best Sellers / New / Performance / Golf / Solid / Prints / Seasonal | P1 | Re-map collections to polo taxonomy. Rules are title-based so they refill automatically |
 | **Funnel data** | Last 14d: **801 sessions** — 693 direct (bot/self), 106 search, 2 social. 6 add-to-cart, 4 reached checkout, **0 purchases** | There is effectively no real shopper traffic. CVR is unmeasurable at this volume | P1 | Attribution + a real traffic source are prerequisites to any CRO claim |
 | **Unit economics baseline** | Prior audit (`audit/FIVE-HUNDRED-K-2026-08-12.md`) measured the *deleted* catalogue: 65.7% catalogue-weighted gross margin, $46.90 avg price / $16.08 avg cost, 0 variants priced below cost | Baseline is now stale (catalogue deleted) but the **method** is sound and reusable | P1 | Re-run against the polo catalogue once built; keep `inventoryItem.unitCost` populated on every variant so margin stays scoreable |
@@ -89,29 +89,34 @@ Under §5 and §72 the performance-tech narrative is therefore **unavailable**.
 Any GSM figure, moisture-management claim or golf-performance story written on
 top of this supply would be fabricated.
 
-## Decision taken (reversible; flag for owner)
+## PROPOSAL ONLY — NOT APPROVED, NOT LIVE
 
-Built a focused **four-SKU core line** rather than a padded catalogue, each
-positioned only to its verified attributes:
+> **Status: OWNER APPROVAL REQUIRED.** Nothing in this section is approved.
+> Three products were created during this cycle and have been **reverted to
+> DRAFT with zero inventory and no channel publication** (see
+> `docs/HIVOLT-SOURCING-PROPOSAL.md` for exact state). The prices below are a
+> starting proposal for discussion, not a decision.
 
-| SKU | Position | Verified basis | Retail |
+A focused four-SKU core line was *proposed*, each positioned only to its
+verified attributes:
+
+| SKU | Position | Verified basis | Proposed retail |
 |---|---|---|---|
-| H01 | Classic cotton polo (flagship, most colourways) | `100% Cotton`, `Anti-Pilling` | $49 |
-| H02 | Cotton stretch slim polo | `COTTON`, `Breathable`, `Slim` | $54 |
-| H03 | Long-sleeve polo | `anti-wrinkle`, US warehouse | $59 |
-| H04 | Jacquard textured knit polo | textured knit, `Breathable`, US warehouse | $69 |
+| H01 | Classic cotton polo (most colourways) | `100% Cotton`, `Anti-Pilling` | $49 (proposed) |
+| H02 | Cotton stretch slim polo | `COTTON`, `Breathable`, `Slim` | $54 (proposed) |
+| H03 | Long-sleeve polo | `anti-wrinkle`, US warehouse | $59 (proposed) |
+| H04 | Jacquard textured knit polo | textured knit, `Breathable` | $69 (proposed) |
 
-**Pricing rationale — and the conflict.** The directive's $500K model assumes
-$100–150 AOV. A no-name polo at $69–129, shipped 11–13 days, with weight-based
-sizing and no published fabric spec, is not defensible against Uniqlo ($29–39)
-or Ralph Lauren ($98, with a century of brand equity). Pricing at $49–69 keeps
-79–85% gross margin while remaining credible. Reaching $100+ AOV should come
-from **multi-unit bundles** (§13) — a polo buyer naturally owns several — not
-from a single-unit price the product cannot carry.
+**Pricing reasoning, for the owner to accept or reject.** The directive's $500K
+model assumes $100–150 AOV. A polo with 11–13 day transit, weight-based sizing
+and no published fabric spec is difficult to defend at $100+ against Uniqlo
+($29–39) and Ralph Lauren ($98, with a century of equity). $49–69 preserves
+79–85% gross margin while remaining credible on *this* supply. Reaching $100+
+AOV would then come from **multi-unit bundles** (§13), not single-unit price.
 
-Every size chart is published exactly as the manufacturer states it, with an
-explicit warning where sizing is weight-based, because size returns are the
-single largest controllable cost in this category.
+**This reasoning assumes the current supply is the product.** If HIVOLT sources
+to spec instead (see `docs/HIVOLT-POLO-SOURCING-SPEC.md`), the premium price
+band becomes defensible and this table should be discarded.
 
 ## OWNER DECISION REQUIRED
 
