@@ -25,11 +25,19 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign hv_declared = variant.metafields.custom.identifier_mode.value
-  if hv_declared == blank
-    assign hv_declared = product.metafields.custom.identifier_mode.value
+  comment
+    Resolution order: variant override, then product default, then auto.
+    Each read goes through default so an unset metafield is an empty string.
+    Comparing an unset metafield to blank is engine-dependent - Shopify treats
+    nil as blank, other Liquid implementations do not - and when it does not,
+    the product-level default silently becomes unreachable. Comparing to ''
+    behaves identically everywhere and is testable.
+  endcomment
+  assign hv_declared = variant.metafields.custom.identifier_mode.value | default: ''
+  if hv_declared == ''
+    assign hv_declared = product.metafields.custom.identifier_mode.value | default: ''
   endif
-  if hv_declared == blank
+  if hv_declared == ''
     assign hv_declared = 'auto'
   endif
 

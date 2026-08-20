@@ -294,6 +294,22 @@ html:not(.js) .hv-sg__units {
 .hv-sg__scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+
+  /* A chart wider than the dialog is normal - a six-column chart will never
+     fit a 320px phone - but at 320px the last column was being cut with no
+     sign that there was more to see. These four layers are the standard
+     scroll-shadow trick: the two opaque covers scroll with the content
+     (background-attachment: local) and the two shadows do not, so a shadow is
+     visible only while there is more table in that direction. No JS, and it
+     disappears by itself on a chart that fits. */
+  background:
+    linear-gradient(to right, var(--hv-paper) 40%, rgba(255, 255, 255, 0)) left center,
+    linear-gradient(to left, var(--hv-paper) 40%, rgba(255, 255, 255, 0)) right center,
+    linear-gradient(to right, rgba(17, 17, 17, 0.16), rgba(17, 17, 17, 0)) left center,
+    linear-gradient(to left, rgba(17, 17, 17, 0.16), rgba(17, 17, 17, 0)) right center;
+  background-repeat: no-repeat;
+  background-size: 32px 100%, 32px 100%, 10px 100%, 10px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .hv-sg__scroll:focus-visible {

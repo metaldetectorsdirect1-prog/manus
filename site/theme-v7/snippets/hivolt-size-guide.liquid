@@ -160,16 +160,29 @@
         </table>
       </div>
 
-      {%- if hv_chart.note.value != blank -%}
-        <p class="hv-sg__note">{{ hv_chart.note.value | newline_to_br }}</p>
+      {%- comment -%}
+        An unset note must produce no paragraph at all. Reading through default
+        makes that true regardless of how the engine compares nil to blank.
+        Escaped before newline_to_br so the line breaks survive but the note's
+        own text cannot introduce markup.
+      {%- endcomment -%}
+      {%- assign hv_note = hv_chart.note.value | default: '' -%}
+      {%- if hv_note != '' -%}
+        <p class="hv-sg__note">{{ hv_note | escape | newline_to_br }}</p>
       {%- endif -%}
 
-      {%- if product.metafields.spec.model_height_cm.value and product.metafields.spec.model_wears_size.value != blank -%}
-        {%- assign hv_model_cm = product.metafields.spec.model_height_cm.value -%}
-        {%- assign hv_model_ft = hv_model_cm | divided_by: 2.54 -%}
+      {%- comment -%}
+        Height without a size, or a size without a height, says nothing useful:
+        the sentence would read "and wears size ." Both are resolved first and
+        both must be present.
+      {%- endcomment -%}
+      {%- assign hv_model_cm = product.metafields.spec.model_height_cm.value | default: '' -%}
+      {%- assign hv_model_size = product.metafields.spec.model_wears_size.value | default: '' -%}
+      {%- if hv_model_cm != '' and hv_model_size != '' -%}
+        {%- assign hv_model_in = hv_model_cm | divided_by: 2.54 -%}
         <p class="hv-sg__model">
-          Model is <span data-unit-cm>{{ hv_model_cm }} cm</span><span data-unit-in>{{ hv_model_ft | round: 1 }} in</span>
-          and wears size {{ product.metafields.spec.model_wears_size.value | escape }}.
+          Model is <span data-unit-cm>{{ hv_model_cm }} cm</span><span data-unit-in>{{ hv_model_in | round: 1 }} in</span>
+          and wears size {{ hv_model_size | escape }}.
         </p>
       {%- endif -%}
     </div>

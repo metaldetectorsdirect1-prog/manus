@@ -79,11 +79,11 @@
               {%- if hv_value.swatch.image %}background-image: url({{ hv_value.swatch.image | image_url: width: 96 }});{% endif -%}
             "></span>
           <span class="visually-hidden">
-            {{- hv_value }}{% unless hv_available %} &mdash; {{ hv_sold_out }}{% endunless -%}
+            {{- hv_value | escape }}{% unless hv_available %} &mdash; {{ hv_sold_out }}{% endunless -%}
           </span>
         {%- else -%}
           <span class="hv-swatch__text">
-            {{- hv_value -}}
+            {{- hv_value | escape -}}
           </span>
           {%- unless hv_available -%}
             <span class="visually-hidden">&mdash; {{ hv_sold_out }}</span>

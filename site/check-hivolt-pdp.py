@@ -1,420 +1,1150 @@
 #!/usr/bin/env python3
-"""Render the HIVOLT PDP snippets against mock data and assert what they emit.
+"""HIVOLT PDP release gate.
 
-parse-liquid.py proves the templates parse. This proves they behave: that the
-size guide disappears when there are no measurements, that a swatch with no
-colour data falls back to text instead of guessing a CSS colour, that the
-structured data is valid JSON and never carries a rating or an invented
-identifier, and that the unit conversion is right.
+Runs the real snippet files through a real Liquid engine against the QA
+fixtures in site/hivolt_pdp_fixtures.py and asserts what they emit.
 
-The storefront is not reachable from this environment, so this is where the
-behaviour gets checked before a human previews the theme.
+Three kinds of check live here and all three are release requirements:
+
+  positive    the component renders the data it was given, correctly
+  degradation missing data removes UI instead of producing a blank or a guess
+  negative    the output never contains a claim nobody has verified - no
+              rating, no review, no invented identifier, no unbacked shipping
+              or returns property
+
+The negative checks matter most. A structured-data document that gains an
+aggregateRating is a Google manual-action risk and a lie to the shopper, so
+those assertions are written to fail on the substring, not on a parsed
+property, and cannot be satisfied by a value that merely looks empty.
 
 Run:  python3 site/check-hivolt-pdp.py
+Exit: 0 when every check passes, 1 otherwise.
 """
 import json
 import pathlib
+import re
 import sys
-from collections.abc import Mapping
+from html.parser import HTMLParser
 
-from liquid import Environment
-from liquid import DictLoader
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
-SNIPPETS = pathlib.Path("site/theme-v7/snippets")
-
-
-# --------------------------------------------------------------------------
-# Shopify filters python-liquid does not ship. Deliberately thin: each one does
-# the least that lets the template under test run, so a passing assertion is
-# about our Liquid, not about a clever stub.
-# --------------------------------------------------------------------------
-def f_t(value, *a, **k):
-    return {"products.product.sold_out": "Sold out",
-            "products.general.size_chart": "Size chart",
-            "products.general.size_trigger": "size"}.get(str(value), str(value))
-
-
-def f_image_url(value, *a, **k):
-    return str(value)
-
-
-def f_handleize(value, *a, **k):
-    return str(value).lower().replace(" ", "-")
-
-
-def f_json(value, *a, **k):
-    return json.dumps(value)
-
-
-def f_money(value, *a, **k):
-    return f"${int(value) / 100:.2f}"
-
-
-class OptionValue(Mapping):
-    """Behaves like Shopify's product_option_value: a string with attributes."""
-
-    def __init__(self, name, available=True, selected=False, swatch=None):
-        self._d = {"name": name, "available": available, "selected": selected,
-                   "swatch": swatch or {}}
-
-    def __getitem__(self, k):
-        return self._d[k]
-
-    def __iter__(self):
-        return iter(self._d)
-
-    def __len__(self):
-        return len(self._d)
-
-    def __str__(self):
-        return self._d["name"]
-
-
-def make_env():
-    env = Environment(loader=DictLoader(
-        {p.stem: p.read_text() for p in SNIPPETS.glob("*.liquid")}))
-    for name, fn in (("t", f_t), ("image_url", f_image_url),
-                     ("handleize", f_handleize), ("json", f_json),
-                     ("money", f_money), ("img_url", f_image_url)):
-        env.filters[name] = fn
-    return env
-
-
-def mf(value):
-    """A metafield drop: the template always reads `.value`."""
-    return {"value": value}
-
-
-CHART_CM = {
-    "title": mf("Pique polo - unisex adult"),
-    "measurement_basis": mf("garment_flat"),
-    "source_unit": mf("cm"),
-    "columns": mf([{"key": "chest", "label": "Chest"},
-                   {"key": "length", "label": "Length"}]),
-    "rows": mf([{"size": "S", "values": {"chest": 51, "length": 70}},
-                {"size": "M", "values": {"chest": 54}},
-                {"size": "L", "values": {}}]),
-    "note": mf("Measured flat across the chest, one inch below the armhole."),
-    "source_reference": mf("supplier tech pack 2026-08"),
-}
-
-
-def product(**over):
-    base = {
-        "id": 999, "title": "HIVOLT Pique Polo", "handle": "hivolt-pique-polo",
-        "url": "/products/hivolt-pique-polo", "vendor": "HIVOLT",
-        "description": "A polo.", "images": [], "variants": [],
-        "has_only_default_variant": False, "empty?": False,
-        "selected_or_first_available_variant": None,
-        "metafields": {"spec": {}, "custom": {}},
-    }
-    base.update(over)
-    return base
-
-
-def variant(**over):
-    base = {"id": 111, "title": "Black / M", "sku": "", "barcode": None,
-            "price": 6900, "available": True, "options": ["Black", "M"],
-            "metafields": {"custom": {}, "mm-google-shopping": {}}}
-    base.update(over)
-    return base
-
+import hivolt_pdp_fixtures as fx          # noqa: E402
+import hivolt_pdp_render as R             # noqa: E402
+from hivolt_pdp_fixtures import OptionValue, mf, product, variant   # noqa: E402
 
 CASES = []
 
 
-def case(name):
+def case(group, name):
     def deco(fn):
-        CASES.append((name, fn))
+        CASES.append((group, name, fn))
         return fn
     return deco
 
 
-# --------------------------------------------------------------------------
-# T2 — size guide
-# --------------------------------------------------------------------------
-@case("size guide renders the table when real measurements exist")
+# ---------------------------------------------------------------------------
+# Small HTML utilities. These exist so structural defects fail as assertions
+# rather than as something a human has to spot in a screenshot.
+# ---------------------------------------------------------------------------
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link",
+        "meta", "param", "source", "track", "wbr"}
+INTERACTIVE = {"a", "button", "input", "select", "textarea", "details"}
+
+
+class _Scan(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.stack = []
+        self.errors = []
+        self.ids = []
+        self.nested_interactive = []
+        self.tags = []
+
+    def handle_starttag(self, tag, attrs):
+        d = dict(attrs)
+        self.tags.append((tag, d))
+        if "id" in d:
+            self.ids.append(d["id"])
+        if tag in INTERACTIVE and any(t in INTERACTIVE for t in self.stack):
+            self.nested_interactive.append((self.stack[-1], tag))
+        if tag not in VOID:
+            self.stack.append(tag)
+
+    def handle_endtag(self, tag):
+        if tag in VOID:
+            return
+        if not self.stack:
+            self.errors.append(f"</{tag}> with nothing open")
+        elif self.stack[-1] != tag:
+            self.errors.append(f"</{tag}> closes <{self.stack[-1]}>")
+            if tag in self.stack:
+                while self.stack and self.stack.pop() != tag:
+                    pass
+        else:
+            self.stack.pop()
+
+
+def scan(html):
+    s = _Scan()
+    s.feed(html)
+    s.close()
+    if s.stack:
+        s.errors.append(f"never closed: {s.stack}")
+    return s
+
+
+def attrs_of(html, tag_name):
+    return [d for t, d in scan(html).tags if t == tag_name]
+
+
+# CSS colour keywords a naive implementation might reach for by handleizing an
+# option name. None of these may ever appear in a style attribute.
+COLOUR_KEYWORDS = ("sea", "slate", "bone", "black", "navy", "volt", "teal",
+                   "ivory", "sand", "olive", "plum", "wheat")
+
+
+# ===========================================================================
+# T1 - specification table
+# ===========================================================================
+SPEC_LABELS = ["Composition", "Fabric weight", "Knit", "Fit", "Collar",
+               "Placket", "Sleeve", "Hem", "Finish", "Seams", "Opacity",
+               "Care", "Made in"]
+
+
+@case("T1 specs", "every populated spec row renders, in schema order")
 def _(env):
-    out = env.get_template("hivolt-size-guide").render(
-        product=product(metafields={"spec": {"size_chart": mf(CHART_CM)}}),
-        part="dialog")
-    assert "<dialog" in out and 'id="HvSizeGuide-999"' in out, out[:400]
-    assert "<th scope=\"row\">S</th>" in out
-    return out
+    html = R.spec_table(env, fx.golden_product())
+    labels = [d for t, d in [(t, d) for t, d in scan(html).tags] if t == "dt"]
+    dts = re.findall(r"<dt>(.*?)</dt>", html, re.S)
+    assert [d.strip() for d in dts] == SPEC_LABELS, dts
 
 
-@case("size guide converts cm to inches without changing what is stored")
+@case("T1 specs", "spec values render verbatim from the metafield")
 def _(env):
-    out = env.get_template("hivolt-size-guide").render(
-        product=product(metafields={"spec": {"size_chart": mf(CHART_CM)}}),
-        part="dialog")
-    # 51 cm / 2.54 = 20.07... -> 20.1
-    assert "<span data-unit-cm>51</span><span data-unit-in>20.1</span>" in out, \
-        "chest row did not convert as expected"
-    assert 'data-active-unit="cm"' in out
+    html = R.spec_table(env, fx.golden_product())
+    for expected in ("60% combed cotton / 40% recycled polyester", "Pique",
+                     "Regular", "Flatlock, 4-thread", "Portugal"):
+        assert expected in html, f"missing value: {expected}"
 
 
-@case("size guide omits a cell that was never measured")
+@case("T1 specs", "fabric weight is the only row that gains a unit")
 def _(env):
-    out = env.get_template("hivolt-size-guide").render(
-        product=product(metafields={"spec": {"size_chart": mf(CHART_CM)}}),
-        part="dialog")
-    assert out.count("hv-sg__absent") == 1, "size M is missing Length; expected one dash"
-    assert ">L<" not in out, "size L has no measurements at all and must be dropped"
+    html = R.spec_table(env, fx.golden_product())
+    assert "220 g/m&sup2;" in html
+    assert html.count("g/m&sup2;") == 1, "unit leaked onto another row"
 
 
-@case("size guide renders NOTHING when no chart is attached")
+@case("T1 specs", "no spec row is ever rendered empty")
 def _(env):
-    p = product()
+    for name, build in fx.SCENARIOS.items():
+        html = R.spec_table(env, build())
+        assert "<dd></dd>" not in html.replace("\n", "").replace(" ", ""), name
+        assert "<dt></dt>" not in html, name
+
+
+@case("T1 specs", "one missing field removes exactly one row")
+def _(env):
+    p = fx.golden_product()
+    del p["metafields"]["spec"]["collar"]
+    html = R.spec_table(env, p)
+    dts = [d.strip() for d in re.findall(r"<dt>(.*?)</dt>", html, re.S)]
+    assert "Collar" not in dts and len(dts) == len(SPEC_LABELS) - 1, dts
+
+
+@case("T1 specs", "several missing fields leave the rest intact and in order")
+def _(env):
+    p = fx.golden_product()
+    for k in ("collar", "placket", "hem", "opacity", "origin"):
+        del p["metafields"]["spec"][k]
+    dts = [d.strip() for d in re.findall(r"<dt>(.*?)</dt>", R.spec_table(env, p), re.S)]
+    assert dts == ["Composition", "Fabric weight", "Knit", "Fit", "Sleeve",
+                   "Finish", "Seams", "Care"], dts
+
+
+@case("T1 specs", "scenario B: no spec data removes the whole block")
+def _(env):
+    html = R.spec_table(env, fx.scenario_b_no_specs())
+    assert html.strip() == "", html[:200]
+
+
+@case("T1 specs", "benefits render as a list, and vanish when absent")
+def _(env):
+    html = R.spec_table(env, fx.golden_product())
+    lis = re.findall(r"<li>(.*?)</li>", html, re.S)
+    assert len(lis) == 3 and "220 g/m2 pique" in lis[0], lis
+    p = fx.golden_product()
+    del p["metafields"]["spec"]["benefits"]
+    assert "hv-spec__benefits" not in R.spec_table(env, p)
+
+
+@case("T1 specs", "model line needs both height and size, or it does not render")
+def _(env):
+    assert "Model is 186 cm and wears size M." in R.spec_table(env, fx.golden_product())
+    for drop in ("model_height_cm", "model_wears_size"):
+        p = fx.golden_product()
+        del p["metafields"]["spec"][drop]
+        assert "hv-spec__model" not in R.spec_table(env, p), f"rendered without {drop}"
+
+
+@case("T1 specs", "spec values are HTML-escaped")
+def _(env):
+    p = fx.golden_product()
+    p["metafields"]["spec"]["fit"] = mf('Regular <script>alert(1)</script>')
+    html = R.spec_table(env, p)
+    assert "<script>" not in html and "&lt;script&gt;" in html
+
+
+# ===========================================================================
+# T2 - size guide
+# ===========================================================================
+@case("T2 size guide", "a real chart produces a trigger")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "trigger")
+    btn = attrs_of(html, "button")
+    assert btn and btn[0]["data-hv-sg-open"].startswith("HvSizeGuide-"), html[:200]
+    assert btn[0]["aria-haspopup"] == "dialog"
+
+
+@case("T2 size guide", "scenario C: no chart means no trigger and no dialog")
+def _(env):
+    p = fx.scenario_c_specs_no_chart()
     for part in ("trigger", "dialog"):
-        out = env.get_template("hivolt-size-guide").render(product=p, part=part)
-        assert out.strip() == "", f"{part} emitted {out!r} with no chart"
+        assert R.size_guide(env, p, part).strip() == "", part
 
 
-@case("size guide renders NOTHING when the chart has no real values")
+@case("T2 size guide", "a chart with no measured cell renders nothing")
 def _(env):
-    empty = dict(CHART_CM)
-    empty["rows"] = mf([{"size": "S", "values": {}}])
-    p = product(metafields={"spec": {"size_chart": mf(empty)}})
+    p = fx.golden_product()
+    chart = dict(fx.GOLDEN_CHART)
+    chart["rows"] = mf([{"size": "S", "values": {}}, {"size": "M", "values": {}}])
+    p["metafields"]["spec"]["size_chart"] = mf(chart)
     for part in ("trigger", "dialog"):
-        out = env.get_template("hivolt-size-guide").render(product=p, part=part)
-        assert out.strip() == "", f"{part} emitted {out!r} for an empty chart"
+        assert R.size_guide(env, p, part).strip() == "", part
 
 
-# --------------------------------------------------------------------------
-# T3 — swatches
-# --------------------------------------------------------------------------
-def render_swatches(env, values):
-    return env.get_template("hivolt-swatches").render(
-        product=product(), option={"name": "Color", "values": values},
-        option_index=1, section_id="main", form_id="f", block={"settings": {}})
-
-
-@case("swatch with real colour data renders a chip")
+@case("T2 size guide", "trigger and dialog agree on the same id")
 def _(env):
-    out = render_swatches(env, [
-        OptionValue("Black", swatch={"color": "#111111"}, selected=True),
-        OptionValue("Bone", swatch={"color": "#e8e4dc"})])
-    assert "background-color: #111111;" in out
-    assert "hv-swatches--text" not in out
-    assert out.count("hv-swatch__chip") == 2
+    p = fx.golden_product()
+    target = attrs_of(R.size_guide(env, p, "trigger"), "button")[0]["data-hv-sg-open"]
+    dlg = attrs_of(R.size_guide(env, p, "dialog"), "dialog")[0]
+    assert dlg["id"] == target
+    assert dlg["aria-labelledby"] == f"{target}-title"
 
 
-@case("swatch with NO colour data falls back to text, never a guessed colour")
+@case("T2 size guide", "a uid keeps two instances on one page distinct")
 def _(env):
-    out = render_swatches(env, [OptionValue("Deep Sea"), OptionValue("Bone")])
-    assert "hv-swatches--text" in out
-    assert "background-color" not in out, "a colour was invented from the name"
-    assert "hv-swatch__text" in out and "Deep Sea" in out
+    p = fx.golden_product()
+    a = attrs_of(R.size_guide(env, p, "dialog", uid="a"), "dialog")[0]["id"]
+    b = attrs_of(R.size_guide(env, p, "dialog", uid="b"), "dialog")[0]["id"]
+    assert a != b, "uid did not disambiguate"
 
 
-@case("sold-out swatch is marked in class and in the accessible name")
+@case("T2 size guide", "table headers follow the chart's own column order")
 def _(env):
-    out = render_swatches(env, [
-        OptionValue("Black", swatch={"color": "#111111"}),
-        OptionValue("Bone", available=False, swatch={"color": "#e8e4dc"})])
-    assert out.count("hv-swatch__label--out") == 1
-    assert "Sold out" in out, "sold-out state is not in the accessible name"
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    ths = [t.strip() for t in re.findall(r'<th scope="col">(.*?)</th>', html, re.S)]
+    assert ths == ["Size", "Chest", "Length", "Sleeve"], ths
 
 
-@case("swatch keeps the theme's variant JS hooks intact")
+@case("T2 size guide", "rows render in the stored unit")
 def _(env):
-    out = render_swatches(env, [OptionValue("Black", swatch={"color": "#111"})])
-    for hook in ('data-variant-input', 'data-index="option1"', 'name="Color"',
-                 'class="variant-input-wrap', 'value="Black"'):
-        assert hook in out, f"missing theme hook: {hook}"
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    assert "<span data-unit-cm>51</span>" in html
+    assert 'data-active-unit="cm"' in html
 
 
-# --------------------------------------------------------------------------
-# G7 — identifier resolution
-# --------------------------------------------------------------------------
+@case("T2 size guide", "51 cm converts to 20.1 in")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    assert "<span data-unit-cm>51</span><span data-unit-in>20.1</span>" in html
+
+
+@case("T2 size guide", "a decimal centimetre survives and converts")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    # 57.5 cm / 2.54 = 22.637... -> 22.6
+    assert "<span data-unit-cm>57.5</span><span data-unit-in>22.6</span>" in html
+
+
+@case("T2 size guide", "a chart stored in inches is not converted twice")
+def _(env):
+    p = fx.golden_product()
+    chart = dict(fx.GOLDEN_CHART)
+    chart["source_unit"] = mf("in")
+    chart["rows"] = mf([{"size": "M", "values": {"chest": 20}}])
+    chart["columns"] = mf([{"key": "chest", "label": "Chest"}])
+    p["metafields"]["spec"]["size_chart"] = mf(chart)
+    html = R.size_guide(env, p, "dialog")
+    assert 'data-active-unit="in"' in html
+    assert "<span data-unit-in>20</span>" in html
+    assert "<span data-unit-cm>50.8</span>" in html
+
+
+@case("T2 size guide", "an unmeasured cell is a dash plus real hidden text")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    assert html.count("hv-sg__absent") == 1, "expected exactly one unmeasured cell"
+    assert 'aria-hidden="true"' in html and "Not measured" in html
+
+
+@case("T2 size guide", "a size with no measurements at all is dropped")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    assert ">3XL<" not in html, "an entirely unmeasured size was rendered"
+    rows = re.findall(r'<th scope="row">(.*?)</th>', html, re.S)
+    assert [r.strip() for r in rows] == ["S", "M", "L", "XL", "2XL"], rows
+
+
+@case("T2 size guide", "measurement basis changes the copy")
+def _(env):
+    p = fx.golden_product()
+    flat = R.size_guide(env, p, "dialog")
+    assert "Garment measured flat" in flat and "not body measurements" in flat
+    chart = dict(fx.GOLDEN_CHART)
+    chart["measurement_basis"] = mf("body")
+    p["metafields"]["spec"]["size_chart"] = mf(chart)
+    body = R.size_guide(env, p, "dialog")
+    assert "Body measurements" in body and "Garment measured flat" not in body
+
+
+@case("T2 size guide", "the retracted 'doubled where the column says so' copy stays gone")
+def _(env):
+    src = (R.SNIPPETS / "hivolt-size-guide.liquid").read_text()
+    assert "doubled where" not in src, "an unbacked measurement claim came back"
+
+
+@case("T2 size guide", "unit toggle offers both units and is a labelled radiogroup")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    grp = [d for d in attrs_of(html, "div") if d.get("role") == "radiogroup"]
+    assert grp and grp[0]["aria-label"] == "Measurement unit"
+    vals = [i["value"] for i in attrs_of(html, "input")]
+    assert vals == ["cm", "in"], vals
+    assert sum(1 for i in attrs_of(html, "input") if "checked" in i) == 1
+
+
+@case("T2 size guide", "the table is scrollable and reachable by keyboard")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    reg = [d for d in attrs_of(html, "div") if d.get("role") == "region"]
+    assert reg and reg[0]["tabindex"] == "0" and reg[0].get("aria-label")
+
+
+@case("T2 size guide", "chart note and model line render inside the dialog")
+def _(env):
+    html = R.size_guide(env, fx.golden_product(), "dialog")
+    assert "Measured flat across the chest" in html
+    assert "and wears size M" in html
+
+
+# ===========================================================================
+# T3 - swatches
+# ===========================================================================
+def _colour_option(p):
+    return p["options_with_values"][0]
+
+
+@case("T3 swatches", "a real swatch colour becomes a chip with that exact colour")
+def _(env):
+    html = R.swatches(env, fx.golden_product(), _colour_option(fx.golden_product()))
+    assert "background-color: #0f0f0f;" in html
+    assert "background-color: #e8e4dc;" in html
+
+
+@case("T3 swatches", "a swatch image becomes a background image")
+def _(env):
+    html = R.swatches(env, fx.golden_product(), _colour_option(fx.golden_product()))
+    assert "background-image: url(/qa-fixture/volt-swatch.png)" in html
+
+
+@case("T3 swatches", "a value with no swatch data becomes a text button")
+def _(env):
+    html = R.swatches(env, fx.golden_product(), _colour_option(fx.golden_product()))
+    assert "hv-swatch__text" in html and "Deep Sea" in html
+
+
+@case("T3 swatches", "no CSS colour is ever inferred from a value's name")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    styles = " ".join(d.get("style", "") for _, d in scan(html).tags).lower()
+    for kw in COLOUR_KEYWORDS:
+        assert f"background-color: {kw}" not in styles, f"guessed colour: {kw}"
+    # Only the two declared hex values and one image may appear.
+    assert styles.count("background-color:") == 2, styles
+
+
+@case("T3 swatches", "scenario D: with no swatch data anywhere the group is text")
+def _(env):
+    p = fx.scenario_d_no_swatches()
+    html = R.swatches(env, p, _colour_option(p))
+    assert "hv-swatches--text" in html
+    assert "background-color" not in html and "background-image" not in html
+    assert html.count("hv-swatch__text") == 5
+
+
+@case("T3 swatches", "chips and text buttons coexist in a mixed group")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    assert "hv-swatches--text" not in html, "mixed group wrongly marked all-text"
+    assert html.count("hv-swatch__chip") == 3
+    assert html.count("hv-swatch__text") == 2
+
+
+@case("T3 swatches", "sold-out marks exactly the unavailable value")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    assert html.count("hv-swatch__label--out") == 1
+    outs = [d for _, d in scan(html).tags if d.get("data-available") == "false"]
+    assert len(outs) == 1 and outs[0]["data-value"] == "Slate", outs
+
+
+@case("T3 swatches", "sold-out state is in the accessible name, not only the colour")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    labels = re.findall(r"<label[^>]*>(.*?)</label>", html, re.S)
+    slate = [l for l in labels if "Slate" in l]
+    assert slate and "Sold out" in slate[0], slate
+
+
+@case("T3 swatches", "available values carry no sold-out wording")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    assert html.count("Sold out") == 1
+
+
+@case("T3 swatches", "exactly one input is checked")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    assert sum(1 for d in attrs_of(html, "input") if "checked" in d) == 1
+
+
+@case("T3 swatches", "the theme's variant JS hooks survive")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    fs = attrs_of(html, "fieldset")[0]
+    assert fs["name"] == "Color" and fs["data-index"] == "option1"
+    assert "variant-input-wrap" in fs["class"]
+    for inp in attrs_of(html, "input"):
+        assert inp["data-variant-input"] is None or inp["data-variant-input"] == ""
+        assert inp["data-index"] == "option1"
+        assert inp["name"] == "Color"
+        assert inp["form"] == "f"
+        assert inp["value"]
+
+
+@case("T3 swatches", "every label points at an input that exists, and ids are unique")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    ids = [d["id"] for d in attrs_of(html, "input")]
+    fors = [d["for"] for d in attrs_of(html, "label")]
+    assert len(ids) == len(set(ids)), ids
+    assert set(fors) == set(ids), (fors, ids)
+
+
+@case("T3 swatches", "a value containing spaces produces a usable id")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, _colour_option(p))
+    ids = [d["id"] for d in attrs_of(html, "input")]
+    assert any("Deep%20Sea" in i or "Deep+Sea" in i or "Deep-Sea" in i for i in ids), ids
+    assert all(" " not in i for i in ids), ids
+
+
+@case("T3 swatches", "the size axis renders as text buttons with its own hooks")
+def _(env):
+    p = fx.golden_product()
+    html = R.swatches(env, p, p["options_with_values"][1], option_index=2)
+    fs = attrs_of(html, "fieldset")[0]
+    assert fs["name"] == "Size" and fs["data-index"] == "option2"
+    assert "hv-swatches--text" in fs["class"]
+    assert html.count("hv-swatch__label--out") == 1        # 2XL
+
+
+@case("T3 swatches", "option values are HTML-escaped in value and data attributes")
+def _(env):
+    p = fx.golden_product()
+    opt = {"name": "Color",
+           "values": [OptionValue('Bl"ack<script>', swatch={"color": "#000000"})],
+           "selected_value": "x"}
+    html = R.swatches(env, p, opt)
+    assert "<script>" not in html
+
+
+# ===========================================================================
+# G6 - feed title
+# ===========================================================================
+@case("G6 feed title", "a populated feed title is used")
+def _(env):
+    p = fx.golden_product()
+    assert R.feed_title(env, p) == f"{fx.QA_MARKER} Pique Polo Shirt - Men's Short Sleeve"
+    assert R.feed_title(env, p, fmt="source") == "metafield"
+
+
+@case("G6 feed title", "scenario H: a blank feed title falls back to the storefront title")
+def _(env):
+    p = fx.scenario_h_blank_feed_title()
+    assert R.feed_title(env, p) == p["title"]
+    assert R.feed_title(env, p, fmt="source") == "fallback"
+
+
+@case("G6 feed title", "an absent metafield falls back too")
+def _(env):
+    p = fx.scenario_i_single_variant()
+    assert R.feed_title(env, p) == p["title"]
+    assert R.feed_title(env, p, fmt="source") == "fallback"
+
+
+@case("G6 feed title", "variant options are appended for an item-level row")
+def _(env):
+    p = fx.golden_product()
+    v = p["variants"][0]
+    assert R.feed_title(env, p, variant=v).endswith(" - Black - S"), R.feed_title(env, p, variant=v)
+
+
+@case("G6 feed title", "a single-variant product does not append 'Default Title'")
+def _(env):
+    p = fx.scenario_i_single_variant()
+    assert R.feed_title(env, p, variant=p["variants"][0]) == p["title"]
+
+
+@case("G6 feed title", "the feed title is truncated to Merchant Center's 150 characters")
+def _(env):
+    p = fx.golden_product()
+    p["metafields"]["custom"]["feed_title"] = mf("W" * 200)
+    assert len(R.feed_title(env, p)) == 150
+
+
+@case("G6 feed title", "structured data uses the storefront title, never the feed title")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    node = R.graph_node(data, "Product")
+    assert node["name"] == p["title"]
+    assert "Men's Short Sleeve" not in node["name"], "feed title leaked into markup"
+
+
+# ===========================================================================
+# G7 - identifiers
+# ===========================================================================
 def mode(env, p, v):
-    return env.get_template("hivolt-identifier").render(
-        product=p, variant=v, format="mode").strip()
+    return R.identifier(env, p, v, "mode").strip()
 
 
-@case("identifier: a real 13-digit barcode resolves to gtin")
+def feed(env, p, v):
+    return R.identifier(env, p, v, "feed")
+
+
+@case("G7 identifiers", "a 13-digit barcode resolves to gtin")
 def _(env):
-    assert mode(env, product(), variant(barcode="4006381333931")) == "gtin"
+    assert mode(env, product(), variant(barcode=fx.FIXTURE_GTIN13)) == "gtin"
 
 
-@case("identifier: a non-numeric barcode is not a GTIN")
+@case("G7 identifiers", "a 12-digit barcode resolves to gtin")
 def _(env):
-    assert mode(env, product(), variant(barcode="HV-POLO-BLK-M")) == "none"
+    assert mode(env, product(), variant(barcode=fx.FIXTURE_GTIN12)) == "gtin"
 
 
-@case("identifier: a 7-digit barcode is not a valid GTIN length")
+@case("G7 identifiers", "an 8-digit and a 14-digit barcode also resolve to gtin")
 def _(env):
-    assert mode(env, product(), variant(barcode="1234567")) == "none"
+    assert mode(env, product(), variant(barcode="12345670")) == "gtin"
+    assert mode(env, product(), variant(barcode="12345678901231")) == "gtin"
 
 
-@case("identifier: brand + MPN resolves to brand_mpn when there is no barcode")
+@case("G7 identifiers", "a non-numeric barcode is not a GTIN")
 def _(env):
-    p = product(metafields={"spec": {}, "custom": {"mpn": mf("PQ-220-BLK")}})
+    assert mode(env, product(), variant(barcode="QA-PQ-BLK-M")) == "none"
+
+
+@case("G7 identifiers", "a barcode of the wrong length is not a GTIN")
+def _(env):
+    for bad in ("1234567", "123456789", "123456789012345"):
+        assert mode(env, product(), variant(barcode=bad)) == "none", bad
+
+
+@case("G7 identifiers", "a barcode with embedded punctuation is not a GTIN")
+def _(env):
+    assert mode(env, product(), variant(barcode="4006381-33393")) == "none"
+
+
+@case("G7 identifiers", "brand plus a product-level MPN resolves to brand_mpn")
+def _(env):
+    p = product(metafields={"spec": {}, "custom": {"mpn": mf("QA-MPN-001")}})
     assert mode(env, p, variant()) == "brand_mpn"
 
 
-@case("identifier: nothing real means none, so the feed sends identifier_exists=no")
+@case("G7 identifiers", "a variant MPN overrides the product default")
 def _(env):
-    p = product()
+    p = product(metafields={"spec": {}, "custom": {"mpn": mf("PRODUCT-LEVEL")}})
+    v = variant(metafields={"custom": {}, "mm-google-shopping": {"mpn": mf("VARIANT-LEVEL")}})
+    out = feed(env, p, v)
+    assert "mpn=VARIANT-LEVEL" in out and "PRODUCT-LEVEL" not in out, out
+
+
+@case("G7 identifiers", "scenario F: declared gtin with no barcode falls through to none")
+def _(env):
+    p = fx.scenario_f_declared_gtin_no_barcode()
+    for v in p["variants"]:
+        assert mode(env, p, v) == "none", v["title"]
+
+
+@case("G7 identifiers", "declared brand_mpn with no MPN falls through to none")
+def _(env):
+    p = product(metafields={"spec": {}, "custom": {"identifier_mode": mf("brand_mpn")}})
     assert mode(env, p, variant()) == "none"
-    feed = env.get_template("hivolt-identifier").render(
-        product=p, variant=variant(), format="feed")
-    assert "identifier_exists=no" in feed
-    assert "gtin=" not in feed and "mpn=" not in feed
 
 
-@case("identifier: declaring gtin without a barcode falls through, it does not fake one")
+@case("G7 identifiers", "declaring none suppresses a real barcode")
 def _(env):
-    p = product(metafields={"spec": {}, "custom": {"identifier_mode": mf("gtin")}})
-    v = variant()
-    assert mode(env, p, v) == "none"
-    assert "111" not in env.get_template("hivolt-identifier").render(
-        product=p, variant=v, format="feed"), "variant id leaked as an identifier"
+    p = product(metafields={"spec": {}, "custom": {"identifier_mode": mf("none")}})
+    assert mode(env, p, variant(barcode=fx.FIXTURE_GTIN13)) == "none"
 
 
-@case("identifier: a variant override beats the product default")
+@case("G7 identifiers", "a variant override beats the product default in both directions")
 def _(env):
     p = product(metafields={"spec": {}, "custom": {"identifier_mode": mf("auto"),
-                                                   "mpn": mf("PQ-220")}})
-    v = variant(metafields={"custom": {"identifier_mode": mf("none")},
-                            "mm-google-shopping": {}})
-    assert mode(env, p, v) == "none"
+                                                   "mpn": mf("QA-MPN-001")}})
+    inherit = variant()
+    override = variant(metafields={"custom": {"identifier_mode": mf("none")},
+                                   "mm-google-shopping": {}})
+    assert mode(env, p, inherit) == "brand_mpn"
+    assert mode(env, p, override) == "none"
 
 
-# --------------------------------------------------------------------------
-# G6 — feed title
-# --------------------------------------------------------------------------
-@case("feed title falls back to the storefront title when unset")
+@case("G7 identifiers", "scenario G: nothing verified means identifier_exists=no")
 def _(env):
-    tpl = env.get_template("hivolt-feed-title")
+    p = fx.scenario_g_no_identifier()
+    for v in p["variants"]:
+        out = feed(env, p, v)
+        assert "identifier_exists=no" in out, v["title"]
+        assert "gtin=" not in out and "mpn=" not in out, out
+
+
+@case("G7 identifiers", "a resolved gtin is reported to the feed with identifier_exists=yes")
+def _(env):
+    out = feed(env, product(), variant(barcode=fx.FIXTURE_GTIN13))
+    assert f"gtin={fx.FIXTURE_GTIN13}" in out and "identifier_exists=yes" in out
+
+
+@case("G7 identifiers", "brand and mpn are both sent in brand_mpn mode")
+def _(env):
+    p = product(metafields={"spec": {}, "custom": {"mpn": mf("QA-MPN-001")}})
+    out = feed(env, p, variant())
+    assert "brand=HIVOLT" in out and "mpn=QA-MPN-001" in out and "identifier_exists=yes" in out
+
+
+@case("G7 identifiers", "a Shopify variant id is never emitted as an identifier")
+def _(env):
+    p = fx.golden_product()
+    for v in p["variants"]:
+        out = feed(env, p, v)
+        for line in out.splitlines():
+            line = line.strip()
+            if line.startswith(("gtin=", "mpn=")):
+                assert str(v["id"]) not in line, f"variant id leaked: {line}"
+
+
+@case("G7 identifiers", "a HIVOLT SKU is never promoted to MPN automatically")
+def _(env):
+    v = variant(sku="QA-PQ-BLK-M")
     p = product()
-    assert tpl.render(product=p, format="plain").strip() == "HIVOLT Pique Polo"
-    assert tpl.render(product=p, format="source").strip() == "fallback"
+    assert mode(env, p, v) == "none"
+    assert "QA-PQ-BLK-M" not in feed(env, p, v)
 
 
-@case("feed title uses the metafield and appends variant options")
+@case("G7 identifiers", "an empty-string MPN is not an identifier")
 def _(env):
-    p = product(metafields={"spec": {},
-                            "custom": {"feed_title": mf("HIVOLT Pique Polo Shirt - Men's")}})
-    out = env.get_template("hivolt-feed-title").render(
-        product=p, variant=variant(), format="plain").strip()
-    assert out == "HIVOLT Pique Polo Shirt - Men's - Black - M", out
+    p = product(metafields={"spec": {}, "custom": {"mpn": mf("   ")}})
+    assert mode(env, p, variant()) == "none"
 
 
-# --------------------------------------------------------------------------
-# T1 — spec table
-# --------------------------------------------------------------------------
-@case("spec table renders NOTHING when no spec is filled in")
+@case("G7 identifiers", "a blank vendor blocks brand_mpn even with a real MPN")
 def _(env):
-    out = env.get_template("hivolt-spec-table").render(product=product())
-    assert out.strip() == "", out[:200]
+    p = product(vendor="", metafields={"spec": {}, "custom": {"mpn": mf("QA-MPN-001")}})
+    assert mode(env, p, variant()) == "none"
 
 
-@case("spec table renders only the rows that have values")
+# ===========================================================================
+# G8 - structured data
+# ===========================================================================
+FORBIDDEN = ("aggregateRating", "AggregateRating", "ratingValue", "reviewCount",
+             '"review"', '"Review"', "priceValidUntil", "shippingDetails",
+             "hasMerchantReturnPolicy", "OfferShippingDetails",
+             "MerchantReturnPolicy")
+
+
+@case("G8 structured data", "the golden product emits valid JSON")
 def _(env):
-    p = product(metafields={"spec": {"composition": mf("100% cotton"),
-                                     "gsm": mf(220)}})
-    out = env.get_template("hivolt-spec-table").render(product=p)
-    assert "Composition" in out and "100% cotton" in out
-    assert "220 g/m" in out
-    for absent in ("Collar", "Placket", "Hem", "Made in"):
-        assert absent not in out, f"{absent} rendered with no value"
+    _, data = R.structured_data(env, product=fx.golden_product())
+    assert data["@context"] == "https://schema.org"
+    assert [n["@type"] for n in data["@graph"]] == \
+        ["Organization", "WebSite", "BreadcrumbList", "Product"]
 
 
-# --------------------------------------------------------------------------
-# G8 — structured data
-# --------------------------------------------------------------------------
-def render_ld(env, **ctx):
-    base = {"request": {"page_type": "product"}, "shop": {"url": "https://hivolt-usa.com",
-            "name": "HIVOLT", "currency": "USD"},
-            "cart": {"currency": {"iso_code": "USD"}},
-            "settings": {"favicon": None, "social_facebook_link": "https://facebook.com/hivolt",
-                         "social_instagram_link": "", "social_youtube_link": "",
-                         "social_tiktok_link": "", "social_pinterest_link": ""},
-            "template": {"suffix": ""}, "canonical_url": "https://hivolt-usa.com/products/x",
-            "collection": {}, "page": {}, "blog": {}, "article": {}}
-    base.update(ctx)
-    out = env.get_template("hivolt-structured-data").render(**base)
-    body = out.split(">", 1)[1].rsplit("</script>", 1)[0]
-    return out, json.loads(body)
-
-
-@case("structured data is valid JSON on a product page")
+@case("G8 structured data", "Organization carries name and url")
 def _(env):
-    v = variant(sku="HV-PQ-BLK-M")
-    p = product(variants=[v], selected_or_first_available_variant=v)
-    _, data = render_ld(env, product=p)
-    types = [n["@type"] for n in data["@graph"]]
-    assert types == ["Organization", "WebSite", "BreadcrumbList", "Product"], types
+    _, data = R.structured_data(env, product=fx.golden_product())
+    org = R.graph_node(data, "Organization")
+    assert org["name"] == "HIVOLT" and org["url"] == R.SHOP_URL
+    assert org["@id"].endswith("#organization")
 
 
-@case("structured data never emits a rating or a review")
+@case("G8 structured data", "Organization sameAs carries only non-blank socials")
 def _(env):
-    v = variant()
-    p = product(variants=[v], selected_or_first_available_variant=v)
-    raw, _ = render_ld(env, product=p)
-    for banned in ("aggregateRating", "AggregateRating", "\"review\"", "Review"):
-        assert banned not in raw, f"{banned} appeared in structured data"
+    _, data = R.structured_data(env, product=fx.golden_product())
+    assert R.graph_node(data, "Organization")["sameAs"] == ["https://facebook.com/hivolt"]
 
 
-@case("structured data omits gtin and mpn when there is no real identifier")
+@case("G8 structured data", "Organization omits logo unless the favicon is big enough")
 def _(env):
-    v = variant()
-    p = product(variants=[v], selected_or_first_available_variant=v)
-    raw, data = render_ld(env, product=p)
+    _, no_logo = R.structured_data(env, product=fx.golden_product())
+    assert "logo" not in R.graph_node(no_logo, "Organization")
+    _, with_logo = R.structured_data(
+        env, product=fx.golden_product(),
+        settings={**R.ld_context()["settings"],
+                  "favicon": {"width": 512, "src": "/qa-fixture/logo.png"}})
+    assert R.graph_node(with_logo, "Organization")["logo"].startswith("https:")
+
+
+@case("G8 structured data", "WebSite publishes through the Organization node")
+def _(env):
+    _, data = R.structured_data(env, product=fx.golden_product())
+    site, org = R.graph_node(data, "WebSite"), R.graph_node(data, "Organization")
+    assert site["publisher"]["@id"] == org["@id"]
+
+
+@case("G8 structured data", "BreadcrumbList positions run 1..n without gaps")
+def _(env):
+    _, data = R.structured_data(env, product=fx.golden_product())
+    items = R.graph_node(data, "BreadcrumbList")["itemListElement"]
+    assert [i["position"] for i in items] == list(range(1, len(items) + 1))
+    assert items[0]["name"] == "Home" and items[-1]["name"] == fx.golden_product()["title"]
+
+
+@case("G8 structured data", "a collection in context adds a breadcrumb step")
+def _(env):
+    _, data = R.structured_data(
+        env, product=fx.golden_product(),
+        collection={"handle": "polos", "title": "Polos", "url": "/collections/polos"})
+    items = R.graph_node(data, "BreadcrumbList")["itemListElement"]
+    assert [i["name"] for i in items] == ["Home", "Polos", fx.golden_product()["title"]]
+    assert items[1]["item"] == f"{R.SHOP_URL}/collections/polos"
+
+
+@case("G8 structured data", "Product name matches the storefront title exactly")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    assert R.graph_node(data, "Product")["name"] == p["title"]
+
+
+@case("G8 structured data", "the offer count equals the variant count")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    assert len(R.graph_node(data, "Product")["offers"]) == len(p["variants"]) == 25
+
+
+@case("G8 structured data", "each offer's price comes from its own variant")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    offers = R.graph_node(data, "Product")["offers"]
+    by_id = {o["@id"].rsplit("=", 1)[1]: o for o in offers}
+    for v in p["variants"]:
+        assert by_id[str(v["id"])]["price"] == v["price"] / 100.0, v["title"]
+    assert sorted({o["price"] for o in offers}) == [69.0, 74.0]
+
+
+@case("G8 structured data", "every offer carries the presentment currency")
+def _(env):
+    _, data = R.structured_data(env, product=fx.golden_product())
+    assert {o["priceCurrency"] for o in R.graph_node(data, "Product")["offers"]} == {"USD"}
+
+
+@case("G8 structured data", "availability tracks each variant independently")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    offers = R.graph_node(data, "Product")["offers"]
+    by_id = {o["@id"].rsplit("=", 1)[1]: o for o in offers}
+    for v in p["variants"]:
+        want = "InStock" if v["available"] else "OutOfStock"
+        assert by_id[str(v["id"])]["availability"].endswith(want), v["title"]
+    kinds = [o["availability"] for o in offers]
+    assert any("InStock" in k for k in kinds) and any("OutOfStock" in k for k in kinds)
+
+
+@case("G8 structured data", "offer urls carry one variant param and no double query")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    for o in R.graph_node(data, "Product")["offers"]:
+        assert o["url"].count("?") == 1, o["url"]
+        assert o["url"].startswith(f"{R.SHOP_URL}{p['url']}?variant="), o["url"]
+
+
+@case("G8 structured data", "the product url is query-free even when reached with tracking")
+def _(env):
+    p = fx.golden_product()
+    p["url"] = "/products/qa-fixture-pique-polo?_pos=3&_sid=abc&_ss=r"
+    _, data = R.structured_data(env, product=p)
+    assert R.graph_node(data, "Product")["url"] == \
+        f"{R.SHOP_URL}/products/qa-fixture-pique-polo"
+
+
+@case("G8 structured data", "gtin appears only on the offers that really have one")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    offers = R.graph_node(data, "Product")["offers"]
+    by_id = {o["@id"].rsplit("=", 1)[1]: o for o in offers}
+    for v in p["variants"]:
+        o = by_id[str(v["id"])]
+        if v["barcode"]:
+            assert o["gtin"] == v["barcode"], v["title"]
+            assert o[f"gtin{len(v['barcode'])}"] == v["barcode"]
+        else:
+            assert "gtin" not in o, f"{v['title']} invented a gtin"
+    assert sum(1 for o in offers if "gtin" in o) == 6      # 5 Black + Bone/L
+
+
+@case("G8 structured data", "mpn appears only where a real MPN is stored")
+def _(env):
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    offers = R.graph_node(data, "Product")["offers"]
+    by_id = {o["@id"].rsplit("=", 1)[1]: o for o in offers}
+    # Volt/M declares `none`, so it must carry no identifier at all.
+    volt_m = next(v for v in p["variants"] if v["title"] == "Volt / M")
+    assert "mpn" not in by_id[str(volt_m["id"])]
+    assert "gtin" not in by_id[str(volt_m["id"])]
+    # Bone (except L, which has a barcode) carries its own variant MPN.
+    bone_s = next(v for v in p["variants"] if v["title"] == "Bone / S")
+    assert by_id[str(bone_s["id"])]["mpn"] == "QA-MPN-BONE-001"
+
+
+@case("G8 structured data", "scenario G: no identifier means no gtin and no mpn anywhere")
+def _(env):
+    raw, data = R.structured_data(env, product=fx.scenario_g_no_identifier())
     assert "gtin" not in raw and "mpn" not in raw
-    offer = data["@graph"][3]["offers"][0]
-    assert offer["price"] == 69.0 and offer["priceCurrency"] == "USD"
+    for o in R.graph_node(data, "Product")["offers"]:
+        assert "gtin" not in o and "mpn" not in o
 
 
-@case("structured data emits gtin only for a real barcode")
+@case("G8 structured data", "NEGATIVE: no rating or review property, in any scenario")
 def _(env):
-    v = variant(barcode="4006381333931")
-    p = product(variants=[v], selected_or_first_available_variant=v)
-    _, data = render_ld(env, product=p)
-    offer = data["@graph"][3]["offers"][0]
-    assert offer["gtin"] == "4006381333931" and offer["gtin13"] == "4006381333931"
+    for name, build in fx.SCENARIOS.items():
+        raw, _ = R.structured_data(env, product=build())
+        low = raw.lower()
+        for banned in ("aggregaterating", "ratingvalue", "reviewcount", '"review"',
+                       '"@type": "review"'):
+            assert banned not in low, f"{name}: {banned} appeared"
 
 
-@case("offer availability follows the variant, not a default")
+@case("G8 structured data", "NEGATIVE: no unbacked commercial property, in any scenario")
 def _(env):
-    v1 = variant(id=1, available=True)
-    v2 = variant(id=2, available=False, title="Black / L")
-    p = product(variants=[v1, v2], selected_or_first_available_variant=v1)
-    _, data = render_ld(env, product=p)
-    got = [o["availability"] for o in data["@graph"][3]["offers"]]
-    assert got == ["https://schema.org/InStock", "https://schema.org/OutOfStock"], got
+    for name, build in fx.SCENARIOS.items():
+        raw, _ = R.structured_data(env, product=build())
+        for banned in FORBIDDEN:
+            assert banned not in raw, f"{name}: {banned} appeared"
 
 
-@case("no Product node on a GemPages template, to avoid two answers on one page")
+@case("G8 structured data", "NEGATIVE: no Shopify id is ever used as an identifier")
 def _(env):
-    v = variant()
-    p = product(variants=[v], selected_or_first_available_variant=v)
-    _, data = render_ld(env, product=p, template={"suffix": "gp-template-1-2"})
-    assert [n["@type"] for n in data["@graph"]][-1] != "Product"
+    p = fx.golden_product()
+    _, data = R.structured_data(env, product=p)
+    ids = {str(v["id"]) for v in p["variants"]} | {str(p["id"])}
+    for o in R.graph_node(data, "Product")["offers"]:
+        for key in ("gtin", "gtin8", "gtin12", "gtin13", "gtin14", "mpn", "sku"):
+            if key in o and key != "sku":
+                assert o[key] not in ids, f"{key} is a Shopify id"
 
 
-@case("home page still carries Organization and WebSite, and no breadcrumb")
+@case("G8 structured data", "scenario I: a single-variant product emits one plain offer")
 def _(env):
-    _, data = render_ld(env, request={"page_type": "index"}, product={})
+    p = fx.scenario_i_single_variant()
+    _, data = R.structured_data(env, product=p)
+    offers = R.graph_node(data, "Product")["offers"]
+    assert len(offers) == 1
+    assert "name" not in offers[0], "Default Title leaked into the offer name"
+    assert offers[0]["price"] == 49.0
+
+
+@case("G8 structured data", "scenario J: a bare product still emits valid, honest JSON")
+def _(env):
+    p = fx.scenario_j_bare_minimum()
+    raw, data = R.structured_data(env, product=p)
+    node = R.graph_node(data, "Product")
+    assert node["name"] == p["title"]
+    for absent in ("description", "image", "brand", "sku"):
+        assert absent not in node, f"{absent} emitted with nothing behind it"
+    assert node["offers"][0]["availability"].endswith("OutOfStock")
+
+
+@case("G8 structured data", "a GemPages template yields no second Product node")
+def _(env):
+    _, data = R.structured_data(env, product=fx.golden_product(),
+                                template={"suffix": "gp-template-1-2"})
+    assert R.graph_node(data, "Product") is None
+    assert [n["@type"] for n in data["@graph"]] == \
+        ["Organization", "WebSite", "BreadcrumbList"]
+
+
+@case("G8 structured data", "the home page carries Organization and WebSite only")
+def _(env):
+    _, data = R.structured_data(env, request={"page_type": "index"}, product={})
     assert [n["@type"] for n in data["@graph"]] == ["Organization", "WebSite"]
 
 
+@case("G8 structured data", "a page template gets a breadcrumb but no Product")
+def _(env):
+    _, data = R.structured_data(env, request={"page_type": "page"}, product={},
+                                page={"title": "Size guide"})
+    types = [n["@type"] for n in data["@graph"]]
+    assert types == ["Organization", "WebSite", "BreadcrumbList"]
+    assert R.graph_node(data, "BreadcrumbList")["itemListElement"][-1]["name"] == "Size guide"
+
+
+@case("G8 structured data", "the description is stripped of markup before it is emitted")
+def _(env):
+    p = fx.golden_product()
+    p["description"] = "<p>A polo <b>with</b> markup.</p>"
+    _, data = R.structured_data(env, product=p)
+    assert R.graph_node(data, "Product")["description"] == "A polo with markup."
+
+
+# ===========================================================================
+# Degradation - every scenario must render without crashing or lying
+# ===========================================================================
+@case("Degradation", "every scenario renders every component without raising")
+def _(env):
+    for name, build in fx.SCENARIOS.items():
+        p = build()
+        R.spec_table(env, p)
+        R.size_guide(env, p, "trigger")
+        R.size_guide(env, p, "dialog")
+        R.feed_title(env, p)
+        for opt_i, opt in enumerate(p.get("options_with_values") or [], start=1):
+            R.swatches(env, p, opt, option_index=opt_i)
+        R.structured_data(env, product=p)
+
+
+@case("Degradation", "every scenario produces well-formed HTML")
+def _(env):
+    for name, build in fx.SCENARIOS.items():
+        html = R.preview_html(env, build())
+        s = scan(html)
+        assert not s.errors, f"{name}: {s.errors}"
+
+
+@case("Degradation", "every scenario's preview page has no duplicate id")
+def _(env):
+    for name, build in fx.SCENARIOS.items():
+        ids = scan(R.preview_html(env, build())).ids
+        dupes = {i for i in ids if ids.count(i) > 1}
+        assert not dupes, f"{name}: duplicate ids {dupes}"
+
+
+@case("Degradation", "no interactive element is nested inside another")
+def _(env):
+    for name, build in fx.SCENARIOS.items():
+        s = scan(R.preview_html(env, build()))
+        assert not s.nested_interactive, f"{name}: {s.nested_interactive}"
+
+
+@case("Degradation", "no scenario emits a placeholder or a TODO")
+def _(env):
+    for name, build in fx.SCENARIOS.items():
+        html = R.preview_html(env, build()).lower()
+        for junk in ("lorem", "todo", "fixme", "placeholder", "undefined",
+                     "something something", "n/a", "tbd"):
+            assert junk not in html, f"{name}: {junk!r} rendered"
+
+
+@case("Degradation", "no scenario emits a visibly empty control or table cell")
+def _(env):
+    for name, build in fx.SCENARIOS.items():
+        html = R.preview_html(env, build())
+        compact = re.sub(r">\s+<", "><", html)
+        for empty in ("<td></td>", "<dd></dd>", "<dt></dt>", "<li></li>",
+                      "<th></th>", "<button></button>"):
+            assert empty not in compact, f"{name}: {empty}"
+
+
+@case("Degradation", "every scenario's structured data parses as JSON")
+def _(env):
+    for name, build in fx.SCENARIOS.items():
+        raw, data = R.structured_data(env, product=build())
+        json.dumps(data)
+        assert raw.count("<script") == 1 and "</script>" in raw, name
+
+
+# ===========================================================================
+# Liquid source safety
+# ===========================================================================
+HIVOLT_SNIPPETS = sorted(R.SNIPPETS.glob("hivolt-*.liquid"))
+
+
+@case("Liquid safety", "every HIVOLT snippet parses with the Shopify-shaped dialect")
+def _(env):
+    for path in HIVOLT_SNIPPETS + [R.SNIPPETS / "variant-button.liquid",
+                                   R.SNIPPETS / "social-meta-tags.liquid"]:
+        env.from_string(path.read_text())
+
+
+@case("Liquid safety", "no condensed boolean guard reads a property it just null-checked")
+def _(env):
+    # Shopify Liquid evaluates `and`/`or` right to left, so
+    # `x != blank and x.y > 0` runs the property read first. That bug shipped
+    # once; this stops it coming back.
+    pattern = re.compile(
+        r"(?:if|unless|elsif)\s+([\w.\[\]'\"-]+)\s*(?:!=\s*blank|!=\s*''|)\s*"
+        r"(?:and|or)\s+\1\.", re.I)
+    offenders = []
+    for path in HIVOLT_SNIPPETS:
+        for i, line in enumerate(path.read_text().splitlines(), 1):
+            if pattern.search(line):
+                offenders.append(f"{path.name}:{i}: {line.strip()}")
+    assert not offenders, "\n".join(offenders)
+
+
+@case("Liquid safety", "size comparisons go through default, so nil never reaches >")
+def _(env):
+    src = (R.SNIPPETS / "hivolt-size-guide.liquid").read_text()
+    assert "hv_col_count = hv_cols.size | default: 0" in src
+    assert "hv_row_count = hv_rows.size | default: 0" in src
+    spec = (R.SNIPPETS / "hivolt-spec-table.liquid").read_text()
+    assert "hv_benefit_count = hv_benefits.size | default: 0" in spec
+
+
+@case("Liquid safety", "the JSON-LD script tag is opened and closed exactly once")
+def _(env):
+    src = (R.SNIPPETS / "hivolt-structured-data.liquid").read_text()
+    assert src.count("<script") == 1 and src.count("</script>") == 1
+
+
+@case("Liquid safety", "no HIVOLT snippet writes a raw metafield into a style attribute")
+def _(env):
+    for path in HIVOLT_SNIPPETS:
+        for line in path.read_text().splitlines():
+            if "style=" in line and "metafields" in line:
+                raise AssertionError(f"{path.name}: {line.strip()}")
+
+
+@case("Liquid safety", "the structured-data snippet still guards against GemPages")
+def _(env):
+    src = (R.SNIPPETS / "hivolt-structured-data.liquid").read_text()
+    assert "hv_gempages_template" in src and "gp-template-" in src
+
+
+# ===========================================================================
+# Nil-guard regressions
+# ===========================================================================
+# Shopify treats an unset metafield as blank; other Liquid engines do not.
+# Every guard below was written against `== blank` and silently changed
+# behaviour depending on the engine. Each is now resolved through `default`
+# first, and each has a test that fails if the old form comes back.
+@case("Nil guards", "the product-level identifier mode is actually reachable")
+def _(env):
+    p = product(metafields={"spec": {}, "custom": {"identifier_mode": mf("none")}})
+    assert mode(env, p, variant(barcode=fx.FIXTURE_GTIN13)) == "none", \
+        "product default was skipped, so a declared suppression was ignored"
+
+
+@case("Nil guards", "an absent chart note produces no paragraph")
+def _(env):
+    p = fx.golden_product()
+    chart = {k: v for k, v in fx.GOLDEN_CHART.items() if k != "note"}
+    p["metafields"]["spec"]["size_chart"] = mf(chart)
+    html = R.size_guide(env, p, "dialog")
+    assert "hv-sg__note" not in html, "empty note paragraph rendered"
+
+
+@case("Nil guards", "a chart note is escaped before its line breaks are added")
+def _(env):
+    p = fx.golden_product()
+    chart = dict(fx.GOLDEN_CHART)
+    chart["note"] = mf("Line one\nLine <b>two</b>")
+    p["metafields"]["spec"]["size_chart"] = mf(chart)
+    html = R.size_guide(env, p, "dialog")
+    assert "<b>" not in html and "&lt;b&gt;" in html
+    assert "<br" in html, "newline_to_br stopped working"
+
+
+@case("Nil guards", "the size guide model line needs both height and size")
+def _(env):
+    assert "and wears size M." in R.size_guide(env, fx.golden_product(), "dialog")
+    for drop in ("model_height_cm", "model_wears_size"):
+        p = fx.golden_product()
+        del p["metafields"]["spec"][drop]
+        html = R.size_guide(env, p, "dialog")
+        assert "hv-sg__model" not in html, f"half a sentence rendered without {drop}"
+
+
+@case("Nil guards", "no HIVOLT snippet compares a metafield to blank")
+def _(env):
+    offenders = []
+    for path in HIVOLT_SNIPPETS:
+        for i, line in enumerate(path.read_text().splitlines(), 1):
+            stripped = line.strip()
+            if stripped.startswith(("comment", "{%- comment", "{% comment")):
+                continue
+            if "metafields" in line and re.search(r"[!=]=\s*blank", line):
+                offenders.append(f"{path.name}:{i}: {stripped}")
+    assert not offenders, (
+        "metafield compared to blank; resolve through `| default: \'\'` instead:\n"
+        + "\n".join(offenders))
+
+
+@case("Nil guards", "swatch option values are escaped in both the chip and text paths")
+def _(env):
+    p = fx.golden_product()
+    for swatch in ({"color": "#000000"}, {}):
+        opt = {"name": "Color",
+               "values": [OptionValue('<img src=x onerror=1>', swatch=swatch)],
+               "selected_value": "x"}
+        html = R.swatches(env, p, opt)
+        assert "<img" not in html, f"unescaped value with swatch={swatch}"
+        assert "&lt;img" in html
+
+
+# ===========================================================================
+# Runner
+# ===========================================================================
 def main():
-    env = make_env()
-    failed = 0
-    for name, fn in CASES:
+    env = R.make_env()
+    failed = []
+    current = None
+    for group, name, fn in CASES:
+        if group != current:
+            print(f"\n{group}")
+            current = group
         try:
             fn(env)
-            print(f"  ok  {name}")
+            print(f"  ok    {name}")
         except AssertionError as e:
-            failed += 1
-            print(f"FAIL  {name}\n      {e}")
+            failed.append((group, name))
+            print(f"  FAIL  {name}\n        {e}")
         except Exception as e:                              # noqa: BLE001
-            failed += 1
-            print(f"ERR   {name}\n      {type(e).__name__}: {e}")
-    print(f"\n{len(CASES) - failed}/{len(CASES)} checks pass")
+            failed.append((group, name))
+            print(f"  ERROR {name}\n        {type(e).__name__}: {e}")
+
+    total = len(CASES)
+    passed = total - len(failed)
+    print(f"\nHIVOLT PDP RELEASE GATE: {passed}/{total} "
+          f"{'PASS' if not failed else 'FAIL'}")
+    if failed:
+        print("\nFailed:")
+        for group, name in failed:
+            print(f"  [{group}] {name}")
     return 1 if failed else 0
 
 
