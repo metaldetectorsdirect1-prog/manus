@@ -85,8 +85,8 @@
             {%- if hv_basis == 'body' -%}
               Body measurements. Measure yourself, then pick the row you fall in.
             {%- else -%}
-              Garment measured flat, then doubled where the column says so. These
-              are the garment's dimensions, not body measurements.
+              Garment measured flat. These are the garment's own dimensions,
+              not body measurements.
             {%- endif -%}
           </p>
         </div>
@@ -149,7 +149,7 @@
                         {%- endif -%}
                         <span data-unit-cm>{{ hv_cm }}</span><span data-unit-in>{{ hv_in }}</span>
                       {%- else -%}
-                        <span class="hv-sg__absent" aria-label="Not measured">&mdash;</span>
+                        <span class="hv-sg__absent" aria-hidden="true">&mdash;</span><span class="visually-hidden">Not measured</span>
                       {%- endif -%}
                     </td>
                   {%- endfor -%}

@@ -328,8 +328,10 @@ html:not(.js) .hv-sg__units {
   font-weight: 700;
 }
 
+/* Decorative: the cell's meaning is carried by hidden text beside it, so this
+   only has to read as "nothing here" without competing with real figures. */
 .hv-sg__absent {
-  color: var(--hv-line);
+  color: #9a9a9a;
 }
 
 .hv-sg__note,
