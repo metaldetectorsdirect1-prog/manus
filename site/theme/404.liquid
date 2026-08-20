@@ -1,0 +1,64 @@
+{%- comment -%}
+  HIVOLT — templates/404.liquid
+  ────────────────────────────
+  Renders inside layout/theme.liquid, which supplies <main>, the ticker,
+  the masthead and the footer. Nothing here defines new CSS: every class is
+  already in hivolt.css.
+
+  Collection titles are read from the collection objects where they exist, so a
+  renamed collection stays correct here. The handles are the three in the
+  masthead: womens, mens, training.
+{%- endcomment -%}
+
+{%- assign c_womens = collections['womens'] -%}
+{%- assign c_mens = collections['mens'] -%}
+{%- assign c_training = collections['training'] -%}
+
+<section class="hero wrap">
+  <p class="mono hero__eyebrow">Error 404</p>
+  <h1 class="hero__h">Page not<br>found.</h1>
+  <p class="hero__sub">
+    Nothing is published at this address. The link is either out of date or
+    mistyped. Everything the store sells is in the three collections below.
+  </p>
+  <div class="hero__cta">
+    <a class="btn" href="{{ routes.all_products_collection_url }}">Everything</a>
+    <a class="btn btn--ghost" href="{{ routes.search_url }}">Search</a>
+  </div>
+</section>
+
+<section class="trust wrap" style="padding-block:0 var(--band)">
+  <div class="sec__head">
+    <h2 class="sec__h">Where to go</h2>
+    <span class="mono">{{ collections.all.products_count }} styles in total</span>
+  </div>
+  <div class="trust__grid">
+    <div class="trust__c">
+      <div class="trust__k">Collection</div>
+      <p class="trust__v">
+        <a href="{{ c_womens.url | default: '/collections/womens-activewear' }}">{{ c_womens.title | default: 'Women' }}</a>
+      </p>
+      <p class="trust__d">Leggings, sports bras, tops and sets. Every style lists its
+        fibre composition and fabric weight.</p>
+    </div>
+    <div class="trust__c">
+      <div class="trust__k">Collection</div>
+      <p class="trust__v">
+        <a href="{{ c_mens.url | default: '/collections/mens-activewear' }}">{{ c_mens.title | default: 'Men' }}</a>
+      </p>
+      <p class="trust__d">Tees, shorts, joggers and outerwear, specified the same way.</p>
+    </div>
+    <div class="trust__c">
+      <div class="trust__k">Collection</div>
+      <p class="trust__v">
+        <a href="{{ c_training.url | default: '/collections/training' }}">{{ c_training.title | default: 'Training' }}</a>
+      </p>
+      <p class="trust__d">The pieces built for load — heavier knits, gusseted, flatlock seams.</p>
+    </div>
+    <div class="trust__c">
+      <div class="trust__k">Search</div>
+      <p class="trust__v"><a href="{{ routes.search_url }}">Search the catalogue</a></p>
+      <p class="trust__d">Search by product name, fabric weight in g/m², or fibre.</p>
+    </div>
+  </div>
+</section>

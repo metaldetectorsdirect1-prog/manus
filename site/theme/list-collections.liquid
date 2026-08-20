@@ -1,0 +1,81 @@
+{%- comment -%}
+  HIVOLT — collection index template
+  ─────────────────────────────────
+  Drop-in replacement for templates/list-collections.liquid.
+
+  Requires two stylesheets linked from layout/theme.liquid:
+
+      {{ 'hivolt.css'      | asset_url | stylesheet_tag }}
+      {{ 'hivolt-blog.css' | asset_url | stylesheet_tag }}
+
+  A ruled list, not a grid of collection tiles. Collection images on this store
+  are supplier photography of individual garments; using one to stand for a
+  whole collection would imply an editorial shoot that does not exist. The
+  useful information here is the name, the count and the description, so that is
+  what the page shows.
+
+  Counts come from collection.all_products_count — the real number, including
+  products that are out of stock.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Collections</li>
+  </ol>
+</nav>
+
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+  <section class="cols-page wrap">
+
+    <div class="sec__head">
+      <h1 class="sec__h">Collections</h1>
+      <span class="mono">
+        {{- collections.size }} collection{% if collections.size != 1 %}s{% endif -%}
+        {%- if collections.all.products_count > 0 %} · {{ collections.all.products_count }} styles in total{% endif -%}
+      </span>
+    </div>
+
+    {%- if collections.size > 0 -%}
+      {%- paginate collections by: 24 -%}
+      <ol class="cols">
+        {%- for collection in collections -%}
+          <li class="cols__i">
+            <a class="cols__a" href="{{ collection.url }}">
+              <span class="cols__t">{{ collection.title }}</span>
+              <span class="mono cols__n">
+                {{- collection.all_products_count }} style{% if collection.all_products_count != 1 %}s{% endif -%}
+              </span>
+              {%- assign blurb = collection.description | strip_html | truncatewords: 26 -%}
+              {%- if blurb != blank -%}
+                <span class="cols__d">{{ blurb }}</span>
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pager" aria-label="Collections pagination">
+          {{- paginate | default_pagination -}}
+        </nav>
+      {%- endif -%}
+      {%- endpaginate -%}
+
+      <p class="cols__foot">
+        <a class="btn btn--ghost" href="{{ routes.all_products_collection_url }}">Every style, unsorted</a>
+      </p>
+    {%- else -%}
+      <div class="empty">
+        <p class="empty__h">No collection is published yet.</p>
+        <p class="empty__p">The full catalogue is still browsable.</p>
+        <p class="empty__act">
+          <a class="btn btn--ghost" href="{{ routes.all_products_collection_url }}">Shop the range</a>
+        </p>
+      </div>
+    {%- endif -%}
+
+  </section>

@@ -1,0 +1,181 @@
+{%- comment -%}
+  HIVOLT — blog index template
+  ───────────────────────────
+  Drop-in replacement for templates/blog.liquid.
+
+  Requires two stylesheets linked from layout/theme.liquid:
+
+      {{ 'hivolt.css'      | asset_url | stylesheet_tag }}
+      {{ 'hivolt-blog.css' | asset_url | stylesheet_tag }}
+
+  (theme-hivolt.css → assets/hivolt.css, theme/blog.css → assets/hivolt-blog.css)
+
+  This blog is a reference library, not a feed: a ruled list of dated entries,
+  no cards, no thumbnails, no "featured" hero. Five hundred articles are easier
+  to scan as a table of contents than as a wall of images.
+
+  Reading time is computed from the article's own word count at 220 words per
+  minute and labelled as an estimate. It is the only derived number on the page
+  and the divisor is stated in the copy, so a reader can check it.
+
+  Tag filtering uses Shopify's native /tagged/ routes, so it works with
+  JavaScript disabled. There is no JavaScript on this template at all.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    {%- if current_tags.size > 0 -%}
+      <li><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+      <li aria-current="page">{{ current_tags.first }}</li>
+    {%- else -%}
+      <li aria-current="page">{{ blog.title }}</li>
+    {%- endif -%}
+  </ol>
+</nav>
+
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+  {%- paginate blog.articles by 20 -%}
+
+    <section class="blog wrap">
+
+      <!-- ── header ──────────────────────────────────────────── -->
+      <div class="sec__head">
+        <h1 class="sec__h">{{ blog.title }}</h1>
+        <span class="mono">
+          {%- if current_tags.size > 0 -%}
+            {{ paginate.items }} article{% if paginate.items != 1 %}s{% endif %} tagged “{{ current_tags.first }}”
+          {%- else -%}
+            {{ blog.articles_count }} article{% if blog.articles_count != 1 %}s{% endif %}
+          {%- endif -%}
+        </span>
+      </div>
+
+      <!-- ── tag filter ──────────────────────────────────────── -->
+      {%- if blog.all_tags.size > 0 -%}
+        <nav class="tags" aria-label="Filter articles by tag">
+          <span class="mono tags__k">Tag</span>
+
+          <a class="tags__a{% if current_tags.size == 0 %} tags__a--on{% endif %}"
+             href="{{ blog.url }}"
+             {% if current_tags.size == 0 %}aria-current="true"{% endif %}>All</a>
+
+          {%- for tag in blog.all_tags -%}
+            {%- if current_tags contains tag -%}
+              <a class="tags__a tags__a--on" href="{{ blog.url }}" aria-current="true"
+                 title="Remove this tag">{{ tag }} <span aria-hidden="true">×</span></a>
+            {%- else -%}
+              <a class="tags__a" href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+
+          <a class="tags__rss mono" href="{{ blog.url }}.atom">RSS</a>
+        </nav>
+      {%- endif -%}
+
+      <!-- ── article list ────────────────────────────────────── -->
+      {%- if blog.articles.size > 0 -%}
+        <ol class="posts">
+          {%- for article in blog.articles -%}
+            {%- assign wc = article.content | strip_html | split: ' ' | size -%}
+            {%- assign mins = wc | divided_by: 220 -%}
+            {%- if mins < 1 -%}{%- assign mins = 1 -%}{%- endif -%}
+
+            <li class="post">
+              <div class="post__when">
+                <time class="mono post__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                  {{- article.published_at | date: '%d %b %Y' -}}
+                </time>
+                <span class="mono post__read">{{ mins }} min read</span>
+              </div>
+
+              <div class="post__body">
+                <h2 class="post__t"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+
+                {%- assign blurb = article.excerpt_or_content | strip_html | truncatewords: 40 -%}
+                {%- if blurb != blank -%}
+                  <p class="post__x">{{ blurb }}</p>
+                {%- endif -%}
+
+                {%- if article.tags.size > 0 -%}
+                  <p class="post__tags">
+                    {%- for tag in article.tags -%}
+                      <a class="post__tag{% if current_tags contains tag %} post__tag--on{% endif %}"
+                         href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+                    {%- endfor -%}
+                  </p>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ol>
+
+        <p class="blog__note mono">
+          Reading time is an estimate: words in the article divided by 220 per minute.
+        </p>
+
+        <!-- ── pager ─────────────────────────────────────────── -->
+        {%- if paginate.pages > 1 -%}
+          <nav class="pager" role="navigation" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a class="pager__a" href="{{ paginate.previous.url }}" rel="prev">Prev</a>
+            {%- else -%}
+              <span class="pager__a pager__a--off" aria-hidden="true">Prev</span>
+            {%- endif -%}
+
+            {%- for part in paginate.parts -%}
+              {%- assign part_num = part.title | plus: 0 -%}
+              {%- if part.is_link -%}
+                <a class="pager__a" href="{{ part.url }}" aria-label="Page {{ part.title }}">{{ part.title }}</a>
+              {%- elsif part_num > 0 -%}
+                <span class="pager__a pager__a--on" aria-current="page">{{ part.title }}</span>
+              {%- else -%}
+                <span class="pager__gap" aria-hidden="true">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+              <a class="pager__a" href="{{ paginate.next.url }}" rel="next">Next</a>
+            {%- else -%}
+              <span class="pager__a pager__a--off" aria-hidden="true">Next</span>
+            {%- endif -%}
+
+            <span class="pager__count">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          </nav>
+        {%- endif -%}
+
+      {%- else -%}
+        <!-- ── empty ───────────────────────────────────────────── -->
+        <div class="empty">
+          {%- if current_tags.size > 0 -%}
+            <p class="empty__h">No article is tagged “{{ current_tags.first }}”.</p>
+            <p class="empty__p">
+              {{ blog.title }} holds {{ blog.articles_count }} article{% if blog.articles_count != 1 %}s{% endif %}
+              in total. Drop the tag to read all of them.
+            </p>
+            <p class="empty__act"><a class="btn btn--ghost" href="{{ blog.url }}">All articles</a></p>
+          {%- else -%}
+            <p class="empty__h">Nothing is published in {{ blog.title }} yet.</p>
+            <p class="empty__p">The catalogue is here in the meantime.</p>
+            <p class="empty__act"><a class="btn btn--ghost" href="{{ routes.all_products_collection_url }}">Shop the range</a></p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </section>
+  {%- endpaginate -%}
+
+{%- comment -%} Breadcrumb structured data {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":{{ shop.url | json }}},
+    {"@type":"ListItem","position":2,"name":{{ blog.title | json }},"item":{{ shop.url | append: blog.url | json }}}
+  ]
+}
+</script>

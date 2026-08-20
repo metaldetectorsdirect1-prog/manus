@@ -1,0 +1,497 @@
+{%- comment -%}
+  HIVOLT — addresses
+  ──────────────────
+  Installs as templates/customers/addresses.liquid.
+
+  Requires, from layout/theme.liquid:
+      'hivolt.css'  | asset_url | stylesheet_tag
+      'account.css' | asset_url | stylesheet_tag
+
+  No <main> element: layout/theme.liquid already provides one.
+
+  Conventions this template follows:
+    · Create and edit both use the customer_address form tag — with
+      customer.new_address for a new one, and address inside the loop for an
+      existing one. Shopify supplies the action, the form_type and the utf8
+      field; nothing here posts by hand.
+    · Delete is its own small POST to /account/addresses/<id> carrying
+      _method=delete, because a form cannot be nested inside the edit form.
+    · The country selector is built from country_option_tags, which prints a
+      data-provinces attribute on every option. Shopify's own bundled
+      customer_area.js reads that attribute — this theme is not allowed to load
+      third-party or CDN scripts, so the twenty lines at the foot of this file
+      do the same job locally, with no dependency.
+
+  With scripting off the page still works: every panel opens through :target,
+  the country of an address stays selected because it is printed as a selected
+  option ahead of the generated list, and the province select keeps the value
+  already on the address.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li><a href="{{ routes.account_url }}">Account</a></li>
+    <li aria-current="page">Addresses</li>
+  </ol>
+</nav>
+
+<section class="acct wrap">
+
+  <div class="sec__head">
+    <h1 class="sec__h">Addresses</h1>
+    <span class="mono">
+      {{ customer.addresses_count }} {{ customer.addresses_count | pluralize: 'address', 'addresses' }}
+    </span>
+  </div>
+
+  <div class="acct__bar">
+    <p class="acct__who">Addresses are used at checkout. Marking one default fills the fields in for you.</p>
+    <a class="frm__link" href="{{ routes.account_url }}">Back to account</a>
+  </div>
+
+  {%- comment -%} ── new address ──────────────────────────────────────────── {%- endcomment -%}
+  <div class="acct__add">
+    <a class="btn" href="#addr-new">Add an address</a>
+  </div>
+
+  <div class="rev ad ad--form" id="addr-new" data-address-form>
+    <h2 class="acct__sub">New address</h2>
+
+    {%- form 'customer_address', customer.new_address, novalidate: 'novalidate' -%}
+      {%- assign sfx = 'new' -%}
+
+      {%- if form.errors -%}
+        <span hidden data-open-target="addr-new"></span>
+        <div class="frm__alert" role="alert" tabindex="-1">
+          <p class="frm__alert-h">The address was not saved. Fix the following, then save it again.</p>
+          <ul class="frm__alert-l">
+            {%- for field in form.errors -%}
+              <li>
+                {%- case field -%}
+                  {%- when 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- when 'address1' -%}
+                    <a href="#Addrnew1">Street address — {{ form.errors.messages[field] }}. Give the number and the street.</a>
+                  {%- when 'city' -%}
+                    <a href="#AddrnewCity">City — {{ form.errors.messages[field] }}.</a>
+                  {%- when 'zip' -%}
+                    <a href="#AddrnewZip">ZIP code — {{ form.errors.messages[field] }}. Five digits, or five plus four.</a>
+                  {%- when 'country' -%}
+                    <a href="#AddrnewCountry">Country — {{ form.errors.messages[field] }}. Pick one from the list.</a>
+                  {%- when 'province' -%}
+                    <a href="#AddrnewProvince">State — {{ form.errors.messages[field] }}. Pick one from the list.</a>
+                  {%- when 'phone' -%}
+                    <a href="#AddrnewPhone">Phone — {{ form.errors.messages[field] }}. Digits only, with the area code.</a>
+                  {%- else -%}
+                    {{ form.errors.translated_fields[field] | capitalize }} — {{ form.errors.messages[field] }}
+                {%- endcase -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+          <div class="frm__raw">{{ form.errors | default_errors }}</div>
+        </div>
+      {%- endif -%}
+
+      <div class="fld__pair">
+        <div class="fld{% if form.errors contains 'first_name' %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="Addr{{ sfx }}First">First name</label>
+          <input class="fld__in" type="text" id="Addr{{ sfx }}First" name="address[first_name]"
+                 value="{{ form.first_name }}" autocomplete="given-name" autocapitalize="words"
+                 {% if form.errors contains 'first_name' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}First-err"{% endif %}>
+          {%- if form.errors contains 'first_name' -%}
+            <p class="fld__err" id="Addr{{ sfx }}First-err">Enter the first name for the parcel.</p>
+          {%- endif -%}
+        </div>
+        <div class="fld{% if form.errors contains 'last_name' %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="Addr{{ sfx }}Last">Last name</label>
+          <input class="fld__in" type="text" id="Addr{{ sfx }}Last" name="address[last_name]"
+                 value="{{ form.last_name }}" autocomplete="family-name" autocapitalize="words"
+                 {% if form.errors contains 'last_name' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Last-err"{% endif %}>
+          {%- if form.errors contains 'last_name' -%}
+            <p class="fld__err" id="Addr{{ sfx }}Last-err">Enter the last name for the parcel.</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="fld">
+        <label class="fld__lab mono" for="Addr{{ sfx }}Co">Company <span class="fld__opt">optional</span></label>
+        <input class="fld__in" type="text" id="Addr{{ sfx }}Co" name="address[company]"
+               value="{{ form.company }}" autocomplete="organization">
+      </div>
+
+      <div class="fld{% if form.errors contains 'address1' %} fld--bad{% endif %}">
+        <label class="fld__lab mono" for="Addr{{ sfx }}1">Street address</label>
+        <input class="fld__in" type="text" id="Addr{{ sfx }}1" name="address[address1]"
+               value="{{ form.address1 }}" autocomplete="address-line1"
+               {% if form.errors contains 'address1' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}1-err"{% endif %}>
+        {%- if form.errors contains 'address1' -%}
+          <p class="fld__err" id="Addr{{ sfx }}1-err">Give the number and the street.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="fld">
+        <label class="fld__lab mono" for="Addr{{ sfx }}2">Apartment, suite, unit <span class="fld__opt">optional</span></label>
+        <input class="fld__in" type="text" id="Addr{{ sfx }}2" name="address[address2]"
+               value="{{ form.address2 }}" autocomplete="address-line2">
+      </div>
+
+      <div class="fld__pair">
+        <div class="fld{% if form.errors contains 'city' %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="Addr{{ sfx }}City">City</label>
+          <input class="fld__in" type="text" id="Addr{{ sfx }}City" name="address[city]"
+                 value="{{ form.city }}" autocomplete="address-level2" autocapitalize="words"
+                 {% if form.errors contains 'city' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}City-err"{% endif %}>
+          {%- if form.errors contains 'city' -%}
+            <p class="fld__err" id="Addr{{ sfx }}City-err">Enter the city or town.</p>
+          {%- endif -%}
+        </div>
+        <div class="fld{% if form.errors contains 'zip' %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="Addr{{ sfx }}Zip">ZIP code</label>
+          <input class="fld__in" type="text" id="Addr{{ sfx }}Zip" name="address[zip]"
+                 value="{{ form.zip }}" autocomplete="postal-code" autocapitalize="characters"
+                 inputmode="numeric"
+                 {% if form.errors contains 'zip' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Zip-err"{% endif %}>
+          {%- if form.errors contains 'zip' -%}
+            <p class="fld__err" id="Addr{{ sfx }}Zip-err">Five digits, or five plus four.</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="fld__pair">
+        <div class="fld{% if form.errors contains 'country' %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="Addr{{ sfx }}Country">Country</label>
+          <select class="fld__in" id="Addr{{ sfx }}Country" name="address[country]"
+                  autocomplete="country-name" data-country data-default="{{ form.country | escape }}"
+                  {% if form.errors contains 'country' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Country-err"{% endif %}>
+            {%- if form.country != blank -%}
+              <option value="{{ form.country | escape }}" selected data-dupe>{{ form.country }}</option>
+            {%- endif -%}
+            {{ country_option_tags }}
+          </select>
+          {%- if form.errors contains 'country' -%}
+            <p class="fld__err" id="Addr{{ sfx }}Country-err">Pick a country from the list.</p>
+          {%- endif -%}
+        </div>
+
+        <div class="fld{% if form.errors contains 'province' %} fld--bad{% endif %}" data-province-wrap
+             {% if form.province == blank %}hidden{% endif %}>
+          <label class="fld__lab mono" for="Addr{{ sfx }}Province">State / province</label>
+          <select class="fld__in" id="Addr{{ sfx }}Province" name="address[province]"
+                  autocomplete="address-level1" data-province data-default="{{ form.province | escape }}"
+                  {% if form.errors contains 'province' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Province-err"{% endif %}>
+            {%- if form.province != blank -%}
+              <option value="{{ form.province | escape }}" selected>{{ form.province }}</option>
+            {%- endif -%}
+          </select>
+          {%- if form.errors contains 'province' -%}
+            <p class="fld__err" id="Addr{{ sfx }}Province-err">Pick a state from the list.</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="fld{% if form.errors contains 'phone' %} fld--bad{% endif %}">
+        <label class="fld__lab mono" for="Addr{{ sfx }}Phone">Phone <span class="fld__opt">optional</span></label>
+        <input class="fld__in" type="tel" id="Addr{{ sfx }}Phone" name="address[phone]"
+               value="{{ form.phone }}" autocomplete="tel" inputmode="tel"
+               aria-describedby="Addr{{ sfx }}Phone-hint{% if form.errors contains 'phone' %} Addr{{ sfx }}Phone-err{% endif %}">
+        <p class="fld__hint" id="Addr{{ sfx }}Phone-hint">The carrier uses it if the parcel cannot be delivered.</p>
+        {%- if form.errors contains 'phone' -%}
+          <p class="fld__err" id="Addr{{ sfx }}Phone-err">Digits only, with the area code.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="fld fld--check">
+        <input type="checkbox" id="Addr{{ sfx }}Default" name="address[default]" value="1">
+        <label for="Addr{{ sfx }}Default">Use this as my default address</label>
+      </div>
+
+      <div class="frm__acts">
+        <button type="submit" class="btn">Save address</button>
+        <a class="frm__link" href="{{ routes.account_addresses_url }}">Cancel</a>
+      </div>
+    {%- endform -%}
+  </div>
+
+  {%- comment -%} ── saved addresses ──────────────────────────────────────── {%- endcomment -%}
+  {%- if customer.addresses_count == 0 -%}
+
+    <div class="acct__empty">
+      <p class="acct__empty-t">No addresses saved.</p>
+      <p class="acct__empty-p">Add one and checkout fills itself in next time.</p>
+    </div>
+
+  {%- else -%}
+
+    {%- paginate customer.addresses by 6 -%}
+      <ul class="ad__list">
+        {%- for address in customer.addresses -%}
+          {%- assign sfx = address.id -%}
+          {%- assign ad_title = address.first_name | append: ' ' | append: address.last_name | strip -%}
+          {%- if ad_title == blank -%}{%- assign ad_title = address.address1 -%}{%- endif -%}
+          {%- if ad_title == blank -%}{%- assign ad_title = address.city -%}{%- endif -%}
+
+          <li class="ad">
+            <div class="ad__head">
+              <h2 class="ad__t">{{ ad_title | default: 'Saved address' }}</h2>
+              {%- if address.id == customer.default_address.id -%}
+                <span class="chp chp--ok">Default</span>
+              {%- endif -%}
+            </div>
+
+            <div class="ad__body">{{ address | format_address }}</div>
+
+            <div class="ad__acts">
+              <a class="frm__link" href="#addr-{{ address.id }}">Edit</a>
+              <form method="post" action="{{ routes.account_addresses_url }}/{{ address.id }}" class="ad__del">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="ad__delbtn"
+                        data-confirm="Delete this address? It is removed from the account straight away."
+                        aria-label="Delete the address for {{ ad_title | escape }}">Delete</button>
+              </form>
+            </div>
+
+            <div class="rev ad__edit" id="addr-{{ address.id }}" data-address-form>
+              {%- form 'customer_address', address, novalidate: 'novalidate' -%}
+
+                {%- if form.errors -%}
+                  <span hidden data-open-target="addr-{{ address.id }}"></span>
+                  <div class="frm__alert" role="alert" tabindex="-1">
+                    <p class="frm__alert-h">This address was not saved. Fix the following, then save it again.</p>
+                    <ul class="frm__alert-l">
+                      {%- for field in form.errors -%}
+                        <li>
+                          {%- case field -%}
+                            {%- when 'form' -%}
+                              {{ form.errors.messages[field] }}
+                            {%- when 'address1' -%}
+                              <a href="#Addr{{ sfx }}1">Street address — {{ form.errors.messages[field] }}. Give the number and the street.</a>
+                            {%- when 'city' -%}
+                              <a href="#Addr{{ sfx }}City">City — {{ form.errors.messages[field] }}.</a>
+                            {%- when 'zip' -%}
+                              <a href="#Addr{{ sfx }}Zip">ZIP code — {{ form.errors.messages[field] }}. Five digits, or five plus four.</a>
+                            {%- when 'country' -%}
+                              <a href="#Addr{{ sfx }}Country">Country — {{ form.errors.messages[field] }}. Pick one from the list.</a>
+                            {%- when 'province' -%}
+                              <a href="#Addr{{ sfx }}Province">State — {{ form.errors.messages[field] }}. Pick one from the list.</a>
+                            {%- when 'phone' -%}
+                              <a href="#Addr{{ sfx }}Phone">Phone — {{ form.errors.messages[field] }}. Digits only, with the area code.</a>
+                            {%- else -%}
+                              {{ form.errors.translated_fields[field] | capitalize }} — {{ form.errors.messages[field] }}
+                          {%- endcase -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                    <div class="frm__raw">{{ form.errors | default_errors }}</div>
+                  </div>
+                {%- endif -%}
+
+                <div class="fld__pair">
+                  <div class="fld{% if form.errors contains 'first_name' %} fld--bad{% endif %}">
+                    <label class="fld__lab mono" for="Addr{{ sfx }}First">First name</label>
+                    <input class="fld__in" type="text" id="Addr{{ sfx }}First" name="address[first_name]"
+                           value="{{ form.first_name }}" autocomplete="given-name" autocapitalize="words"
+                           {% if form.errors contains 'first_name' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}First-err"{% endif %}>
+                    {%- if form.errors contains 'first_name' -%}
+                      <p class="fld__err" id="Addr{{ sfx }}First-err">Enter the first name for the parcel.</p>
+                    {%- endif -%}
+                  </div>
+                  <div class="fld{% if form.errors contains 'last_name' %} fld--bad{% endif %}">
+                    <label class="fld__lab mono" for="Addr{{ sfx }}Last">Last name</label>
+                    <input class="fld__in" type="text" id="Addr{{ sfx }}Last" name="address[last_name]"
+                           value="{{ form.last_name }}" autocomplete="family-name" autocapitalize="words"
+                           {% if form.errors contains 'last_name' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Last-err"{% endif %}>
+                    {%- if form.errors contains 'last_name' -%}
+                      <p class="fld__err" id="Addr{{ sfx }}Last-err">Enter the last name for the parcel.</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div class="fld">
+                  <label class="fld__lab mono" for="Addr{{ sfx }}Co">Company <span class="fld__opt">optional</span></label>
+                  <input class="fld__in" type="text" id="Addr{{ sfx }}Co" name="address[company]"
+                         value="{{ form.company }}" autocomplete="organization">
+                </div>
+
+                <div class="fld{% if form.errors contains 'address1' %} fld--bad{% endif %}">
+                  <label class="fld__lab mono" for="Addr{{ sfx }}1">Street address</label>
+                  <input class="fld__in" type="text" id="Addr{{ sfx }}1" name="address[address1]"
+                         value="{{ form.address1 }}" autocomplete="address-line1"
+                         {% if form.errors contains 'address1' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}1-err"{% endif %}>
+                  {%- if form.errors contains 'address1' -%}
+                    <p class="fld__err" id="Addr{{ sfx }}1-err">Give the number and the street.</p>
+                  {%- endif -%}
+                </div>
+
+                <div class="fld">
+                  <label class="fld__lab mono" for="Addr{{ sfx }}2">Apartment, suite, unit <span class="fld__opt">optional</span></label>
+                  <input class="fld__in" type="text" id="Addr{{ sfx }}2" name="address[address2]"
+                         value="{{ form.address2 }}" autocomplete="address-line2">
+                </div>
+
+                <div class="fld__pair">
+                  <div class="fld{% if form.errors contains 'city' %} fld--bad{% endif %}">
+                    <label class="fld__lab mono" for="Addr{{ sfx }}City">City</label>
+                    <input class="fld__in" type="text" id="Addr{{ sfx }}City" name="address[city]"
+                           value="{{ form.city }}" autocomplete="address-level2" autocapitalize="words"
+                           {% if form.errors contains 'city' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}City-err"{% endif %}>
+                    {%- if form.errors contains 'city' -%}
+                      <p class="fld__err" id="Addr{{ sfx }}City-err">Enter the city or town.</p>
+                    {%- endif -%}
+                  </div>
+                  <div class="fld{% if form.errors contains 'zip' %} fld--bad{% endif %}">
+                    <label class="fld__lab mono" for="Addr{{ sfx }}Zip">ZIP code</label>
+                    <input class="fld__in" type="text" id="Addr{{ sfx }}Zip" name="address[zip]"
+                           value="{{ form.zip }}" autocomplete="postal-code" autocapitalize="characters"
+                           inputmode="numeric"
+                           {% if form.errors contains 'zip' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Zip-err"{% endif %}>
+                    {%- if form.errors contains 'zip' -%}
+                      <p class="fld__err" id="Addr{{ sfx }}Zip-err">Five digits, or five plus four.</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div class="fld__pair">
+                  <div class="fld{% if form.errors contains 'country' %} fld--bad{% endif %}">
+                    <label class="fld__lab mono" for="Addr{{ sfx }}Country">Country</label>
+                    <select class="fld__in" id="Addr{{ sfx }}Country" name="address[country]"
+                            autocomplete="country-name" data-country data-default="{{ form.country | escape }}"
+                            {% if form.errors contains 'country' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Country-err"{% endif %}>
+                      {%- if form.country != blank -%}
+                        <option value="{{ form.country | escape }}" selected data-dupe>{{ form.country }}</option>
+                      {%- endif -%}
+                      {{ country_option_tags }}
+                    </select>
+                    {%- if form.errors contains 'country' -%}
+                      <p class="fld__err" id="Addr{{ sfx }}Country-err">Pick a country from the list.</p>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="fld{% if form.errors contains 'province' %} fld--bad{% endif %}" data-province-wrap
+                       {% if form.province == blank %}hidden{% endif %}>
+                    <label class="fld__lab mono" for="Addr{{ sfx }}Province">State / province</label>
+                    <select class="fld__in" id="Addr{{ sfx }}Province" name="address[province]"
+                            autocomplete="address-level1" data-province data-default="{{ form.province | escape }}"
+                            {% if form.errors contains 'province' %}aria-invalid="true" aria-describedby="Addr{{ sfx }}Province-err"{% endif %}>
+                      {%- if form.province != blank -%}
+                        <option value="{{ form.province | escape }}" selected>{{ form.province }}</option>
+                      {%- endif -%}
+                    </select>
+                    {%- if form.errors contains 'province' -%}
+                      <p class="fld__err" id="Addr{{ sfx }}Province-err">Pick a state from the list.</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div class="fld{% if form.errors contains 'phone' %} fld--bad{% endif %}">
+                  <label class="fld__lab mono" for="Addr{{ sfx }}Phone">Phone <span class="fld__opt">optional</span></label>
+                  <input class="fld__in" type="tel" id="Addr{{ sfx }}Phone" name="address[phone]"
+                         value="{{ form.phone }}" autocomplete="tel" inputmode="tel"
+                         aria-describedby="Addr{{ sfx }}Phone-hint{% if form.errors contains 'phone' %} Addr{{ sfx }}Phone-err{% endif %}">
+                  <p class="fld__hint" id="Addr{{ sfx }}Phone-hint">The carrier uses it if the parcel cannot be delivered.</p>
+                  {%- if form.errors contains 'phone' -%}
+                    <p class="fld__err" id="Addr{{ sfx }}Phone-err">Digits only, with the area code.</p>
+                  {%- endif -%}
+                </div>
+
+                <div class="fld fld--check">
+                  <input type="checkbox" id="Addr{{ sfx }}Default" name="address[default]" value="1"
+                         {% if address.id == customer.default_address.id %}checked{% endif %}>
+                  <label for="Addr{{ sfx }}Default">Use this as my default address</label>
+                </div>
+
+                <div class="frm__acts">
+                  <button type="submit" class="btn">Save changes</button>
+                  <a class="frm__link" href="{{ routes.account_addresses_url }}">Cancel</a>
+                </div>
+              {%- endform -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="acct__pager" aria-label="Address pages">
+          {%- if paginate.previous -%}
+            <a class="acct__pg" href="{{ paginate.previous.url }}" rel="prev">Previous</a>
+          {%- else -%}
+            <span class="acct__pg acct__pg--off">Previous</span>
+          {%- endif -%}
+          <span class="acct__pgc mono">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}
+            <a class="acct__pg" href="{{ paginate.next.url }}" rel="next">Next</a>
+          {%- else -%}
+            <span class="acct__pg acct__pg--off">Next</span>
+          {%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+
+  {%- endif -%}
+
+</section>
+
+<script>
+(function(){
+
+  /* 1. A panel the server has something to say about is opened. The CSS :has()
+        rule does this without scripting; this covers browsers without :has. */
+  document.querySelectorAll('[data-open-target]').forEach(function(mark){
+    var pane = document.getElementById(mark.getAttribute('data-open-target'));
+    if (pane) pane.classList.add('is-open');
+  });
+
+  /* 2. Country → province. country_option_tags writes the subregions of each
+        country onto its own option as JSON in data-provinces. A country with
+        none (most of them) hides the province field entirely. */
+  function wire(scope){
+    var country  = scope.querySelector('[data-country]');
+    var province = scope.querySelector('[data-province]');
+    var wrap     = scope.querySelector('[data-province-wrap]');
+    if (!country || !province || !wrap) return;
+
+    // The selected-country option printed for the no-script case is a
+    // duplicate without data-provinces. Drop it, then select the real one.
+    var dupe = country.querySelector('option[data-dupe]');
+    var want = country.getAttribute('data-default') || (dupe ? dupe.value : '');
+    if (dupe) dupe.parentNode.removeChild(dupe);
+    if (want) country.value = want;
+
+    function fill(keep){
+      var option = country.options[country.selectedIndex];
+      var list = [];
+      try { list = JSON.parse(option.getAttribute('data-provinces') || '[]'); } catch (e) { list = []; }
+
+      province.innerHTML = '';
+      if (!list.length){
+        wrap.hidden = true;
+        province.disabled = true;
+        return;
+      }
+      wrap.hidden = false;
+      province.disabled = false;
+      list.forEach(function(pair){
+        var o = document.createElement('option');
+        o.value = pair[0];
+        o.textContent = pair[1];
+        province.appendChild(o);
+      });
+      if (keep) province.value = keep;
+    }
+
+    country.addEventListener('change', function(){ fill(''); });
+    fill(province.getAttribute('data-default') || '');
+  }
+  document.querySelectorAll('[data-address-form]').forEach(wire);
+
+  /* 3. Delete is destructive and one click away — ask first. */
+  document.querySelectorAll('[data-confirm]').forEach(function(button){
+    button.addEventListener('click', function(event){
+      if (!window.confirm(button.getAttribute('data-confirm'))) event.preventDefault();
+    });
+  });
+
+  var alert = document.querySelector('.frm__alert');
+  if (alert && alert.offsetParent !== null) alert.focus();
+})();
+</script>

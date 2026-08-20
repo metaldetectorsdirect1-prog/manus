@@ -1,0 +1,96 @@
+# STEP 2 — batch 2: 10 products, 32 images
+
+mutation RemoveFabricatedImages {
+  # Men's Stripe Trim Basketball Shorts  (1 image)
+  op12_MensStripeTrimBasketballShorts: productDeleteMedia(
+    productId: "gid://shopify/Product/9571237888232"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432727272"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Tapered Leg Drawstring Joggers  (6 images)
+  op13_MensTaperedLegDrawstringJoggers: productDeleteMedia(
+    productId: "gid://shopify/Product/9571296149736"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182758277352",
+      "gid://shopify/MediaImage/40160661078248",
+      "gid://shopify/MediaImage/40160661176552",
+      "gid://shopify/MediaImage/40160661111016",
+      "gid://shopify/MediaImage/40160661143784",
+      "gid://shopify/MediaImage/40160661209320"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Tight Cycling Shorts  (6 images)
+  op14_MensTightCyclingShorts: productDeleteMedia(
+    productId: "gid://shopify/Product/9571678879976"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182758375656",
+      "gid://shopify/MediaImage/40160658489576",
+      "gid://shopify/MediaImage/40160658587880",
+      "gid://shopify/MediaImage/40160658522344",
+      "gid://shopify/MediaImage/40160658555112",
+      "gid://shopify/MediaImage/40160658620648"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men’s Color Block Raglan T-Shirt  (1 image)
+  op15_MensColorBlockRaglanTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9571273146600"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447767784"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men’s Drawstring Basketball Shorts  (1 image)
+  op16_MensDrawstringBasketballShorts: productDeleteMedia(
+    productId: "gid://shopify/Product/9571679600872"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432792808"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men’s Drawstring Joggers  (2 images)
+  op17_MensDrawstringJoggers: productDeleteMedia(
+    productId: "gid://shopify/Product/9571669999848"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182759031016",
+      "gid://shopify/MediaImage/40160763805928"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men’s Lightweight Performance T-Shirt  (1 image)
+  op18_MensLightweightPerformanceTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9571286319336"
+    mediaIds: [
+      "gid://shopify/MediaImage/40160763838696"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men’s Piping Straight Leg Sweatpants  (6 images)
+  op19_MensPipingStraightLegSweatpants: productDeleteMedia(
+    productId: "gid://shopify/Product/9571280388328"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182758310120",
+      "gid://shopify/MediaImage/40153661866216",
+      "gid://shopify/MediaImage/40153661964520",
+      "gid://shopify/MediaImage/40153661898984",
+      "gid://shopify/MediaImage/40153661931752",
+      "gid://shopify/MediaImage/40153661997288"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men’s Raglan Sleeve Performance T-Shirt  (3 images)
+  op20_MensRaglanSleevePerformanceTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9571286778088"
+    mediaIds: [
+      "gid://shopify/MediaImage/40160760299752",
+      "gid://shopify/MediaImage/40160760332520",
+      "gid://shopify/MediaImage/40160760365288"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men’s Regular Fit Performance Shorts  (5 images)
+  op21_MensRegularFitPerformanceShorts: productDeleteMedia(
+    productId: "gid://shopify/Product/9571676094696"
+    mediaIds: [
+      "gid://shopify/MediaImage/40153657344232",
+      "gid://shopify/MediaImage/40153657442536",
+      "gid://shopify/MediaImage/40153657377000",
+      "gid://shopify/MediaImage/40153657409768",
+      "gid://shopify/MediaImage/40153657475304"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+}

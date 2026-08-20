@@ -1,0 +1,432 @@
+{%- comment -%}
+  HIVOLT — layout/theme.liquid
+  ────────────────────────────
+  The shared shell for every page. Drop-in replacement for layout/theme.liquid.
+
+  Requires one asset: assets/hivolt.css. site/build-theme.py concatenates
+  theme-hivolt.css and every per-agent stylesheet — including this shell's
+  site/theme/layout.css — into that single file, so nothing else is linked here.
+
+  Chrome lifted from the built design:
+      ticker   — site/index.liquid
+      masthead — site/index.html
+      footer   — site/index.html
+
+  The footer opens with snippets/newsletter.liquid — Shopify's native
+  form 'customer', which sets accepts_marketing and needs no app. Before it,
+  the only signup in the store was on /pages/membership, a page almost nobody
+  navigates to, so every other page gave a visitor no way to leave an address.
+
+  Menus are read from linklists. If a linklist is empty or absent the hardcoded
+  links below render instead, so the header and footer are never blank on a
+  store where the menus have not been wired up yet.
+
+      linklists['main-menu']  — masthead + mobile panel (flat, one level)
+      linklists.footer        — footer columns. Each TOP-LEVEL link becomes a
+                                column heading; its CHILD links become the list.
+                                Capped at 4 columns, matching the four
+                                hardcoded columns and the 1.5fr+4x1fr grid.
+                                A 5th would overflow the row.
+
+  sameAs in the Organization block is built from the social_* theme settings,
+  and only from the ones that actually hold a value. It is what tells Google
+  that a social profile and this website are the same brand entity, so an
+  empty array taught it nothing. A dead URL, though, is worse than no URL —
+  which is why each entry is conditional rather than a fixed list.
+{%- endcomment -%}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.className=document.documentElement.className.replace('no-js','js');</script>
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- comment -%}
+    The Google Search Console verification page is a published page whose entire
+    body is the verification token. It is not a destination, it has no content
+    to rank, and an indexed copy of it is a thin-content page competing against
+    the pages that matter. Search engines still need to fetch it, so noindex
+    rather than disallow, and follow so it passes nothing on to a dead end.
+  {%- endcomment -%}
+  {%- if page.handle == 'google-site-verification' -%}
+    <meta name="robots" content="noindex,follow">
+  {%- endif -%}
+
+  {%- comment -%}
+    Search Console verification, meta-tag method.
+
+    The store already holds a token for the HTML-FILE method
+    (google6945ed5c46bc40d8), served by redirecting /google<token>.html to
+    /pages/google-site-verification. Google's own instructions say not to
+    redirect the verification file, and Shopify gives no way to serve a real
+    file at the site root — so that route cannot be relied on.
+
+    The meta tag is the method that works on Shopify, because the theme owns
+    the <head>. Its token is NOT the same string as the file token: Search
+    Console issues a separate one per method. Paste that one here.
+
+    It renders on every page, which is harmless and means verification does
+    not break if the homepage template is ever swapped.
+  {%- endcomment -%}
+  {%- if settings.google_site_verification != blank -%}
+    <meta name="google-site-verification" content="{{ settings.google_site_verification | escape }}">
+  {%- endif -%}
+  {%- if settings.bing_site_verification != blank -%}
+    <meta name="msvalidate.01" content="{{ settings.bing_site_verification | escape }}">
+  {%- endif -%}
+  {%- if settings.favicon %}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif %}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; tagged {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+  {%- assign meta_desc = page_description | default: shop.description | default: shop.name -%}
+  {%- if meta_desc != blank %}
+    <meta name="description" content="{{ meta_desc | strip_html | truncate: 320 | escape }}">
+  {%- endif %}
+
+  {%- comment -%} Open Graph / Twitter — real values only, no invented handles {%- endcomment -%}
+  {%- assign og_type = 'website' -%}
+  {%- if request.page_type == 'product' -%}
+    {%- assign og_type = 'product' -%}
+  {%- elsif request.page_type == 'article' -%}
+    {%- assign og_type = 'article' -%}
+  {%- endif -%}
+  {%- assign og_image = false -%}
+  {%- if request.page_type == 'product' and product.featured_image -%}
+    {%- assign og_image = product.featured_image -%}
+  {%- elsif request.page_type == 'collection' and collection.featured_image -%}
+    {%- assign og_image = collection.featured_image -%}
+  {%- elsif request.page_type == 'article' and article.image -%}
+    {%- assign og_image = article.image -%}
+  {%- elsif settings.share_image -%}
+    {%- assign og_image = settings.share_image -%}
+  {%- endif -%}
+
+  <meta property="og:site_name" content="{{ shop.name | escape }}">
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  {%- if meta_desc != blank %}
+    <meta property="og:description" content="{{ meta_desc | strip_html | truncate: 320 | escape }}">
+  {%- endif %}
+  {%- if og_image %}
+    {%- assign og_image_src = og_image | image_url: width: 1200 | prepend: 'https:' %}
+    <meta property="og:image" content="{{ og_image_src }}">
+    <meta property="og:image:secure_url" content="{{ og_image_src }}">
+    <meta property="og:image:alt" content="{{ og_image.alt | default: page_title | escape }}">
+  {%- endif %}
+  {%- if request.page_type == 'product' %}
+    <meta property="product:price:amount" content="{{ product.price | divided_by: 100.0 }}">
+    <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+    <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+  {%- endif %}
+
+  <meta name="twitter:card" content="{% if og_image %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  {%- if meta_desc != blank %}
+    <meta name="twitter:description" content="{{ meta_desc | strip_html | truncate: 200 | escape }}">
+  {%- endif %}
+  {%- if og_image %}
+    <meta name="twitter:image" content="{{ og_image | image_url: width: 1200 | prepend: 'https:' }}">
+    <meta name="twitter:image:alt" content="{{ og_image.alt | default: page_title | escape }}">
+  {%- endif %}
+
+  {{ content_for_header }}
+
+  {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%} Brand entity + sitelinks search box. Renders on every page. {%- endcomment -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "description": "HIVOLT makes performance activewear with published fabric specifications - exact fibre composition and fabric weight taken from the supplier specification.",
+    {%- if settings.logo %}
+    "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {%- endif %}
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": {{ settings.support_email | default: shop.email | default: 'support@hivolt-usa.com' | json }},
+      "areaServed": "US",
+      "availableLanguage": "English"
+    },
+    {%- comment -%}
+      Collected first, then joined, so the array never carries a trailing
+      comma when one of the four settings is left blank.
+    {%- endcomment -%}
+    {%- assign social = '' -%}
+    {%- if settings.social_facebook != blank -%}{%- assign social = social | append: settings.social_facebook | append: '|' -%}{%- endif -%}
+    {%- if settings.social_instagram != blank -%}{%- assign social = social | append: settings.social_instagram | append: '|' -%}{%- endif -%}
+    {%- if settings.social_tiktok != blank -%}{%- assign social = social | append: settings.social_tiktok | append: '|' -%}{%- endif -%}
+    {%- if settings.social_youtube != blank -%}{%- assign social = social | append: settings.social_youtube | append: '|' -%}{%- endif -%}
+    {%- assign social_list = social | split: '|' -%}
+    "sameAs": [
+      {%- for s in social_list -%}
+        {{ s | strip | json }}{%- unless forloop.last %},{% endunless -%}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</head>
+
+<body class="template-{{ request.page_type | handle }}">
+
+<a class="skip" href="#main">Skip to content</a>
+
+{%- comment -%}
+  ── menus: linklist first, hardcoded fallback second ──────────────────
+  `size | plus: 0` coerces a missing linklist, a missing `links`, and an
+  empty `links` all to 0, so the count is always an integer and the `> 0`
+  test can never raise on nil. Do not "simplify" this to `!= blank`: that
+  reads a MISSING linklist as present and silently renders an empty menu,
+  and `.size > 0` on its own raises on nil.
+{%- endcomment -%}
+{%- assign main_links = linklists['main-menu'].links -%}
+{%- assign main_count = main_links.size | plus: 0 -%}
+{%- assign nav_titles = 'Women,Men,Training,Fabric,About' | split: ',' -%}
+{%- assign nav_urls = '/collections/womens-activewear,/collections/mens-activewear,/collections/training,/pages/materials-sustainability,/pages/about-us' | split: ',' -%}
+
+{%- assign footer_links = linklists.footer.links -%}
+{%- assign footer_count = footer_links.size | plus: 0 -%}
+{%- assign foot_shop_t = 'Women,Men,Tops,Bottoms,Sports bras,Leggings,Shorts,Outerwear & hoodies,Everything' | split: ',' -%}
+{%- assign foot_shop_u = '/collections/womens-activewear,/collections/mens-activewear,/collections/tops,/collections/bottoms,/collections/sports-bras,/collections/leggings,/collections/shorts,/collections/outerwear-hoodies,/collections/all' | split: ',' -%}
+{%- assign foot_sport_t = 'Training,Yoga & studio,Tennis & court,Football & soccer,Basketball,Drop 04 — Voltcore' | split: ',' -%}
+{%- assign foot_sport_u = '/collections/training,/collections/yoga-studio,/collections/tennis-and-court,/collections/football-soccer,/collections/basketball,/collections/drop-04-voltcore' | split: ',' -%}
+{%- assign foot_info_t = 'Fabric & specifications,Size guide,Shipping,Returns & refunds' | split: ',' -%}
+{%- assign foot_info_u = '/pages/materials-sustainability,/pages/size-guide,/pages/shipping-delivery,/pages/returns-refunds' | split: ',' -%}
+{%- assign foot_co_t = 'About,Contact,Privacy,Terms' | split: ',' -%}
+{%- assign foot_co_u = '/pages/about-us,/pages/contact-us,/policies/privacy-policy,/pages/terms-of-service' | split: ',' -%}
+
+{%- comment -%}
+  settings.show_ticker comes from settings_schema.json. Tested against false
+  rather than for truth, so the ticker still renders on a store where the
+  setting was never saved.
+{%- endcomment -%}
+{%- comment -%}
+  The ticker TRACK is aria-hidden because it prints its contents twice — that
+  duplication is what makes the marquee loop seamlessly, and a screen reader
+  would read every line twice. So anything that carries real information, as
+  opposed to decoration, has to be stated once outside it. That is what the
+  visually-hidden paragraph below is for; without it, surfacing a discount code
+  here would announce it to sighted visitors only.
+
+  The offer renders only when BOTH the text and the code are set. A code with no
+  text, or text with no code, is a shopper hunting for something that isn't
+  there.
+{%- endcomment -%}
+{%- unless settings.show_ticker == false -%}
+{%- assign promo_on = false -%}
+{%- if settings.promo_enabled and settings.promo_text != blank and settings.promo_code != blank -%}
+  {%- assign promo_on = true -%}
+{%- endif -%}
+<div class="ticker">
+  {%- if promo_on -%}
+    <p class="visually-hidden">{{ settings.promo_text | escape }} — use code {{ settings.promo_code | escape }} at checkout.</p>
+  {%- endif -%}
+  <div class="ticker__track" aria-hidden="true">
+    {%- for i in (1..2) -%}
+      {%- if promo_on -%}
+        <span class="ticker__promo">{{ settings.promo_text | escape }} · code {{ settings.promo_code | escape }}</span>
+      {%- endif -%}
+      <span>Free US shipping · no minimum</span>
+      <span>60-day returns</span>
+      <span>Every fabric weight published</span>
+      <span>Ships from Illinois</span>
+      <span>US orders only</span>
+    {%- endfor -%}
+  </div>
+</div>
+{%- endunless -%}
+
+<header class="mast">
+  <div class="wrap mast__in">
+    <a href="{{ routes.root_url }}" class="logo">{{ shop.name }}</a>
+
+    <nav class="nav" aria-label="Primary">
+      {%- if main_count > 0 -%}
+        {%- for link in main_links -%}
+          <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for title in nav_titles -%}
+          <a href="{{ nav_urls[forloop.index0] }}">{{ title }}</a>
+        {%- endfor -%}
+      {%- endif -%}
+    </nav>
+
+    <div class="mast__act">
+      <a href="{{ routes.search_url }}" class="mono mast__search">Search</a>
+      <a href="{{ routes.cart_url }}" class="mono">Bag ({{ cart.item_count }})</a>
+      {%- comment -%}
+        The toggle is last so it is the element immediately before #nav-panel in
+        the tab order: Tab straight after opening lands on the first menu link,
+        not on the bag. It is hidden above 860px, so desktop order is unchanged.
+      {%- endcomment -%}
+      <button type="button" class="mnav__toggle" id="nav-toggle"
+              aria-expanded="false" aria-controls="nav-panel">Menu</button>
+    </div>
+  </div>
+
+  <div class="mnav" id="nav-panel" hidden>
+    <nav class="wrap mnav__in" aria-label="Primary, mobile">
+      <ul class="mnav__list">
+        {%- if main_count > 0 -%}
+          {%- for link in main_links -%}
+            <li><a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for title in nav_titles -%}
+            <li><a href="{{ nav_urls[forloop.index0] }}">{{ title }}</a></li>
+          {%- endfor -%}
+        {%- endif -%}
+        <li><a href="{{ routes.search_url }}">Search</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  {{ content_for_layout }}
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    {%- comment -%}
+      The signup is skipped on /pages/membership, which renders its own
+      form 'customer'. form.posted_successfully? is scoped to the form TYPE,
+      not to a particular element, so both forms would report success after one
+      submit and the page would print the confirmation twice.
+    {%- endcomment -%}
+    {%- unless page.handle == 'membership' -%}
+      {%- render 'newsletter' -%}
+    {%- endunless -%}
+
+    <div class="foot__grid">
+      <div>
+        <a href="{{ routes.root_url }}" class="logo" style="font-size:17px">{{ shop.name }}</a>
+        <p class="foot__addr" style="margin-top:16px">
+          Technical activewear, specified in public.<br>
+          Shipping within the United States.<br>
+          {{ settings.support_email | default: shop.email | default: 'support@hivolt-usa.com' }}
+        </p>
+      </div>
+
+      {%- if footer_count > 0 -%}
+        {%- for column in footer_links limit: 4 -%}
+          <div>
+            <h2 class="foot__h">{{ column.title | escape }}</h2>
+            <ul>
+              {%- assign col_count = column.links.size | plus: 0 -%}
+              {%- if col_count > 0 -%}
+                {%- for link in column.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                {%- endfor -%}
+              {%- else -%}
+                <li><a href="{{ column.url }}">{{ column.title | escape }}</a></li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div>
+          <h2 class="foot__h">Shop</h2>
+          <ul>
+            {%- for title in foot_shop_t -%}
+              <li><a href="{{ foot_shop_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div>
+          <h2 class="foot__h">Sport</h2>
+          <ul>
+            {%- for title in foot_sport_t -%}
+              <li><a href="{{ foot_sport_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div>
+          <h2 class="foot__h">Information</h2>
+          <ul>
+            {%- for title in foot_info_t -%}
+              <li><a href="{{ foot_info_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        <div>
+          <h2 class="foot__h">Company</h2>
+          <ul>
+            {%- for title in foot_co_t -%}
+              <li><a href="{{ foot_co_u[forloop.index0] }}">{{ title | escape }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="foot__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <span>Free US shipping · 60-day returns · US orders only</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn   = document.getElementById('nav-toggle');
+  var panel = document.getElementById('nav-panel');
+  if(!btn || !panel) return;
+
+  var wide = window.matchMedia('(min-width: 861px)');
+
+  function isOpen(){ return btn.getAttribute('aria-expanded') === 'true'; }
+
+  function setOpen(open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.textContent = open ? 'Close' : 'Menu';
+    panel.hidden = !open;
+  }
+
+  btn.addEventListener('click', function(){ setOpen(!isOpen()); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape' && e.key !== 'Esc') return;
+    if(!isOpen()) return;
+    setOpen(false);
+    btn.focus();
+  });
+
+  // A resize past the breakpoint hides the panel in CSS; keep state honest.
+  function sync(){ if(wide.matches && isOpen()) setOpen(false); }
+  if(wide.addEventListener) { wide.addEventListener('change', sync); }
+  else if(wide.addListener) { wide.addListener(sync); }
+
+  setOpen(false);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+# STEP 1 — run this first. It removes the fabricated image from ONE product.
+# Check that product in your storefront, confirm the real supplier photo is
+# now the featured image, then run step2.
+
+mutation RemoveFabricatedImages {
+  # Cropped Zip-Through Hoodie  (1 image)
+  op1_CroppedZipThroughHoodie: productDeleteMedia(
+    productId: "gid://shopify/Product/9571272163560"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182759096552"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+}

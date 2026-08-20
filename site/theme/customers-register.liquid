@@ -1,0 +1,156 @@
+{%- comment -%}
+  HIVOLT — create account
+  ───────────────────────
+  Installs as templates/customers/register.liquid.
+
+  Requires, from layout/theme.liquid:
+      'hivolt.css'  | asset_url | stylesheet_tag
+      'account.css' | asset_url | stylesheet_tag
+
+  No <main> element: layout/theme.liquid already provides one.
+
+  Shopify decides what a valid password is and reports it back through
+  form.errors. This template never states a rule it cannot enforce, so there is
+  no invented minimum length in the hint text.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li><a href="{{ routes.account_login_url }}">Sign in</a></li>
+    <li aria-current="page">Create account</li>
+  </ol>
+</nav>
+
+<section class="acct acct--solo wrap">
+
+  <div class="sec__head">
+    <h1 class="sec__h">Create account</h1>
+    <span class="mono">Optional</span>
+  </div>
+
+  <p class="acct__lede">
+    An account stores your order history and your addresses. You can buy without one.
+  </p>
+
+  {%- form 'create_customer', novalidate: 'novalidate' -%}
+
+    {%- if form.errors -%}
+      <div class="frm__alert" role="alert" tabindex="-1" id="register-alert">
+        <p class="frm__alert-h">The account was not created. Fix the following, then send it again.</p>
+        <ul class="frm__alert-l">
+          {%- for field in form.errors -%}
+            <li>
+              {%- case field -%}
+                {%- when 'form' -%}
+                  {{ form.errors.messages[field] }}
+                {%- when 'first_name' -%}
+                  <a href="#RegisterFirst">First name — {{ form.errors.messages[field] }}.</a>
+                {%- when 'last_name' -%}
+                  <a href="#RegisterLast">Last name — {{ form.errors.messages[field] }}.</a>
+                {%- when 'email' -%}
+                  <a href="#RegisterEmail">Email address — {{ form.errors.messages[field] }}. If you have ordered before, sign in instead of creating a second account.</a>
+                {%- when 'password' -%}
+                  <a href="#RegisterPassword">Password — {{ form.errors.messages[field] }}.</a>
+                {%- else -%}
+                  {{ form.errors.translated_fields[field] | capitalize }} — {{ form.errors.messages[field] }}
+              {%- endcase -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+        <div class="frm__raw">{{ form.errors | default_errors }}</div>
+      </div>
+    {%- endif -%}
+
+    <div class="fld__pair">
+      <div class="fld{% if form.errors contains 'first_name' %} fld--bad{% endif %}">
+        <label class="fld__lab mono" for="RegisterFirst">First name</label>
+        <input
+          class="fld__in"
+          type="text"
+          id="RegisterFirst"
+          name="customer[first_name]"
+          value="{{ form.first_name }}"
+          autocomplete="given-name"
+          autocapitalize="words"
+          {% if form.errors contains 'first_name' %}aria-invalid="true" aria-describedby="RegisterFirst-err"{% endif %}>
+        {%- if form.errors contains 'first_name' -%}
+          <p class="fld__err" id="RegisterFirst-err">Enter the first name to put on the parcel.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="fld{% if form.errors contains 'last_name' %} fld--bad{% endif %}">
+        <label class="fld__lab mono" for="RegisterLast">Last name</label>
+        <input
+          class="fld__in"
+          type="text"
+          id="RegisterLast"
+          name="customer[last_name]"
+          value="{{ form.last_name }}"
+          autocomplete="family-name"
+          autocapitalize="words"
+          {% if form.errors contains 'last_name' %}aria-invalid="true" aria-describedby="RegisterLast-err"{% endif %}>
+        {%- if form.errors contains 'last_name' -%}
+          <p class="fld__err" id="RegisterLast-err">Enter the last name to put on the parcel.</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="fld{% if form.errors contains 'email' %} fld--bad{% endif %}">
+      <label class="fld__lab mono" for="RegisterEmail">Email address</label>
+      <input
+        class="fld__in"
+        type="email"
+        id="RegisterEmail"
+        name="customer[email]"
+        value="{{ form.email }}"
+        autocomplete="email"
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        required
+        {% if form.errors contains 'email' %}aria-invalid="true" aria-describedby="RegisterEmail-err"{% endif %}>
+      <p class="fld__hint" id="RegisterEmail-hint">Order confirmations and tracking go to this address.</p>
+      {%- if form.errors contains 'email' -%}
+        <p class="fld__err" id="RegisterEmail-err">Enter an address you can open, in the form name@example.com.</p>
+      {%- endif -%}
+    </div>
+
+    <div class="fld{% if form.errors contains 'password' %} fld--bad{% endif %}">
+      <label class="fld__lab mono" for="RegisterPassword">Password</label>
+      <input
+        class="fld__in"
+        type="password"
+        id="RegisterPassword"
+        name="customer[password]"
+        autocomplete="new-password"
+        required
+        {% if form.errors contains 'password' %}aria-invalid="true" aria-describedby="RegisterPassword-err"{% endif %}>
+      {%- if form.errors contains 'password' -%}
+        <p class="fld__err" id="RegisterPassword-err">Choose a different password and type it again.</p>
+      {%- endif -%}
+    </div>
+
+    <div class="frm__acts">
+      <button type="submit" class="btn">Create account</button>
+      <a class="frm__link" href="{{ routes.account_login_url }}">Already have one — sign in</a>
+    </div>
+  {%- endform -%}
+
+  <div class="acct__alt">
+    <h2 class="acct__sub">What the account holds</h2>
+    <div class="sheet">
+      <div class="sheet__row"><span class="sheet__k">Orders</span><span class="sheet__v">Every order placed with this address</span></div>
+      <div class="sheet__row"><span class="sheet__k">Addresses</span><span class="sheet__v">As many as you want, one marked default</span></div>
+      <div class="sheet__row"><span class="sheet__k">Payment</span><span class="sheet__v">Handled by Shopify Checkout, never stored here</span></div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+(function(){
+  var alert = document.querySelector('.frm__alert');
+  if (alert) alert.focus();
+})();
+</script>

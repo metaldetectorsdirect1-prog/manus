@@ -1,0 +1,149 @@
+/* ─────────────────────────────────────────────────────────────
+   HIVOLT — page.fabric.liquid
+   Additive only. Loads AFTER theme-hivolt.css and never overrides
+   a token. Everything here is scoped to the fabric reference page;
+   the shared classes (.wrap .sec__head .sec__h .mono .sheet .disc
+   .pub .trust__grid .faq) are reused as-is, not redeclared.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── header ────────────────────────────────────────────────── */
+.fab-head{padding-block:clamp(40px,6vw,88px) clamp(28px,4vw,52px)}
+.fab-head__eyebrow{color:var(--steel)}
+.fab-head__h{
+  font-size:clamp(34px,7.4vw,92px); line-height:.92; letter-spacing:-.032em;
+  font-weight:800; text-transform:uppercase; margin:24px 0 0; text-wrap:balance;
+}
+.fab-head__sub{
+  max-width:64ch; margin:28px 0 0; font-size:clamp(15.5px,1.4vw,18px);
+  color:var(--ink-2); line-height:1.64;
+}
+
+/* in-page contents — the page is long enough to need one */
+.fab__toc{
+  display:flex; flex-wrap:wrap; gap:0; margin-top:32px;
+  border-top:1px solid var(--ink); border-left:1px solid var(--rule);
+}
+.fab__toc a{
+  color:var(--steel); text-decoration:none; padding:13px 16px;
+  border-right:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  flex:1 1 auto; min-width:0; white-space:nowrap;
+  transition:background .14s ease,color .14s ease;
+}
+.fab__toc a:hover{background:var(--ink); color:var(--paper)}
+
+.fab__rte{margin-top:30px; max-width:68ch; color:var(--ink-2); line-height:1.66}
+.fab__rte p{margin:0 0 15px}
+.fab__rte p:last-child{margin-bottom:0}
+
+/* ── section shell ─────────────────────────────────────────── */
+.fab{padding-block:var(--band)}
+.fab--alt{background:var(--paper-2)}
+
+.fab__lead{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(22px,4vw,64px); margin-top:34px;
+}
+.fab__lead--tight{margin-top:8px}
+@media (max-width:860px){.fab__lead{grid-template-columns:minmax(0,1fr)}}
+.fab__lead>*{min-width:0}
+
+.fab__p{margin:0 0 17px; color:var(--ink-2); font-size:15.5px; line-height:1.68; max-width:66ch}
+.fab__p:last-child{margin-bottom:0}
+.fab__p strong{color:var(--ink); font-weight:700}
+.fab__p--lead{margin-top:30px; font-size:clamp(15.5px,1.35vw,17.5px)}
+
+.fab__sub{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--blueprint); margin:38px 0 0; font-weight:400;
+}
+.fab__lead .fab__sub:first-child{margin-top:34px}
+
+.fab__list{margin:16px 0 0; padding:0; list-style:none; display:grid; gap:0}
+.fab__list li{
+  padding:11px 0; border-top:1px solid var(--rule);
+  color:var(--ink-2); font-size:14.5px; line-height:1.62;
+}
+
+/* ── weight-band table ─────────────────────────────────────── */
+/* Global table/th/td styling lives in theme-hivolt.css. This wrapper
+   supplies the required horizontal scroll container and re-aligns the
+   two prose columns, which the right-aligned numeric default suits badly. */
+.fab__tw{
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  border:1px solid var(--rule); background:var(--paper); margin-top:30px;
+}
+.fab__tw table{min-width:760px}
+.fab__tw th,.fab__tw td{text-align:left; vertical-align:top; line-height:1.6}
+.fab__tw tbody th{
+  background:transparent; color:var(--ink); font-weight:700;
+  font-size:11px; letter-spacing:.13em; white-space:nowrap;
+}
+.fab__tw .fab__num{
+  color:var(--blueprint); font-weight:700; white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.fab__tw .fab__beh{min-width:280px; color:var(--ink-2); text-transform:none; letter-spacing:.01em}
+.fab__tw tbody td:nth-child(3){min-width:200px; color:var(--ink-2)}
+
+.fab__disc{margin-top:16px; max-width:96ch; background:var(--paper)}
+.fab__disc em{font-style:normal; color:var(--ink); font-weight:700}
+
+/* ── numbered procedure ────────────────────────────────────── */
+.fab__steps{
+  counter-reset:fabstep; list-style:none; margin:30px 0 0; padding:0;
+  display:grid; gap:1px; background:var(--rule); border:1px solid var(--rule);
+}
+.fab__steps li{
+  counter-increment:fabstep; background:var(--paper); position:relative;
+  padding:17px 20px 17px 64px; color:var(--ink-2); font-size:15px; line-height:1.62;
+}
+.fab__steps li::before{
+  content:counter(fabstep,decimal-leading-zero); position:absolute; left:20px; top:19px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--blueprint);
+  font-variant-numeric:tabular-nums;
+}
+.fab__steps strong{color:var(--ink); font-weight:700}
+@media (max-width:520px){
+  .fab__steps li{padding:15px 16px 16px; }
+  .fab__steps li::before{position:static; display:block; margin-bottom:7px}
+}
+
+/* ── ledger / published-figures sheets (reuses .sheet) ─────── */
+.fab__sheet{max-width:640px}
+.fab__sheet .sheet__row{grid-template-columns:minmax(0,1fr) auto}
+.fab__sheet .sheet__k{white-space:normal; letter-spacing:.09em}
+.fab__sheet .sheet__v{white-space:nowrap}
+.fab__sheet a.sheet__row{
+  text-decoration:none; color:inherit;
+  padding-inline:10px; margin-inline:-10px;
+  transition:background .14s ease;
+}
+.fab__sheet a.sheet__row:hover{background:var(--paper-2)}
+.fab__sheet a.sheet__row:hover .sheet__k{color:var(--ink)}
+
+/* ── fibre glossary (reuses .trust__grid / .trust__c) ──────── */
+.trust__grid.fab__fib{grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:34px}
+@media (max-width:960px){.trust__grid.fab__fib{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:680px){.trust__grid.fab__fib{grid-template-columns:minmax(0,1fr)}}
+.trust__grid.fab__fib>*{min-width:0}
+.fab__fib .trust__v{font-size:18px}
+
+.fab__attr{list-style:none; margin:15px 0 0; padding:0; display:grid; gap:0}
+.fab__attr li{
+  display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px;
+  padding:9px 0; border-top:1px solid var(--rule);
+  font-size:13px; color:var(--ink-2); line-height:1.55;
+}
+.fab__attr b{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--steel); white-space:nowrap; padding-top:3px; font-weight:400;
+}
+
+.fab__note{max-width:88ch; margin-top:24px}
+
+/* ── questions (reuses .faq) ───────────────────────────────── */
+/* The .faq band is --ink in both themes, but --ink itself inverts, so a
+   --paper sub-line held back with opacity is only legible in one of them
+   (5.57:1 light, 4.19:1 dark). --on-ink-2 is derived for this ground and
+   tracks the inversion: 6.85:1 / 5.40:1. */
+.faq .fab__faqnote{color:var(--on-ink-2); margin:0}

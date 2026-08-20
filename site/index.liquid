@@ -1,0 +1,327 @@
+{%- comment -%}
+  HIVOLT — homepage template
+  ──────────────────────────
+  Drop-in replacement for templates/index.liquid.
+
+  Requires assets/hivolt.css (supplied alongside this file) to be present and
+  linked from layout/theme.liquid:
+
+      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+
+  Product data is read from the collection named in the FEATURED variable
+  below. Fabric weight is read from a product metafield; where none exists the
+  block is omitted rather than guessed — the whole premise of this page is that
+  every number on it is real.
+
+  Metafield expected (create in Settings → Custom data → Products):
+      namespace: spec   key: gsm          type: integer
+      namespace: spec   key: composition  type: single line text
+{%- endcomment -%}
+
+{%- assign FEATURED = 'featured' -%}
+{%- assign col = collections[FEATURED] -%}
+{%- if col == blank or col.products_count == 0 -%}
+  {%- assign col = collections.all -%}
+{%- endif -%}
+
+{%- comment -%}
+  The ticker, masthead, <main> and footer now live in layout/theme.liquid so
+  they render on every page. This template supplies page content only.
+{%- endcomment -%}
+
+  <!-- ── HERO: the specification is the thesis ─────────────── -->
+  <section class="hero wrap">
+    <p class="mono hero__eyebrow">Technical activewear · United States</p>
+    <h1 class="hero__h">Every number<br>on this page<br><em>is measured.</em></h1>
+    <p class="hero__sub">
+      Most activewear brands describe fabric with adjectives. We publish the
+      specification — fibre composition, fabric weight in grams per square metre,
+      and where it ships from. Compare it against anything.
+    </p>
+    <div class="hero__cta">
+      <a class="btn" href="{{ routes.all_products_collection_url }}">Shop the range</a>
+      <a class="btn btn--ghost" href="/pages/materials-sustainability">How we measure</a>
+    </div>
+
+    <div class="spec">
+      <div class="spec__cell">
+        <div class="spec__k">Fabric weight</div>
+        <div class="spec__v">220 <small>g/m²</small></div>
+        <p class="spec__n">Core legging knit. Category norm is 180–200.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Composition</div>
+        <div class="spec__v">75/25</div>
+        <p class="spec__n">Nylon / spandex, from the mill spec sheet.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Ships from</div>
+        <div class="spec__v">IL, USA</div>
+        <p class="spec__n">8–14 business days, tracked.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Returns</div>
+        <div class="spec__v">60 days</div>
+        <p class="spec__n">Unworn, tags on. No restocking fee.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Catalogue</div>
+        <div class="spec__v">{{ collections.all.products_count }}</div>
+        <p class="spec__n">Styles, each with a published spec.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SIGNATURE: the opacity comparator ─────────────────── -->
+  <section class="band-ink cmp">
+    <div class="wrap cmp__grid">
+      <div>
+        <p class="mono cmp__eyebrow">The 220 argument</p>
+        <h2 class="cmp__h">Why fabric weight is<br>the only number<br>that matters in a squat.</h2>
+        <p class="cmp__p">
+          Grams per square metre is knit density. Below about 200 g/m², a legging
+          stretched across the glute thins enough to go translucent — the failure
+          everyone has had and nobody photographs. Our core knit is 220.
+        </p>
+        <p class="cmp__p">
+          Drag the slider. This is a diagram of how density changes opacity, not a
+          photograph of our fabric — we don't publish pictures we haven't taken.
+        </p>
+      </div>
+
+      <div>
+        <div class="swatch">
+          <div class="swatch__print" aria-hidden="true">
+            <div class="l">Opacity test card</div>
+            <div class="r"></div>
+            <div class="l l--big">Can you read this?</div>
+            <div class="r"></div>
+            <div class="l">If yes, the knit is too light to squat in</div>
+          </div>
+          <div class="swatch__knit" id="knit" aria-hidden="true"></div>
+          <div class="swatch__tag" id="tag">220 g/m² — fully opaque</div>
+        </div>
+        <div class="cmp__ctl">
+          <div class="cmp__read">
+            <span>Fabric weight</span>
+            <span><b id="read">220</b> g/m²</span>
+          </div>
+          <label for="gsm" class="visually-hidden">Fabric weight in grams per square metre</label>
+          <input type="range" id="gsm" min="150" max="220" step="5" value="220">
+          <p class="cmp__note">
+            Illustration of relative opacity across knit densities. Not a photograph
+            of a HIVOLT garment. The 220 g/m² figure is taken from our mill's
+            specification sheet.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CATALOGUE ─────────────────────────────────────────── -->
+  <section class="cat wrap">
+    <div class="sec__head">
+      <h2 class="sec__h">The range</h2>
+      <span class="mono">{{ collections.all.products_count }} styles · named by weight</span>
+    </div>
+
+    <div class="grid">
+      {%- for product in col.products limit: 8 -%}
+        {%- assign gsm = product.metafields.spec.gsm -%}
+        {%- assign comp = product.metafields.spec.composition -%}
+        <a class="item" href="{{ product.url }}">
+          <div class="item__fig">
+            <span class="item__ref">REF {{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            {%- if gsm != blank -%}<span class="item__gsm">{{ gsm }}</span>{%- endif -%}
+            {%- if product.featured_image -%}
+              <img
+                src="{{ product.featured_image | image_url: width: 800 }}"
+                srcset="{{ product.featured_image | image_url: width: 400 }} 400w,
+                        {{ product.featured_image | image_url: width: 800 }} 800w,
+                        {{ product.featured_image | image_url: width: 1200 }} 1200w"
+                sizes="(max-width:560px) 50vw, (max-width:1080px) 50vw, 25vw"
+                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                width="{{ product.featured_image.width }}"
+                height="{{ product.featured_image.height }}"
+                loading="{% if forloop.index <= 4 %}eager{% else %}lazy{% endif %}">
+            {%- else -%}
+              <div class="ph"><span>No image</span></div>
+            {%- endif -%}
+          </div>
+          <div class="item__body">
+            <h3 class="item__name">{{ product.title }}</h3>
+            {%- if comp != blank -%}
+              <p class="item__meta">{{ comp }}</p>
+            {%- else -%}
+              <p class="item__meta">{{ product.type }}</p>
+            {%- endif -%}
+            <div class="item__foot">
+              <span class="item__price">
+                {{ product.price | money }}{% if product.price_varies %} +{% endif %}
+              </span>
+              <span class="item__buy">{% if product.available %}View{% else %}Sold out{% endif %}</span>
+            </div>
+          </div>
+        </a>
+      {%- else -%}
+        <p class="mono" style="padding:28px">No products published yet.</p>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  <!-- ── WHAT WE PUBLISH ───────────────────────────────────── -->
+  <section class="pub">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 class="sec__h">What we publish</h2>
+        <span class="mono">And what we won't</span>
+      </div>
+
+      <div class="pub__grid">
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">The mill specification</h3>
+          <p class="pub__d">Fibre composition and fabric weight for every style, copied from the
+            supplier's sheet without editing. If a number looks unflattering, it stays.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">Where it ships from</h3>
+          <p class="pub__d">Orders leave a facility in Illinois and take 8–14 business days. That's
+            slower than Amazon and we'd rather say so than surprise you at the door.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">Photographs we took</h3>
+          <p class="pub__d">Product images are the supplier's own studio photography of the exact
+            garment. Diagrams are labelled as diagrams.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Reviews we don't have</h3>
+          <p class="pub__d">HIVOLT is new. There are no star ratings on this site because there are
+            no customers yet to write them. When there are, they'll be real.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Countdown timers</h3>
+          <p class="pub__d">No fake stock counters, no "12 people are viewing", no expiring offer
+            that resets when you reload. The price is the price.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Health claims</h3>
+          <p class="pub__d">Leggings are not a medical device. Competitors in this category sell
+            them as treatments for cellulite and varicose veins. We won't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRUST ─────────────────────────────────────────────── -->
+  <section class="trust wrap">
+    <div class="sec__head">
+      <h2 class="sec__h">Buying from us</h2>
+      <span class="mono">The whole policy, no asterisks</span>
+    </div>
+    <div class="trust__grid">
+      <div class="trust__c">
+        <div class="trust__k">Shipping</div>
+        <p class="trust__v">Free, every order</p>
+        <p class="trust__d">No minimum, no threshold. 8–14 business days, tracked from dispatch.
+          Continental US only — we don't ship anywhere we can't deliver on time.</p>
+      </div>
+      <div class="trust__c">
+        <div class="trust__k">Returns</div>
+        <p class="trust__v">60 days</p>
+        <p class="trust__d">Unworn with tags, for any reason or none. Start it from your order
+          email. No restocking fee and no explanation required.</p>
+      </div>
+      <div class="trust__c">
+        <div class="trust__k">Payment</div>
+        <p class="trust__v">Shopify Checkout</p>
+        <p class="trust__d">Card details go to Shopify's PCI-compliant checkout and never touch
+          our servers. Apple Pay, Google Pay, Shop Pay accepted.</p>
+      </div>
+      <div class="trust__c">
+        <div class="trust__k">Reaching a person</div>
+        <p class="trust__v">One inbox, answered</p>
+        <p class="trust__d">{{ shop.email | default: 'support@hivolt-usa.com' }} — replies within
+          one business day. No bot, no ticket number.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ (with FAQPage schema) ─────────────────────────── -->
+  <section class="faq">
+    <div class="wrap">
+      <h2 class="faq__h">Questions worth asking</h2>
+      <p class="mono" style="color:var(--on-ink-2)">Including the ones most stores avoid</p>
+
+      <div class="faq__list">
+        <details>
+          <summary>Are these your own designs, or blanks?</summary>
+          <p class="faq__a">They're manufacturer blanks, chosen and specified by us — the same
+            model most activewear labels under $100 use. We don't claim to run a factory. What we
+            do is publish the actual specification instead of hiding it behind words like
+            "buttery" and "second-skin".</p>
+        </details>
+        <details>
+          <summary>Why does shipping take 8–14 days?</summary>
+          <p class="faq__a">Because that's how long it takes. Orders are picked and dispatched
+            from a facility in Illinois. We could quote 3–5 days and disappoint most of you; we'd
+            rather quote the real window and hit it.</p>
+        </details>
+        <details>
+          <summary>There are no reviews on this site. Why?</summary>
+          <p class="faq__a">Because HIVOLT is new and nobody has written one yet. Every review
+            widget you've seen on a store this young was either imported from a supplier or
+            bought. When we have real customers, we'll publish what they actually say, including
+            the bad ones.</p>
+        </details>
+        <details>
+          <summary>What does 220 g/m² actually mean for me?</summary>
+          <p class="faq__a">Grams per square metre is how much a square metre of the fabric
+            weighs — a direct proxy for knit density. Denser knit stretches less at the same load,
+            which is why it stays opaque through a deep squat. Most leggings in this price range
+            sit at 180–200 and don't publish the figure at all.</p>
+        </details>
+        <details>
+          <summary>Do you ship outside the United States?</summary>
+          <p class="faq__a">No. Not yet, and we'd rather say no than take an order we can't
+            deliver properly. If that changes it'll be announced here first.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Are these your own designs, or blanks?","acceptedAnswer":{"@type":"Answer","text":"They are manufacturer blanks, chosen and specified by us. We publish the actual specification rather than describing it with adjectives."}},
+    {"@type":"Question","name":"Why does shipping take 8-14 days?","acceptedAnswer":{"@type":"Answer","text":"Orders are picked and dispatched from a facility in Illinois. 8-14 business days is the real window, tracked from dispatch."}},
+    {"@type":"Question","name":"Why are there no reviews on this site?","acceptedAnswer":{"@type":"Answer","text":"HIVOLT is new and no customer has written one yet. When there are real reviews they will be published, including negative ones."}},
+    {"@type":"Question","name":"What does 220 g/m² mean?","acceptedAnswer":{"@type":"Answer","text":"Grams per square metre is the weight of one square metre of fabric, a direct proxy for knit density. Denser knit stretches less under load and stays opaque through a deep squat."}},
+    {"@type":"Question","name":"Do you ship outside the United States?","acceptedAnswer":{"@type":"Answer","text":"No. HIVOLT currently ships within the United States only."}}
+  ]
+}
+</script>
+
+<script>
+(function(){
+  var s=document.getElementById('gsm'),k=document.getElementById('knit'),
+      r=document.getElementById('read'),t=document.getElementById('tag');
+  if(!s)return;
+  function paint(){
+    var v=+s.value;
+    k.style.setProperty('--d',Math.min(1,0.16+((v-150)/70)*0.84).toFixed(3));
+    r.textContent=v;
+    var label = v>=215 ? 'fully opaque' : v>=200 ? 'mostly opaque'
+              : v>=180 ? 'thins under stretch' : 'sheer under stretch';
+    t.textContent=v+' g/m² — '+label;
+  }
+  s.addEventListener('input',paint); paint();
+})();
+</script>

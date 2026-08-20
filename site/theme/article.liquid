@@ -1,0 +1,329 @@
+{%- comment -%}
+  HIVOLT — article template
+  ────────────────────────
+  Drop-in replacement for templates/article.liquid.
+
+  Requires two stylesheets linked from layout/theme.liquid:
+
+      {{ 'hivolt.css'      | asset_url | stylesheet_tag }}
+      {{ 'hivolt-blog.css' | asset_url | stylesheet_tag }}
+
+  The whole page is built around one job: reading. The body sits in an .rte
+  wrapper capped near 68ch — the article HTML is authored in Shopify's editor
+  and cannot be touched from here, so every element it might contain (h2, h3,
+  lists, blockquote, table, code, images) is styled from CSS alone. Tables get
+  their horizontal scroll the same way, because there is no wrapper div to add.
+
+  Reading time is computed from this article's word count at 220 words per
+  minute and labelled as an estimate.
+
+  Comments render only when they are switched on for the blog. If the blog is
+  moderated, the page says so rather than implying a comment is live when it is
+  still queued.
+{%- endcomment -%}
+
+{%- assign wc = article.content | strip_html | split: ' ' | size -%}
+{%- assign mins = wc | divided_by: 220 -%}
+{%- if mins < 1 -%}{%- assign mins = 1 -%}{%- endif -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+    <li aria-current="page">{{ article.title }}</li>
+  </ol>
+</nav>
+
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+  <article class="art wrap">
+
+    <!-- ── header ──────────────────────────────────────────── -->
+    <header class="art__head">
+      <p class="mono art__k">{{ blog.title }}</p>
+      <h1 class="art__h">{{ article.title }}</h1>
+
+      <p class="art__meta mono">
+        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+          {{- article.published_at | date: '%d %B %Y' -}}
+        </time>
+        <span aria-hidden="true">·</span>
+        <span>{{ mins }} min read</span>
+        {%- if article.author != blank -%}
+          <span aria-hidden="true">·</span>
+          <span>{{ article.author }}</span>
+        {%- endif -%}
+      </p>
+
+      {%- if article.tags.size > 0 -%}
+        <p class="art__tags">
+          {%- for tag in article.tags -%}
+            <a class="art__tag" href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+          {%- endfor -%}
+        </p>
+      {%- endif -%}
+    </header>
+
+    {%- if article.image -%}
+      <figure class="art__fig">
+        <img
+          src="{{ article.image | image_url: width: 1600 }}"
+          srcset="{{ article.image | image_url: width: 800 }} 800w,
+                  {{ article.image | image_url: width: 1200 }} 1200w,
+                  {{ article.image | image_url: width: 1600 }} 1600w"
+          sizes="(max-width:900px) 100vw, 900px"
+          alt="{{ article.image.alt | default: article.title | escape }}"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+          loading="eager">
+      </figure>
+    {%- endif -%}
+
+    <!-- ── body ────────────────────────────────────────────── -->
+    <div class="rte art__rte">
+      {{ article.content }}
+    </div>
+
+    <p class="art__note mono">
+      Reading time is an estimate: words in this article divided by 220 per minute.
+    </p>
+
+    {%- comment -%}
+      ── shop the subject ─────────────────────────────────────────────
+      Organic search is the only recurring source of real traffic to this
+      store, and every one of those visitors lands on an article. Until now
+      article.liquid contained no reference to a product or a collection
+      anywhere in 248 lines — a reader finished the piece and had nothing to
+      buy and nowhere to go but the footer.
+
+      The match is real, not decorative. Article tags already use the same
+      vocabulary as collection handles (leggings, shorts, tops, bottoms,
+      training), so the tag IS the join. Three tags need aliasing because the
+      blog singularised or shortened them.
+
+      Preference order runs specific to broad, so an article tagged both
+      "leggings" and "womens" surfaces leggings rather than the 106-product
+      women's collection. Nothing renders unless a matching collection is
+      found AND it holds products — collections[handle] returns a truthy
+      EmptyDrop for a handle that does not exist, so .handle is tested rather
+      than the object.
+    {%- endcomment -%}
+
+    {%- assign alias_from = 'sports-bra,mens,womens,yoga,soccer,football' | split: ',' -%}
+    {%- assign alias_to = 'sports-bras,mens-activewear,womens-activewear,yoga-studio,football-soccer,football-soccer' | split: ',' -%}
+    {%- assign norm = '' -%}
+    {%- for t in article.tags -%}
+      {%- assign hit = false -%}
+      {%- for a in alias_from -%}
+        {%- if a == t -%}
+          {%- assign norm = norm | append: alias_to[forloop.index0] | append: ',' -%}
+          {%- assign hit = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- unless hit -%}{%- assign norm = norm | append: t | append: ',' -%}{%- endunless -%}
+    {%- endfor -%}
+
+    {%- assign pref = 'leggings,sports-bras,shorts,tennis-and-court,football-soccer,basketball,outerwear-hoodies,yoga-studio,drop-04-voltcore,tops,bottoms,training,mens-activewear,womens-activewear' | split: ',' -%}
+    {%- assign picked = blank -%}
+    {%- for h in pref -%}
+      {%- if picked == blank -%}
+        {%- assign needle = h | append: ',' -%}
+        {%- if norm contains needle -%}
+          {%- assign c = collections[h] -%}
+          {%- if c.handle != blank and c.products.size > 0 -%}
+            {%- assign picked = c -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if picked != blank -%}
+      <section class="art__shop" aria-labelledby="art-shop-h">
+        <div class="sec__head">
+          <h2 class="sec__h" id="art-shop-h">{{ picked.title | escape }}</h2>
+          <a class="mono" href="{{ picked.url }}">All {{ picked.products.size }} &rarr;</a>
+        </div>
+        <div class="grid">
+          {%- for product in picked.products limit: 4 -%}
+            <article class="item">
+              <a class="item__fig" href="{{ product.url }}">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 600 }}"
+                       alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                       width="{{ product.featured_image.width }}"
+                       height="{{ product.featured_image.height }}" loading="lazy">
+                {%- else -%}
+                  <span class="ph"><span>No image</span></span>
+                {%- endif -%}
+              </a>
+              <div class="item__body">
+                <a class="item__name" href="{{ product.url }}">{{ product.title | escape }}</a>
+                {%- if product.metafields.spec.gsm != blank -%}
+                  <p class="item__meta">{{ product.metafields.spec.gsm }} g/m&sup2;</p>
+                {%- endif -%}
+                <p class="item__price">{{ product.price | money }}</p>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+
+    <!-- ── previous / next ─────────────────────────────────── -->
+    <nav class="artnav" aria-label="More articles">
+      {%- if blog.previous_article != blank -%}
+        <a class="artnav__a artnav__a--prev" href="{{ blog.previous_article.url }}" rel="prev">
+          <span class="mono artnav__k">Previous</span>
+          <span class="artnav__t">{{ blog.previous_article.title }}</span>
+        </a>
+      {%- else -%}
+        <span class="artnav__a artnav__a--prev artnav__a--off">
+          <span class="mono artnav__k">Previous</span>
+          <span class="artnav__t">Nothing before this one</span>
+        </span>
+      {%- endif -%}
+
+      {%- if blog.next_article != blank -%}
+        <a class="artnav__a artnav__a--next" href="{{ blog.next_article.url }}" rel="next">
+          <span class="mono artnav__k">Next</span>
+          <span class="artnav__t">{{ blog.next_article.title }}</span>
+        </a>
+      {%- else -%}
+        <span class="artnav__a artnav__a--next artnav__a--off">
+          <span class="mono artnav__k">Next</span>
+          <span class="artnav__t">Nothing after this one</span>
+        </span>
+      {%- endif -%}
+    </nav>
+
+    <p class="art__back">
+      <a class="btn btn--ghost" href="{{ blog.url }}">All {{ blog.articles_count }} articles</a>
+    </p>
+
+    <!-- ── comments ────────────────────────────────────────── -->
+    {%- if blog.comments_enabled? -%}
+      <section class="cmt-sec" id="comments">
+        <div class="sec__head">
+          <h2 class="sec__h">Comments</h2>
+          <span class="mono">
+            {{- article.comments_count }} published
+            {%- if blog.moderated? %} · read before they appear{% endif -%}
+          </span>
+        </div>
+
+        {%- if article.comments_count > 0 -%}
+          <ol class="cmts">
+            {%- for comment in article.comments -%}
+              <li class="cmt" id="comment-{{ comment.id }}">
+                <p class="mono cmt__k">
+                  {{ comment.author }}
+                  <span aria-hidden="true">·</span>
+                  <time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">
+                    {{- comment.created_at | date: '%d %b %Y' -}}
+                  </time>
+                </p>
+                <div class="rte cmt__b">{{ comment.content }}</div>
+              </li>
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+
+        {%- form 'new_comment', article -%}
+          {%- if form.posted_successfully? -%}
+            <p class="cmtf__msg cmtf__msg--ok" role="status">
+              {%- if blog.moderated? -%}
+                Comment received. It appears here once we have read it.
+              {%- else -%}
+                Comment posted.
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="cmtf__msg cmtf__msg--err" role="alert">
+              <p class="mono cmtf__msg-k">Comment not posted</p>
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+
+          <div class="cmtf" id="comment-form">
+            <p class="mono cmtf__h">Leave a comment</p>
+
+            <div class="cmtf__grid">
+              <div class="cmtf__f">
+                <label class="mono cmtf__lab" for="comment-author">Name</label>
+                <input class="cmtf__in" type="text" name="comment[author]" id="comment-author"
+                       value="{{ form.author }}" autocomplete="name" required>
+              </div>
+              <div class="cmtf__f">
+                <label class="mono cmtf__lab" for="comment-email">Email</label>
+                <input class="cmtf__in" type="email" name="comment[email]" id="comment-email"
+                       value="{{ form.email }}" autocomplete="email"
+                       autocapitalize="off" spellcheck="false" required>
+              </div>
+            </div>
+
+            <div class="cmtf__f">
+              <label class="mono cmtf__lab" for="comment-body">Comment</label>
+              <textarea class="cmtf__in cmtf__ta" name="comment[body]" id="comment-body"
+                        rows="6" required>{{ form.body }}</textarea>
+            </div>
+
+            <p class="cmtf__note mono">
+              {%- if blog.moderated? -%}
+                Comments are read before they are published. Your email is not shown and is not
+                added to any mailing list.
+              {%- else -%}
+                Comments publish immediately. Your email is not shown and is not added to any
+                mailing list.
+              {%- endif -%}
+            </p>
+
+            <button class="btn cmtf__go" type="submit">Post comment</button>
+          </div>
+        {%- endform -%}
+      </section>
+    {%- endif -%}
+
+  </article>
+
+{%- comment -%} Article + breadcrumb structured data {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title | strip_html | truncate: 110 | json }},
+  "description": {{ article.excerpt_or_content | strip_html | truncatewords: 40 | json }},
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "dateModified": {{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "author": {"@type":"Person","name":{{ article.author | default: 'HIVOLT' | json }}},
+  {%- if article.image %}
+  "image": [{{ article.image | image_url: width: 1200 | prepend: "https:" | json }}],
+  {%- endif %}
+  "publisher": {
+    "@type": "Organization",
+    "name": "HIVOLT",
+    "url": {{ shop.url | json }}
+  },
+  "mainEntityOfPage": {"@type":"WebPage","@id":{{ shop.url | append: article.url | json }}},
+  "isPartOf": {"@type":"Blog","name":{{ blog.title | json }},"url":{{ shop.url | append: blog.url | json }}}
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":{{ shop.url | json }}},
+    {"@type":"ListItem","position":2,"name":{{ blog.title | json }},"item":{{ shop.url | append: blog.url | json }}},
+    {"@type":"ListItem","position":3,"name":{{ article.title | json }},"item":{{ shop.url | append: article.url | json }}}
+  ]
+}
+</script>

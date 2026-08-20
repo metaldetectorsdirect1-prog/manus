@@ -1,0 +1,221 @@
+{%- comment -%}
+  HIVOLT — single order
+  ─────────────────────
+  Installs as templates/customers/order.liquid.
+
+  Requires, from layout/theme.liquid:
+      'hivolt.css'  | asset_url | stylesheet_tag
+      'account.css' | asset_url | stylesheet_tag
+
+  No <main> element: layout/theme.liquid already provides one.
+
+  Fulfilment is read per line item, because Shopify fulfils per line item: a
+  two-item order can be half shipped, and saying "shipped" across the whole
+  order would be a lie for one of them. Tracking is printed as a link only when
+  the carrier supplied a URL; otherwise the bare number is shown, because a
+  fabricated tracking link is worse than no link.
+
+  Money is never recomputed here. Every figure is a Shopify total passed through
+  the money filter.
+{%- endcomment -%}
+
+{%- assign ftone = 'warn' -%}
+{%- case order.fulfillment_status -%}
+  {%- when 'fulfilled' -%}{%- assign ftone = 'ok' -%}
+  {%- when 'partial' -%}{%- assign ftone = 'warn' -%}
+  {%- when 'restocked' -%}{%- assign ftone = 'mute' -%}
+{%- endcase -%}
+
+{%- assign ptone = 'warn' -%}
+{%- case order.financial_status -%}
+  {%- when 'paid' -%}{%- assign ptone = 'ok' -%}
+  {%- when 'refunded' -%}{%- assign ptone = 'mute' -%}
+  {%- when 'partially_refunded' -%}{%- assign ptone = 'mute' -%}
+  {%- when 'voided' -%}{%- assign ptone = 'crit' -%}
+  {%- when 'unpaid' -%}{%- assign ptone = 'crit' -%}
+{%- endcase -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li><a href="{{ routes.account_url }}">Account</a></li>
+    <li aria-current="page">Order {{ order.name }}</li>
+  </ol>
+</nav>
+
+<section class="acct wrap">
+
+  <div class="sec__head">
+    <h1 class="sec__h">Order {{ order.name }}</h1>
+    <span class="mono">
+      <time datetime="{{ order.created_at | date: '%Y-%m-%d' }}">Placed {{ order.created_at | date: '%d %b %Y' }}</time>
+    </span>
+  </div>
+
+  <div class="ord__state">
+    {%- if order.cancelled -%}
+      <span class="chp chp--crit">Cancelled</span>
+    {%- else -%}
+      <span class="chp chp--{{ ftone }}">{{ order.fulfillment_status_label }}</span>
+    {%- endif -%}
+    <span class="chp chp--{{ ptone }}">{{ order.financial_status_label }}</span>
+    {%- if order.cancelled -%}
+      <p class="ord__cancel">
+        Cancelled {{ order.cancelled_at | date: '%d %b %Y' }}{% if order.cancel_reason_label != blank %} · {{ order.cancel_reason_label }}{% endif %}.
+        The payment status above is the current one.
+      </p>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ── line items ─────────────────────────────────────────── {%- endcomment -%}
+  <div class="tbl__scroll">
+    <table class="tbl tbl--items">
+      <caption class="visually-hidden">Items in order {{ order.name }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Qty</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Line total</th>
+          <th scope="col">Fulfilment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for line_item in order.line_items -%}
+          <tr>
+            <td data-l="Item">
+              {%- if line_item.product -%}
+                <a class="tbl__link" href="{{ line_item.product.url }}">{{ line_item.title }}</a>
+              {%- else -%}
+                <span class="tbl__link">{{ line_item.title }}</span>
+              {%- endif -%}
+              {%- if line_item.sku != blank -%}
+                <span class="li__meta">SKU {{ line_item.sku }}</span>
+              {%- endif -%}
+              {%- for allocation in line_item.line_level_discount_allocations -%}
+                <span class="li__meta">{{ allocation.discount_application.title }} −{{ allocation.amount | money }}</span>
+              {%- endfor -%}
+            </td>
+
+            <td data-l="Qty" class="tbl__num">{{ line_item.quantity }}</td>
+
+            <td data-l="Unit" class="tbl__num">
+              {%- if line_item.original_price > line_item.final_price -%}
+                <s>{{ line_item.original_price | money }}</s>
+              {%- endif -%}
+              {{ line_item.final_price | money }}
+            </td>
+
+            <td data-l="Line total" class="tbl__num">{{ line_item.final_line_price | money }}</td>
+
+            <td data-l="Fulfilment">
+              {%- assign f = line_item.fulfillment -%}
+              {%- if f -%}
+                <span class="chp chp--ok">Shipped</span>
+                <span class="li__meta">
+                  <time datetime="{{ f.created_at | date: '%Y-%m-%d' }}">{{ f.created_at | date: '%d %b %Y' }}</time>
+                  {%- if f.tracking_company != blank %} · {{ f.tracking_company }}{% endif -%}
+                </span>
+                {%- if f.tracking_number != blank -%}
+                  {%- if f.tracking_url != blank -%}
+                    <a class="li__track" href="{{ f.tracking_url }}" rel="noopener nofollow" target="_blank">
+                      Track {{ f.tracking_number }}<span class="visually-hidden"> (opens in a new tab)</span>
+                    </a>
+                  {%- else -%}
+                    <span class="li__meta">Tracking {{ f.tracking_number }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- elsif order.cancelled -%}
+                <span class="chp chp--crit">Cancelled</span>
+              {%- else -%}
+                <span class="chp chp--warn">Not shipped yet</span>
+              {%- endif -%}
+            </td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ord__grid">
+
+    {%- comment -%} ── totals ───────────────────────────────────────────── {%- endcomment -%}
+    <div class="ord__sum">
+      <h2 class="acct__sub">Totals</h2>
+      <div class="sheet">
+        <div class="sheet__row">
+          <span class="sheet__k">Subtotal</span>
+          <span class="sheet__v">{{ order.subtotal_price | money }}</span>
+        </div>
+
+        {%- for discount in order.discount_applications -%}
+          <div class="sheet__row">
+            <span class="sheet__k">{{ discount.title }}</span>
+            <span class="sheet__v">−{{ discount.total_allocated_amount | money }}</span>
+          </div>
+        {%- endfor -%}
+
+        <div class="sheet__row">
+          <span class="sheet__k">
+            Shipping
+            {%- for method in order.shipping_methods %} · {{ method.title }}{% endfor -%}
+          </span>
+          <span class="sheet__v">
+            {%- if order.shipping_price == 0 -%}Free{%- else -%}{{ order.shipping_price | money }}{%- endif -%}
+          </span>
+        </div>
+
+        {%- if order.tax_lines.size > 0 -%}
+          {%- for tax_line in order.tax_lines -%}
+            <div class="sheet__row">
+              <span class="sheet__k">{{ tax_line.title }} {{ tax_line.rate_percentage }}%</span>
+              <span class="sheet__v">{{ tax_line.price | money }}</span>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="sheet__row">
+            <span class="sheet__k">Tax</span>
+            <span class="sheet__v">{{ order.tax_price | money }}</span>
+          </div>
+        {%- endif -%}
+
+        <div class="sheet__row">
+          <span class="sheet__k">Total</span>
+          <span class="sheet__v"><em>{{ order.total_price | money }}</em></span>
+        </div>
+      </div>
+
+      <p class="acct__note mono">Confirmation sent to {{ order.email }}</p>
+    </div>
+
+    {%- comment -%} ── addresses ────────────────────────────────────────── {%- endcomment -%}
+    <div class="ord__addrs">
+      <div class="ad ad--flat">
+        <h2 class="acct__sub">Shipping address</h2>
+        {%- if order.shipping_address -%}
+          <div class="ad__body">{{ order.shipping_address | format_address }}</div>
+          {%- if order.shipping_address.phone != blank -%}
+            <p class="li__meta">{{ order.shipping_address.phone }}</p>
+          {%- endif -%}
+        {%- else -%}
+          <p class="acct__p">Nothing to ship on this order.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="ad ad--flat">
+        <h2 class="acct__sub">Billing address</h2>
+        {%- if order.billing_address -%}
+          <div class="ad__body">{{ order.billing_address | format_address }}</div>
+        {%- else -%}
+          <p class="acct__p">Same as the shipping address.</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="frm__acts">
+    <a class="btn btn--ghost" href="{{ routes.account_url }}">Back to order history</a>
+  </div>
+
+</section>

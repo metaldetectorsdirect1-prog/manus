@@ -1,0 +1,139 @@
+{%- comment -%}
+  HIVOLT — templates/page.drops.liquid
+  ────────────────────────────────────
+  Alternate page template. In the admin: Pages → Drop Calendar → Template
+  suffix → "drops". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
+
+  The drop list is generated from the store, not typed here. Any collection
+  whose handle begins "drop-" is picked up and rendered with its live product
+  count and its actual products — so creating Drop 05 in the admin puts it on
+  this page with no template change, and archiving one removes it.
+
+  A calendar that is edited by hand is a calendar that goes stale, and a stale
+  drop calendar advertises a date that has passed.
+
+  No countdown timer and no "selling fast" line. Both are stock claims this
+  template cannot verify, and inventory is not exposed here.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Drops' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Release calendar</p>
+  <h1 class="hero__h">Made once.<br>Restocked<br><em>on demand.</em></h1>
+  <p class="hero__sub">
+    Every drop below is live on the store right now. The list is read from the
+    catalogue, so what you see here is what exists.
+  </p>
+</section>
+
+<section class="pg wrap">
+  {%- if page.content != blank -%}
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  {%- endif -%}
+</section>
+
+{%- comment -%}
+  Collect the drop collections first so the "nothing live" state can be decided
+  before any heading is printed.
+{%- endcomment -%}
+{%- assign drop_count = 0 -%}
+{%- for c in collections -%}
+  {%- if c.handle contains 'drop-' and c.products_count > 0 -%}
+    {%- assign drop_count = drop_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if drop_count > 0 -%}
+
+  {%- for c in collections -%}
+    {%- if c.handle contains 'drop-' and c.products_count > 0 -%}
+
+      <section class="cat wrap">
+        <div class="sec__head">
+          <h2 class="sec__h">{{ c.title | escape }}</h2>
+          <span class="mono">{{ c.products_count }} styles · live now</span>
+        </div>
+
+        {%- if c.description != blank -%}
+          <div class="rte" style="margin-top:20px">{{ c.description }}</div>
+        {%- endif -%}
+
+        <div class="grid">
+          {%- for p in c.products limit: 4 -%}
+            <a class="item" href="{{ p.url }}">
+              <div class="item__fig">
+                {%- if p.metafields.spec.gsm != blank -%}
+                  <span class="item__gsm">{{ p.metafields.spec.gsm }}</span>
+                {%- endif -%}
+                {%- if p.featured_image -%}
+                  <img src="{{ p.featured_image | image_url: width: 800 }}"
+                       alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                       width="{{ p.featured_image.width }}" height="{{ p.featured_image.height }}"
+                       loading="lazy">
+                {%- else -%}
+                  <div class="ph"><span>No image</span></div>
+                {%- endif -%}
+              </div>
+              <div class="item__body">
+                <h3 class="item__name">{{ p.title }}</h3>
+                <p class="item__meta">{{ p.metafields.spec.composition | default: p.type }}</p>
+                <div class="item__foot">
+                  <span class="item__price">{{ p.price | money }}</span>
+                  <span class="item__buy">View</span>
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
+        {%- if c.products_count > 4 -%}
+          <div class="pg__q" style="margin-top:26px">
+            <p class="pg__q-t">
+              <span class="mono">{{ c.products_count | minus: 4 }} more in this drop</span>
+              Every style lists its fibre composition and fabric weight.
+            </p>
+            <a class="btn btn--ghost" href="{{ c.url }}">See the whole drop</a>
+          </div>
+        {%- endif -%}
+      </section>
+
+    {%- endif -%}
+  {%- endfor -%}
+
+{%- else -%}
+
+  <section class="pg wrap">
+    <div class="rte">
+      <p>
+        No drop is live at the moment. The catalogue stays open between
+        releases — <a href="{{ routes.all_products_collection_url }}">everything
+        currently made is here</a>.
+      </p>
+    </div>
+  </section>
+
+{%- endif -%}
+
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Want the next one early?</span>
+      The Circuit list is told a drop is coming before it goes live. Free, and
+      it is the only thing the list is used for.
+    </p>
+    {%- assign membership_page = pages['membership'] -%}
+    <a class="btn" href="{{ membership_page.url | default: '/pages/membership' }}">Join the Circuit</a>
+  </div>
+</section>
