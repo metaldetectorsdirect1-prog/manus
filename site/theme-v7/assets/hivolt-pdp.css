@@ -1,0 +1,427 @@
+/* ==========================================================================
+   HIVOLT — PDP data layer (T2 size guide, T3 swatches, T1 spec table)
+   Loaded on every page; all rules are namespaced .hv-* so nothing here can
+   reach the theme's own components.
+   ========================================================================== */
+
+:root {
+  --hv-ink: #111111;
+  --hv-ink-soft: #5a5a5a;
+  --hv-line: #e0e0e0;
+  --hv-paper: #ffffff;
+  --hv-volt: #c8ff00;
+  --hv-focus-ring: 0 0 0 2px var(--hv-paper), 0 0 0 4px var(--hv-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Colour swatches
+   -------------------------------------------------------------------------- */
+
+.hv-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 0;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+.hv-swatch {
+  margin: 0;
+  padding: 0;
+}
+
+.hv-swatch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hv-swatch__label {
+  /* 44px is the tap target; the visible chip inside is smaller. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+.hv-swatch__chip {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--hv-line);
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.12s ease;
+}
+
+.hv-swatch__input:checked + .hv-swatch__label .hv-swatch__chip {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.18),
+    0 0 0 2px var(--hv-paper),
+    0 0 0 4px var(--hv-ink);
+}
+
+.hv-swatch__input:focus-visible + .hv-swatch__label .hv-swatch__chip {
+  outline: 2px solid var(--hv-ink);
+  outline-offset: 4px;
+}
+
+/* Sold out: struck through, still selectable so the shopper can see which
+   sizes the colour is missing rather than having it vanish. */
+.hv-swatch__label--out .hv-swatch__chip {
+  opacity: 0.45;
+  position: relative;
+}
+
+.hv-swatch__label--out .hv-swatch__chip::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  background: linear-gradient(
+    to top left,
+    transparent calc(50% - 1px),
+    var(--hv-ink) calc(50% - 1px),
+    var(--hv-ink) calc(50% + 1px),
+    transparent calc(50% + 1px)
+  );
+}
+
+/* Text fallback — a value with no swatch data attached. */
+.hv-swatches--text .hv-swatch__label,
+.hv-swatch__text {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border: 1px solid var(--hv-line);
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.hv-swatches--text .hv-swatch__label {
+  border: 0;
+  padding: 0;
+}
+
+.hv-swatch__input:checked + .hv-swatch__label .hv-swatch__text {
+  border-color: var(--hv-ink);
+  box-shadow: inset 0 0 0 1px var(--hv-ink);
+}
+
+.hv-swatch__input:focus-visible + .hv-swatch__label .hv-swatch__text {
+  outline: 2px solid var(--hv-ink);
+  outline-offset: 2px;
+}
+
+.hv-swatch__label--out .hv-swatch__text {
+  color: var(--hv-ink-soft);
+  text-decoration: line-through;
+  border-style: dashed;
+}
+
+/* --------------------------------------------------------------------------
+   Size guide
+   -------------------------------------------------------------------------- */
+
+.hv-sg-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.hv-sg-trigger__icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hv-sg-trigger:focus-visible {
+  outline: 2px solid var(--hv-ink);
+  outline-offset: 3px;
+}
+
+.hv-sg {
+  width: min(680px, calc(100vw - 32px));
+  max-height: min(85vh, 760px);
+  padding: 0;
+  border: 1px solid var(--hv-line);
+  border-radius: 0;
+  background: var(--hv-paper);
+  color: var(--hv-ink);
+  overflow: hidden;
+}
+
+.hv-sg::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.hv-sg__panel {
+  max-height: min(85vh, 760px);
+  overflow-y: auto;
+  padding: 22px 24px 26px;
+}
+
+.hv-sg__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.hv-sg__title {
+  margin: 0 0 4px;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.hv-sg__basis {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--hv-ink-soft);
+}
+
+.hv-sg__close {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  margin: -10px -10px 0 0;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.hv-sg__close svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.hv-sg__close:focus-visible {
+  outline: 2px solid var(--hv-ink);
+  outline-offset: -2px;
+}
+
+.hv-sg__units {
+  display: inline-flex;
+  border: 1px solid var(--hv-line);
+  margin-bottom: 16px;
+}
+
+/* Without JavaScript the toggle does nothing, so it is not shown. The chart
+   still renders in the unit it was recorded in. */
+html:not(.js) .hv-sg__units {
+  display: none;
+}
+
+.hv-sg__unit {
+  margin: 0;
+}
+
+.hv-sg__unit input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.hv-sg__unit span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 18px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.hv-sg__unit input:checked + span {
+  background: var(--hv-ink);
+  color: var(--hv-paper);
+}
+
+.hv-sg__unit input:focus-visible + span {
+  outline: 2px solid var(--hv-ink);
+  outline-offset: -2px;
+}
+
+.hv-sg__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hv-sg__scroll:focus-visible {
+  outline: 2px solid var(--hv-ink);
+  outline-offset: 2px;
+}
+
+.hv-sg__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hv-sg__table th,
+.hv-sg__table td {
+  padding: 10px 12px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--hv-line);
+}
+
+.hv-sg__table thead th {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hv-ink-soft);
+  border-bottom-color: var(--hv-ink);
+}
+
+.hv-sg__table tbody th {
+  font-weight: 700;
+}
+
+.hv-sg__absent {
+  color: var(--hv-line);
+}
+
+.hv-sg__note,
+.hv-sg__model {
+  margin: 14px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--hv-ink-soft);
+}
+
+/* Unit switching. The stored unit is the default, so the table is correct
+   before any script runs. */
+.hv-sg[data-active-unit="cm"] [data-unit-in],
+.hv-sg[data-active-unit="in"] [data-unit-cm] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Specification table
+   -------------------------------------------------------------------------- */
+
+.hv-spec {
+  margin: 0 0 24px;
+}
+
+.hv-spec__benefits {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.hv-spec__benefits li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.hv-spec__benefits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 2px;
+  background: var(--hv-ink);
+}
+
+.hv-spec__heading {
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hv-ink-soft);
+}
+
+.hv-spec__list {
+  margin: 0;
+  border-top: 1px solid var(--hv-line);
+}
+
+.hv-spec__row {
+  display: grid;
+  grid-template-columns: minmax(110px, 34%) 1fr;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hv-line);
+}
+
+.hv-spec__row dt {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--hv-ink-soft);
+}
+
+.hv-spec__row dd {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.hv-spec__model {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--hv-ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hv-swatch__chip {
+    transition: none;
+  }
+}

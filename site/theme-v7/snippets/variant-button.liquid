@@ -1,0 +1,99 @@
+{%- comment -%}
+  Impulse's button-style variant picker.
+
+  HIVOLT change: a colour option is handed to hivolt-swatches, which reads the
+  real swatch data on each option value. The theme's own colour branch guessed a
+  CSS colour from the value's name when no swatch was attached, so "Deep Sea"
+  rendered as whatever `sea` means to the browser. Everything else in this file
+  is the theme's, unchanged.
+{%- endcomment -%}
+
+{%- assign swatch_file_extension = 'png' -%}
+
+{%- capture size_chart_title -%}
+  {{ 'products.general.size_chart' | t }} <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-size-chart" viewBox="0 0 64 64"><path d="M22.39 33.53c-7.46 0-13.5-3.9-13.5-8.72s6-8.72 13.5-8.72 13.5 3.9 13.5 8.72a12 12 0 0 1-.22 1.73"/><ellipse cx="22.39" cy="24.81" rx="3.28" ry="2.12"/><path d="M8.89 24.81V38.5c0 7.9 6.4 9.41 14.3 9.41h31.92V33.53H22.39"/><path d="M46.78 33.53v7.44"/><path d="M38.65 33.53v7.44"/><path d="M30.52 33.53v7.44"/><path d="M22.39 33.53v7.44"/></svg>
+{%- endcapture -%}
+
+{%- liquid
+  assign is_size = false
+  assign size_trigger = 'products.general.size_trigger' | t | downcase
+  assign downcased_option = option.name | downcase
+
+  if downcased_option contains size_trigger
+    assign is_size = true
+  endif
+-%}
+
+<div class="variant-wrapper js" data-type="button">
+  <label class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless variant_labels %} hidden-label{% endunless %}"
+    for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}">
+    {{ option.name }}
+    {%- if connect_to_sizechart and is_size -%}
+      <span class="variant__label-info">
+        &mdash;
+        {%- render
+          'tool-tip-trigger',
+          title: size_chart_title,
+          content: section.blocks[sizechart_index].settings.size_chart.content,
+          context: 'size-chart'
+        -%}
+      </span>
+    {%- endif -%}
+    {%- if is_color -%}
+      <span class="variant__label-info">
+        &mdash;
+        <span
+          data-variant-color-label
+          data-index="{{ forloop.index0 }}"
+          data-option-index="{{ color_option_index }}">
+          {{ option.selected_value }}
+        </span>
+      </span>
+    {%- endif -%}
+  </label>
+  {%- assign option_index = forloop.index -%}
+
+  {%- if is_color -%}
+    {%- render 'hivolt-swatches',
+      product: product,
+      option: option,
+      option_index: option_index,
+      section_id: section_id,
+      form_id: form_id,
+      block: block
+    -%}
+  {%- else -%}
+    <fieldset class="variant-input-wrap"
+      name="{{ option.name }}"
+      data-index="option{{ option_index }}"
+      data-handle="{{ option.name | handleize }}"
+      id="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ forloop.index0 }}">
+      <legend class="hide">{{ option.name }}</legend>
+      {%- for value in option.values -%}
+        {%- liquid
+          assign product_available = true
+          if product.options.size == 1 and block.settings.product_dynamic_variants_enable
+            assign product_available = product.variants[forloop.index0].available
+          endif
+        -%}
+        <div
+          class="variant-input"
+          data-index="option{{ option_index }}"
+          data-value="{{ value | escape }}">
+          <input type="radio"
+            form="{{ form_id }}"
+            {% if option.selected_value == value %} checked="checked"{% endif %}
+            value="{{ value | escape }}"
+            data-index="option{{ option_index }}"
+            name="{{ option.name }}"
+            data-variant-input
+            class="{% unless product_available %} disabled{% endunless %}"
+            id="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}">
+          <label
+            for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+            class="variant__button-label{% unless product_available %} disabled{% endunless %}">{{ value | escape }}</label>
+        </div>
+      {%- endfor -%}
+    </fieldset>
+  {%- endif -%}
+</div>

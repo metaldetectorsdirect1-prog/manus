@@ -1,0 +1,107 @@
+{%- comment -%}
+  HIVOLT — unique product identifier resolver (G7)
+
+  One place decides how a variant is identified. Structured data, feed previews
+  and any future feed writer all call this, so they cannot drift apart.
+
+  Params
+    product  required — product drop
+    variant  required — variant drop
+    format   'mode'   — prints the resolved mode and nothing else
+             'jsonld' — prints identifier properties as JSON-LD pairs, each
+                        followed by a comma (place before a property that is
+                        always present)
+             'feed'   — prints one `key=value` per line for feed mapping
+
+  Modes
+    gtin       a real manufacturer barcode is stored on the variant
+    brand_mpn  no barcode, but vendor + a real manufacturer part number identify it
+    none       neither exists — the feed must send identifier_exists = false
+
+  Nothing is invented here. A mode declared on the product or variant is checked
+  against the data before it is trusted and falls through when the value is not
+  actually there, so a mislabelled product degrades to `none` rather than
+  shipping a fake identifier. Shopify variant IDs are never used as GTINs.
+{%- endcomment -%}
+
+{%- liquid
+  assign hv_declared = variant.metafields.custom.identifier_mode.value
+  if hv_declared == blank
+    assign hv_declared = product.metafields.custom.identifier_mode.value
+  endif
+  if hv_declared == blank
+    assign hv_declared = 'auto'
+  endif
+
+  assign hv_barcode = variant.barcode | default: '' | strip
+  assign hv_barcode_length = hv_barcode | size
+
+  comment
+    A GTIN is 8, 12, 13 or 14 digits. Strip every digit out; whatever is left
+    over is a non-digit, which disqualifies the value.
+  endcomment
+  assign hv_residue = hv_barcode
+  assign hv_digits = '0,1,2,3,4,5,6,7,8,9' | split: ','
+  for hv_digit in hv_digits
+    assign hv_residue = hv_residue | remove: hv_digit
+  endfor
+
+  assign hv_gtin = ''
+  if hv_residue == '' and hv_barcode_length > 0
+    if hv_barcode_length == 8 or hv_barcode_length == 12 or hv_barcode_length == 13 or hv_barcode_length == 14
+      assign hv_gtin = hv_barcode
+    endif
+  endif
+
+  assign hv_mpn = variant.metafields['mm-google-shopping'].mpn.value | default: '' | strip
+  if hv_mpn == ''
+    assign hv_mpn = product.metafields.custom.mpn.value | default: '' | strip
+  endif
+
+  assign hv_brand = product.vendor | default: '' | strip
+
+  assign hv_mode = 'none'
+  case hv_declared
+    when 'gtin'
+      if hv_gtin != ''
+        assign hv_mode = 'gtin'
+      endif
+    when 'brand_mpn'
+      if hv_mpn != '' and hv_brand != ''
+        assign hv_mode = 'brand_mpn'
+      endif
+    when 'none'
+      assign hv_mode = 'none'
+    else
+      if hv_gtin != ''
+        assign hv_mode = 'gtin'
+      elsif hv_mpn != '' and hv_brand != ''
+        assign hv_mode = 'brand_mpn'
+      endif
+  endcase
+-%}
+
+{%- case format -%}
+  {%- when 'mode' -%}
+    {{- hv_mode -}}
+
+  {%- when 'jsonld' -%}
+    {%- if hv_mode == 'gtin' -%}
+      "gtin": {{ hv_gtin | json }},
+      "gtin{{ hv_barcode_length }}": {{ hv_gtin | json }},
+    {%- elsif hv_mode == 'brand_mpn' -%}
+      "mpn": {{ hv_mpn | json }},
+    {%- endif -%}
+
+  {%- when 'feed' -%}
+    {%- if hv_mode == 'gtin' -%}
+gtin={{ hv_gtin }}
+identifier_exists=yes
+    {%- elsif hv_mode == 'brand_mpn' -%}
+brand={{ hv_brand }}
+mpn={{ hv_mpn }}
+identifier_exists=yes
+    {%- else -%}
+identifier_exists=no
+    {%- endif -%}
+{%- endcase -%}

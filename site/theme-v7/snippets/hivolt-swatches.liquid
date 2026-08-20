@@ -1,0 +1,95 @@
+{%- comment -%}
+  HIVOLT — colour swatches (T3)
+
+  Renders the values of one colour option. Everything on screen comes from the
+  variant data, so a two-colour product and a nine-colour product behave
+  identically and no product is named anywhere in this file.
+
+  Params
+    product, option, option_index, section_id, form_id, block
+
+  The radio inputs keep the theme's own attributes (data-variant-input,
+  data-index, name, value) untouched, so Impulse's variant JS — gallery
+  switching, price, availability, and the ?variant= URL it pushes to history —
+  keeps working. Only the label is ours.
+
+  Fallback: a value with no swatch attached renders as a text button. Guessing a
+  CSS colour from the value's name is what previously turned "Deep Sea" into
+  whatever `sea` happens to mean to a browser; it is not done here.
+{%- endcomment -%}
+
+{%- liquid
+  assign hv_swatch_count = 0
+  for hv_value in option.values
+    if hv_value.swatch.color or hv_value.swatch.image
+      assign hv_swatch_count = hv_swatch_count | plus: 1
+    endif
+  endfor
+
+  assign hv_sold_out = 'products.product.sold_out' | t
+-%}
+
+<fieldset
+  class="variant-input-wrap hv-swatches{% if hv_swatch_count == 0 %} hv-swatches--text{% endif %}"
+  name="{{ option.name }}"
+  data-index="option{{ option_index }}"
+  data-handle="{{ option.name | handleize }}"
+  id="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option_index | minus: 1 }}">
+  <legend class="hide">{{ option.name }}</legend>
+
+  {%- for hv_value in option.values -%}
+    {%- capture hv_input_id -%}
+      ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ hv_value | url_encode }}
+    {%- endcapture -%}
+    {%- assign hv_input_id = hv_input_id | strip -%}
+
+    {%- liquid
+      assign hv_has_swatch = false
+      if hv_value.swatch.color or hv_value.swatch.image
+        assign hv_has_swatch = true
+      endif
+
+      assign hv_available = hv_value.available
+    -%}
+
+    <div
+      class="variant-input hv-swatch"
+      data-index="option{{ option_index }}"
+      data-value="{{ hv_value | escape }}"
+      data-available="{{ hv_available }}">
+      <input
+        type="radio"
+        form="{{ form_id }}"
+        {% if hv_value.selected %}checked="checked"{% endif %}
+        value="{{ hv_value | escape }}"
+        data-index="option{{ option_index }}"
+        name="{{ option.name }}"
+        data-variant-input
+        data-color-name="{{ hv_value | escape }}"
+        class="hv-swatch__input variant__input--color-swatch{% unless hv_available %} disabled{% endunless %}"
+        id="{{ hv_input_id }}">
+
+      <label for="{{ hv_input_id }}" class="hv-swatch__label{% unless hv_available %} hv-swatch__label--out{% endunless %}">
+        {%- if hv_has_swatch -%}
+          <span
+            class="hv-swatch__chip"
+            aria-hidden="true"
+            style="
+              {%- if hv_value.swatch.color %}background-color: {{ hv_value.swatch.color }};{% endif -%}
+              {%- if hv_value.swatch.image %}background-image: url({{ hv_value.swatch.image | image_url: width: 96 }});{% endif -%}
+            "></span>
+          <span class="visually-hidden">
+            {{- hv_value }}{% unless hv_available %} &mdash; {{ hv_sold_out }}{% endunless -%}
+          </span>
+        {%- else -%}
+          <span class="hv-swatch__text">
+            {{- hv_value -}}
+          </span>
+          {%- unless hv_available -%}
+            <span class="visually-hidden">&mdash; {{ hv_sold_out }}</span>
+          {%- endunless -%}
+        {%- endif -%}
+      </label>
+    </div>
+  {%- endfor -%}
+</fieldset>

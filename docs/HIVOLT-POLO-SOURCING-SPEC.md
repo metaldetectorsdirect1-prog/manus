@@ -1,4 +1,13 @@
-# HIVOLT — Polo Sourcing Specification
+# HIVOLT - Polo Sourcing Specification
+
+> ## STATUS: PROPOSED - NOT APPROVED HIVOLT SPECIFICATION
+>
+> Every numerical threshold in this document is a **PROPOSED TARGET** on an
+> **INDUSTRY/BENCHMARK BASIS**. None came from authoritative HIVOLT product
+> data or an owner decision. They are recommendations to negotiate against and
+> to approve, amend or reject - not requirements HIVOLT has adopted.
+>
+> **OWNER APPROVAL REQUIRED** before any threshold below becomes a HIVOLT spec.
 
 The product HIVOLT **should source**, not whatever a marketplace happens to
 offer. This is the brief to send to manufacturers.
@@ -6,21 +15,21 @@ offer. This is the brief to send to manufacturers.
 > Values marked `[OWNER]` are commercial decisions. Values marked `[QUOTE]` come
 > back from the supplier. Nothing here is invented — unknowns stay unknown.
 
-## MUST HAVE — disqualifying if absent
+## MUST HAVE (all PROPOSED, benchmark basis, OWNER APPROVAL REQUIRED)
 
-| # | Requirement | Target / acceptance | Why it is non-negotiable |
-|---|---|---|---|
+| # | Requirement | PROPOSED TARGET | BASIS | Why it matters |
+|---|---|---|---|---|
 | 1 | **Published fabric composition** | Exact % split, on a spec sheet | §5 forbids claims not backed by product data. No spec = no marketing story |
-| 2 | **Published GSM** | 180–240 gsm for a year-round premium polo | The single number that separates "premium" from "cheap" in customer perception and in ad copy |
+| 2 | **Published GSM** | *Proposed* 180–240 gsm | Industry norm, **not a HIVOLT decision** | The single number that separates "premium" from "cheap" in customer perception and in ad copy |
 | 3 | **True US/EU sizing** | Garment measurements per size, US-standard | Weight-based Asian sizing is the #1 avoidable return driver |
-| 4 | **Size tolerance** | ±1 cm on chest/length | Inconsistent sizing destroys repeat purchase |
-| 5 | **Shrinkage tested** | ≤3% after 3 home washes, documented | A polo that shrinks is a refund and a lost customer |
-| 6 | **Colour consistency across production runs** | ΔE ≤ 1.5 between lots | Reorders must match the photography and prior purchases |
+| 4 | **Size tolerance** | *Proposed* ±1 cm | Common apparel QC benchmark | Inconsistent sizing destroys repeat purchase |
+| 5 | **Shrinkage tested** | *Proposed* ≤3% / 3 washes | Typical knitwear benchmark | A polo that shrinks is a refund and a lost customer |
+| 6 | **Colour consistency** | *Proposed* ΔE ≤ 1.5 | Textile industry benchmark | Reorders must match the photography and prior purchases |
 | 7 | **Private neck label** | Woven or printed HIVOLT label | Without it this is not a brand, it is a reseller |
-| 8 | **Defect allowance defined** | ≤2%, with remedy terms | Otherwise QC cost is unbounded |
-| 9 | **Reorder lead time** | ≤6 weeks | Longer breaks the ability to scale advertising into stock |
+| 8 | **Defect allowance** | *Proposed* ≤2% + remedy | Common contract benchmark | Otherwise QC cost is unbounded |
+| 9 | **Reorder lead time** | *Proposed* ≤6 weeks | Needed to scale ads into stock | Longer breaks the ability to scale advertising into stock |
 
-## STRONGLY PREFERRED
+## STRONGLY PREFERRED (proposed)
 
 | # | Requirement | Target | Value |
 |---|---|---|---|
@@ -35,7 +44,7 @@ offer. This is the brief to send to manufacturers.
 | 18 | Embroidery compatibility | Confirmed for logo placement | HIVOLT mark on chest/sleeve |
 | 19 | Hang tags + packaging | Branded, recyclable | Unboxing is retention |
 
-## OPTIONAL
+## OPTIONAL (proposed)
 
 | # | Requirement | Note |
 |---|---|---|

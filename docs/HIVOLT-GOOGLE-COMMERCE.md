@@ -51,6 +51,10 @@ stage. The problem is that it describes a different business.
 
 ## 2. POLICY CONTRADICTIONS — P0, live right now
 
+> **Each item below now has a verbatim quote, a diagnosis, a drafted replacement
+> and the owner question it turns on, in `HIVOLT-POLICY-CORRECTIONS.md`.**
+> Nothing there has been applied — every one is a commercial or legal claim.
+
 These are published, customer-facing statements that are **currently false or
 will become false** under the polo / international strategy. Each is both a
 Merchant Center misrepresentation risk and a consumer-trust problem.
@@ -113,14 +117,75 @@ This alone would jeopardise account review.
 | Availability | Inventory | Yes (currently 0 — honest) |
 | Condition | Static "new" | Trivial |
 | Price / Compare-at | Shopify native | Price yes; **compare-at must never be fabricated** |
-| **GTIN** | **Supplier** | **NOT AVAILABLE** — marketplace suppliers provide none. Own-brand goods legitimately have no GTIN; use `identifier_exists: false` rather than inventing one |
-| MPN | Own SKU can serve | Yes |
+| **GTIN** | Variant `barcode` | **Resolved per variant, never assumed** — see §4a. No supplier has provided one yet; that is a fact about today's data, not a property of the brand |
+| MPN | `mm-google-shopping.mpn` (variant) → `custom.mpn` (product) | Resolved per variant — §4a. **A HIVOLT SKU is not an MPN** unless the manufacturer issued it |
 | Product / Image URLs | Shopify native | Yes |
 | Shipping attributes | Delivery profiles | **US only** — see §5 |
 | Market/country availability | Markets | **US only** — see §5 |
 
 **Nothing here is invented.** GTIN absence is normal for own-brand apparel and
 is declared, not fabricated.
+
+---
+
+## 4a. Unique product identifiers — configurable per SKU
+
+Built 2026-08-20. `snippets/hivolt-identifier.liquid` in the draft theme.
+
+The earlier version of this document said to send `identifier_exists: false`.
+That was wrong as an architecture even though it is right as today's answer:
+it hardcodes a temporary fact about the six candidate suppliers into the feed
+logic, and it would keep sending `false` on the day a supplier does hand over a
+barcode. Identifier handling is now **data, resolved per variant**.
+
+### The three cases
+
+| Mode | Condition | Feed sends | JSON-LD emits |
+|---|---|---|---|
+| `gtin` | Variant `barcode` holds 8, 12, 13 or 14 digits | `gtin`, `identifier_exists=yes` | `gtin` + `gtin{8,12,13,14}` |
+| `brand_mpn` | No barcode, but `vendor` and a real MPN both exist | `brand`, `mpn`, `identifier_exists=yes` | `mpn` (brand is always emitted) |
+| `none` | Neither | `identifier_exists=no` | nothing |
+
+### Where the mode comes from
+
+```
+variant.metafields.custom.identifier_mode      (per-SKU override)
+  → product.metafields.custom.identifier_mode   (family default)
+    → 'auto'                                    (when both are blank)
+```
+
+Both metafields are constrained to `auto | gtin | brand_mpn | none`.
+
+`auto` inspects the data and picks the highest case that is actually satisfied.
+The explicit modes exist for the case the data cannot express — one colourway
+carrying a supplier barcode while the rest do not, or a supplier number that
+must not be published.
+
+### The resolver verifies before it trusts
+
+Declaring `gtin` on a product whose variants have no barcode does **not**
+produce a GTIN. The resolver checks the value, finds nothing, and falls through
+to `none`. The same is true of `brand_mpn` with no MPN stored. A mislabelled
+product degrades to "no identifier", which is a correct statement, rather than
+shipping a fabricated one.
+
+A GTIN is validated on shape as well as presence: every digit is stripped and
+the remainder must be empty, and the length must be 8, 12, 13 or 14. `HV-POLO-BLK-M`
+in the barcode field resolves to `none`, not to a malformed GTIN.
+
+### What is never used as an identifier
+
+- Shopify variant IDs (`gid://shopify/ProductVariant/…` or the bare number).
+- HIVOLT's own SKU scheme (`HV-P01-…`). A SKU is an internal stock code; an
+  MPN is issued by whoever manufactured the item. They are only the same number
+  if HIVOLT is the manufacturer of record, which is a decision, not a default.
+- Any value generated to satisfy a validator.
+
+### Verified by
+
+`site/check-hivolt-pdp.py` — seven cases covering each mode, an invalid
+barcode, a wrong-length barcode, a declared-but-unsupported mode, and a variant
+override beating the product default.
 
 ---
 
@@ -163,7 +228,7 @@ warnings.
 - [ ] Availability in feed == real inventory
 - [ ] Landing page returns 200, not an empty collection
 - [ ] Google product category mapped
-- [ ] `identifier_exists: false` where no GTIN exists
+- [ ] Identifier mode resolves correctly per variant (§4a) — `identifier_exists=no` only where the resolver confirms there is nothing real to send
 - [ ] Shipping in feed matches configured rates for that country
 - [ ] Policy pages consistent with feed countries (**currently fails — §2**)
 - [ ] Currency matches market presentment
@@ -181,22 +246,59 @@ search relevance.
 | Storefront PDP | Brand + clean product name | `HIVOLT Classic Cotton Polo` |
 | Feed | Brand + Type + verified attribute + colour | `HIVOLT Men's Cotton Polo Shirt — Short Sleeve — Navy` |
 
-Implementation: a `custom.feed_title` metafield overriding the channel title,
-so advertising relevance never degrades the storefront. **Every attribute in a
-feed title must be verified** — "performance", "stretch", "moisture-wicking"
-may not appear unless the supplier spec states them.
+**Built 2026-08-20.** `custom.feed_title` (product, max 150 chars) holds the
+feed title; `snippets/hivolt-feed-title.liquid` resolves it. Blank falls back to
+the storefront title — a deliberate fallback, not a gap, since the storefront
+title is itself a valid feed title. Passing a variant appends its options, which
+is what an item-level row needs, and the result is truncated at Merchant
+Center's 150-character limit so the words that survive are the ones we chose.
+
+The feed title is used **only** in feeds. Structured data and the PDP both read
+the storefront title, so the markup can never contradict what the shopper sees.
+
+Consumer: Shopify's Google & YouTube channel has no title-override field, so
+`custom.feed_title` is read by a Merchant Center **supplemental feed**, keyed on
+item id. Any feed writer built later reads the same metafield rather than
+re-deriving the rule.
+
+**Every attribute in a feed title must be verified** — "performance", "stretch",
+"moisture-wicking" may not appear unless the supplier spec states them.
 
 ---
 
 ## 9. Structured data
 
+**Built 2026-08-20** in the draft theme:
+`snippets/hivolt-structured-data.liquid`, rendered in `<head>` on every page.
+The live theme has **no** structured data of any kind — this is net new.
+
 | Type | Status | Note |
 |---|---|---|
-| Product | To implement | Must match visible price/availability exactly |
-| Offer | To implement | Currency + availability from live data |
-| BreadcrumbList | To implement | Theme has breadcrumbs enabled |
-| Organization | To implement | Name, logo, contact, address all available |
-| **Review / AggregateRating** | **PROHIBITED** | No real review data exists. Emitting it would be fabricated markup. |
+| Organization | Built | Name, url, `sameAs` from non-blank social settings. `logo` only when the favicon is ≥112 px, per Google's minimum |
+| WebSite | Built | Publisher points at the Organization node |
+| BreadcrumbList | Built | Product, collection, page and article. Includes the collection step only when the product was reached through one |
+| Product | Built | Product pages only. Name, url, description, up to 8 images, brand from `vendor` |
+| Offer | Built | **One Offer per variant**, each with its own url, sku, identifiers, price and availability |
+| **Review / AggregateRating** | **PROHIBITED — no code path exists** | No real review data. A test asserts neither string can appear in the output |
+
+Deliberately **not** emitted, each because it encodes a commitment nobody has
+made: `priceValidUntil`, `shippingDetails`, `hasMerchantReturnPolicy`. They
+belong here once shipping, duties and returns are settled per market (P-3, P-4
+in `HIVOLT-POLICY-CORRECTIONS.md`), and not before.
+
+Consistency is structural rather than promised: price, currency, availability,
+title, variant and URL are read from the same Liquid drops the page renders
+from, so the markup cannot drift from the visible page. Prices come from
+`variant.price` and the currency from `cart.currency.iso_code`, which follow the
+shopper's market automatically.
+
+Where a GemPages template is active the Product node stands down, so a crawler
+never gets two answers on one page.
+
+**Verified by** `site/check-hivolt-pdp.py`: the output parses as JSON, the graph
+contains exactly the expected node types, availability tracks each variant
+independently, `gtin` appears only for a real barcode, and no rating or review
+string is present.
 
 ---
 

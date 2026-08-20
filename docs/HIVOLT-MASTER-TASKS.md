@@ -1,6 +1,6 @@
 # HIVOLT — Master Task Register
 
-Updated 2026-08-20. **Authority boundary is enforced in every row.**
+Updated 2026-08-20 (second pass). **Authority boundary is enforced in every row.**
 
 ## Authority model
 
@@ -21,6 +21,15 @@ Updated 2026-08-20. **Authority boundary is enforced in every row.**
 | C6 | Sourcing path comparison (A–E) | TECH | Done — `HIVOLT-SOURCING-PROPOSAL.md` |
 | C7 | $500K quantitative model | TECH | Done — `HIVOLT-500K-MODEL.md` |
 | C8 | Legacy logo marked deprecated, preserved | TECH | Done |
+| C9 | **T1 — polo data schema** | TECH | Done — 12 product metafields + `hivolt_size_chart` metaobject |
+| C10 | **T2 — size-guide system** | TECH | Done — data-driven, cm/in, renders nothing without real measurements |
+| C11 | **T3 — colour swatches** | TECH | Done — real swatch data only, no guessed colours |
+| C12 | **G6 — feed-title architecture** | TECH | Done — `custom.feed_title` + resolver |
+| C13 | **G7 — configurable identifiers** | TECH | Done — per-variant `auto/gtin/brand_mpn/none`, verified before trusted |
+| C14 | **G8 — structured data** | TECH | Done — Organization/WebSite/Breadcrumb/Product/Offer, no rating, no fake identifiers |
+| C15 | Draft-theme navigation de-linked from empty legacy collections | TECH | Done — new menus, homepage rebuilt |
+| C16 | Live policy contradictions documented for approval | TECH | Done — `HIVOLT-POLICY-CORRECTIONS.md`, 7 items, nothing applied |
+| C17 | Render-level test suite for the new PDP layer | TECH | Done — `site/check-hivolt-pdp.py`, 27 checks |
 
 ## Blocked on OWNER
 
@@ -42,9 +51,9 @@ theme copies**; nothing touches the live theme without approval.
 
 | # | Item | Priority | Depends on |
 |---|---|---|---|
-| T1 | Metafield schema for polo attributes (fabric, GSM, fit, care, size table) | P1 | — |
-| T2 | Size-guide modal — dual unit (in/cm), per-product table from metafields | P1 | T1 |
-| T3 | Colour swatch selector + variant image switching | P1 | — |
+| ~~T1~~ | ~~Metafield schema for polo attributes~~ | **DONE** | — |
+| ~~T2~~ | ~~Size-guide modal — dual unit (in/cm), per-product table from metafields~~ | **DONE** | — |
+| ~~T3~~ | ~~Colour swatch selector + variant image switching~~ | **DONE** | — |
 | T4 | PDP template to directive §9 hierarchy | P1 | T1–T3 |
 | T5 | Sticky mobile ATC (suppressed until variants chosen) | P1 | T4 |
 | T6 | Product benefit / details accordion architecture | P1 | T1 |
@@ -81,9 +90,9 @@ Merchant Center activation, no product activation performed.**
 | # | Item | Priority | Note |
 |---|---|---|---|
 | G5 | Google product category metafield + mapping architecture | P1 | `Apparel & Accessories > Clothing > Shirts & Tops` |
-| G6 | `custom.feed_title` metafield — feed titles separate from storefront titles | P1 | Premium PDP naming never degraded for ad relevance |
-| G7 | `identifier_exists: false` handling where no GTIN exists | P1 | Own-brand apparel; never invent GTINs |
-| G8 | Structured data templates: Product, Offer, BreadcrumbList, Organization | P1 | **No Review/AggregateRating** — no real review data exists |
+| ~~G6~~ | ~~`custom.feed_title` metafield~~ | **DONE** | Resolver falls back to storefront title; consumer is a Merchant Center supplemental feed |
+| ~~G7~~ | ~~Identifier handling where no GTIN exists~~ | **DONE** | Rebuilt as configurable per SKU/variant — see Google doc §4a. Not hardcoded to `false` |
+| ~~G8~~ | ~~Structured data templates~~ | **DONE** | Organization, WebSite, BreadcrumbList, Product, one Offer per variant. No rating, no invented identifier |
 | G9 | Material / pattern / fit metafields (feeds both PDP and feed) | P1 | Depends on T1 |
 | G10 | Publish `/pages/size-chart` (currently `isPublished: false`, PDP block points at it) | P1 | Broken reference — size guide cannot render |
 | G11 | Feed pre-flight validation checklist as a runnable check | P2 | §7 of Google doc |
@@ -93,8 +102,8 @@ Merchant Center activation, no product activation performed.**
 
 | # | Finding | Lane |
 |---|---|---|
-| G13 | **11 of 11 main-menu links resolve to empty collections** | Resolves when catalogue lands; collection taxonomy still needs polo re-architecture (OWNER decides taxonomy) |
-| G14 | Navigation is women's-activewear taxonomy on a men's polo brand | OWNER — merchandising decision |
+| G13 | **11 of 11 main-menu links resolve to empty collections** | **Fixed in the draft theme only.** New `hivolt-draft-main` / `hivolt-draft-shop` menus contain no empty-collection links. `main-menu` and `footer-shop` are untouched, so the live theme still shows all 11 |
+| G14 | Navigation is women's-activewear taxonomy on a men's polo brand | OWNER — polo category taxonomy is a merchandising decision, so the draft nav ships with no category links at all rather than invented ones |
 | G15 | `/collections/all` shows 3 DRAFT products → renders empty | Expected; correct state |
 
 ## Standing prohibitions
@@ -109,3 +118,41 @@ Merchant Center activation, no product activation performed.**
 8. No Google Ads, campaigns, ad spend, or Merchant Center activation.
 9. No Review/AggregateRating structured data without real review data.
 10. No invented GTINs, MPNs, or product identifiers.
+
+---
+
+## Draft theme — what is built and where
+
+**`HIVOLT v7 — DRAFT: PDP data layer`** — theme `158653808872`, UNPUBLISHED.
+Duplicated from the current MAIN theme (`158570021096`), which was **not
+touched**. Owner previews it in Online Store → Themes.
+
+| File | What it does |
+|---|---|
+| `snippets/hivolt-identifier.liquid` | Resolves GTIN / brand+MPN / none per variant. One resolver for every consumer |
+| `snippets/hivolt-feed-title.liquid` | Feed title, falling back to the storefront title |
+| `snippets/hivolt-size-guide.liquid` | Size guide, trigger and dialog. Renders nothing without real measurements |
+| `snippets/hivolt-swatches.liquid` | Colour swatches from real swatch data; text fallback, never a guessed colour |
+| `snippets/hivolt-spec-table.liquid` | Publishes the `spec.*` metafields that are filled in, and only those |
+| `snippets/hivolt-structured-data.liquid` | JSON-LD graph |
+| `snippets/hivolt-head.liquid` | Single entry point for the head additions |
+| `assets/hivolt-pdp.css`, `assets/hivolt-size-guide.js` | Styles and the dialog / unit-toggle behaviour |
+| `snippets/variant-button.liquid` | Theme file — colour branch delegated to the swatch snippet |
+| `snippets/social-meta-tags.liquid` | Theme file — one added render of `hivolt-head` |
+| `templates/product.json` | Spec table and size guide added; the size-chart block pointing at the unpublished `size-chart` page removed |
+| `templates/index.json` | Rebuilt without the deleted catalogue |
+| `sections/header-group.json`, `sections/footer-group.json` | Repointed to the new menus |
+
+Source of record is `site/theme-v7/` in this repo. Checks:
+`python3 site/parse-liquid.py site/theme-v7/snippets/*.liquid` and
+`python3 site/check-hivolt-pdp.py`.
+
+### Still owner-gated on this theme
+
+1. **Preview and publish** — Claude cannot publish a theme.
+2. **Attach a size chart.** The metaobject exists and the guide is wired to it,
+   but no chart has been created because no polo has been measured. Until one
+   is, the size guide correctly renders nothing.
+3. **Fill the `spec.*` fields** from supplier documentation. Empty fields render
+   nothing, so the PDP is honest but thin.
+4. **Polo category taxonomy** (G14) before the draft nav can carry category links.

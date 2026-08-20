@@ -78,14 +78,14 @@ replaced with real numbers before any pricing decision.**
 | Path | MOQ | Capital | Landed COGS (est.) | QC control | Branding control | Speed to launch | Scaling | Return risk | Premium pricing |
 |---|---|---|---|---|---|---|---|---|---|
 | **A. OEM / private label** | 300–1,000/style | High ($15–50k) | $12–22 | High | Full (label, tag, packaging) | 8–16 weeks | High | Low (own spec + sizing) | **Yes** |
-| **B. Blank performance polo + HIVOLT branding** | 50–300 | Medium ($3–15k) | $18–30 | Medium-high (known blank spec) | Medium (decoration, not construction) | 3–6 weeks | High | Low-medium | **Yes** |
+| **B. Blank performance polo + HIVOLT branding** *(recommended, not approved)* | 50–300 | Medium ($3–15k) | $18–30 | Medium-high (known blank spec) | Medium (decoration, not construction) | 3–6 weeks | High | Low-medium | **Yes** |
 | **C. Custom cut-and-sew** | 500–2,000/style | Highest ($30–100k) | $10–20 at volume | Highest | Total | 16–28 weeks | Highest | Lowest | **Yes, strongest** |
 | **D. Regional 3PL (on top of A/B/C)** | n/a | Medium (inventory float) | +$3–6/order | n/a | n/a | 2–4 weeks to set up | Enables EU/UK speed | Reduces (fast returns) | Enables |
 | **E. Current marketplace dropship** | 0 | ~$0 | $9–29 | **None** | **None** | Days | Fragile | **High** (sizing) | **No** |
 
-**Path B is the strongest risk-adjusted entry** for a brand with no sales
+**RECOMMENDATION ONLY (not approved): Path B appears the strongest risk-adjusted entry** for a brand with no sales
 history: known blank specs (published GSM, true US sizing), real branding, low
-capital, weeks not months. Path A or C follows once demand is proven.
+capital, weeks not months. Path A or C would follow once demand is proven. This is a recommendation; no supplier strategy is approved.
 
 **Estimates flagged:** every MOQ, capital and COGS figure above is an industry
 range, not a quote. Real numbers require contacting suppliers — an owner action.
