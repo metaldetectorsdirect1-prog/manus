@@ -29,7 +29,12 @@ Updated 2026-08-20 (second pass). **Authority boundary is enforced in every row.
 | C14 | **G8 — structured data** | TECH | Done — Organization/WebSite/Breadcrumb/Product/Offer, no rating, no fake identifiers |
 | C15 | Draft-theme navigation de-linked from empty legacy collections | TECH | Done — new menus, homepage rebuilt |
 | C16 | Live policy contradictions documented for approval | TECH | Done — `HIVOLT-POLICY-CORRECTIONS.md`, 7 items, nothing applied |
-| C17 | Render-level test suite for the new PDP layer | TECH | Done — `site/check-hivolt-pdp.py`, 27 checks |
+| C17 | Render-level test suite for the new PDP layer | TECH | Done — `site/check-hivolt-pdp.py` |
+| C18 | **Golden PDP fixture + 10 degraded scenarios** | TECH | Done — `site/hivolt_pdp_fixtures.py`, 25-variant matrix, no real data |
+| C19 | **Release gate expanded to 113 assertions** | TECH | Done — positive, degradation and negative checks; exits non-zero |
+| C20 | **Browser QA across 7 viewports + axe-core** | TECH | Done — `site/check-hivolt-browser.py`, 174/174, 0 WCAG violations |
+| C21 | **Four defects found and fixed by the gate** | TECH | Done — see `HIVOLT-PDP-RELEASE-QA.md` |
+| C22 | Release readiness report | TECH | Done — `HIVOLT-PDP-RELEASE-QA.md`: **READY FOR HUMAN PREVIEW** |
 
 ## Blocked on OWNER
 
@@ -146,6 +151,18 @@ touched**. Owner previews it in Online Store → Themes.
 Source of record is `site/theme-v7/` in this repo. Checks:
 `python3 site/parse-liquid.py site/theme-v7/snippets/*.liquid` and
 `python3 site/check-hivolt-pdp.py`.
+
+### Release gate
+
+`python3 site/check-hivolt-pdp.py` — 113 assertions, exits non-zero on failure.
+`python3 site/render-pdp-preview.py && python3 site/check-hivolt-browser.py` —
+174 browser checks at 320/375/390/430/768/1024/1440 plus axe-core WCAG 2.1 AA.
+
+Fixtures are local Python (`site/hivolt_pdp_fixtures.py`), contain no real
+product data, and cannot reach the store.
+
+Full evidence, including the structured-data PASS/FAIL table and the
+`/pages/fabric-weight-index` audit, is in `HIVOLT-PDP-RELEASE-QA.md`.
 
 ### Still owner-gated on this theme
 
