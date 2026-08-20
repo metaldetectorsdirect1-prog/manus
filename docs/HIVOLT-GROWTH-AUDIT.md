@@ -62,3 +62,69 @@ These were established earlier in the project and remain binding:
 4. **Payments status** — Settings → Payments active?
 5. **Target retail price band and margin floor** for the polo line.
 6. **Returns policy for EU/UK** (14-day statutory withdrawal differs from the current 60-day US promise).
+
+---
+
+# Addendum — Polo supply reality (2026-08-20)
+
+Supplier research (AutoDS catalogue, 10 searches + 6 deep verifications,
+read-only) returned **six** usable men's polo candidates after rejecting
+brand-titled items, mis-tagged gym tees, over-ceiling bundles, and duplicates.
+
+## The finding that changes positioning
+
+**The available dropship supply cannot support a "premium performance polo"
+brand as specified in §5.**
+
+| Evidence | Detail |
+|---|---|
+| Fabric weight (GSM) | **Not stated on any listing.** Zero of six. |
+| "Quick dry" / moisture-wicking | **Not stated on any listing.** Zero of six. |
+| Verified cotton | Only 2 of 6 (`100% Cotton` on one, `COTTON` on another). The rest are itemSpecific **POLYESTER**. |
+| Verifiable performance words | Only literal itemSpecific tokens: `Breathable`, `anti-wrinkle`, `Anti-Pilling`. Nothing else may be claimed. |
+| Sizing | Two of the strongest use **weight-based Asian/EUR charts** — a direct returns risk for US buyers in the most fit-sensitive category. |
+| US warehouse | Only 2 suppliers (11–14 day transit). The rest ship CN 13 days. |
+
+Under §5 and §72 the performance-tech narrative is therefore **unavailable**.
+Any GSM figure, moisture-management claim or golf-performance story written on
+top of this supply would be fabricated.
+
+## Decision taken (reversible; flag for owner)
+
+Built a focused **four-SKU core line** rather than a padded catalogue, each
+positioned only to its verified attributes:
+
+| SKU | Position | Verified basis | Retail |
+|---|---|---|---|
+| H01 | Classic cotton polo (flagship, most colourways) | `100% Cotton`, `Anti-Pilling` | $49 |
+| H02 | Cotton stretch slim polo | `COTTON`, `Breathable`, `Slim` | $54 |
+| H03 | Long-sleeve polo | `anti-wrinkle`, US warehouse | $59 |
+| H04 | Jacquard textured knit polo | textured knit, `Breathable`, US warehouse | $69 |
+
+**Pricing rationale — and the conflict.** The directive's $500K model assumes
+$100–150 AOV. A no-name polo at $69–129, shipped 11–13 days, with weight-based
+sizing and no published fabric spec, is not defensible against Uniqlo ($29–39)
+or Ralph Lauren ($98, with a century of brand equity). Pricing at $49–69 keeps
+79–85% gross margin while remaining credible. Reaching $100+ AOV should come
+from **multi-unit bundles** (§13) — a polo buyer naturally owns several — not
+from a single-unit price the product cannot carry.
+
+Every size chart is published exactly as the manufacturer states it, with an
+explicit warning where sizing is weight-based, because size returns are the
+single largest controllable cost in this category.
+
+## OWNER DECISION REQUIRED
+
+**To sell genuine premium performance polos, the supply must change.** Options:
+
+1. **Private label / cut-and-sew** — real spec sheets (GSM, composition,
+   moisture management), true US sizing, own labelling. Unlocks the §5
+   performance story and $89–129 pricing. Requires MOQ + capital.
+2. **Premium POD** (e.g. a supplier publishing full fabric specs) — lower MOQ,
+   spec-backed claims, higher unit cost.
+3. **Stay with current supply** — then positioning must remain "classic cotton
+   polo" at $49–69, and the brand line "ACTIVATE YOUR POTENTIAL" carries the
+   aspiration while the product copy stays factual.
+
+Option 3 is live now. Options 1–2 are the path to the directive's stated
+premium position and are a capital/sourcing decision, not a code change.
