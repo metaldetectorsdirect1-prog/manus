@@ -35,6 +35,8 @@ Updated 2026-08-20 (second pass). **Authority boundary is enforced in every row.
 | C20 | **Browser QA across 7 viewports + axe-core** | TECH | Done — `site/check-hivolt-browser.py`, 174/174, 0 WCAG violations |
 | C21 | **Four defects found and fixed by the gate** | TECH | Done — see `HIVOLT-PDP-RELEASE-QA.md` |
 | C22 | Release readiness report | TECH | Done — `HIVOLT-PDP-RELEASE-QA.md`: **READY FOR HUMAN PREVIEW** |
+| C23 | Real size-chart integration attempt | TECH | **BLOCKED, correctly** — no garment measurement exists for any draft polo. Nothing written. Real-data pipeline verified fail-closed, 14/14 |
+| C24 | Supplier measurement request | TECH | Done — `HIVOLT-POLO-MEASUREMENT-REQUEST.md`, ready to send |
 
 ## Blocked on OWNER
 
@@ -167,9 +169,11 @@ Full evidence, including the structured-data PASS/FAIL table and the
 ### Still owner-gated on this theme
 
 1. **Preview and publish** — Claude cannot publish a theme.
-2. **Attach a size chart.** The metaobject exists and the guide is wired to it,
-   but no chart has been created because no polo has been measured. Until one
-   is, the size guide correctly renders nothing.
+2. **Obtain garment measurements.** Confirmed 2026-08-20: the supplier supplies
+   a recommended body weight per size and no garment dimension at all, so no
+   chart can be created without new data. Send
+   `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md` to the supplier or measure a
+   physical sample. Until then the size guide correctly renders nothing.
 3. **Fill the `spec.*` fields** from supplier documentation. Empty fields render
    nothing, so the PDP is honest but thin.
 4. **Polo category taxonomy** (G14) before the draft nav can carry category links.

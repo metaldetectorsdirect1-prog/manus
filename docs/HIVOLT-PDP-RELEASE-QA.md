@@ -243,7 +243,7 @@ Verified read-only on 2026-08-20:
 
 | Blocker | Evidence | Consequence |
 |---|---|---|
-| **No size chart exists** | `metaobjects(type: "hivolt_size_chart")` returns 0 entries | The size guide correctly renders nothing on every product. Its behaviour cannot be seen in preview until one real chart is created. |
+| **No size chart exists, and none can be created yet** | `metaobjects(type: "hivolt_size_chart")` returns 0 entries. Investigated 2026-08-20: no garment measurement exists anywhere for any draft polo — see *Real catalog integration* | The size guide correctly renders nothing on every product. **Blocking action: `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md`** — the supplier provides recommended body weight only, which is not a garment dimension. |
 | **No `spec.*` values on any product** | All 3 draft products return 0 metafields in the `spec` namespace | The specification table correctly renders nothing. Same consequence. |
 | **No barcodes** | Every variant sampled has `barcode: null`; `custom.mpn` unset | Every offer resolves to `identifier_exists=no`. Correct, but no product will carry a GTIN until a supplier provides one. |
 | **Weight-based sizing on SKUs** | e.g. `HV-H01-NAVY-EURS60-70KG` | A size chart built on these needs a decision about what the size labels mean before measurements can be attached. |
@@ -330,13 +330,202 @@ read and not written.
 
 ---
 
+## Real catalog integration
+
+> ## REAL SIZE DATA: BLOCKED — AUTHORITATIVE MEASUREMENTS REQUIRED
+>
+> See `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md`.
+>
+> No `hivolt_size_chart` metaobject was created and no product metafield was
+> written. There is no garment measurement to put in one.
+
+Attempted 2026-08-20 against the product the release report named as the next
+step.
+
+### Product examined
+
+| | |
+|---|---|
+| Title | HIVOLT Classic Cotton Polo — Men's Short Sleeve |
+| Product ID | `gid://shopify/Product/9603121774824` |
+| Handle | `hivolt-classic-cotton-polo-mens-short-sleeve` |
+| Status | **DRAFT** — asserted before any write was considered |
+| Variants | 20 (Colour 6 × Size 5, sparse) |
+| Size option values | `EUR S 60-70kg`, `EUR M 70-80kg`, `EUR L 80-90kg`, `EUR XL 90-100kg`, `EUR XXL 100-105kg` |
+| Colour option values | Navy, White, Light Blue, Dark Grey, Black, Army Green |
+| `spec.size_chart` | `null` |
+| `spec.*` metafields | 0 |
+
+### Where measurement evidence was looked for
+
+| Source | Result |
+|---|---|
+| Repository — all `.md` `.csv` `.tsv` `.json` `.txt` `.xlsx` `.pdf` | No garment measurement. The only hits for chest/shoulder/sleeve/flat are this project's own test fixtures and the retired fabric page. |
+| Repository — `HV-H01`, supplier item id, `60-70kg` and equivalents | Hits only in our own documentation |
+| Shopify product metafields (all namespaces) | `custom.supplier_source`, `custom.supplier_variant_map`, three `mm-google-shopping` feed fields, three Judge.me review stubs. No measurement. |
+| Shopify Files | One video. No spec sheet, tech pack or measurement document. |
+| Product media, 9 images | Hero, six colourways, two "detail". The two detail images could **not** be examined — `cdn.shopify.com` is egress-blocked from this environment. Flagged below. |
+| Product description | Contains a supplier sizing table — **body weight only** (see below) |
+| AutoDS research catalogue, by supplier item id | No record returned |
+| Supplier listing direct | `aliexpress.com` egress-blocked |
+
+### What the supplier actually provides
+
+The product description carries the supplier's sizing table verbatim:
+
+| Size label | Recommended body weight |
+|---|---|
+| EUR S | 60-70kg |
+| EUR M | 70-80kg |
+| EUR L | 80-90kg |
+| EUR XL | 90-100kg |
+| EUR XXL | 100-105kg |
+
+That is the entire sizing dataset for this product. It contains **no chest, no
+length, no shoulder, no sleeve — no garment dimension of any kind.**
+
+A recommended wearer body weight cannot be converted into a garment
+measurement. There is no formula, and inventing one is exactly the failure this
+architecture was built to prevent.
+
+### Evidence classification
+
+| Candidate source | Class | Reason |
+|---|---|---|
+| Body-weight table on the Classic Cotton Polo | **Not a measurement source** | It is a fit recommendation, not a garment dimension |
+| Anti-Wrinkle Polo "Length" column, 92–116 cm | **C — insufficient** | Label contradicts the values; see below |
+| Slim-Fit Cotton Polo | **Not a measurement source** | Supplier states sizes with no measurements |
+
+Nothing reached class A, and nothing reached a class B that could be trusted
+without interpretation. Per the rule, **nothing was written.**
+
+#### Why the one numeric source was rejected
+
+The Anti-Wrinkle Polo (`9603123216616`) is the only draft product with numeric
+garment data. It is internally consistent — all seven stated inch values match
+their centimetre values to two decimal places — and it was still rejected:
+
+- Labelled **Length**, but grades at a constant **4 cm per size**. Men's polo
+  body length typically grades ~2 cm per size; 4 cm is chest-circumference
+  grading.
+- **92–116 cm** is outside the normal men's polo body-length range (~68–80 cm)
+  and inside the normal chest-circumference range.
+- The supplier states no measurement basis.
+
+Publishing a column headed "Length" carrying what is probably a chest
+circumference would put a wrong number in front of a customer. That is worse
+than an absent size guide. It is also a different product from the one this
+task targeted.
+
+### Size-label semantics
+
+**UNVERIFIED.**
+
+HIVOLT's own product description states the kilogram range is a recommended
+body weight, and the store's variant SKUs encode the same (`HV-H01-NAVY-EURS60-70KG`).
+That description was transcribed from the supplier listing by an earlier
+session, not from a specification document, and it could not be re-checked
+against the supplier this session — AliExpress is egress-blocked and AutoDS
+holds no record of the item.
+
+So the internal evidence is consistent but self-referential. Whether `EUR`
+denotes a European sizing standard, and whether an equivalent alpha size
+exists, is unknown. The questions are in §6 of the measurement request.
+
+**No variant option value was renamed.** `EUR S 60-70kg` remains exactly as
+stored.
+
+### Real-data pipeline verification
+
+The fixture proves the components work. This proves the **real** relationship
+behaves correctly with the data that genuinely exists today — a product with no
+chart must produce no size guide, not a broken one.
+
+Method: the Admin API read-back for product `9603121774824` was transformed
+faithfully into the existing local render harness and rendered through the same
+snippets the draft theme runs. **This is not a storefront preview** — the
+storefront remains egress-blocked. Every input was read from Shopify in this
+session.
+
+**14/14 PASS**
+
+| Check | Result |
+|---|---|
+| Size-guide trigger absent | PASS |
+| Size-guide dialog absent | PASS |
+| No placeholder table markup | PASS |
+| Specification block absent | PASS |
+| Colour option falls back to text buttons | PASS |
+| No colour inferred from a value's name | PASS |
+| All six real colourways render | PASS |
+| All five real size labels render verbatim | PASS |
+| Size labels not silently renamed to S/M/L | PASS |
+| Structured data valid, Product node present | PASS |
+| Offer count equals the real variant count (20) | PASS |
+| Every offer OutOfStock, matching real inventory of 0 | PASS |
+| No identifier invented for barcode-less variants | PASS |
+| No rating or review markup | PASS |
+
+### Missing-chart control
+
+All three draft products currently have `spec.size_chart = null`, so the
+control condition is the whole catalogue: no product renders a size-guide
+trigger, a dialog or a placeholder table. When one chart is eventually attached
+to one product, that product will opt in on its own without changing the others.
+
+### Observations for the owner — reported, not changed
+
+1. **Size options are stored out of order.** Shopify returns them as
+   `EUR S`, `EUR M`, `EUR XL`, `EUR XXL`, `EUR L`. The size selector will
+   render `L` after `XXL`. This is product data, not theme code, and changing
+   variant option values was outside this session's authority.
+2. **No option value carries swatch data.** All 11 values return
+   `swatch: null`, so every colour renders as a text button. That is T3's
+   designed fallback behaving correctly on real data, and it is the reason the
+   fallback exists — but real swatches would present better.
+3. **Two "detail" images could not be examined.** `cdn.shopify.com` is
+   egress-blocked here. If either turns out to be a supplier sizing diagram it
+   would change the answer for this product. Anyone with CDN access should open
+   `hv-h01-detail-1.webp` and `hv-h01-detail-2.webp` before treating this as
+   settled.
+
+### Theme changes
+
+**None.** The real data exposed no defect: the pipeline failed closed exactly as
+designed. No file was uploaded to any theme this session, so the draft theme
+remains byte-identical to `site/theme-v7/` as verified in the previous session.
+
+---
+
 ## Safety confirmation
 
-- MAIN theme `158570021096` — **not read from, not written to, not published.**
-  It carries no `hivolt-*` file and its `updatedAt` predates this session.
+**Release-gate session (commit `51c4732`)**
+
+- MAIN theme `158570021096` — **not written to, not published.** It carries no
+  `hivolt-*` file and its `updatedAt` predates that session.
 - Draft theme `158653808872` — 4 files updated, **role still `UNPUBLISHED`.**
 - No production product, metafield definition, metaobject entry, page, policy,
-  menu, redirect, collection or discount was created, modified or deleted.
-  Store access this session was read-only apart from the four draft-theme file
-  writes.
+  menu, redirect, collection or discount created, modified or deleted. Store
+  access was read-only apart from the four draft-theme file writes.
+
+**Real-catalog session (2026-08-20)**
+
+- **Zero Shopify mutations of any kind.** Every call was a read. No metaobject
+  was created; no product metafield was written; no theme file was uploaded.
+- MAIN theme `158570021096` — role `MAIN`, `updatedAt` `2026-08-20T05:47:10Z`,
+  unchanged.
+- Draft theme `158653808872` — role `UNPUBLISHED`, `updatedAt`
+  `2026-08-20T10:00:47Z`, unchanged since the previous session's last write.
+- No product status, title, description, price, variant, option value, SKU,
+  barcode, inventory or SEO field touched. `/pages/fabric-weight-index`
+  untouched. Navigation, collections, redirects and policies untouched.
 - PR #2 — **not merged.**
+
+One thing worth recording rather than glossing over: product `9603121774824`
+reports `updatedAt: 2026-08-20T22:17:33Z`, later than this session's first
+read. No mutation was issued from here — every Shopify call this session was a
+`graphql_query`, and the AutoDS call is documented read-only. A field-by-field
+re-read confirms it: title, handle, vendor, description, status and variant
+count are identical to the first read, and every metafield still carries its
+original `updatedAt` of 06:33–06:37. The bump came from something outside this
+session, most plausibly the installed Judge.me app. Nothing in scope changed.
