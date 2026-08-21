@@ -483,17 +483,91 @@ to one product, that product will opt in on its own without changing the others.
    `swatch: null`, so every colour renders as a text button. That is T3's
    designed fallback behaving correctly on real data, and it is the reason the
    fallback exists — but real swatches would present better.
-3. **Two "detail" images could not be examined.** `cdn.shopify.com` is
-   egress-blocked here. If either turns out to be a supplier sizing diagram it
-   would change the answer for this product. Anyone with CDN access should open
-   `hv-h01-detail-1.webp` and `hv-h01-detail-2.webp` before treating this as
-   settled.
+3. **Two "detail" images could not be examined.** See *Detail-media evidence
+   attempt* below — a second session exhausted every available retrieval path
+   and the images remain unread.
 
 ### Theme changes
 
 **None.** The real data exposed no defect: the pipeline failed closed exactly as
 designed. No file was uploaded to any theme this session, so the draft theme
 remains byte-identical to `site/theme-v7/` as verified in the previous session.
+
+---
+
+## Detail-media evidence attempt — 2026-08-21
+
+The previous session flagged the two `detail` images on the Classic Cotton Polo
+as the highest-priority remaining evidence: if either is a supplier sizing
+diagram, the product is not blocked. A dedicated session went after them.
+
+**Outcome: neither image could be inspected. They remain unread, and the
+product remains blocked.** Zero Shopify mutations were made.
+
+### Retrieval attempts
+
+| # | Path | Result |
+|---|---|---|
+| 1 | Local repository and full filesystem search | No copy exists. The images were never downloaded — the products were created by handing supplier URLs to Shopify's server-side fetcher, so the bytes went supplier → Shopify without passing through here. |
+| 2 | Shopify Admin API media query | Returns metadata only — id, alt, dimensions, MIME type, CDN URL. The Admin API exposes no pixel data for a `MediaImage`. |
+| 3 | `curl` with the proxy CA bundle | `CONNECT tunnel failed, response 403` |
+| 4 | First-party `WebFetch` | `EGRESS_BLOCKED — cdn.shopify.com` |
+| 5 | Chromium via Playwright | `net::ERR_TUNNEL_CONNECTION_FAILED` — the browser uses the same proxy |
+| 6 | AutoDS connector (MCP traffic bypasses the allowlist) | No record of supplier item `1005002281827487`; a title search returned ten unrelated products, none matching the supplier colour codes `PL208` / `PL205` / `AX-511` |
+| 7 | Shopify Admin authenticated browser | Not available — no Admin session or credentials in this environment |
+
+The egress proxy recorded the denial itself:
+
+```
+{"kind": "connect_rejected",
+ "detail": "gateway answered 403 to CONNECT (policy denial or upstream failure)",
+ "host": "cdn.shopify.com:443"}
+```
+
+`/root/.ccr/README.md` is explicit about this class: *"The destination host is
+not allowed by your organization's egress policy for this session. Do not retry
+or route around it — report the blocked host."* No bypass, mirror or
+third-party copy was used.
+
+### Evidence note
+
+| | |
+|---|---|
+| `hv-h01-detail-1.webp` | `gid://shopify/MediaImage/40334801469672`, 1000×1000 webp, READY. **Inspected: NO.** Contents unknown. Sizing evidence: undetermined. |
+| `hv-h01-detail-2.webp` | `gid://shopify/MediaImage/40334801502440`, 1000×1000 webp, READY. **Inspected: NO.** Contents unknown. Sizing evidence: undetermined. |
+
+**Nothing is claimed about what these images contain.** They may hold a
+supplier size chart or they may be product close-ups. The only honest statement
+is that this environment cannot read them.
+
+One weak signal, recorded as a signal and not as evidence: both are 1000×1000,
+the same square format as the hero and the six colourway shots, and the session
+that created this product transcribed the supplier's sizing into the product
+description as body-weight-only. Had a measurement chart been in the supplier's
+media set, that session would plausibly have transcribed measurements too. That
+is an inference about a past session's behaviour, not a fact about the pixels,
+and it does not close the question.
+
+### What this changes
+
+Nothing about the blocked status, and nothing about the required next action.
+The product still has no garment measurement, `spec.size_chart` is still
+`null`, and no `hivolt_size_chart` entry exists.
+
+It does change who can resolve it: **a human with normal Shopify Admin access
+can settle this in about a minute** by opening the two images in the product's
+media gallery. That check now sits ahead of sending the supplier request,
+because if either image is a measurement chart the request may be unnecessary.
+
+### T2 confirmed still correctly empty
+
+The real-data pipeline verification was re-run against the current live state:
+**14/14 PASS** — no size-guide trigger, no dialog, no placeholder table, no
+spec block, while still emitting valid structured data with 20 offers, all
+correctly `OutOfStock` and no invented identifier.
+
+Release gate re-run unchanged: **113/113**, Liquid parse **9/9**. No theme file
+was modified or deployed.
 
 ---
 
@@ -520,6 +594,23 @@ remains byte-identical to `site/theme-v7/` as verified in the previous session.
   barcode, inventory or SEO field touched. `/pages/fabric-weight-index`
   untouched. Navigation, collections, redirects and policies untouched.
 - PR #2 — **not merged.**
+
+**Detail-media evidence session (2026-08-21)**
+
+- **Zero Shopify mutations.** Every Shopify call was a `graphql_query`; the one
+  AutoDS call is documented read-only. No metaobject created, no metafield
+  written, no theme file uploaded.
+- MAIN `158570021096` — role `MAIN`, `updatedAt 2026-08-20T05:47:10Z`, unchanged.
+- Draft `158653808872` — role `UNPUBLISHED`, `updatedAt 2026-08-20T10:00:47Z`,
+  unchanged. Not published.
+- Target product — `updatedAt 2026-08-20T22:17:33Z`, identical to the previous
+  session's closing read, so no external write occurred in between. Status
+  still `DRAFT`; `spec.size_chart` still `null`; 0 `hivolt_size_chart` entries.
+- No product status, title, description, price, variant, option value, order,
+  SKU, barcode, inventory, swatch or SEO field touched. No policy, navigation,
+  collection, redirect or page touched. `/pages/fabric-weight-index` untouched.
+- The egress policy denial on `cdn.shopify.com` was reported, not circumvented.
+  No proxy bypass, mirror or third-party image copy was used.
 
 One thing worth recording rather than glossing over: product `9603121774824`
 reports `updatedAt: 2026-08-20T22:17:33Z`, later than this session's first

@@ -2,6 +2,18 @@
 
 **Status: OPEN. This is the blocking item for the product size guide.**
 
+> **Do this first — it takes a minute and may make the rest unnecessary.**
+>
+> The product carries two images named `hv-h01-detail-1.webp` and
+> `hv-h01-detail-2.webp`. Nobody has been able to look at them: the automation
+> environment cannot reach Shopify's CDN, so their contents are unknown. If
+> either turns out to be a supplier size chart or measurement diagram, the
+> measurements may already exist and this request can be narrowed or dropped.
+>
+> Open Shopify Admin → Products → *HIVOLT Classic Cotton Polo — Men's Short
+> Sleeve* → Media, and view the last two images. If either shows a size table
+> or a measurement diagram, send a screenshot instead of completing §5.
+
 The storefront size guide is built, tested and deployed to the draft theme. It
 renders nothing on this product because no garment measurement exists for it —
 not in the repository, not in Shopify, not in any supplier document we hold.

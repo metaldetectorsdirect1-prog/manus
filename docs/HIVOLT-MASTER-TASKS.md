@@ -37,6 +37,7 @@ Updated 2026-08-20 (second pass). **Authority boundary is enforced in every row.
 | C22 | Release readiness report | TECH | Done — `HIVOLT-PDP-RELEASE-QA.md`: **READY FOR HUMAN PREVIEW** |
 | C23 | Real size-chart integration attempt | TECH | **BLOCKED, correctly** — no garment measurement exists for any draft polo. Nothing written. Real-data pipeline verified fail-closed, 14/14 |
 | C24 | Supplier measurement request | TECH | Done — `HIVOLT-POLO-MEASUREMENT-REQUEST.md`, ready to send |
+| C25 | Detail-media evidence recovery | TECH | **Exhausted, unresolved** — 7 retrieval paths tried, all denied by egress policy. Images unread. Zero mutations. Needs a human with Shopify Admin |
 
 ## Blocked on OWNER
 
