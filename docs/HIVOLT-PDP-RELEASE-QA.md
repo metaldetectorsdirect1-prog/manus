@@ -571,6 +571,136 @@ was modified or deployed.
 
 ---
 
+## Real catalog — Size option ordering
+
+> ## BLOCKED — SAFE OPTION VALUE REORDER NOT AVAILABLE
+>
+> `productOptionsReorder` reports success and performs no write on this store
+> through this access path. Attempted twice, both documented argument forms.
+> **Nothing was changed and nothing was damaged.**
+
+Attempted 2026-08-21 against the observation logged in *Real catalog
+integration*: the Size option values are stored out of sequence.
+
+### Product
+
+| | |
+|---|---|
+| Title | HIVOLT Classic Cotton Polo — Men's Short Sleeve |
+| Product ID | `gid://shopify/Product/9603121774824` |
+| Status | `DRAFT` — asserted before and after |
+| Variants | 20 |
+| Size option | `gid://shopify/ProductOption/12296794800360`, position 2 |
+
+### Before, and still
+
+| # | Stored order | Target order |
+|---|---|---|
+| 1 | `EUR S 60-70kg` | `EUR S 60-70kg` |
+| 2 | `EUR M 70-80kg` | `EUR M 70-80kg` |
+| 3 | `EUR XL 90-100kg` | **`EUR L 80-90kg`** |
+| 4 | `EUR XXL 100-105kg` | `EUR XL 90-100kg` |
+| 5 | **`EUR L 80-90kg`** | `EUR XXL 100-105kg` |
+
+The target order is derived only from the literal kilogram ranges already in
+the labels — `60-70 → 70-80 → 80-90 → 90-100 → 100-105`. It does not depend on
+knowing what `EUR` means, and no label was read as an alpha size.
+
+Two independent facts corroborate that `EUR L 80-90kg` is the single displaced
+value:
+
+- The option-value IDs are sequential in the correct order — `…617192` (S),
+  `…649960` (M), `…682728` (L), `…715496` (XL), `…748264` (XXL), a constant
+  32768 step. The values were **created** in the right sequence; only the
+  stored display order is wrong.
+- The **variant** ordering is already correct. Within Light Blue the variants
+  run S, M, L, XL, XXL. Only the `Size` option's `optionValues` array carries
+  the wrong sequence — and that array is what Liquid renders the selector from.
+
+### What was attempted
+
+| # | Operation | Identification | userErrors | Effect |
+|---|---|---|---|---|
+| 1 | `productOptionsReorder` | Both options and all values by `id` | `[]` | **None** |
+| 2 | `productOptionsReorder` | Both options and all values by `name` (the form in Shopify's own example) | `[]` | **None** |
+
+Both calls pinned **both** options explicitly — Color first with its six values
+in current order, Size second with the corrected five — because the
+documentation states that input order sets option positions, so passing Size
+alone would have demoted Color to position 1.
+
+`product.updatedAt` remained `2026-08-20T22:17:33Z` across both attempts. A
+write bumps that timestamp, so no write occurred.
+
+`ProductOptionValue` exposes no `position` field — array order *is* the display
+order — so the unchanged array is conclusive rather than a reading artefact.
+Shopify's documentation page truncates mid-sentence at "Note: The" in every API
+version indexed, so any caveat it carries could not be read.
+
+After two no-op attempts of the officially documented operation, work stopped.
+No alternative strategy was tried: rebuilding variants, deleting and recreating
+the option, temporary renames and clone-and-replace are all excluded, because
+every one of them risks the variant matrix to fix a display-order cosmetic.
+
+### Forensic diff — 20/20 preserved
+
+Programmatic comparison of the pre-mutation baseline against the post-attempt
+read-back. **Zero integrity failures.**
+
+| Assertion | Result |
+|---|---|
+| Variant count 20 → 20 | PASS |
+| Variant GID set identical | PASS |
+| `GID → SKU` for all 20 | PASS |
+| `GID → Colour` for all 20 | PASS |
+| `GID → Size` for all 20 | PASS |
+| `GID → price` for all 20 | PASS |
+| `GID → compare-at price` (all null) | PASS |
+| `GID → barcode` (all null) | PASS |
+| `GID → inventory item ID` for all 20 | PASS |
+| `GID → inventory quantity / policy` | PASS |
+| `GID → media` for all 20 | PASS |
+| Colour value order unchanged | PASS |
+| Size option id and position unchanged | PASS |
+| Product id/title/handle/vendor/type/status/updatedAt | PASS |
+| `spec.size_chart` still `null` | PASS |
+| `hivolt_size_chart` count still 0 | PASS |
+| No unrelated metafield touched (all still `06:33`–`06:37`) | PASS |
+
+### Render verification — 13/13
+
+The post-attempt Admin read-back was fed through the real-data render harness
+(local; the storefront remains egress-blocked):
+
+- The selector renders Shopify's stored order **verbatim** — `S, M, XL, XXL, L`
+- No duplicate controls, no missing value, no renamed label
+- Colour order unchanged; T3 text fallback still active
+- T2 absent — no trigger, no dialog, no placeholder chart
+- Structured data valid, 20 offers, all `OutOfStock`, no invented identifier
+
+**This confirms the theme is correct.** It consumes Shopify's canonical option
+order faithfully, so the defect lives entirely in the product data. No Liquid
+change was made and none is warranted — compensating for bad data in the theme
+would hide the defect on every other product.
+
+Regression gates unchanged: release gate **113/113**, Liquid parse **9/9**,
+house rules clean, no theme file modified or deployed.
+
+### Smallest human action
+
+In Shopify Admin → **Products** → *HIVOLT Classic Cotton Polo — Men's Short
+Sleeve* → the **Variants** section → the **Size** option → drag
+`EUR L 80-90kg` above `EUR XL 90-100kg`. The Admin UI reorders option values
+directly and preserves variants. Renaming nothing, adding nothing.
+
+Worth recording alongside the project's other verification traps: **a Shopify
+mutation can return `userErrors: []` and still do nothing.** `themeFilesUpsert`
+was already known to report success either way; `productOptionsReorder` behaves
+the same. Read the resource back and check `updatedAt` — an empty error list is
+not evidence of a write.
+
+---
+
 ## Safety confirmation
 
 **Release-gate session (commit `51c4732`)**
@@ -594,6 +724,21 @@ was modified or deployed.
   barcode, inventory or SEO field touched. `/pages/fabric-weight-index`
   untouched. Navigation, collections, redirects and policies untouched.
 - PR #2 — **not merged.**
+
+**Size-ordering session (2026-08-21)**
+
+- Two `productOptionsReorder` calls were issued against product
+  `9603121774824`. Both were **no-ops**: `userErrors: []`, `updatedAt`
+  unchanged, forensic diff clean on every field. No other mutation of any kind.
+- MAIN `158570021096` — role `MAIN`, `updatedAt 2026-08-20T05:47:10Z`, unchanged.
+- Draft `158653808872` — role `UNPUBLISHED`, `updatedAt 2026-08-20T10:00:47Z`,
+  unchanged. Not published. No theme file uploaded.
+- No variant created or deleted; no variant ID, SKU, barcode, price,
+  compare-at, inventory or media association changed; no option or option value
+  renamed; no kilogram range edited; no Colour value touched.
+- No size chart created, no measurement invented, `spec.*` still empty.
+- No policy, navigation, collection, redirect or page touched.
+  `/pages/fabric-weight-index` untouched.
 
 **Detail-media evidence session (2026-08-21)**
 

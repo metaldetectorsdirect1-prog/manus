@@ -38,6 +38,7 @@ Updated 2026-08-20 (second pass). **Authority boundary is enforced in every row.
 | C23 | Real size-chart integration attempt | TECH | **BLOCKED, correctly** — no garment measurement exists for any draft polo. Nothing written. Real-data pipeline verified fail-closed, 14/14 |
 | C24 | Supplier measurement request | TECH | Done — `HIVOLT-POLO-MEASUREMENT-REQUEST.md`, ready to send |
 | C25 | Detail-media evidence recovery | TECH | **Exhausted, unresolved** — 7 retrieval paths tried, all denied by egress policy. Images unread. Zero mutations. Needs a human with Shopify Admin |
+| C26 | Size option-value ordering fix | TECH | **BLOCKED, not resolved** — `productOptionsReorder` returns `userErrors: []` and performs no write. 20/20 variant integrity verified intact. Needs a drag-reorder in Shopify Admin |
 
 ## Blocked on OWNER
 
