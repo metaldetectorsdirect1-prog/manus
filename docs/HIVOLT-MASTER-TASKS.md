@@ -177,5 +177,69 @@ Full evidence, including the structured-data PASS/FAIL table and the
    `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md` to the supplier or measure a
    physical sample. Until then the size guide correctly renders nothing.
 3. **Fill the `spec.*` fields** from supplier documentation. Empty fields render
-   nothing, so the PDP is honest but thin.
-4. **Polo category taxonomy** (G14) before the draft nav can carry category links.
+   nothing, so the PDP is honest but thin. Rules for that pass are below.
+4. **Reorder the Size option values.** `productOptionsReorder` does not take
+   effect on this store (C26). Owner action: Products → the polo → Variants →
+   Size → drag `EUR L 80-90kg` above `EUR XL 90-100kg`. Rename nothing.
+5. **Polo category taxonomy** (G14) before the draft nav can carry category links.
+
+---
+
+## Next phase — populating `spec.*` for the Classic Cotton Polo
+
+Agreed with the owner 2026-08-21. Do not start this until step 4 above is done.
+
+### Step 1 — verify the manual reorder before anything else
+
+Read the product back and confirm the Size option now reads:
+
+```
+EUR S 60-70kg
+EUR M 70-80kg
+EUR L 80-90kg
+EUR XL 90-100kg
+EUR XXL 100-105kg
+```
+
+Then confirm, against the baseline recorded in `HIVOLT-PDP-RELEASE-QA.md`, that
+all 20 variant GIDs, SKUs, prices, inventory items and selected-option mappings
+are unchanged. A drag in Admin should preserve all of them; verify rather than
+assume. If anything moved, stop and report before writing any metafield.
+
+### Step 2 — classify every candidate value before writing it
+
+| Class | Meaning | May write? |
+|---|---|---|
+| **A** | Verified authoritative — supplier spec sheet, tech pack, manufacturing record, measured sample | **Yes** |
+| **B** | Exact-product evidence, weaker form — the supplier's own listing text for this item | **Only if unambiguous** |
+| **C** | Inferred, marketing, generic, or from a similar-but-different product | **Never** |
+
+Sources to inspect: the product description, `custom.supplier_source`,
+`custom.supplier_variant_map`, tags, media alt text, repository documents, and
+anything else that names this exact item. Fields plausibly reachable from the
+existing description include fit, knit construction, material, care, feature
+and pattern. Model height, model size and anything uncertain stay **blank**.
+
+A value is class B only when it means one thing. "Type: regular" describing a
+cut is writable as a fit; a number whose label contradicts its own magnitude —
+the trap that rejected the Anti-Wrinkle Polo's "Length" column — is class C no
+matter how internally consistent it looks.
+
+### Step 3 — keep a provenance table
+
+Every written value, and every field deliberately left empty, goes in
+`docs/HIVOLT-SIZE-DATA-PROVENANCE.md` (create it in that pass):
+
+| Metafield | Stored value | Source | Evidence class |
+|---|---|---|---|
+| `spec.fit` | … | supplier description | B |
+| `spec.collar` | … | exact product data | B |
+| `spec.origin` | … | supplier/manufacturing record | A |
+| `spec.model_height_cm` | *blank* | no evidence | — |
+
+### The principle
+
+> **A blank metafield is better than a polished lie.**
+
+The PDP renders nothing for an empty field by design. A thin, true product page
+costs nothing; one wrong specification costs the first customer who checks it.

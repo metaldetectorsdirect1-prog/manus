@@ -12,6 +12,35 @@
 - Keep files under 500 lines
 - Validate input at system boundaries
 
+## Shopify mutation rules
+
+**`userErrors: []` does not prove a mutation succeeded.**
+
+Every mutation requires an authoritative read-back and an expected-state
+comparison before it may be classified as successful. An empty error list means
+the request was accepted, not that anything was written.
+
+Confirmed on this store by two separate APIs:
+
+- `themeFilesUpsert` reports success as an empty list whether or not the file
+  landed — verify with `checksumMd5` against the local source.
+- `productOptionsReorder` returns `userErrors: []`, echoes a well-formed
+  payload, and performs no write at all — `updatedAt` never moves.
+
+The read-back must check the field that actually carries the change, plus the
+resource's `updatedAt`. A write bumps that timestamp; if it has not moved,
+nothing happened regardless of what the payload said.
+
+Two more that follow from the same class of failure:
+
+- **A mutation payload can echo stale state.** Query the resource again rather
+  than trusting the object the mutation returned.
+- **Two no-ops are the stop signal.** If the officially documented operation
+  does not take effect, report it blocked and name the smallest human action.
+  Do not reach for a strategy that rebuilds what it was meant to adjust —
+  recreating variants, options or products to fix an ordering or display
+  problem risks the identity of everything downstream.
+
 ## Ruflo Capability Brain & Implementation Loop
 
 Ruflo is the coordination ledger and policy decision point. Claude Code is the
