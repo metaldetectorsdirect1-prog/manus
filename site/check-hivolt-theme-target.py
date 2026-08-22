@@ -179,6 +179,13 @@ def report(themes):
 # ---------------------------------------------------------------------------
 # The real state as of 2026-08-21: a theme named DRAFT that is MAIN, and a
 # theme named LIVE that is not. Both traps present in one fixture.
+#
+# These names were corrected in Shopify on 2026-08-22 and are kept here on
+# purpose. The fixture is not a description of current state - it is the
+# adversarial input these tests exist to survive. Updating it to the new neutral
+# names would delete the very thing being tested and leave a suite that proves
+# nothing. If the fixture ever needs to change, add a case; do not replace this
+# one.
 REAL = [
     {"id": "gid://shopify/OnlineStoreTheme/158653808872",
      "name": "HIVOLT v7 — DRAFT: PDP data layer (do not publish)",

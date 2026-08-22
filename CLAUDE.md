@@ -103,15 +103,23 @@ Never conclude a theme is `MAIN` or `UNPUBLISHED` from any of these:
 **Theme IDs survive role changes. Theme names go stale. Only the current
 `role` field returned by Shopify is authoritative.**
 
-This store has already produced both failure modes:
+This store has already produced both failure modes. Between 2026-08-21 and
+2026-08-22 it carried these two names simultaneously:
 
-| Theme | Name says | Role actually is |
+| Theme | Name said | Role actually was |
 |---|---|---|
 | `158653808872` | "HIVOLT v7 — **DRAFT**: PDP data layer (do not publish)" | **`MAIN`** — live since 2026-08-21 |
 | `158482727144` | "HIVOLT v35 — **LIVE** (returns copy fixed)" | `UNPUBLISHED` |
 
-Two themes, both named the opposite of what they are. A session that trusted
+Two themes, both named the opposite of what they were. A session that trusted
 either name would have written to the wrong one.
+
+Both were renamed to role-neutral descriptions on 2026-08-22, so those exact
+strings are gone. **The lesson is not.** Renaming removed two traps; it did not
+make names trustworthy. Names are metadata a human edits and a role change never
+updates — the next stale name is one publish away. Other themes in this store
+are still called "PUBLISH ME" and "PUBLISH:" while nobody intends to publish
+them. Read `role`.
 
 ### MAIN theme write rule
 

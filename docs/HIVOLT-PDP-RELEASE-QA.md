@@ -10,6 +10,11 @@
 > They are a record of the conditions each session worked under, not current
 > instructions.
 >
+> **Both themes were also renamed on 2026-08-22** — `158653808872` to "HIVOLT
+> v7 — Production Baseline — PDP Data Layer" and `158482727144` to "HIVOLT v35 —
+> Returns Copy Correction". Theme names quoted anywhere below are the names in
+> use when those sessions ran. Match themes by ID, not by name.
+>
 > For current state see `docs/HIVOLT-CURRENT-STATE.md`, and re-query Shopify
 > before acting on either.
 

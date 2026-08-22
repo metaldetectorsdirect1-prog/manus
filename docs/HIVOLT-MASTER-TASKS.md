@@ -144,9 +144,19 @@ Merchant Center activation, no product activation performed.**
 **`HIVOLT v7 — DRAFT: PDP data layer`** — theme `158653808872`.
 
 **Role changed on 2026-08-21: this theme is now `MAIN`.** The owner published
-it; v6 (`158570021096`) dropped to `UNPUBLISHED` in the same operation. The
-theme name still says "DRAFT" and is now misleading — renaming it is a safe
-cosmetic fix whenever the owner wants it.
+it; v6 (`158570021096`) dropped to `UNPUBLISHED` in the same operation.
+
+**Contradictory-name hazard: RESOLVED 2026-08-22.** The theme was renamed from
+"HIVOLT v7 — DRAFT: PDP data layer (do not publish)" to **"HIVOLT v7 —
+Production Baseline — PDP Data Layer"**, and `158482727144` from "HIVOLT v35 —
+LIVE (returns copy fixed)" to **"HIVOLT v35 — Returns Copy Correction"** — the
+latter named from commit `e560953`, which records what v35 actually carried.
+Metadata only: no file written, no role changed, MAIN re-verified 15/15
+byte-identical afterwards.
+
+The names are now role-neutral, which removes the trap but does not create a
+new source of truth. **Role still comes from Shopify's `role` field and from
+nothing else** — a neutral name can go stale exactly as a false one did.
 
 Verified after the swap, re-checked 2026-08-22 against the full tracked source
 set rather than the `hivolt-*` prefix alone: **15/15 files byte-identical to

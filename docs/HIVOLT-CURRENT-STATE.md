@@ -2,7 +2,7 @@
 
 **Operational source of truth for future sessions. Not a history.**
 
-Queried: **2026-08-22**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+Queried: **2026-08-22T11:41Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
 
 > ## This file is a convenience, not an authority.
 >
@@ -15,27 +15,42 @@ Queried: **2026-08-22**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
 
 ## Shopify themes
 
-| Theme ID | Role now | Name (stale — ignore it) |
+| Theme ID | Role now | Name (descriptive only) |
 |---|---|---|
-| `158653808872` | **`MAIN` — LIVE** | "HIVOLT v7 — DRAFT: PDP data layer (do not publish)" |
+| `158653808872` | **`MAIN`** | "HIVOLT v7 — Production Baseline — PDP Data Layer" |
 | `158570021096` | `UNPUBLISHED` | "HIVOLT v6 — PUBLISH ME: logo in header" |
-| `158482727144` | `UNPUBLISHED` | "HIVOLT v35 — **LIVE** (returns copy fixed)" |
+| `158482727144` | `UNPUBLISHED` | "HIVOLT v35 — Returns Copy Correction" |
 | `158563467496` | `UNPUBLISHED` | "HIVOLT v37 — PUBLISH: 15% two-item upsell" |
 | `158568906984` | `UNPUBLISHED` | "HIVOLT v5 — PUBLISH ME: favicon + full footer" |
 | `158347559144` | `UNPUBLISHED` | "HIVOLT v30 — product schema. PUBLISH ME" |
 | `158001037544` | `UNPUBLISHED` | "Impulse" |
 | `158568546536` | `UNPUBLISHED` | "Copy of Impulse" |
 
-**The IDs in this table are informational only. Re-query roles before writes.**
-
-Two names in that table are the opposite of the truth: `158653808872` says
-DRAFT and is live; `158482727144` says LIVE and is not. **Theme role must never
-be inferred from an ID or a name** — see `CLAUDE.md`, *Shopify production-state
+**The IDs and names in this table are informational only. Re-query roles before
+writes.** A name records what a theme *is for*; only Shopify's `role` field
+records what it currently *does*. See `CLAUDE.md`, *Shopify production-state
 rule*.
 
+### The two contradictory names were removed on 2026-08-22
+
+Until then `158653808872` was named "HIVOLT v7 — **DRAFT**: PDP data layer (do
+not publish)" while holding role `MAIN`, and `158482727144` was named "HIVOLT
+v35 — **LIVE**" while holding role `UNPUBLISHED`. Both were renamed to
+role-neutral descriptions in a metadata-only change: no file was written, no
+role changed, and MAIN re-verified at 15/15 byte-identical afterwards.
+
+Note what this did **not** fix. The remaining names still carry imperatives —
+"PUBLISH ME", "PUBLISH:" — on five themes nobody intends to publish. They are
+weaker traps than a false role claim, but they are the same kind of mistake, so
+they are recorded here rather than silently tolerated. **The guard does not read
+names at all, which is why none of them can actually cause a wrong write.**
+
 The role swap happened `2026-08-21T04:11:02Z`, when the owner published v7.
-Live theme integrity was verified afterwards: **15/15 repo-owned files
-byte-identical to `site/theme-v7/`** by `checksumMd5`. No drift.
+Live theme integrity has been verified twice since — after the swap, and again
+after the 2026-08-22 rename: **15/15 repo-owned files byte-identical to
+`site/theme-v7/`** by `checksumMd5` both times. No drift. The rename moved the
+theme's own `updatedAt` to `2026-08-22T11:41:49Z` while every file timestamp
+stayed at `2026-08-20`, which is what a metadata-only write looks like.
 
 ### Before a theme write
 
@@ -99,7 +114,7 @@ All other `spec.*` fields are deliberately blank: `gsm`, `knit`, `collar`,
 | 4 | **Two detail images unreadable** | `hv-h01-detail-1.webp`, `hv-h01-detail-2.webp`. Every retrieval path denied by network policy; 7 attempts recorded |
 | 5 | **Live policy contradictions unresolved** | 7 items awaiting owner decisions — `docs/HIVOLT-POLICY-CORRECTIONS.md` |
 | 6 | **`/pages/fabric-weight-index` still live** with ~109 dead product links | Independent production incident, unrelated to the PDP work. Untouched |
-| 7 | **Live theme name is misleading** | `158653808872` is named "DRAFT … do not publish" but is `MAIN`. Renaming is safe and cosmetic; not done without instruction |
+| 7 | ~~Live theme name is misleading~~ | ✅ **RESOLVED 2026-08-22.** `158653808872` → "HIVOLT v7 — Production Baseline — PDP Data Layer"; `158482727144` → "HIVOLT v35 — Returns Copy Correction". Metadata only; roles and files untouched |
 
 ---
 
