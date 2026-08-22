@@ -41,6 +41,123 @@ Two more that follow from the same class of failure:
   recreating variants, options or products to fix an ordering or display
   problem risks the identity of everything downstream.
 
+### The mutation sequence
+
+Every Shopify mutation runs this sequence. It is one sequence, not one per
+resource type; steps 11 and 12 are the only additions.
+
+**Before**
+
+1. Authoritative current-state read — from Shopify, this session, not from a
+   prompt, a prior report, or a document in this repo.
+2. Target identity verification — the GID you are about to write to is the GID
+   you read back, checked field by field, not matched by name or by position.
+3. Role / status verification — theme `role`, product `status`.
+4. Concurrency snapshot — capture the fields the write must not disturb, so
+   collateral damage is detectable afterwards.
+5. Smallest mutation that achieves the goal.
+
+**After**
+
+6. Independent fresh read, issued after the mutation returned.
+7. Exact comparison on the intended field.
+8. Comparison on unrelated state that must not have moved.
+9. `updatedAt` check wherever the resource carries one.
+10. Only then classify the mutation as successful.
+
+**Theme mutations add:**
+
+11. Re-verify the target theme's `role` immediately before the write. Role can
+    change between your first read and your write — that is exactly what
+    happened on 2026-08-21.
+
+**Product mutations add:**
+
+12. Re-verify the product's `status` immediately before the write.
+
+---
+
+## Shopify production-state rule
+
+**Theme role must never be inferred from a theme ID or a theme name.**
+
+Before any theme mutation:
+
+1. Query current theme roles from Shopify.
+2. Identify `MAIN` dynamically, from the returned `role` field.
+3. Identify the intended non-production target dynamically, the same way.
+4. Compare live state against the assumptions in the task prompt.
+5. **If they disagree, live Shopify state wins.**
+6. Stop before writing until the target is confirmed safe.
+
+Never conclude a theme is `MAIN` or `UNPUBLISHED` from any of these:
+
+- a numeric theme ID
+- a theme name
+- a prior session's report
+- the task prompt
+- a branch name
+- a directory name
+- a document in this repository, including `docs/HIVOLT-CURRENT-STATE.md`
+
+**Theme IDs survive role changes. Theme names go stale. Only the current
+`role` field returned by Shopify is authoritative.**
+
+This store has already produced both failure modes:
+
+| Theme | Name says | Role actually is |
+|---|---|---|
+| `158653808872` | "HIVOLT v7 — **DRAFT**: PDP data layer (do not publish)" | **`MAIN`** — live since 2026-08-21 |
+| `158482727144` | "HIVOLT v35 — **LIVE** (returns copy fixed)" | `UNPUBLISHED` |
+
+Two themes, both named the opposite of what they are. A session that trusted
+either name would have written to the wrong one.
+
+### MAIN theme write rule
+
+A write to whichever theme currently holds role `MAIN` requires **explicit task
+authorization for production modification.**
+
+If the task says "draft only" and the intended theme is currently `MAIN`:
+
+**STOP.**
+
+- Do not reinterpret the authorization.
+- Do not silently redirect the write to a different theme.
+- Do not publish or unpublish any theme as a workaround.
+
+Report the conflict and name the smallest human action. A refused write that
+names the conflict is a successful outcome.
+
+### Preflight
+
+`site/check-hivolt-theme-target.py` adjudicates a target against a theme list.
+It does not fetch — fetching is connector-only, see below — but it applies the
+rules above deterministically and exits non-zero on a violation:
+
+```
+# paste the themes read-back into a file, then:
+python3 site/check-hivolt-theme-target.py --themes state.json --report
+python3 site/check-hivolt-theme-target.py --themes state.json \
+        --target <gid> --expect-role UNPUBLISHED
+python3 site/check-hivolt-theme-target.py --self-test
+```
+
+Exit 1 is a refusal. Do not work around it. Passing the live theme's gid with
+`--expect-role UNPUBLISHED` — the assumption every session held before
+2026-08-21 — prints the conflict and exits 1, which is the whole point.
+
+**No standalone script in this repo can query Shopify.** There are no Shopify
+credentials in the environment, no script contains an Admin API call, and
+egress to `f36zps-yd.myshopify.com` is denied at CONNECT by network policy.
+Shopify is reachable only through the MCP connector, which is available to the
+Claude session and not to a subprocess. Fetch with the connector; adjudicate
+with the script.
+
+Current known state lives in `docs/HIVOLT-CURRENT-STATE.md`. **That file is a
+convenience, not an authority** — it is written by a past session and can be as
+stale as any prompt. Re-query before writing.
+
 ## Ruflo Capability Brain & Implementation Loop
 
 Ruflo is the coordination ledger and policy decision point. Claude Code is the

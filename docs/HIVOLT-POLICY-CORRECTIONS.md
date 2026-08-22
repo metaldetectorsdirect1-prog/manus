@@ -358,7 +358,7 @@ should be deactivated before the polo line is published, not after.
 ## What was changed instead, and where
 
 Nothing above was applied. The equivalent corrections **inside the unpublished
-draft theme** (`HIVOLT v7 — DRAFT: PDP data layer`, theme `158653808872`) were:
+draft theme** (`HIVOLT v7 — DRAFT: PDP data layer`, theme `158653808872` — a draft when this was written, **published by the owner on 2026-08-21 and now `MAIN`**) were:
 
 | Change | Why it was safe to make |
 |---|---|

@@ -10,6 +10,23 @@ Online Store → Themes → Add theme → Upload zip will accept.
 Run:  python3 site/build-theme.py
 Out:  HIVOLT-theme.zip
 
+VERIFY THE TARGET THEME'S ROLE BEFORE ANY OF THIS
+─────────────────────────────────────────────────
+This script writes a zip to disk. It performs no network I/O, holds no
+credentials and names no theme id, so nothing here can reach Shopify by itself.
+The deploy route described below is carried out by a session, and that session
+must establish the target's role from Shopify first:
+
+    themes(first: 25) { edges { node { id name role updatedAt } } }
+    python3 site/check-hivolt-theme-target.py --themes state.json \
+            --target <gid> --expect-role UNPUBLISHED
+
+Role is read from the `role` field and from nothing else. Theme names in this
+store contradict their roles in both directions: `158653808872` is named
+"DRAFT ... do not publish" and is `MAIN`; `158482727144` is named "LIVE" and is
+not. A theme id that used to be a draft is not evidence either — v7 became MAIN
+on 2026-08-21. See CLAUDE.md, "Shopify production-state rule".
+
 DEPLOYING WITHOUT THE ZIP
 ─────────────────────────
 Writes to the live theme are refused, so the route is: themeDuplicate (the

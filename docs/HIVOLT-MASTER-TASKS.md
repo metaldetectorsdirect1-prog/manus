@@ -56,7 +56,9 @@ Updated 2026-08-20 (second pass). **Authority boundary is enforced in every row.
 ## TECH queue — proceeding without owner input
 
 Product-independent storefront infrastructure. Built against **draft/unpublished
-theme copies**; nothing touches the live theme without approval.
+theme copies**; nothing touches the live theme without approval. (Theme
+`158653808872` was one of those copies and has since been published by the
+owner — it is now the live theme.)
 
 | # | Item | Priority | Depends on |
 |---|---|---|---|
@@ -111,7 +113,7 @@ Merchant Center activation, no product activation performed.**
 
 | # | Finding | Lane |
 |---|---|---|
-| G13 | **11 of 11 main-menu links resolve to empty collections** | **Fixed in the draft theme only.** New `hivolt-draft-main` / `hivolt-draft-shop` menus contain no empty-collection links. `main-menu` and `footer-shop` are untouched, so the live theme still shows all 11 |
+| G13 | **11 of 11 main-menu links resolve to empty collections** | **Fixed on theme `158653808872`, which was a draft when this was written and is now `MAIN`/live.** New `hivolt-draft-main` / `hivolt-draft-shop` menus contain no empty-collection links. `main-menu` and `footer-shop` are untouched, so the live theme still shows all 11 |
 | G14 | Navigation is women's-activewear taxonomy on a men's polo brand | OWNER — polo category taxonomy is a merchandising decision, so the draft nav ships with no category links at all rather than invented ones |
 | G15 | `/collections/all` shows 3 DRAFT products → renders empty | Expected; correct state |
 
@@ -122,13 +124,20 @@ Merchant Center activation, no product activation performed.**
 3. No performance/fabric claim not literally present in supplier data.
 4. No artificial inventory.
 5. No publishing to any sales channel without owner approval.
-6. No live theme writes without owner approval.
+6. No live theme writes without owner approval. **The live theme is whichever
+   theme currently holds role `MAIN` — query it, never assume it.** As of
+   2026-08-21 that is `158653808872`, whose name still says "DRAFT".
+   See `CLAUDE.md`, *Shopify production-state rule*.
 7. No brand redesign from the deprecated legacy logo.
 8. No Google Ads, campaigns, ad spend, or Merchant Center activation.
 9. No Review/AggregateRating structured data without real review data.
 10. No invented GTINs, MPNs, or product identifiers.
 
 ---
+
+> **Current state lives in `docs/HIVOLT-CURRENT-STATE.md`.** That file is the
+> operational dashboard; this register is the task history. Re-query Shopify
+> before acting on either.
 
 ## Live theme — what is built and where
 
@@ -139,8 +148,11 @@ it; v6 (`158570021096`) dropped to `UNPUBLISHED` in the same operation. The
 theme name still says "DRAFT" and is now misleading — renaming it is a safe
 cosmetic fix whenever the owner wants it.
 
-Verified after the swap: **10/10 `hivolt-*` files byte-identical to
-`site/theme-v7/` by MD5.** What is live is what was tested.
+Verified after the swap, re-checked 2026-08-22 against the full tracked source
+set rather than the `hivolt-*` prefix alone: **15/15 files byte-identical to
+`site/theme-v7/` by `checksumMd5`.** Zero drift. What is live is what was
+tested. (The earlier "10/10" counted only `hivolt-*`-prefixed files and
+undercounted the set by five.)
 
 Prohibition 6 below (no live theme writes without owner approval) now applies to
 this theme, not to v6.

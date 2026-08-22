@@ -1,5 +1,18 @@
 # HIVOLT PDP — release QA
 
+> ## Production-state update — 2026-08-21
+>
+> **Theme `158653808872` was subsequently published and is now `MAIN`.**
+> Theme `158570021096` is now `UNPUBLISHED`.
+>
+> Statements below that describe `158653808872` as a draft, or `158570021096`
+> as MAIN, were **true when those tests were run** and are preserved as written.
+> They are a record of the conditions each session worked under, not current
+> instructions.
+>
+> For current state see `docs/HIVOLT-CURRENT-STATE.md`, and re-query Shopify
+> before acting on either.
+
 ## Verdict
 
 > ## THEME IS LIVE — PRODUCTS ARE NOT
@@ -25,8 +38,8 @@
 | Branch | `claude/hivolt-store-admin-6e3q23` |
 | Commit | `51c4732` — *PDP release gate: golden fixture, 113 assertions, browser QA, four defects fixed* |
 | Pull request | #2 (draft, open, not merged) |
-| Draft theme | `158653808872` — *HIVOLT v7 — DRAFT: PDP data layer*, role `UNPUBLISHED` |
-| Live theme | `158570021096` — *HIVOLT v6*, role `MAIN`, **not touched** |
+| Draft theme | `158653808872` — *HIVOLT v7 — DRAFT: PDP data layer*, role `UNPUBLISHED` **on 2026-08-20. This theme is now `MAIN` — see the note at the top.** |
+| Live theme | `158570021096` — *HIVOLT v6*, role `MAIN`, **not touched. Now `UNPUBLISHED`.** |
 | Date | 2026-08-20 |
 
 Reproduce the whole gate:
