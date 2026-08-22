@@ -130,11 +130,20 @@ Merchant Center activation, no product activation performed.**
 
 ---
 
-## Draft theme — what is built and where
+## Live theme — what is built and where
 
-**`HIVOLT v7 — DRAFT: PDP data layer`** — theme `158653808872`, UNPUBLISHED.
-Duplicated from the current MAIN theme (`158570021096`), which was **not
-touched**. Owner previews it in Online Store → Themes.
+**`HIVOLT v7 — DRAFT: PDP data layer`** — theme `158653808872`.
+
+**Role changed on 2026-08-21: this theme is now `MAIN`.** The owner published
+it; v6 (`158570021096`) dropped to `UNPUBLISHED` in the same operation. The
+theme name still says "DRAFT" and is now misleading — renaming it is a safe
+cosmetic fix whenever the owner wants it.
+
+Verified after the swap: **10/10 `hivolt-*` files byte-identical to
+`site/theme-v7/` by MD5.** What is live is what was tested.
+
+Prohibition 6 below (no live theme writes without owner approval) now applies to
+this theme, not to v6.
 
 | File | What it does |
 |---|---|
@@ -185,7 +194,47 @@ Full evidence, including the structured-data PASS/FAIL table and the
 
 ---
 
-## Next phase — populating `spec.*` for the Classic Cotton Polo
+## `spec.*` population — DONE for the Classic Cotton Polo (2026-08-22)
+
+The plan below was carried out, with one deliberate departure: **step 1 was
+skipped.** The owner instructed on 2026-08-22 to decouple this pass from the
+unresolved Size ordering issue rather than block on it, so the manual reorder is
+still outstanding and is tracked on its own below.
+
+Outcome: **2 fields written, 15 left blank.** Full audit trail in
+`docs/HIVOLT-PRODUCT-DATA-PROVENANCE.md`; release summary in
+`docs/HIVOLT-PDP-RELEASE-QA.md`.
+
+| Metafield | Stored value | Source | Class |
+|---|---|---|---|
+| `spec.composition` | `100% Cotton` | supplier attribute on source item `1005002281827487` | B |
+| `spec.fit` | `Regular` | supplier attribute `Type: regular`, same item | B |
+| `spec.knit` | *blank* | supplier states the class (Knit), not the structure | C |
+| `spec.care` | *blank* | identical text on cotton **and** polyester products — boilerplate | C |
+| `spec.benefits` | *blank* | `Anti-Pilling` has no grade, GSM or test standard behind it | C |
+| the other twelve | *blank* | no source | C |
+
+The provenance file was created as `HIVOLT-PRODUCT-DATA-PROVENANCE.md` rather
+than `HIVOLT-SIZE-DATA-PROVENANCE.md` — it covers all product data, not only
+sizing, and sizing has no data to record.
+
+New gate: `python3 site/check-hivolt-real-product.py` → **21/21 PASS**,
+mutation-tested in both directions.
+
+### Open items carried forward
+
+| # | Item | Why it matters | Owner action |
+|---|---|---|---|
+| **P1** | Read the garment care label and verify `100% Cotton` | Fibre content is a regulated claim (16 CFR Part 303); the current value is a supplier dropdown selection, not a label | Photograph the label before publishing |
+| **P2** | Obtain flat garment measurements per size | No `hivolt_size_chart` can exist without them; the supplier gives body weight only | Send `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md` |
+| **P3** | Obtain country of manufacture | `spec.origin` is required for EU/UK listings and is currently blank | Read it off the label |
+| **P4** | **Fix the Size option display order by hand** | Still `S → M → XL → XXL → L` in the catalogue. `productOptionsReorder` reports success and writes nothing — **do not retry it** | Drag the values in Shopify admin, then verify all 20 variant GIDs, SKUs, prices and inventory are unchanged |
+| **P5** | Repeat this pass for the other two draft polos | Both still have zero `spec.*` | — |
+| **P6** | `/pages/fabric-weight-index` still live with dead product links | Independent production incident, unrelated to this work | Decide: unpublish, or repoint the links |
+
+---
+
+## Original plan (kept for the record) — populating `spec.*` for the Classic Cotton Polo
 
 Agreed with the owner 2026-08-21. Do not start this until step 4 above is done.
 

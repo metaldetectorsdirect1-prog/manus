@@ -2,12 +2,19 @@
 
 ## Verdict
 
-> ## READY FOR HUMAN PREVIEW
+> ## THEME IS LIVE — PRODUCTS ARE NOT
 >
-> The theme code is complete, tested and deployed to the draft theme. It is
-> **not** a recommendation to publish: publishing turns on commercial and
-> policy decisions that only the owner can make, and on store data that does
-> not exist yet. Both are itemised under *Remaining release blockers*.
+> **Updated 2026-08-22.** The owner published theme v7 (`158653808872`) on
+> 2026-08-21, so the PDP data layer described below is on the live storefront.
+> It was verified byte-identical to tested source: 10/10 `hivolt-*` files match
+> `site/theme-v7/` by MD5.
+>
+> The three HIVOLT polos remain **`DRAFT`** and are not publicly reachable.
+> Publishing them still turns on commercial and policy decisions only the owner
+> can make, and on product data that does not exist yet — itemised under
+> *Remaining release blockers* and under *Real catalog — `spec.*` population*.
+>
+> The original verdict for the code itself, unchanged: **complete and tested.**
 
 ---
 
@@ -701,6 +708,126 @@ not evidence of a write.
 
 ---
 
+## Real catalog — `spec.*` population (2026-08-22)
+
+**Result: 2 of 17 fields written. 15 deliberately left blank.**
+
+The full audit trail is `docs/HIVOLT-PRODUCT-DATA-PROVENANCE.md`. This section
+is the release-facing summary.
+
+### Theme roles have changed since the last session — read this first
+
+The pass began by verifying the two assertions every previous session closed
+with. Both are now **false**, and not because of anything done here:
+
+| Theme | Name | Role now | `updatedAt` |
+|-------|------|----------|-------------|
+| `158570021096` | HIVOLT v6 — PUBLISH ME: logo in header | **`UNPUBLISHED`** | `2026-08-21T04:10:55Z` |
+| `158653808872` | HIVOLT v7 — DRAFT: PDP data layer | **`MAIN`** | `2026-08-21T04:11:02Z` |
+
+The seven-second gap between those two timestamps is the signature of a publish
+operation: the old live theme is unpublished and the new one takes the role in
+the same transaction. **The owner published theme v7 on 2026-08-21.** The PDP
+data layer built in the previous sessions is therefore live, not draft.
+
+That is the owner's call and it is a reasonable one — but it changes what the
+words "MAIN" and "draft" mean everywhere above this section, so it is recorded
+here rather than left for someone to trip over.
+
+Before writing anything, the newly-live theme was checked against tested source:
+**10/10 `hivolt-*` files byte-identical to `site/theme-v7/` by MD5.** What went
+live is what was tested.
+
+The `spec.*` writes below remain safe under the same reasoning that governed
+every earlier session, but for a different reason than before: it is no longer
+that the theme is unpublished, it is that **the product itself is still
+`DRAFT`** and therefore not publicly reachable.
+
+### What was written
+
+| Field | Value | Class | Source |
+|-------|-------|-------|--------|
+| `spec.composition` | `100% Cotton` | **B** | Supplier attribute `Material: 100% Cotton` on source item `1005002281827487` |
+| `spec.fit` | `Regular` | **B** | Supplier attribute `Type: regular` on the same item |
+
+Class B means the supplier states it for this exact item but nobody has checked
+it against a garment label or a tech pack. Both carry a pre-publish verification
+item; `100% Cotton` in particular is a regulated claim under 16 CFR Part 303 and
+must be read off the physical label before this product goes live.
+
+### What was deliberately left blank, and why
+
+Fifteen fields. The three that were tempting and wrong:
+
+- **`spec.knit`** — the supplier says `Craft of weaving: Knit`. That is the
+  *class* (knit rather than woven), not the *structure* the field asks for
+  (Pique, Interlock, Single jersey). Writing `Knit` there would read as a
+  specification while carrying no information.
+- **`spec.care`** — the sentence *"Machine wash cold. Do not bleach or tumble
+  dry."* appears byte-identically on all three draft polos, including the
+  **polyester** one. Identical care text across cotton and polyester is copy
+  pasted three times, not three labels transcribed.
+- **`spec.benefits`** — the supplier's `Feature: Anti-Pilling` has no GSM, no
+  pilling grade and no test standard behind it. The field's own definition
+  requires each line to be checkable against a number on the same page.
+
+The remaining twelve — `gsm`, `collar`, `placket`, `cuff`, `hem`, `finish`,
+`seams`, `opacity`, `origin`, `model_height_cm`, `model_wears_size`,
+`size_chart` — have no source at all.
+
+### Verification
+
+`userErrors: []` was treated as meaningless, per the project rule. Evidence of
+persistence:
+
+- independent re-query returns both values with `updatedAt 2026-08-22T02:35:09Z`;
+- the product's `updatedAt` moved `2026-08-20T22:17:33Z` → `2026-08-22T02:35:11Z`
+  — the movement `productOptionsReorder` never produced;
+- all fifteen C-class fields read back `null`;
+- the 20-variant matrix, captured before and after and compared field by field,
+  is byte-identical (`md5 27c1e249fd97a9e0b19e223189f0eb04`);
+- both sibling draft polos are untouched, `updatedAt` unmoved, no `spec.*`.
+
+`python3 site/check-hivolt-real-product.py` → **21/21 PASS.** It renders the
+real snippets against a drop transcribed from the read-back and asserts that
+the fifteen blanks produce no row, no empty cell, no dash and no placeholder —
+with `Pique`, `Anti-Pilling` and `Machine wash` named explicitly in the
+forbidden list.
+
+Both halves of that gate were mutation-tested rather than trusted. Injecting a
+fabricated `spec.knit = "Pique"` drops it to **17/21** with four assertions
+naming the fault; binding a valid chart makes the size guide emit 655 and 1,818
+characters, proving the empty render comes from the guard rather than from a
+harness incapable of emitting anything.
+
+### Still unresolved, tracked separately
+
+- **Size option display order remains wrong** — `S → M → XL → XXL → L`. Not
+  touched by this pass. `productOptionsReorder` is not to be retried; see the
+  section above. Needs a manual drag in the Shopify admin.
+- **No size chart exists.** `spec.size_chart` is `null` and there are still 0
+  `hivolt_size_chart` metaobjects, because no garment measurement exists for
+  this product from any source.
+- **The two detail images remain unread.**
+
+### Gate status at close of this pass
+
+| Gate | Result |
+|---|---|
+| `site/parse-liquid.py` | 32/33 — see note |
+| `site/check-liquid.py` | PASS |
+| `site/check-hivolt-pdp.py` | **113/113 PASS** |
+| `site/check-hivolt-real-product.py` | **21/21 PASS** |
+
+The one parse failure is `site/theme/article.liquid`, which uses `offset` as a
+variable name. `offset` and `limit` are ordinary identifiers in Shopify Liquid
+but reserved words in python-liquid, so this is a limitation of the local
+harness rather than a defect in the file. It is pre-existing, the file is
+untouched by this pass, and it belongs to the v6 theme. **All 9 liquid files in
+`site/theme-v7/` — the theme that is now live — parse cleanly.**
+
+---
+
 ## Safety confirmation
 
 **Release-gate session (commit `51c4732`)**
@@ -765,3 +892,28 @@ re-read confirms it: title, handle, vendor, description, status and variant
 count are identical to the first read, and every metafield still carries its
 original `updatedAt` of 06:33–06:37. The bump came from something outside this
 session, most plausibly the installed Judge.me app. Nothing in scope changed.
+
+**`spec.*` population session (2026-08-22)**
+
+- **Two Shopify mutations, both in one `metafieldsSet` call**, both against
+  product `9603121774824`: `spec.composition` and `spec.fit`. Nothing else was
+  written in this session by any means.
+- Product status — `DRAFT` before, `DRAFT` after. **Not published.**
+- Variant matrix — 20 variants before and after, identical ids, SKUs, prices,
+  barcodes, inventory quantities and selected options. No variant created,
+  deleted or renamed.
+- Options — `Color` and `Size` unchanged in name, id, position and value order.
+  No option value renamed. No kilogram range edited. `productOptionsReorder`
+  **not called.**
+- `spec.size_chart` still `null`; **0** `hivolt_size_chart` metaobjects. No size
+  chart created and no measurement invented.
+- Sibling drafts `hivolt-slim-fit-cotton-polo-mens-long-sleeve` and
+  `hivolt-anti-wrinkle-polo-mens-long-sleeve` — `updatedAt` unmoved, no
+  `spec.*` written.
+- No theme file uploaded, and no theme published or unpublished by this session.
+  The v6→v7 role swap recorded above happened on 2026-08-21, before this
+  session opened, and was made by the owner.
+- No policy, navigation, collection, redirect, page, market, shipping or payment
+  setting touched. `/pages/fabric-weight-index` untouched.
+- No price, inventory, SKU or barcode changed anywhere in the catalogue.
+- PR #2 — **not merged.**
