@@ -1,5 +1,38 @@
 # Polo sourcing candidates — AliExpress research, 2026-08-23
 
+> ## Margin ranking, 2026-08-23 — the decisive finding
+>
+> Ranked by landed cost (item + shipping) against the 3.5× pricing floor from
+> `docs/google-ads-playbook.md`, with lead time as the tiebreak.
+>
+> | Product | Landed | 3.5× floor | Days | Whs | vs $49 |
+> |---|---:|---:|---:|:--:|---|
+> | Kermei solid cotton | $9.68 | **$33.88** | 13 | CN | **CLEARS** |
+> | AIOPESON solid *(= H01's own source)* | $11.58 | **$40.53** | 11 | US | **CLEARS** |
+> | XuBu custom-LOGO *(min shipping)* | $13.08 | **$45.78** | 28 | CN | **CLEARS** |
+> | AIOPESON V-neck striped | $15.06 | $52.71 | 13 | CN | fails |
+> | AIOPESON breathable stretch | $18.38 | $64.33 | 11 | CN | fails |
+> | AIOPESON henley | $19.79 | $69.27 | 14 | US | fails |
+> | AIOPESON badge embroidery | $20.58 | $72.03 | 13 | CN | fails |
+> | Business casual knitted | $21.01 | $73.54 | 12 | CN | fails |
+> | King Billion contrast | $22.33 | $78.16 | 14 | US | fails |
+> | NN man sport/golf | $23.41 | $81.94 | 14 | CN | fails |
+> | XuBu custom-LOGO *(max shipping)* | $40.25 | $140.88 | 29 | CN | fails |
+> | We Men's 6XL embroidery | $50.75 | $177.62 | 14 | CN | fails |
+> | Crush on Retro knitted | $111.79 | $391.26 | 20 | CN | fails |
+>
+> **3 of 13 clear a $49 price point.** At 3.0× — the blended margin this store
+> actually runs, per PR #2 — 4 clear.
+>
+> One of the three is the item H01 is already sourced from, so the genuinely
+> new options are **two**: Kermei, and XuBu *if* its shipping can be pinned to
+> the low end of its $6.85–$34.02 range.
+>
+> This inverts the request. The constraint on adding polos is not finding them
+> — it is that at $49, almost nothing sourced this way earns its keep. The
+> options are to price well above $49, or source materially cheaper than
+> $14 landed.
+
 **Read the two caveats before using this list.**
 
 ## Caveat 1 — these are NOT ranked by sales
@@ -43,7 +76,7 @@ is the minimum retail price under the pricing rule in
 | 6 | AIOPESON V-Neck Striped Slim Fit | AIOPESON Official | $12.81–15.06 | **free** | 13 | **$52.71** | `1005008457301989` |
 | 7 | AIOPESON Breathable Lightweight Stretch | AIOPESON Official | $17.32–18.38 | **free** | 11 | **$64.33** | `1005008383805960` |
 | 8 | Business Casual Knitted Slim Fit | Top Mens Selling Jeans | $19.54–21.01 | **free** | 12 | **$73.54** | `1005011831687634` |
-| 9 | Leisure Embroidery Cotton Polo, to 6XL | We Men's Store | $26.09 | $2.05–24.66 | 14 | **$91.32** | `1005003219784243` |
+| 9* | Leisure Embroidery Cotton Polo, to 6XL | We Men's Store | $26.09 | $2.05–24.66 | 14 | **$91.32** | `1005003219784243` |
 | 10 | Men's Polo Knitted, tennis/golf | Crush on Retro | $42.27 | $0–69.52 | 9–20 | **$147.95** | `1005003218023322` |
 
 ### Duplicates found
