@@ -247,8 +247,8 @@ mutation-tested in both directions.
 
 | # | Item | Why it matters | Owner action |
 |---|---|---|---|
-| **P1** | Read the garment care label and verify `100% Cotton` | Fibre content is a regulated claim (16 CFR Part 303); the current value is a supplier dropdown selection, not a label | Photograph the label before publishing |
-| **P2** | Obtain flat garment measurements per size | No `hivolt_size_chart` can exist without them; the supplier gives body weight only | Send `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md` |
+| **P1** | Read the garment care label and verify `100% Cotton` | Fibre content is a regulated claim (16 CFR Part 303); the current value is a supplier dropdown selection, not a label | **Folded into the same message as P2** — it asks for label photographs, not a yes/no answer. One send covers both blockers |
+| **P2** | Obtain flat garment measurements per size | No `hivolt_size_chart` can exist without them; the supplier gives body weight only | **Request written and ready to send — `docs/HIVOLT-SUPPLIER-EVIDENCE-REQUEST.md`.** Owner sends it through the supplier chat for item `1005002281827487`; automation has no messaging surface (AliExpress 403 at CONNECT, AutoDS has no contact tool) |
 | **P3** | Obtain country of manufacture | `spec.origin` is required for EU/UK listings and is currently blank | Read it off the label |
 | **P4** | **Fix the Size option display order by hand** | Still `S → M → XL → XXL → L` in the catalogue. `productOptionsReorder` reports success and writes nothing — **do not retry it** | Drag the values in Shopify admin, then verify all 20 variant GIDs, SKUs, prices and inventory are unchanged |
 | **P5** | Repeat this pass for the other two draft polos | Both still have zero `spec.*` | — |

@@ -3,7 +3,10 @@
 **Product:** `HIVOLT Classic Cotton Polo — Men's Short Sleeve`
 **GID:** `gid://shopify/Product/9603121774824`
 **Status:** `DRAFT` — not published to any of the store's 7 sales channels
-**Gate status as of 2026-08-22:** **BLOCKED — 4 hard blockers open**
+**Gate status as of 2026-08-22:** **BLOCKED — 4 hard blockers open.** Two of
+them (Gates 2 and 3) are now waiting on one supplier message that is written and
+ready to send — see `docs/HIVOLT-SUPPLIER-EVIDENCE-REQUEST.md`. Preparing a
+request does not narrow a blocker; only received, validated evidence does.
 
 This document exists to make accidental publication difficult. Publishing this
 product means setting `status: ACTIVE` **and/or** creating a
@@ -65,7 +68,20 @@ defect.
 
 | Requirement | State |
 |---|---|
-| Physical care/fibre label read, or another authoritative manufacturing record obtained | ❌ **BLOCKER** |
+| Physical care/fibre label read, or another authoritative manufacturing record obtained | ❌ **BLOCKER** — `PHYSICAL LABEL / MANUFACTURING EVIDENCE REQUEST PREPARED — RESPONSE PENDING` (2026-08-22) |
+
+**Evidence request status.** A bilingual request for photographs of the sewn-in
+composition and care labels, plus any tech pack or composition certificate, is
+prepared and ready to send: `docs/HIVOLT-SUPPLIER-EVIDENCE-REQUEST.md`. It could
+not be sent from the automation environment — AliExpress is denied at CONNECT
+(403) and the AutoDS integration exposes no messaging tool — so it awaits the
+owner sending it through the supplier chat for item `1005002281827487`.
+
+The request deliberately asks for a **photograph**, not a yes/no answer, because
+a supplier confirming "yes, 100% cotton" in chat is the same class of evidence
+already held and would not clear this gate. Acceptance classes are defined in
+that document **before** any reply arrives, so the standard cannot be relaxed to
+fit whatever turns up.
 
 **Do not delete `100% Cotton` while the product remains `DRAFT`.** It is the
 best available evidence and it is correctly classified. Removing it would lose
@@ -103,8 +119,19 @@ chart sends a shopper to that page. Two wrongs compound.
 
 | Requirement | State |
 |---|---|
-| Supplier or measured-sample garment measurements obtained | ❌ **BLOCKER**. Request drafted: `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md` |
+| Supplier or measured-sample garment measurements obtained | ❌ **BLOCKER** — `EVIDENCE REQUEST PREPARED — RESPONSE PENDING` (2026-08-22) |
 | `hivolt_size_chart` metaobject created from those measurements and bound to `spec.size_chart` | ⏳ Depends on the above |
+
+**Evidence request status.** Same message, same blocker on sending. The request
+asks for chest, shoulder, body length and sleeve in centimetres against our five
+exact Size values, plus the three things that decide whether the numbers are
+usable at all: garment-flat vs body basis, flat half-width vs full
+circumference, and production tolerance. It also asks what `EUR S 60-70kg`
+actually means, which nobody has confirmed.
+
+Reject conditions are written down in advance, including the two that have
+already caught bad data once: body weight presented as sizing, and a column
+whose label contradicts its own values.
 
 ---
 
@@ -145,8 +172,8 @@ Gate 5 is the only gate fully closed.
 | Gate | Status |
 |---|---|
 | 1 — Product-data integrity | ❌ 2 blockers (size order, zero inventory) + 3 pending |
-| 2 — Textile composition | ❌ 1 blocker (physical label unverified) |
-| 3 — Sizing | ❌ 1 blocker (no measurements, no chart) |
+| 2 — Textile composition | ❌ 1 blocker (physical label unverified) — evidence request prepared, response pending |
+| 3 — Sizing | ❌ 1 blocker (no measurements, no chart) — evidence request prepared, response pending |
 | 4 — Policy and business | ❌ 4 unresolved owner decisions |
 | 5 — Technical | ✅ closed |
 

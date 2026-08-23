@@ -1,6 +1,12 @@
 # HIVOLT Classic Cotton Polo — measurement request
 
-**Status: OPEN. This is the blocking item for the product size guide.**
+**Status: OPEN. This blocks two things: the product size guide, and the fibre
+composition claim on the product page.**
+
+A ready-to-send bilingual version of this request — English and Simplified
+Chinese, sized for a supplier chat window — is in
+`docs/HIVOLT-SUPPLIER-EVIDENCE-REQUEST.md`. Send that; keep this document as
+the detailed specification behind it.
 
 > **Do this first — it takes a minute and may make the rest unnecessary.**
 >
@@ -148,7 +154,60 @@ it with you. Please answer directly:
 
 ---
 
-## 7. Evidence we need alongside the numbers
+## 7. Fibre composition — the second blocker
+
+This is separate from the measurements and equally blocking. **Please answer it
+even if you cannot supply a single measurement.**
+
+Our store currently states this polo is **100% Cotton**. That came from the
+`Material` attribute on the supplier listing — a value selected from a dropdown,
+not a document. In the United States the seller, not the supplier, is legally
+answerable for fibre-content accuracy, so we cannot list the product on a
+dropdown value.
+
+**What we need is a photograph, not an answer.** "Yes, it is 100% cotton" in a
+chat message is the same class of evidence we already have and does not move
+this forward.
+
+Please send clear photographs, with the text readable, of:
+
+1. the **sewn-in fibre composition label** — the one stating the fibre
+   percentages,
+2. the **care label** — wash symbols and instructions,
+3. any **other sewn-in label** carrying composition or origin.
+
+If the composition and care text are on one label, one photo is enough.
+
+And if your factory holds any of these, please send them too:
+
+- specification sheet or tech pack for this style,
+- material or composition test certificate,
+- production sheet.
+
+Two further questions the photograph will not answer:
+
+1. **Is the fibre content identical across all six colourways?** Black
+   (`PL205`) and Army Green (`AX-511`) carry different supplier codes from the
+   other four (`PL208`). If the fabric differs, we need the composition for
+   each.
+2. **What is the country of manufacture** as printed on the label?
+
+---
+
+## 8. Confirm this is the same garment
+
+Everything above — every measurement, every photograph, every document — must
+come from **AliExpress item `1005002281827487`**, the polo we actually sell.
+
+Please confirm explicitly that it does. If a measurement table or a label photo
+belongs to a different polo in your catalogue, tell us, and tell us which one.
+We would rather have nothing than data from a garment our customer will not
+receive. A near-identical style from the same factory is still the wrong
+garment.
+
+---
+
+## 9. Evidence we need alongside the numbers
 
 A filled-in table is enough to get the size guide live, but we record where
 every published number came from. Please send **one** of the following:
@@ -163,14 +222,18 @@ Whatever you send is filed against the product so that anyone can later answer
 
 ---
 
-## 8. What happens when this comes back
+## 10. What happens when this comes back
 
 1. The numbers go into one `hivolt_size_chart` record in the exact unit and on
    the exact basis you used.
 2. It is attached to this one product.
 3. The size guide starts rendering on the product page — a table with a
    centimetre/inch toggle, and the basis stated on it.
-4. Nothing is published to customers until that has been reviewed.
+4. If the label photograph confirms the fibre content, the composition on the
+   product page stops being a supplier-reported value and becomes a verified
+   one. If it contradicts `100% Cotton`, we correct the page to match the
+   label — the label wins.
+5. Nothing is published to customers until that has been reviewed.
 
 Until then the product page shows no size guide at all, which is the intended
 behaviour. It will not show a generic polo chart, and it will not show

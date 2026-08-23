@@ -2,7 +2,7 @@
 
 **Operational source of truth for future sessions. Not a history.**
 
-Queried: **2026-08-22T11:41Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+Queried: **2026-08-22T12:31Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
 
 > ## This file is a convenience, not an authority.
 >
@@ -17,9 +17,9 @@ Queried: **2026-08-22T11:41Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.co
 
 | Theme ID | Role now | Name (descriptive only) |
 |---|---|---|
-| `158653808872` | **`MAIN`** | "HIVOLT v7 — Production Baseline — PDP Data Layer" |
+| `158482727144` | **`MAIN`** | "HIVOLT v35 — Returns Copy Correction" |
+| `158653808872` | `UNPUBLISHED` | "HIVOLT v7 — Production Baseline — PDP Data Layer" |
 | `158570021096` | `UNPUBLISHED` | "HIVOLT v6 — PUBLISH ME: logo in header" |
-| `158482727144` | `UNPUBLISHED` | "HIVOLT v35 — Returns Copy Correction" |
 | `158563467496` | `UNPUBLISHED` | "HIVOLT v37 — PUBLISH: 15% two-item upsell" |
 | `158568906984` | `UNPUBLISHED` | "HIVOLT v5 — PUBLISH ME: favicon + full footer" |
 | `158347559144` | `UNPUBLISHED` | "HIVOLT v30 — product schema. PUBLISH ME" |
@@ -39,18 +39,51 @@ v35 — **LIVE**" while holding role `UNPUBLISHED`. Both were renamed to
 role-neutral descriptions in a metadata-only change: no file was written, no
 role changed, and MAIN re-verified at 15/15 byte-identical afterwards.
 
+**The rename proved its worth within the hour.** Both themes swapped roles again
+at `12:29:08Z`, and neither name became a lie, because neither name makes a role
+claim. Had the old names survived, the store would now have a theme called
+"HIVOLT v35 — LIVE" that is live — accidentally correct — and one called "v7 —
+DRAFT … do not publish" that is a draft, also accidentally correct. Both would
+have been right by luck and wrong again on the next publish.
+
 Note what this did **not** fix. The remaining names still carry imperatives —
 "PUBLISH ME", "PUBLISH:" — on five themes nobody intends to publish. They are
 weaker traps than a false role claim, but they are the same kind of mistake, so
 they are recorded here rather than silently tolerated. **The guard does not read
 names at all, which is why none of them can actually cause a wrong write.**
 
-The role swap happened `2026-08-21T04:11:02Z`, when the owner published v7.
-Live theme integrity has been verified twice since — after the swap, and again
-after the 2026-08-22 rename: **15/15 repo-owned files byte-identical to
-`site/theme-v7/`** by `checksumMd5` both times. No drift. The rename moved the
-theme's own `updatedAt` to `2026-08-22T11:41:49Z` while every file timestamp
-stayed at `2026-08-20`, which is what a metadata-only write looks like.
+### The live theme changed again on 2026-08-22
+
+**The roles swapped a second time at `2026-08-22T12:29:08Z`.** Both themes carry
+that identical timestamp, which is the signature of a publish: v35 took `MAIN`
+and v7 dropped to `UNPUBLISHED` in one operation.
+
+Sequence so far:
+
+| When | MAIN became | Carries the PDP data layer? |
+|---|---|---|
+| before 2026-08-21 | `158570021096` (v6) | no |
+| `2026-08-21T04:11:02Z` | `158653808872` (v7) | **yes** |
+| `2026-08-22T12:29:08Z` | `158482727144` (v35) | **no** |
+
+**The PDP data layer is no longer on the live storefront.** v35 carries none of
+the nine `hivolt-*` files; it is the 2026-08-14 returns-copy correction, and its
+`templates/product.liquid` still checksums `4ca61e89…`, matching commit
+`e560953`. So v35 is intact and doing what it was built for — it simply predates
+the spec table, size guide, swatches and structured data.
+
+Nothing customer-facing broke: H01 and both sibling polos are `DRAFT` and
+published to zero sales channels, so no shopper could reach a PDP that depended
+on those files either way.
+
+Whether this was intentional is the owner's call, not a defect to fix. It is
+recorded here rather than acted on.
+
+While v7 held `MAIN`, its integrity was verified twice — after the 2026-08-21
+publish and after the 2026-08-22 rename: **15/15 repo-owned files byte-identical
+to `site/theme-v7/`** by `checksumMd5` both times. The rename moved the theme's
+own `updatedAt` while every file timestamp stayed at `2026-08-20`, which is what
+a metadata-only write looks like.
 
 ### Before a theme write
 
