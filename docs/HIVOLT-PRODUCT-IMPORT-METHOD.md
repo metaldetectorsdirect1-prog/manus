@@ -91,3 +91,43 @@ the reason this was not run as a bulk job.
 Both from AIOPESON Official Store — the same supplier as the existing HIVOLT
 polo, whose evidence request is already pending. One supplier relationship
 covers all three.
+
+---
+
+## Branded product images — the working pipeline
+
+Proven end to end 2026-08-23. **No image bytes ever pass through this
+environment**, which is what makes it work at all: local egress to
+`ae01.alicdn.com`, `cdn.shopify.com` and Higgsfield's CloudFront is denied,
+but every hop below is a server fetching a URL from another server.
+
+```
+supplier photo URL
+  -> Haggsfiled media_import_url      (Higgsfield fetches it)
+  -> remove_background                 (cutout, garment untouched)
+  -> result URL from show_generation_by_ids
+  -> Shopify productCreateMedia originalSource   (Shopify fetches it)
+  -> MediaImage READY on Shopify CDN
+```
+
+Verified: `9605582553320` gained a 1000×1000 background-removed image,
+`fileStatus: READY`. The garment pixels are the supplier's original photograph;
+only the background was removed.
+
+### What this pipeline will not do
+
+**It does not overlay the logo, and it should not.** Google Merchant Center
+prohibits promotional text, watermarks, logos and borders on product images.
+Baking the HIVOLT mark into a PDP photo risks feed disapproval — the same
+failure class as fabricated imagery, arrived at from the opposite direction.
+
+So "our own branded images" resolves to:
+
+1. **Product images**: the real garment, background removed, consistent framing.
+   Clean and uniform across the catalogue. No mark.
+2. **Brand expression**: theme chrome, collection headers, backgrounds, the site
+   itself. That is where `#DAF305` and the lockup belong.
+
+This is also why generated product photography stays refused. Both roads —
+fabricating the garment, or stamping a mark on it — end at the same disapproved
+feed.
