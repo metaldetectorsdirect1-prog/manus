@@ -1,0 +1,42 @@
+{
+ "url": "https://shopify-staged-uploads.storage.googleapis.com/",
+ "params": [
+  [
+   "Content-Type",
+   "text/jsonl"
+  ],
+  [
+   "success_action_status",
+   "201"
+  ],
+  [
+   "acl",
+   "private"
+  ],
+  [
+   "key",
+   "tmp/79986393320/bulk/9b8ca11e-0818-477d-8267-fdcfed0c9d88/hivolt-article-deletes.jsonl"
+  ],
+  [
+   "x-goog-date",
+   "20260824T141809Z"
+  ],
+  [
+   "x-goog-credential",
+   "merchant-assets@shopify-tiers.iam.gserviceaccount.com/20260824/auto/storage/goog4_request"
+  ],
+  [
+   "x-goog-algorithm",
+   "GOOG4-RSA-SHA256"
+  ],
+  [
+   "x-goog-signature",
+   "025058a8b22680149a1f113f0a276f65d00889cec8c22b68b1ac18e5e20deefd6b479b20771055713e5a1c298e8f45c6fa38aad9870c085959b434f644900abba7f02ad29148c6dd8c0cbf7682627abdda680e6200e2b6a0b0e3aad80fba17bd80aef57ceacca263f019c6e2677b34a3c1a35491963f0e830d8bd0e5f3eee2c8c7e6e663835b6baf18c7b63753be6ed25f8f56666910f1adb561517836aa57a4f89cf8e7ed3d21e837107615c8032c3f73d4d2526fa089706d74b99f09913dc4c13cb9207074ae96bbb0e23187c99a1191ac832840cb8115197a0628201dbffffa97cffa8a1cbd3b91d9ad646782cdd3a916999e7a2c03fc8ed7bbb6a7ee8955"
+  ],
+  [
+   "policy",
+   "eyJjb25kaXRpb25zIjpbeyJDb250ZW50LVR5cGUiOiJ0ZXh0XC9qc29ubCJ9LHsic3VjY2Vzc19hY3Rpb25fc3RhdHVzIjoiMjAxIn0seyJhY2wiOiJwcml2YXRlIn0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMSwxMDQ4NTc2MDBdLHsiYnVja2V0Ijoic2hvcGlmeS1zdGFnZWQtdXBsb2FkcyJ9LHsia2V5IjoidG1wXC83OTk4NjM5MzMyMFwvYnVsa1wvOWI4Y2ExMWUtMDgxOC00NzdkLTgyNjctZmRjZmVkMGM5ZDg4XC9oaXZvbHQtYXJ0aWNsZS1kZWxldGVzLmpzb25sIn0seyJ4LWdvb2ctZGF0ZSI6IjIwMjYwODI0VDE0MTgwOVoifSx7IngtZ29vZy1jcmVkZW50aWFsIjoibWVyY2hhbnQtYXNzZXRzQHNob3BpZnktdGllcnMuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb21cLzIwMjYwODI0XC9hdXRvXC9zdG9yYWdlXC9nb29nNF9yZXF1ZXN0In0seyJ4LWdvb2ctYWxnb3JpdGhtIjoiR09PRzQtUlNBLVNIQTI1NiJ9XSwiZXhwaXJhdGlvbiI6IjIwMjYtMDgtMjVUMTQ6MTg6MDlaIn0="
+  ]
+ ],
+ "file": "prune/delete-vars.jsonl"
+}
