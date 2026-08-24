@@ -281,3 +281,83 @@ than an editorial choice.
 | Terms §1 — registered entity | 1 | 12 |
 | `size-guide-women` / `size-guide-men` | 1 | 1–3 (mitigated by test 4, unpublished) |
 | `contact-us` — response time | 1 | 6 |
+
+---
+
+# 🔴 2026-08-24 — the ninth surface: JSON page templates
+
+`templates/page.faq.json` and `templates/page.about.json` both had
+`main-page` set to **`"disabled": true`**. The page body was never rendered.
+What rendered instead was the theme's demo section content — and on a
+**published** page linked from `main-menu`, `footer-help` and the homepage.
+
+**Nothing in seven prior audits caught this**, because every audit read the
+*page* and stopped. The page body was correct; the template silently discarded it.
+
+## What `/pages/faq` was actually serving
+
+Eleven fabricated demo questions, and all of it emitted as **`FAQPage` JSON-LD** —
+machine-readable false claims, the same defect class as the fabricated reviews:
+
+| Rendered claim | Truth |
+|---|---|
+| "Standard shipping takes 5–7 business days. Express (2–3)… orders before 2pm EST ship same day" | No such windows. No express tier exists |
+| "free standard shipping on all orders over $100" | Free on **every** order, no minimum |
+| "Orders can be modified or cancelled within 1 hour" | Unsourced |
+| **"We currently ship to Canada, the US, the UK, and Australia"** | **US only.** International market disabled |
+| "returns within 30 days" | **60 days** |
+| "returns portal… prepaid label within 24 hours" | No portal exists |
+| "Exchanges ship free of charge" | No exchanges offered |
+| "Each product page includes a size guide" | Zero products |
+| "Most styles run true to size" | Zero products |
+
+**Fixed:** both templates reduced to `main-page` only. 5,020 b → 113 b and
+862 b → 113 b, verified by read-back. `/pages/about-us` was additionally
+rendering six empty demo sections (slideshow, rich-text, map, text-columns,
+featured-collection, contact form) — all gone.
+
+---
+
+## Published pages rewritten 2026-08-24 — the ruled-out figures, again
+
+The 2–4 / 8–14 / 10–18 figures were live on **two more published pages**:
+
+| Page | Removed | Replaced with |
+|---|---|---|
+| `faq` | "dispatched within 2–4 business days", "8–14 business days", "allow 10–18 business days end to end" | a named gap, in customer-facing language |
+| `faq` | "Men's golf polos. Three styles…", "every product page carries two sections", "fabric weight… on all three polos", "sized by body weight" | current, sourced answers |
+| `contact-us` | "Allow 10–18 business days end to end" | removed |
+| `contact-us` | "for two of our three polos", "What is this polo made of?", "a real person answers every message" | confirmed values only |
+| `accessibility` | "re-test the full storefront each quarter", "respond within two business days" | a **Known gaps** section naming what has *not* been tested |
+
+**No `[[NEEDS:]]` marker was published.** On a live page an internal placeholder
+is itself a defect. The gap is stated in plain customer-facing language instead —
+house standard test 2 (*gaps are named, not filled*) and test 4 (*the provenance
+statement is published on the page*). The `[[NEEDS:]]` rows live here.
+
+### Open `[[NEEDS:]]` rows added
+
+| # | Needed | Where | Public? |
+|---|---|---|:--:|
+| 14 | Dispatch window | `faq`, Shipping policy | gap named, no figure published |
+| 15 | Delivery window per market | `faq`, Shipping policy | gap named |
+| 16 | Support hours | `faq`, `contact-us`, `accessibility` | gap named |
+| 17 | Response-time commitment | same | gap named |
+| 18 | Cookie inventory — categories, named third parties, retention | `privacy` | **NO — unpublished** |
+| 19 | Installed-app list and their data access | `privacy` | NO — `appInstallations` denied to this integration |
+| 20 | Retention periods per data category | `privacy` | NO |
+| 21 | Whether a DPO / EU representative is required | `privacy` | NO |
+
+### House standard (§1.6) — result per page
+
+| Page | 1 sourced | 2 gaps named | 3 no silent derivation | 4 provenance on page | 5 gap owned | Verdict |
+|---|:--:|:--:|:--:|:--:|:--:|---|
+| `faq` | ✅ | ✅ | ✅ | ✅ | ✅ | **passes** |
+| `contact-us` | ✅ | ✅ | ✅ | ✅ | ✅ | **passes** |
+| `accessibility` | ✅ | ✅ | ✅ | ✅ | ✅ | **passes** |
+| `care-guide` | ✅ cited to ISO 3758 / ASTM D5489 | ✅ | ✅ | ✅ | ✅ | **passes** |
+| `privacy` | ⚠️ 4 open rows | ✅ | ✅ | ✅ | ✅ | **unpublished, correctly** |
+
+`care-guide` carries no HIVOLT-specific care instruction and says so explicitly:
+*"We are not generalising from the fibre guidance above to a garment we have not
+received."*

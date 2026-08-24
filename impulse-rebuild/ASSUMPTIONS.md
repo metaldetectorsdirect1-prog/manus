@@ -167,3 +167,40 @@ unset and no delivery copy has been written from Tapstitch.**
 | 34 | **`shipping-delivery` flagged, not unpublished** | It carries two live UNSOURCED rows, but it is linked from Terms, Returns and four footer menus. Unpublishing creates dead links across pages this build wrote. Zero products means nobody can order, so exposure is latent. **Owner decision, surfaced rather than taken.** |
 | 35 | **Nothing stripped from article schema** | Evidence says there is almost nothing to strip. Removing legitimate `Article` markup to appear productive would be worse than leaving it. |
 | 36 | **Prune still not started** | §4 resolved the locale question, but the redirect map now needs the existing 331 redirects pulled first to avoid conflicts. Starting deletions before that is exactly the half-execution §5 warns against. |
+
+---
+
+## 37. Dead anchors in survivor bodies resolve through the redirect layer, not rewritten links
+**Decided 2026-08-24. Carried forward — do not rediscover as a defect.**
+
+318 of the 351 dead anchors in the 79 surviving articles still literally point at
+dead handles. They resolve because 85 redirects send those handles to
+`/pages/about-us`. This is deliberate: same destination, self-healing the moment a
+real product or collection occupies the handle, and it avoids pushing ~530 KB of
+article bodies back through the API to create 351 identical links to one page.
+
+## 38. The 68 `/de/products/*` redirects stay untouched
+**Decided 2026-08-24. Carried forward.**
+
+They are correct locale mappings. They chain into a 404 only because the catalog
+is empty, and they self-heal when it returns. Retargeting them would destroy
+correct mappings to paper over a temporary state.
+
+## 39. The 33 anchors pointing at real-but-empty collections stay untouched
+`/collections/tops`, `womens-activewear`, `outerwear-hoodies` exist, are empty
+today, and are part of the go-forward IA. They resolve on catalog import.
+
+## 40. FAQPage schema is owned by the homepage FAQ section, not the FAQ page
+**Decided 2026-08-24.** `sections/faq.liquid` emits `FAQPage` unconditionally
+whenever it holds blocks. `templates/page.faq.json` previously rendered that
+section with eleven fabricated demo questions; it now renders `main-page` only,
+so it emits no schema. The homepage section is the single `FAQPage` on the
+domain, its six answers are all sourced, and there is no longer any overlap to
+conflict with. One emitting surface is safe; two overlapping ones risk both being
+discarded.
+
+## 41. No review UI was built without a review backend
+**Decided 2026-08-24.** Building a review section with no submission mechanism
+would be a shell that implies capability the store does not have. The theme-side
+work that is real — confirming nothing emits `AggregateRating`, and documenting
+the enforcement requirement — was done instead. See `REVIEW-SYSTEM.md`.

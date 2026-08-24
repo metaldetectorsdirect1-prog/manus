@@ -335,3 +335,66 @@ Final: **836 redirects**, 7 menus, 79 articles.
 SEO scaffolding). §4.4 review system remains the highest-value unbuilt item —
 this project shipped five fabricated testimonials once and the live theme still
 carries them.
+
+## 2026-08-24 — §4 content queue: pages, care guide, Organization schema, IA spec
+
+Dev theme role re-verified `UNPUBLISHED` before every theme write. Every write
+read back and compared by parsed value.
+
+### 🔴 Ninth defect surface found: JSON page templates
+`templates/page.faq.json` and `templates/page.about.json` had `main-page`
+`"disabled": true`. Page bodies were discarded; theme demo content rendered
+instead, on published pages. `/pages/faq` was serving eleven fabricated questions
+— *"free shipping over $100"*, *"30 days"*, *"ships to Canada, the UK, Australia"*,
+a returns portal that does not exist — **and emitting all of it as `FAQPage`
+JSON-LD**. `/pages/about-us` was rendering six empty demo sections.
+Both templates reduced to `main-page` only: 5,020 b → 113 b, 862 b → 113 b.
+
+### Pages
+| Page | Action | Published |
+|---|---|:--:|
+| `faq` | rewritten — 25 sourced Q&As across store, shipping, returns, sizing, payment, accounts, care, contact | yes |
+| `contact-us` | rewritten — confirmed values only; hours and response time stated as not set | yes |
+| `accessibility` | rewritten — added a **Known gaps** section; removed two unsourced process commitments | yes |
+| `privacy` | **created** — GDPR/CCPA structure, links to the policy rather than duplicating it, 4 `[[NEEDS:]]` rows | **no** |
+| `care-guide` | **created** — general fibre care cited to ISO 3758 / ASTM D5489, hub linking 14 surviving articles | yes |
+
+The 2–4 / 8–14 / 10–18 figures were live on `faq` and `contact-us`. Removed. No
+`[[NEEDS:]]` marker was published — gaps are stated in customer-facing language.
+
+**No article was redirected into the care guide.** It is general fibre guidance
+and does not absorb any survivor's specific content, so redirecting would have
+shrunk the survivor set for tidiness. All 14 links verified against the keep list.
+
+### Schema
+- `snippets/structured-data.liquid` — **new.** `Organization` with the corrected entity, `legalName: Dn Global Trading LLC`. `sameAs` and `aggregateRating` recorded as deliberate absences with reasons in the file header.
+- `snippets/social-meta-tags.liquid` — the upstream theme emitted `<meta name="twitter:site" content="@">` whenever the social setting was empty, which it is. Now guarded.
+- **FAQPage ownership:** the homepage section owns it. The FAQ page now emits none. One emitting surface, six sourced answers, no overlap.
+- Verified by reading `product-template.liquid` (26,851 b) and `theme.liquid` (15,319 b) in full: the theme emits **no `Product`, `Offer`, `availability` or `AggregateRating` anywhere.** Canonical is present on every page.
+
+### Review system — §1 is owner-side, documented in `REVIEW-SYSTEM.md`
+`appInstallations` denied for the seventh consecutive session; app install is an
+OAuth grant in the admin with no Admin API equivalent; Shopify's own Product
+Reviews app was sunset. No review app can be installed from here.
+
+No empty-state UI was built: it would be the visible half of a system with no
+backend, on a store with no product page to render it. Copy and design are
+specified in `REVIEW-SYSTEM.md` and ready.
+
+The report names four paths by which an unverified review could still be created.
+**The fourth is the one that actually happened here** — the five fabricated
+testimonials were hardcoded in a theme file, so no review-app setting would have
+prevented them. `sections/testimonials.liquid` still exists and is referenced by
+no template on the dev theme.
+
+### Information architecture
+`INFORMATION-ARCHITECTURE.md` — two-path tree specified, 14 namespaced handles,
+smart rules **tag-based rather than title-based** (the current fifteen let a
+product's *name* decide its collection). All fifteen legacy collections
+reconciled. **Nothing created** — twenty empty collections would add twenty empty
+surfaces and tempt a future session into wiring navigation to them. The six menus
+still point only at live destinations.
+
+### Not reached
+§6 font preload and `prefers-reduced-motion` verification; per-page unique title
+and meta description audit.
