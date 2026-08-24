@@ -361,3 +361,33 @@ statement is published on the page*). The `[[NEEDS:]]` rows live here.
 `care-guide` carries no HIVOLT-specific care instruction and says so explicitly:
 *"We are not generalising from the fibre guidance above to a garment we have not
 received."*
+
+---
+
+# 🔴 2026-08-24 — tenth surface found, NOT yet remediated: collection descriptions and per-resource SEO
+
+Checked while looking for the next candidate. All **fifteen** collections carry
+marketing copy and `seo.title` / `seo.description` that render on collection pages
+and in search results. **No session has ever opened them.** Zero products sit
+behind any of it.
+
+| Collection | Unsourced claim |
+|---|---|
+| `womens-activewear` | "premium **moisture-wicking**, **squat-proof** fabrics", "**220–270 g/m²** compression knit", "Sizes 2XS–XL" and "Sizes 2XS–2XL" **in the same description** |
+| `tops` | "**170–230 g/m²**", "Sizes S–4XL" |
+| `leggings` | "squat-proof", "stay opaque through every rep", "Sizes S–2XL" |
+| `shorts` | "tummy control", "squat-proof and opaque" |
+| `sets` | **"Buy any two pieces and 15% comes off both"** — a discount offer |
+| `sports-bras` | "Sizes S–XL", "wide underbands that stay put" |
+| `all` | "Sizes 2XS-4XL" |
+| `mens-golf-polos`, `long-sleeve-golf-polos` | polo-era copy, "Three styles" |
+
+**The sharpest item:** `womens-activewear` claims **moisture-wicking**. The About
+page and Terms §1 both state HIVOLT will not describe a fabric as wicking without
+a supplier document. The store contradicts its own published standard, on a page
+Google indexes.
+
+Several `seo.description` values are also the full body text with " - HIVOLT"
+appended — over the ~155-character limit and truncated in results.
+
+**Not remediated this session.** Recorded here as the first item for the next one.

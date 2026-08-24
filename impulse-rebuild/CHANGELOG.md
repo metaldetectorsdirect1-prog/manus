@@ -398,3 +398,10 @@ still point only at live destinations.
 ### Not reached
 §6 font preload and `prefers-reduced-motion` verification; per-page unique title
 and meta description audit.
+
+### Tenth surface found, not remediated
+All fifteen collection `descriptionHtml` and `seo` fields carry unsourced claims —
+fabricated GSM ranges (220–270, 170–230 g/m²), size ranges that contradict
+themselves within one description, "moisture-wicking" and "squat-proof", and a
+"15% off both" discount offer. `womens-activewear` claiming moisture-wicking
+directly contradicts About and Terms §1. Details in `CLAIMS-REGISTER.md`.
