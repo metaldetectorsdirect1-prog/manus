@@ -36,3 +36,20 @@ addendum, `ASSUMPTIONS.md` decisions 7–16.
 
 Not started: Phases 3, 4, 7; product-dependent halves of 5 and 6; imagery
 generation; the §13 verification pass. All blocked on B1/B3.
+
+## 2026-08-24 — Phase 3 (partial)
+
+### Shopify writes
+| Action | Result |
+|---|---|
+| `pageCreate` `size-guide-women` | ✅ `134494421224`, published, verified |
+| `pageCreate` `size-guide-men` | ✅ `134494453992`, published, verified |
+| `themeFilesUpsert` → **live theme** `158743363816` | ❌ **REFUSED** by connector policy — live theme writes blocked |
+
+No shipping-zone change (see `VERIFICATION-PARTIAL.md` item 3 — International
+market is already disabled; the change would have altered nothing and risked a
+Tapstitch resync conflict).
+
+### Repo
+New: `INFORMATION-ARCHITECTURE.md`, `CONTENT-INVENTORY.md`.
+Updated: `DESIGN-SYSTEM.md` (§2.2 imagery constraint), `VERIFICATION-PARTIAL.md`.

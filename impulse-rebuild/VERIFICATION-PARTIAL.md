@@ -62,3 +62,106 @@ API**, so this is evidence of quiescence, not proof of removal. Confirming it in
 Admin → Apps remains an owner action before Phase 3.
 
 `locales/en.default.json` was deliberately not written to.
+
+---
+
+# Phase 3 queue — every item closed or blocked
+
+| # | Item | Status |
+|---|---|---|
+| 1 | **Live-theme verification** | ✅ done — 🔴 **defect confirmed present, removal BLOCKED** (below) |
+| 2 | GemPages status | ⚠️ **still unverifiable** — `appInstallations` remains scope-denied |
+| 3 | Shipping-zone restriction | ⚠️ **not needed as specified** — finding below |
+| 4 | Information architecture | ✅ `INFORMATION-ARCHITECTURE.md` — tree, namespaced handles, smart rules, 15-collection disposition |
+| 5 | **Both size guides** | ✅ **live and verified** — `size-guide-women`, `size-guide-men` |
+| 6 | Returns / 60-day page | ❌ not done |
+| 7 | Policy suite rewrite | ❌ not done |
+| 8 | FAQ 18+ | ❌ not done |
+| 9 | About | ❌ not done |
+| 10 | Care guide | ❌ not done — fabric types depend on catalog |
+| 11 | Customer account templates | ❌ not done |
+| 12 | Empty/utility states | ⚠️ partial — defective sections removed from 404/cart; states not yet designed |
+| 13 | Review system | ❌ not done |
+| 14 | Non-product imagery | ❌ not done — logo + favicon already live from an earlier session |
+| 15 | Footer | ❌ not done |
+| 16 | Perf / a11y / SEO scaffolding | ❌ not done |
+| — | Collection objects (§5) | ❌ not created |
+
+**Items 6–16 were not reached.** Reported as not done rather than partially done.
+
+## 🔴 Item 1 — live theme still carries the fabricated content
+
+Read from published theme `158743363816`, `templates/product.json`:
+
+| Check | Answer |
+|---|---|
+| `testimonials` present in `order`? | **YES** — position 5 of 8 |
+| All five fabricated reviews present? | **YES** — Leslie M., Rachel F., Sam R., Sharon S., Matt C. |
+| "Organic cotton" sales point present? | **YES** — `sales_point-1` |
+| *(also)* fake "extra 10% off — limited time" on live `collection.json`? | **YES** |
+
+Last session cleaned **only the dev theme**. My report said "four forbidden
+items removed" without distinguishing the two, which was imprecise.
+
+**Removal attempted and refused at the tool layer:**
+
+> `themeFilesUpsert` … blocked. *"This mutation targets the live (published)
+> theme. Theme file writes against the live storefront are blocked."*
+
+This is a connector safety policy that task authorization does not override.
+Three ways to clear it, all owner actions:
+
+1. **Publish the dev theme** `158753652968` — already clean, already carries the
+   corrected design system. Cleanest path.
+2. Delete the `testimonials` section in the live theme's editor by hand.
+3. Duplicate live → edit the copy → publish.
+
+**Current exposure is latent, not active:** with zero products, no product page
+renders, so nobody can see the fake reviews today. It becomes live the moment a
+catalog imports. It should be cleared before then, not after.
+
+## ⚠️ Item 3 — the shipping contradiction is narrower than I reported
+
+Last session I reported "shipping says US-only while checkout accepts 71
+countries." Checking the actual configuration, that overstated it:
+
+| Market | Enabled | Regions |
+|---|---|---|
+| **United States** | ✅ enabled, **primary** | US only |
+| **International** | ❌ **disabled** | ~71 countries |
+
+**The International market is already disabled**, so checkout is US-only at the
+market level — matching the published policy.
+
+The 71-country figure came from `shop.shipsToCountries`, which reflects
+*delivery-zone coverage*, not an open checkout. Those zones live on a
+**non-default profile named `Tapstitch: Special Line`** — an app-owned
+fulfilment profile. The default `General profile` has exactly one zone: United
+States.
+
+So the directive's instruction — restrict zones to the US — **would not change
+what a customer can do**, and deleting zones from an app-owned profile invites a
+resync conflict (a prior repo note records Tapstitch reactivating deactivated US
+rates on resync). No change made. Reporting the finding instead, since the
+conservative outcome the directive wanted already holds.
+
+## ⚠️ Item 2 — GemPages, third check
+
+`appInstallations` → `access denied` again. Unchanged: **an idle app is
+indistinguishable from an uninstalled one over this API.** No GemPages write to
+either theme since the original install burst. `locales/en.default.json` still
+untouched by me.
+
+## New since last session
+
+A third theme appeared: **`158753849576` "Copy of Impulse"**, UNPUBLISHED,
+created by someone other than this session. Not written to. Noted so the theme
+count is not a surprise later.
+
+## Still blocked (§7) — unchanged
+
+Hero imagery · category tiles · collection banners · final `product.json` /
+`collection.json` population · product-dependent trust content · navigation
+wiring · delivery copy and per-market table · duties language · photographic
+language lock · §13 zero-empty verification · squint, grid, five-second,
+density, speed and 375px criteria.

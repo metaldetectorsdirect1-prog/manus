@@ -109,3 +109,23 @@ the settings were live on the dev theme before being corrected:
 Photographic language, hero, category tiles, collection banners, and the
 supplier-image normalization pass. The visual language must match the real
 garments, not precede them.
+
+---
+
+## Binding constraint on imagery (§2.2)
+
+**Volt only works if everything around it stays chromatically quiet.** `#DAF305`
+is inherited from HIVOLT's performance-brand identity. Confined to the primary
+CTA at under 5% of a viewport, against near-black and warm paper, it reads as a
+signature. Put it against saturated photography and it stops being a signature
+and becomes a sports brand imitating a fashion house.
+
+This is a **constraint on Phase 6, not a preference:**
+
+- Product and editorial photography **must be neutral or low-saturation.**
+- **One chromatic event per screen, and it is the button.**
+- No saturated backgrounds. No coloured gradients. No secondary bright accents.
+
+If imagery comes back saturated, the accent has to be reconsidered before the
+imagery ships — not after. The palette and the photographic direction are one
+decision, and this is the half that is already locked.
