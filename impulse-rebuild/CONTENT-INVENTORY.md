@@ -10,9 +10,9 @@
 | Help Center | `faq` | ✅ | ~900 | **Rewrite pending** — polo-specific; needs 18+ Q&As, both genders |
 | Shipping & Delivery | `shipping-delivery` | ✅ | ~380 | **BLOCKED** — no supplier, no truthful delivery figure |
 | 60-Day Love-It Guarantee | `60-day-love-it-guarantee` | ✅ | ~420 | Rewrite pending — commitment confirmed, copy is polo-specific |
-| Returns & Refunds | `returns-refunds` | ✅ | ~500 | Rewrite pending — same |
+| **Returns & Refunds** | `returns-refunds` | ✅ | ~780 | **REWRITTEN, final.** Window, condition, exclusions, step-by-step, exchanges, faulty handled separately, discount recalculation, return address. ⚠️ 2 unverified SLA claims |
 | Contact Us | `contact-us` | ✅ | ~300 | Rewrite pending — add hours, response-time commitment |
-| Terms of Service | `terms-of-service` | ✅ | ~950 | **Rewrite pending** — says "technical activewear", wrong category |
+| **Terms of Service** | `terms-of-service` | ✅ | ~700 | **REWRITTEN.** Category corrected to women's + men's apparel; supplements clause qualified to "currently"; size-guide precedence stated |
 | Accessibility Statement | `accessibility` | ✅ | ~350 | Minor — largely category-neutral |
 | Track Your Order | `track-order` | ✅ | ~250 | Minor — category-neutral |
 | Materials & Specifications | `materials-sustainability` | ✅ | ~400 | Rewrite pending |
@@ -29,3 +29,8 @@ it must cover are determined by the catalog.
 **Blog:** `Training Journal`, **501 articles**, all written for the men's polo
 positioning. Not audited article-by-article. A 501-article rewrite is its own
 project and should not be assumed inside this build.
+
+
+## Blog
+
+**501 articles**, fully audited — see `BLOG-AUDIT.md`. Bulk-generated across 13 days (11 articles inside 75 seconds at one point). Content quality is high; every factual anchor points at a deleted catalog. Earns real but modest traffic. Classification: 55–70% rewrite, 20–30% delete, 5–10% redirect, 5–10% keep. Nothing actioned.

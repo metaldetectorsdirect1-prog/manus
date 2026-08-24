@@ -165,3 +165,75 @@ Hero imagery · category tiles · collection banners · final `product.json` /
 wiring · delivery copy and per-market table · duties language · photographic
 language lock · §13 zero-empty verification · squint, grid, five-second,
 density, speed and 375px criteria.
+
+---
+
+# Phase 4 — queue status
+
+| # | Item | Status |
+|---|---|---|
+| §1 | Live-theme status check | ✅ reported — **still dirty**, unchanged since `23:17:18Z` |
+| §2 | App investigation | ✅ `APP-CONFLICTS.md` — 8+ integrations, 4 categories, 2 languages |
+| §3 | Blog audit | ✅ `BLOG-AUDIT.md` — 501 articles, bulk-generated in 13 days |
+| §4 | **Blog + article templates** | ✅ **built and verified** |
+| 6 | **Returns / 60-day page** | ✅ **rewritten, ships final** — ⚠️ two unverified claims flagged in `ASSUMPTIONS.md` |
+| 7 | Policy suite | ⚠️ **partial — Terms only.** Privacy, Accessibility, Contact not done |
+| 8 | FAQ 18+ | ❌ not done |
+| 9 | About | ❌ not done |
+| 10 | Care guide | ❌ not done |
+| 11 | Customer account templates | ❌ not done |
+| 12 | Empty/utility states | ❌ not done |
+| 13 | Review system | ❌ not done |
+| 14 | Non-product imagery | ❌ not done |
+| 15 | Footer | ❌ not done |
+| 16 | Perf / a11y / SEO scaffolding | ⚠️ **partial** — Article JSON-LD ships via the article template; see defect below |
+
+## §1 — live theme, verbatim answer
+
+Read from published `158743363816`:
+
+| Check | Answer |
+|---|---|
+| `testimonials` in `product.json` `order`? | **YES — still present** |
+| "Organic cotton" sales point? | **YES — still present** |
+| "extra 10% off — limited time" on `collection.json`? | **YES — still present** |
+
+`product.json` is **6,844 bytes, `updatedAt 2026-08-23T23:17:18Z`** — byte-identical
+to install. No manual cleanup has occurred yet. Tool-layer write block stands;
+not worked around.
+
+## 🔴 New defect found — duplicate Article schema
+
+`sections/article-template.liquid` emits `Article` JSON-LD for every article.
+The audit found that **the articles also carry their own embedded `Article` and
+`FAQPage` JSON-LD inside the body HTML.**
+
+Every article therefore publishes **two competing Article schemas**, and the
+body-embedded one carries the false product claims. Fixing the template does not
+fix this — the bad schema is in the content.
+
+Two further template-level issues:
+
+- The template declares `"author": {"@type": "Person"}` while `article.author` is
+  **"HIVOLT Training Team"**, an organization. Type mismatch on all 501.
+- Not fixed this session. Recorded for the blog remediation pass, where it is
+  the highest-severity, lowest-effort item.
+
+## §4 verification
+
+| File | Check | Result |
+|---|---|---|
+| `templates/blog.json` | `featured-collections` (4 empty blocks) removed | **PASS** |
+| `templates/blog.json` | tag filter, RSS, date, excerpt, landscape ratio set | **PASS** |
+| `templates/article.json` | hero image, tags, date, author, sharing on; related posts titled | **PASS** |
+| Both | comments disabled | **PASS** |
+
+Verified by parsed-value read-back at `10:02:07Z`.
+
+## Still blocked (§7) — unchanged
+
+Hero imagery · category tiles · collection banners · final `product.json` /
+`collection.json` population · product-dependent trust content · navigation
+wiring · delivery copy, per-market table, duties language · photographic
+language lock · zero-empty verification · squint, grid, five-second, density,
+speed and 375px criteria.

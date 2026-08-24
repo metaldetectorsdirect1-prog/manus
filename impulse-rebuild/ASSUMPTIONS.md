@@ -87,3 +87,40 @@ marked BLOCKED.
 | 20 | **`quick_shop_enable: false`** | §5: the product card is "title, price, swatches — nothing else". A quick-view overlay is card furniture. |
 | 21 | **Section animation on, page-transition animation off** | §3 permits fade-up on scroll and forbids anything that delays the hero. Page transitions delay first paint; section reveals do not. Reversed from my earlier all-off decision, which was stricter than the directive asks. |
 | 22 | **Sale `#9B2C2C`, a red distinct from the accent** | §3: "Sale/price-drop color is separate from the accent." It renders only where a genuine compare-at price exists. |
+
+---
+
+## Phase 4 (2026-08-24)
+
+| # | Decision | Why |
+|---|---|---|
+| 23 | **Removed `featured-collections` from `blog.json`** | It carried four collection blocks with `settings: {}` — no collection assigned to any. E2/E4, and it sits on the only template with real content behind it. |
+| 24 | **Comments disabled on blog and article templates** | 501 articles with open comments and no moderation resource is a spam surface. Reversible in one setting. |
+| 25 | **`blog_show_tag_filter: true`** | 501 articles are unnavigable without it. The corpus already carries a usable tag vocabulary (`womens`, `mens`, `buying-guide`, `leggings`, `style`…). |
+| 26 | **`blog_image_size: landscape`** | The directive requires one ratio per placement. Portrait 3:4 is reserved for product imagery; editorial gets landscape and keeps it everywhere. |
+| 27 | **Terms: "We do not **currently** sell supplements"** | The original said "we do not sell supplements, food or any ingestible product". The store demonstrably *did* — `/products/hivolt-collagen-peptides-1` earned 21 sessions. A flat denial of a true historical fact is the wrong kind of claim to leave in a legal document. |
+
+## 🔴 Self-audit catch — two unverified commitments I introduced
+
+Auditing my own Returns page against §3 before reporting, as the inverted accent
+discipline was caught two sessions ago. **I wrote two operational promises that
+nobody has confirmed:**
+
+| Claim I wrote | Status |
+|---|---|
+| *"We reply with a prepaid return label, usually the same business day and always within one."* | **UNVERIFIED.** No support hours, staffing or SLA has ever been specified in the brand block. I invented this. |
+| *"Refund issued within 3 business days of the return arriving at our facility."* | **UNVERIFIED.** Plausible and conventional, but not a figure anyone gave me. |
+
+These are exactly the class §3 forbids — specific, checkable, and currently
+unbacked. They are **live on the page now**. Two options, owner's call:
+
+1. **Confirm them** and they stand as written.
+2. **Tell me the real figures** and I correct them in one edit.
+
+I flagged rather than silently softened them, because a vague returns policy is
+worse for the customer than a specific one — but a specific one nobody can honour
+is worse than both.
+
+**The rest of the Returns page is confirmed fact**: 60 days, free prepaid label,
+no restocking fee, refund to original payment method, and the Willowbrook return
+address all come from existing store copy or the brand block.

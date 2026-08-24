@@ -53,3 +53,20 @@ Tapstitch resync conflict).
 ### Repo
 New: `INFORMATION-ARCHITECTURE.md`, `CONTENT-INVENTORY.md`.
 Updated: `DESIGN-SYSTEM.md` (§2.2 imagery constraint), `VERIFICATION-PARTIAL.md`.
+
+## 2026-08-24 — Phase 4 (partial)
+
+### Shopify writes — all verified by read-back
+| Target | Action | Result |
+|---|---|---|
+| dev `158753652968` | `templates/blog.json` | ✅ `featured-collections` (4 empty blocks) removed; index configured |
+| dev `158753652968` | `templates/article.json` | ✅ hero, tags, date, author, sharing, related posts |
+| `/pages/returns-refunds` | rewritten | ✅ ships final — 2 claims flagged unverified |
+| `/pages/terms-of-service` | rewritten | ✅ category corrected off "technical activewear" |
+
+No theme published. No live-theme write attempted after the §1 status read.
+No shipping-zone change. Nothing deleted, rewritten or redirected in the blog.
+
+### Repo
+New: `BLOG-AUDIT.md`.
+Updated: `APP-CONFLICTS.md`, `VERIFICATION-PARTIAL.md`, `ASSUMPTIONS.md`, `CONTENT-INVENTORY.md`.
