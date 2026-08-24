@@ -128,3 +128,81 @@ The content layer is strong and was clearly written to the same honesty standard
 Ten policy and help pages already exist with specific, non-generic content. §9's
 main job is mostly done — except that they describe products the store no longer
 has.
+
+---
+
+# Addendum — template-level defects (added 2026-08-24, Phase 2 pass)
+
+The Phase 1 pass audited store data. This addendum audits the theme's own
+template JSON, which turned out to carry the most serious defect in the build.
+
+## 🔴 D-CRIT — Five fabricated customer testimonials, live on every product page
+
+`templates/product.json` shipped a `testimonials` section **in its `order`
+array** — not disabled, not a preset, active on every PDP:
+
+| Author | Location | Rating |
+|---|---|---|
+| Leslie M. | Toronto, ON | 5 stars |
+| Rachel F. | Los Angeles, CA | 5 stars |
+| Sam R. | Brooklyn, NY | 5 stars |
+| Sharon S. | New Orleans, LA | 5 stars |
+| Matt C. | Montreal, QC | 5 stars |
+
+Invented names, invented cities, invented quotes, fake star icons. This is a
+direct breach of §3's first three prohibitions. **Removed.**
+
+## Other template defects found and closed
+
+| Code | File | Defect | Action |
+|---|---|---|---|
+| §3 | `product.json` | `sales_point-1` claims **"Organic cotton"** — unsubstantiated material claim, no supplier documentation | removed |
+| E7 | `product.json` | `sales_point-2` text: `"Something something"` | removed |
+| E7 | `product.json` | `tab-1`, `tab-2`: `<p>[connect via dynamic source]</p>` | removed |
+| E7 | `product.json` | `tab-3`: `<p>[connect certification badges/images via dynamic source]</p>` | removed |
+| E7 | `product.json` | `tab-4`: `<p>something something</p>` | removed |
+| E7/E5 | `product.json` | `slideshow` — `top_subheading: "something something"`, `link_text: "Leads to sustainability page"`, `link: ""` | removed |
+| E1 | `product.json` | `collection-return`, `sub`, `apps` all `disabled: true` | removed |
+| E6 | `product.json` | `size_chart` pointed at page `size-chart`, which is **unpublished** | repointed to `size-guide` |
+| §3 | `collection.json` | `promo-grid` banner: *"Save on Select Styles — take an extra 10% off sale items, limited time"* with `link: ""`. Fake urgency **and** a discount that does not exist | removed |
+| §6 | `collection.json` | `parallax: true` on the collection header | set `false` |
+| E3 | `collection.json` | `collection-header` `enable: false` — header suppressed | set `true` |
+| E4/E6 | `404.json` | `featured-collection` "Popular picks" → every collection is empty | removed |
+| E4/E6 | `cart.json` | same `featured-collection` | removed |
+| §3/E4 | `settings_data.json` | All five social links pointed at **Shopify's own demo accounts** (`facebook.com/shopify`, `instagram.com/shopify`, `tiktok.com/@shopify`, `pinterest.com/shopify`, `youtube.com/user/shopify`) | all 10 social fields emptied |
+| E4 | `settings_data.json` | `favicon: ""`, no logo set | both set to the real brand marks |
+
+## Still open — `templates/index.json` (Phase 3, blocked on products)
+
+Left untouched because the homepage rebuild waits on the catalog. Every one of
+these is a defect:
+
+- `shoppable-hero` — 3 hotspots bound to products `the-riva-tank`,
+  `the-lena-midi`, `the-cami`. **None exist.** `image: ""`, `button_link: ""`.
+- `featured-collections` — 4 tiles → `2026-tops`, `2026-bottoms`,
+  `2026-dresses`, `2026-layers`. **None of those collections exist.**
+- `featured-collection` → `2026-new`; `featured-collection-2` →
+  `2026-the-linen-edit`. Neither exists.
+- `hero-video` — a **YouTube demo video** (`kAaV5gfdsG0`), `link: ""`.
+- `promo-grid` — 2 blocks, both `image: ""`, both CTAs labelled but unlinked.
+- `slideshow` — `image: ""`, `link: ""`, `parallax: true` (breaches §6),
+  `autoplay: true`.
+- `image-grid` — **7 blocks**, several `image: ""`, all `link: ""`.
+- `text-with-icons` — `button_label: "boop"`.
+- `text-and-image` — `image: ""`, `image2: ""`, `title: ""`, `button_link: ""`.
+
+## Section-removal ruling — closed
+
+`testimonials`, `countdown`, `logo-list` across all 7 JSON templates:
+
+| Template | Contained any of the three? |
+|---|---|
+| `product.json` | **yes — `testimonials`. Removed.** |
+| `index.json` | no |
+| `collection.json` | no |
+| `404.json`, `cart.json`, `search.json`, `page.json` | no |
+
+The three `.liquid` section files remain on disk but are now referenced by **no
+template**, so they cannot render. Deleting the files themselves is deferred —
+Impulse's theme editor lists them as available presets, and removing section
+files from a theme that the editor may re-add is a separate, riskier change.

@@ -44,3 +44,33 @@ marked BLOCKED.
   or rebuilding it is a commercial act with cost and supplier consequences.
 - **B2 — category conflict.** Men's polos vs women's apparel is a positioning
   decision, not a build detail. Guessing wrong wastes the entire build.
+
+---
+
+## Phase 2 decisions (2026-08-24)
+
+| # | Decision | Why |
+|---|---|---|
+| 7 | **Kept Impulse's `host_grotesk` / `fustat` pairing** rather than choosing new faces | Both are variable, well-hinted and already loaded. A swap costs two font downloads for no legibility gain. Base size raised 17px, line-height 1.4 → 1.5 to meet §6. |
+| 8 | **Dark-forward palette, volt as the single accent** | The accent is sampled from the owner's logo (`#DAF305`), not chosen. Volt is barred from being text on light — it measures 1.20:1 there. |
+| 9 | **All 10 social fields emptied** rather than left or guessed | Impulse's defaults pointed at *Shopify's own* accounts. §6: "only accounts that actually exist. Delete the rest." No HIVOLT social account has been verified. |
+| 10 | **Motion disabled** (`animate_sections`, `animate_images`, `animate_page_transitions` all false) | On a dropship catalog with mixed-quality supplier photography, entrance animation draws the eye to the weakest asset. |
+| 11 | **`inventory_enable: false`** | §3 forbids scarcity cues not wired to real stock. There is no stock. |
+| 12 | **Removed the three `disabled: true` sections from `product.json`** rather than enabling them | The ruling is explicit: disabled sections trip E1. They return when there is real content. |
+| 13 | **Kept `recently-viewed` on `cart.json`** while removing `featured-collection` | `featured-collection` points at a named empty collection — a hard E6. `recently-viewed` is self-hiding and repopulates automatically once products exist; it is not an empty section, it is a dynamic one. |
+| 14 | **Repointed the PDP `size_chart` block from `size-chart` to `size-guide`** | `size-chart` is unpublished (E6); `size-guide` is published and real. Both pages need rewriting for a women's catalog in Phase 5. |
+| 15 | **Did not delete the `testimonials`/`countdown`/`logo-list` `.liquid` files** | Removing them from every template `order` makes them unrenderable, which satisfies the ruling. Deleting section files the theme editor may re-offer is a riskier, separate change. |
+| 16 | **Proceeded with dev-theme writes despite not being able to certify GemPages removal** | `appInstallations` is scope-denied. Evidence gathered instead: no GemPages write to either theme in ~10h. Risk contained by writing only to the unpublished theme and never touching `locales/en.default.json`, the one shared file GemPages owns. |
+
+## Still blocked
+
+- **B1 — zero products.** Unchanged. Phases 3, 4, 7 and the product-dependent
+  halves of 5 and 6 cannot run.
+- **B3 — SUPPLIER unconfirmed.** The brand block still reads
+  `<<CONFIRM: Trendsi | CJ | AutoDS>>`, and `REAL_SHIPPING_TIMES` is explicitly
+  to be derived from it. **The Shipping page therefore cannot be rewritten** —
+  the existing 2–4 / 8–14 figures were ruled out for reuse, and inventing
+  replacements breaches §3. Returns (60 days, free label) is confirmed and safe.
+- **B4 — 71-country checkout vs US-only shipping copy.** Cannot be reconciled
+  until the supplier is known, since which markets are truthfully servable
+  depends entirely on who fulfils.
