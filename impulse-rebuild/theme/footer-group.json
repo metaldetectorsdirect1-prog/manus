@@ -1,0 +1,53 @@
+{
+  "type": "footer",
+  "name": "t:sections.footer-group.name",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu-explore": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": true,
+            "menu": "footer-shop",
+            "container_width": 25
+          }
+        },
+        "menu-help": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": true,
+            "menu": "footer-help",
+            "container_width": 25
+          }
+        },
+        "menu-about": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": true,
+            "menu": "footer-about",
+            "container_width": 25
+          }
+        },
+        "menu-contact": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": true,
+            "menu": "footer-legal",
+            "container_width": 25
+          }
+        }
+      },
+      "block_order": ["menu-explore", "menu-help", "menu-about", "menu-contact"],
+      "settings": {
+        "show_currency_selector": false,
+        "show_currency_flags": false,
+        "show_locale_selector": false,
+        "show_payment_icons": true,
+        "show_copyright": true,
+        "copyright_text": "Dn Global Trading LLC (trading as HIVOLT) · 10s225 Kaye Ln, Willowbrook, IL 60527, United States"
+      }
+    }
+  },
+  "order": ["footer"]
+}

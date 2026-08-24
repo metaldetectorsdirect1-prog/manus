@@ -189,3 +189,84 @@ empty/utility states, footer, IA, SEO scaffolding — plus the prune once its ga
 clears, and the safe cleanups itemised in `LEGACY-AUDIT.md` §11. What is genuinely
 blocked is narrower than it looks: every *number* on a policy or shipping page,
 and every product, image and size chart.
+
+## 2026-08-24 — Homepage build (dev theme `158753652968`, role UNPUBLISHED, re-verified immediately before every write)
+
+### `templates/index.json` — rebuilt from scratch
+Stock Impulse demo content (11,428 b, wired to demo products `the-riva-tank`,
+`the-lena-midi`, `the-cami` and demo collections `2026-tops` … `2026-layers`)
+replaced with 7 fully-populated sections, 8,331 b. Verified by parsed value.
+
+| # | Section id | Type | Notes |
+|---|---|---|---|
+| 1 | `hero` | `slideshow` | Dark editorial image, `title_size: 72` **persisted unclamped**, `overlay_opacity: 30`, two equal-weight CTAs |
+| 2 | `brand-statement` | `rich-text` | 63 words, CTA → About |
+| 3 | `editorial-construction` | `text-and-image` | image right, 94 words, CTA → About |
+| 4 | `editorial-fit` | `text-and-image` | image left (opposite orientation), 78 words, CTA → size guide |
+| 5 | `journal` | `blog-posts` | blog `news`, 3 posts, view-all on |
+| 6 | `faq` | `faq` | 6 questions + link block. Emits `FAQPage` JSON-LD from the section itself |
+| 7 | `newsletter` | `newsletter` | consent line + Privacy Policy link, no discount offer |
+
+### Slots deliberately left out — and where they belong
+Not added disabled, not added with placeholders. Insert positions in `order`:
+
+| Slot | Insert at | Between |
+|---|---|---|
+| Featured collection (New In) | index 1 | `hero` → `brand-statement` |
+| Collection list / category tiles | index 2 | `brand-statement` → `editorial-construction` |
+| Promo grid with product links | index 4 | `editorial-construction` → `editorial-fit` |
+| Featured collection (second) | index 5 | `editorial-fit` → `journal` |
+| Product recommendations | n/a | product template, not homepage |
+| Recently viewed | n/a | removed from `templates/cart.json` this session |
+
+### `sections/header-group.json` — rebuilt
+Announcement carried two false claims (`Free shipping / On all orders over $100`
+— there is no minimum; `30-day postage paid returns` — the confirmed window is
+60). Replaced with one true message: *"Every number we publish has a source."* →
+`/pages/size-guide`. Header sticky on index and collection, `toolbar_menu`
+cleared (pointed at `new-toolbar`, which does not exist), `toolbar_social: false`
+(no verified HIVOLT accounts), currency and locale selectors off (`de` is
+unpublished). One `mega_menu` block bound to Help, wired to live pages only.
+
+### `sections/footer-group.json` — rebuilt
+`footer-promotions` removed entirely — it was three identical blocks reading
+"Free Returns / 30 days to return", disabled but present. Four menu columns at
+25% each. Payment icons on (Shopify renders only enabled gateways). Copyright
+carries the corrected entity: **Dn Global Trading LLC (trading as HIVOLT)**, full
+address. Social fields already empty in `settings_data.json`.
+
+### Menus — all six rebuilt
+`main-menu`, `footer-shop`→"Explore", `footer-help`→"Help", `footer-about`→"About",
+`footer-legal`→"Contact", and `customer-account-main-menu` (was **empty** — the
+unconfigured-setting defect). Every target is a published, existing destination.
+No empty collections, and `/pages/shipping-delivery` is gone from all of them —
+which closes the four dead links that unpublishing it created.
+
+### `config/settings_data.json` — one key
+`logo` `shopify://shop_images/hivolt-lockup-dark.png` → `""`. It is a dark-ground
+lockup and `color_header` is `#F8F6F2`. Header now renders the shop name as text.
+All 105 other keys preserved and verified — no silent clamp on
+`type_header_base_size` (60) or `type_header_line_height` (1.1).
+
+### Utility states
+- `templates/404.json` 483 b → 1,826 b: 404 art, copy, CTA → journal, plus a link row to five live pages.
+- `templates/cart.json` 593 b → 113 b: `recently-viewed` removed — with zero products it was a guaranteed-empty section.
+
+### `/pages/about-us` — rewritten (production write, `updatedAt` moved, verified)
+Voice kept. Removed claims that are now false: *"all three polos"*, *"Our polos
+are cotton and polyester"*, *"Every product page carries two sections"*, and the
+named gap list for products that no longer exist. Added an honest
+"Where the store is right now" section and the corrected legal entity.
+
+### §5 queue — status
+1. **Customer account templates — already present and substantial.** Impulse ships all seven (`login` 2.9 kb, `register` 1.6 kb, `account` 2.5 kb, `order` 10.4 kb, `addresses` 10.0 kb, `reset_password` 1.4 kb, `activate_account` 1.1 kb). They inherit colour, type and button style from `settings_data.json`, which is now correct. Rebuilding them would be regression risk with no gain. **Reached, no work required.**
+2. **Empty and utility states — done** (404, cart; search template needs no change).
+3. **About — done.**
+
+### Found in passing
+- Blog section renders most-recent, not highest-traffic; Impulse exposes no traffic ordering. Featuring by traffic needs article dates changed or a manual-selection section.
+- Old `footer` menu still holds polo links and `/pages/shipping-delivery`; the new footer group does not reference it, so nothing renders from it.
+- `sections/testimonials.liquid` and `sections/countdown.liquid` exist in the theme but are referenced by no template on this theme.
+- A second delivery profile, **"Tapstitch: Special Line"**, carries paid international rates across dozens of zones while every policy says US-only. Unreachable while the International market is disabled.
+- Shipping rate name `FREE Tracked Shipping (8–14 business days)` → `FREE Tracked Shipping`; price `$0.00 USD` and active state unchanged, verified. That figure was rendering at checkout.
+- `shopPolicyUpdate` is denied to this connector (`write_legal_policies`). Corrected bodies for all four policies are ready to paste in `policies/`.
