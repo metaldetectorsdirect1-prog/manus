@@ -74,3 +74,16 @@ marked BLOCKED.
 - **B4 — 71-country checkout vs US-only shipping copy.** Cannot be reconciled
   until the supplier is known, since which markets are truthfully servable
   depends entirely on who fulfils.
+
+---
+
+## Design Standard Directive (2026-08-24)
+
+| # | Decision | Why |
+|---|---|---|
+| 17 | **Volt `#DAF305` is the primary CTA colour** | §3: "Accent is for the primary CTA and nothing else." My first pass had ink CTAs and volt scattered on the sale tag, cart dot and announcement bar — exactly inverted. Corrected. |
+| 18 | **`instrument_serif_n4` for display** | §3 requires "a distinctive display/serif for headings, a clean neutral grotesque for body". Impulse ships it (used in its own Dune and Apothecary presets), so it costs one font load and no third family. |
+| 19 | **H1 capped at 60px, not the 72px the 1.333 scale wants** | Impulse's schema rejects anything above 60 outright. Hero sections carry their own `title_size`, so the hero still exceeds the global H1. |
+| 20 | **`quick_shop_enable: false`** | §5: the product card is "title, price, swatches — nothing else". A quick-view overlay is card furniture. |
+| 21 | **Section animation on, page-transition animation off** | §3 permits fade-up on scroll and forbids anything that delays the hero. Page transitions delay first paint; section reveals do not. Reversed from my earlier all-off decision, which was stricter than the directive asks. |
+| 22 | **Sale `#9B2C2C`, a red distinct from the accent** | §3: "Sale/price-drop color is separate from the accent." It renders only where a genuine compare-at price exists. |
