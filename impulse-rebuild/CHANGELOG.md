@@ -143,3 +143,49 @@ set `isPublished: false` (§2 immediate action), verified by read-back.
 ### Blog prune (§3.2) status
 **Step 1 complete.** All 331 redirects pulled and reconciled; no conflicts in the
 `/blogs/news/*` namespace. Step 2 (deletion map) needs no further reads.
+
+## 2026-08-24 — Track A §3.2 · Blog prune, steps 1–2
+
+### Shopify changes
+
+| Action | Before | After | Verified |
+|---|---|---|---|
+| `urlRedirectCreate` ×11 (aliased, one request) | 331 redirects | **342** redirects | count +11 exactly; 4 paths spot-read-back with correct target |
+
+The eleven paths were perfume-era article URLs taking **23 measured sessions in
+90 days** to hard 404s — no article, no redirect. Confirmed both ways before
+writing: `articles(query:"handle:…")` empty, `urlRedirects(query:"path:…")` empty,
+against a control path that returned its known redirect. All now → `/blogs/news`,
+matching the four that already had redirects.
+
+`userErrors: []` was not treated as proof. No article was deleted. No other
+resource changed.
+
+### Repository changes
+- `impulse-rebuild/PRUNE-MAP.md` — **new**, the §3.2 step-2 deliverable
+- `impulse-rebuild/prune/articles-501.txt` — full corpus, 501 lines, 501 unique
+- `impulse-rebuild/prune/classify.py` — deterministic classifier, rules in-file
+- `impulse-rebuild/prune/prune-map.json`, `survivors.txt` (79), `deletions.txt` (422)
+
+### Where the prune stands
+Steps 1–2 complete. **Stopped at step 3 — "verify" — which is the owner's own
+gate.** The map recommends 79 survivors / 422 deletions, retaining 56.2% of
+measured blog traffic while removing 84% of the corpus.
+
+`BLOG-AUDIT.md`'s original 13-survivor plan is no longer supportable: it came from
+a 26-article sample that file itself flagged as too thin, and measured traffic is
+now available for the whole corpus — 112 live articles earn sessions, not 13.
+
+Two findings that reduce the prune's cost:
+- The `/de/` arm needs no work. 170 redirects already exist; after deletion each
+  chains `/de/blogs/news/X → /blogs/news/X → /blogs/news` and resolves.
+- Aliased batch mutations work on this connector (proven by the 11-redirect call),
+  so the whole prune is ~20 calls, not the oversized batch job previously assumed.
+
+### Product-independent work remaining (§3.4)
+Executable with no supplier and no catalog: the content/template queue (§3.3) —
+policy-suite page structure, FAQ, About, care guide, customer-account templates,
+empty/utility states, footer, IA, SEO scaffolding — plus the prune once its gate
+clears, and the safe cleanups itemised in `LEGACY-AUDIT.md` §11. What is genuinely
+blocked is narrower than it looks: every *number* on a policy or shipping page,
+and every product, image and size chart.
