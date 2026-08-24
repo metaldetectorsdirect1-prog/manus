@@ -287,3 +287,61 @@ would create exactly the E6 defects at scale that this build has been closing.
 4. Strip embedded JSON-LD from the ~13 survivors only — deleting the other ~488
    removes their bad schema at no cost.
 5. Consolidate the six care articles into the care guide.
+
+---
+
+# 🔴 CORRECTION to my own Phase 5 finding (2026-08-24)
+
+**Last session I reported "42/50 articles make product claims in embedded
+JSON-LD" and extrapolated "~420 of 501 publish false claims in machine-readable
+form." That was wrong, and it drove a priority call.**
+
+The 42/50 came from a loose regex — `g/m|gsm|...|Product|Offer|price` — run
+against schema blocks. It matched general fabric advice like *"blends around
+220–270 g/m² hold their shape"*, which is a materials statement, not a claim
+about a HIVOLT product.
+
+Re-scanned with a regex that actually tests for HIVOLT product claims
+(`HIVOLT (t-shirts|leggings|garments|range|products)`, `"@type":"Product|Offer|
+AggregateRating|Review"`, or a g/m² figure within 60 chars of "HIVOLT"):
+
+| Sample | Carry JSON-LD | Schema makes a HIVOLT product claim |
+|---|---|---|
+| **100 articles (20% of corpus)** | **100/100** | **0/100** |
+
+The schema blocks are `Article` (headline, author, publisher) plus `FAQPage`
+carrying general advice. **Per §3's own criterion — "preserve legitimate Article
+schema where the claims are true" — there is essentially nothing to strip.**
+
+One confirmed exception exists: `what-gsm-should-activewear-be`, the newest
+article, whose FAQPage states *"Across the 109 HIVOLT garments that publish a
+mill-spec fabric weight, the median is 220 g/m2."* That is a genuine product
+claim in schema. It is **not** in the traffic-survivor set, so the prune deletes
+it and the claim goes with it.
+
+**Where the defects actually live: the prose.**
+
+| Measured across 100 articles | |
+|---|---|
+| Distinct dead `/products/` links | **110** |
+| Distinct `/collections/` links | 7 — `bottoms`, `training`, `yoga-studio`, `outerwear-hoodies`, `tops`, `mens-activewear`, `womens-activewear` |
+| Of those, collections that exist today | **2** (`tops`, `outerwear-hoodies`) |
+| Articles hitting the §3.5 auto-delete list | **0/100** |
+
+Extrapolated: **~550 distinct dead product links across the corpus**, and five
+referenced collections that do not exist.
+
+**Revised priority:** the schema strip is not urgent because there is barely a
+schema problem. The link rot is the real defect, and it is fixed by the prune —
+which remains blocked on the redirect map.
+
+## New input for the redirect map
+
+`urlRedirectsCount` is **331**. A redirect infrastructure already exists, with an
+established convention of `→ /collections/all` for retired products. **The full
+331 must be pulled before building the prune's map**, or it will duplicate or
+conflict with existing entries. See `LOCALE-AUDIT.md`.
+
+Per `LOCALE-AUDIT.md`, the German locale is **unpublished**, so no full second
+redirect arm is required — only coverage for the handful of `/de/blogs/news/*`
+paths search engines still hold.

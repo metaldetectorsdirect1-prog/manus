@@ -70,3 +70,19 @@ No shipping-zone change. Nothing deleted, rewritten or redirected in the blog.
 ### Repo
 New: `BLOG-AUDIT.md`.
 Updated: `APP-CONFLICTS.md`, `VERIFICATION-PARTIAL.md`, `ASSUMPTIONS.md`, `CONTENT-INVENTORY.md`.
+
+## 2026-08-24 — Phase 6
+
+### Shopify writes
+| Target | Action | Result |
+|---|---|---|
+| `/pages/size-guide-women` | `isPublished: false` | ✅ verified |
+| `/pages/size-guide-men` | `isPublished: false` | ✅ verified |
+
+Two writes, both unpublish. No page content written — §1 in force.
+No theme write. No article deleted, redirected or edited.
+
+### Repo
+New: `LOCALE-AUDIT.md`.
+Updated: `CLAIMS-REGISTER.md` (open rows now at top), `BLOG-AUDIT.md` (correction),
+`VERIFICATION-PARTIAL.md`, `CONTENT-INVENTORY.md`, `ASSUMPTIONS.md`.

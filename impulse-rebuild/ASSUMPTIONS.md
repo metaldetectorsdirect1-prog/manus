@@ -155,3 +155,15 @@ must be production + transit, not transit alone.
 
 **Both are decisions for the owner. Neither is a detail. `SUPPLIER` remains
 unset and no delivery copy has been written from Tapstitch.**
+
+---
+
+## Phase 6 (2026-08-24)
+
+| # | Decision | Why |
+|---|---|---|
+| 32 | **§1 accepted in full.** No number, timeframe, exclusion, guarantee, process step or material claim written this session | The diagnosis is correct: the failure mode is inventing operationally binding specifics that read as plausible. Structure-only is the right fix. |
+| 33 | **Both size guides unpublished, not deleted** | The structure, how-to-measure content and international conversion tables are sound and sourceable. Only the HIVOLT grade is not. |
+| 34 | **`shipping-delivery` flagged, not unpublished** | It carries two live UNSOURCED rows, but it is linked from Terms, Returns and four footer menus. Unpublishing creates dead links across pages this build wrote. Zero products means nobody can order, so exposure is latent. **Owner decision, surfaced rather than taken.** |
+| 35 | **Nothing stripped from article schema** | Evidence says there is almost nothing to strip. Removing legitimate `Article` markup to appear productive would be worse than leaving it. |
+| 36 | **Prune still not started** | §4 resolved the locale question, but the redirect map now needs the existing 331 redirects pulled first to avoid conflicts. Starting deletions before that is exactly the half-execution §5 warns against. |

@@ -265,3 +265,45 @@ speed and 375px criteria.
 `templates/product.json` on `158743363816`: **6,844 bytes, `updatedAt
 2026-08-23T23:17:18Z`.** Byte-identical to install. Testimonials, "Organic
 cotton" and the "extra 10% off" banner all still present. Owner-side removal.
+
+---
+
+# Phase 6 status
+
+| Item | Status |
+|---|---|
+| §1 standing rule accepted | ✅ no claims content written this session |
+| §2 size guides unpublished | ✅ both, verified by read-back |
+| §2 publication sweep of all shop pages | ✅ 18 pages — 2 UNSOURCED rows still live, flagged |
+| §3 schema strip | ✅ **executed as an audit — near-nothing to strip.** 0/100 schema blocks carry product claims |
+| §4 locale audit | ✅ `LOCALE-AUDIT.md` — **no EU data exists** |
+| §5 prune | ❌ **not started** — 331 existing redirects must be pulled first |
+| 7 Policy suite | ❌ not done |
+| 8 FAQ | ❌ not done |
+| 9 About | ❌ not done |
+| 10 Care guide | ⚠️ source identified (6 articles) |
+| 11–16 | ❌ not done |
+
+## Live theme — session-start status
+
+`158743363816` `templates/product.json`: **6,844 bytes, `updatedAt
+2026-08-23T23:17:18Z`.** Unchanged. Testimonials, "Organic cotton" and the
+"extra 10% off" banner all still present. Owner-side removal.
+
+## 🔴 Fourth fabrication — found in my own analysis, not in page copy
+
+Last session I reported **"42/50 articles make product claims in embedded
+JSON-LD"** and extrapolated **"~420 of 501 publish false claims in
+machine-readable form."** I then used that to argue the schema strip was the most
+urgent blog action.
+
+**It was a loose-regex artifact.** Re-tested against a regex that actually
+identifies HIVOLT product claims: **0/100 in a 20% sample.**
+
+This is a different failure from the previous three. Those were invented
+*content*. This was an over-stated *finding* — a heuristic reported as a
+measurement, which then drove a priority decision. It is arguably the more
+dangerous kind, because it looked like evidence.
+
+The correction is in `BLOG-AUDIT.md`. The real defect is 110 dead product links
+per 100 articles, in the prose.

@@ -1,5 +1,29 @@
 # CLAIMS-REGISTER.md
 
+## ⚠️ OPEN UNSOURCED ROWS — read this first
+
+| # | Claim | Page | Public? | Needed |
+|---|---|---|:--:|---|
+| 1 | Women's body-measurement grade | `size-guide-women` | **NO — unpublished 2026-08-24** | Real garment measurements |
+| 2 | Men's body-measurement grade | `size-guide-men` | **NO — unpublished 2026-08-24** | Real garment measurements |
+| 3 | HIVOLT alpha → US/UK/EU numeric mapping | both guides | NO | Owner confirmation of intended grade |
+| 4 | **Dispatch 2–4 days · delivery 8–14 days · end-to-end 10–18** | `shipping-delivery` | **🔴 YES — LIVE** | Supplier selection. Ruled out for reuse in Phase 3 |
+| 5 | **"a parcel that does not arrive is refunded or replaced"** | `shipping-delivery` | **🔴 YES — LIVE** | Owner confirmation |
+| 6 | Support hours · response-time commitment | `contact-us` | pre-recorded | Owner — before the rewrite, not after |
+
+**Rows 4 and 5 are the only UNSOURCED claims still publicly reachable.** Both are
+inherited from a prior session, both were written for the polo catalog, and Phase 3
+explicitly ruled the figures out for reuse. They describe a fulfilment operation
+that does not currently exist.
+
+They were **not unpublished unilaterally**: `shipping-delivery` is linked from the
+Terms, the Returns page, and four footer menus, so removing it creates dead links
+across pages this build wrote. With zero products nobody can place an order, so the
+exposure is latent rather than active — the same posture as the live theme's
+fabricated testimonials. **Flagged for an owner decision: unpublish, or supply
+figures.**
+
+
 Every factual claim published at shop level, with its source. Maintained for the
 rest of the build; every new page adds rows.
 
@@ -134,3 +158,31 @@ Two are known to carry live defects:
 
 Rows 1–3 are live now. Row 4 is live and inherited. Row 5 is pre-recorded so the
 Contact rewrite cannot introduce it silently.
+
+---
+
+## Size guides — unpublished 2026-08-24
+
+Both set `isPublished: false`, verified by read-back. **Not deleted** — the
+structure, how-to-measure content, and international conversion tables are sound
+and stay. Only the HIVOLT-specific measurement grade is unsourced.
+
+Blocked on real garment measurements, which are blocked on the supplier decision.
+
+## 🟢 `size-guide` (Men's Polos) — audited, and it is exemplary
+
+Written by a prior session. Audited this session against §1 and it **passes
+completely**:
+
+> *"They do not share a size system, and we are not going to pretend they do."*
+> *"Garment measurements are not published for this style."*
+> *"The supplier publishes **no measurements and no body-weight guidance** for this style."*
+> *"We have not converted, estimated, or averaged any number on this page."*
+> *"Until our suppliers give us garment measurements, that policy is doing work a
+> size chart should be doing, and we would rather be straight with you about that
+> than invent a table."*
+
+Every figure traces to a supplier statement. The kg→lb column is arithmetic on a
+supplied number. **This page is the standard the two guides I wrote failed to
+meet**, and it was sitting on the same site the whole time. It stays published —
+it is category-stale, not factually defective.
