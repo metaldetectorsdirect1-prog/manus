@@ -116,3 +116,27 @@ At least **eight** third-party integrations have or had write access to this
 store, across at least **four unrelated commercial categories** (apparel,
 perfume, children's games, supplements) and **two languages**. The theme is the
 newest thing here; everything else carries sediment from previous businesses.
+
+---
+
+## 🔴 A German storefront locale is live and serving (2026-08-24)
+
+Previously logged as "German metafield remnants". It is more than remnants:
+
+| Path | Sessions / 90d |
+|---|---:|
+| `/de/blogs/news/jump-rope-workouts-from-first-skip-to-10-minute-rounds` | 5 |
+| `/collections/damen` | 7 |
+| `/collections/herren` | 5 |
+
+**A `/de/` locale is live, indexed, and earning search traffic.** Consequences:
+
+1. Any blog prune must map redirects for `/blogs/news/*` **and** `/de/blogs/news/*`.
+2. The Privacy Policy must reflect it — a live German locale means EU visitors,
+   which means GDPR applies in fact and not just in theory.
+3. `/collections/damen` and `/collections/herren` are German-named collections
+   outside the fifteen catalogued in `INFORMATION-ARCHITECTURE.md`. The
+   collection disposition table is **incomplete** and needs a re-audit including
+   locale-scoped collections.
+
+Not changed. Recorded.

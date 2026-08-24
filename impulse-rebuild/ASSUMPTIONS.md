@@ -124,3 +124,34 @@ is worse than both.
 **The rest of the Returns page is confirmed fact**: 60 days, free prepaid label,
 no restocking fee, refund to original payment method, and the Willowbrook return
 address all come from existing store copy or the brand block.
+
+---
+
+## Phase 5 (2026-08-24)
+
+| # | Decision | Why |
+|---|---|---|
+| 28 | **Size guides corrected, not deleted** | The tables are unsourced, but a size guide without measurements is not a size guide. Both now open with an explicit provenance statement saying the grade is standard, not measured from HIVOLT garments, and that product pages govern. Converts an implicit claim into a checkable one. Still an open row in `CLAIMS-REGISTER.md`. |
+| 29 | **Five further unsourced claims deleted from the live Returns page** | Per §1: "write the page without that sentence and list the gap." They were softened-out entirely rather than hedged. |
+| 30 | **Blog prune designed, not executed** | §3.4 requires redirects before deletion. 487 deletions plus a two-locale redirect map exceeds the remaining budget, and a half-finished prune creates E6 at scale. Sequence handed over in `BLOG-AUDIT.md`. |
+| 31 | **JSON-LD strip deferred behind the prune** | ~488 of the ~501 schema blocks disappear with their articles. Stripping first would be work thrown away. |
+
+## Tapstitch — the conflict, recorded as instructed
+
+Tapstitch is print-on-demand and is **not being adopted**. If it later is:
+
+**Made-to-order goods are conventionally excluded from change-of-mind returns.**
+HIVOLT publishes a 60-day, any-reason, free-label guarantee. These are
+incompatible as written. Adopting POD forces one of two decisions:
+
+1. **Honour the guarantee on made-to-order goods at cost.** Every change-of-mind
+   return is a total loss — the garment cannot be resold — plus outbound and
+   return shipping. That is a margin decision, not a policy detail.
+2. **Change the published commitment.** Narrowing a live 60-day guarantee is a
+   trust cost with a customer base that has been told otherwise.
+
+POD also adds per-item production time *before* dispatch, so any delivery figure
+must be production + transit, not transit alone.
+
+**Both are decisions for the owner. Neither is a detail. `SUPPLIER` remains
+unset and no delivery copy has been written from Tapstitch.**

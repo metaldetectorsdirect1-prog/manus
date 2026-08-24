@@ -183,3 +183,107 @@ is the largest bucket; keep-as-is is the smallest.
 
 Nothing was deleted, rewritten, or redirected. The audit informs the decision; it
 does not make it.
+
+---
+
+# Data-driven classification — 2026-08-24 (Phase 5)
+
+The sampling estimates above are superseded by measured data.
+
+## Embedded JSON-LD — scanned, quantified, not yet stripped
+
+First 50 articles by publish date, machine-scanned:
+
+| | |
+|---|---|
+| Articles carrying embedded JSON-LD | **50 / 50 — 100%** |
+| ...of which make product / spec / material claims | **42 / 50 — 84%** |
+| Schema types per article | `Article` ×1, `Organization` ×2, `FAQPage` ×1, `Question` ×3, `Answer` ×3 |
+
+**Extrapolated to the corpus: ~501 articles carry embedded JSON-LD; ~420 make
+claims about products that no longer exist.** Confidence high — the pattern is
+100% consistent across the batch, which is what a template-driven generation run
+produces.
+
+## Traffic — the whole corpus, measured
+
+90 days, all landing pages. Blog articles appearing above 4 sessions:
+
+| Article | Sessions |
+|---|---:|
+| `hot-yoga-outfits-what-survives-105-degrees` | 23 |
+| `common-perfume-mistakes-to-avoid` | 9 |
+| `bulgarian-split-squats-why-they-hurt-and-why-they-work` | 9 |
+| `best-gym-clothes-that-hide-sweat` | 7 |
+| `should-you-put-gym-clothes-in-the-dryer` | 7 |
+| `how-long-do-leggings-last-lifespan-and-replacement-signs` | 5 |
+| `/de/blogs/news/jump-rope-workouts-from-first-skip-to-10-minute-rounds` | 5 |
+| `how-to-dry-gym-clothes-fast-when-you-train-daily` | 4 |
+| `thermal-regulation-how-fabric-keeps-you-cool-and-warm` | 4 |
+| `washing-white-activewear-keeping-it-bright-without-bleach` | 4 |
+| `best-color-block-activewear-bold-without-clashing` | 4 |
+| `removing-deodorant-stains-from-black-workout-tops` | 4 |
+| `breathing-while-running-rhythms-that-prevent-side-stitches` | 4 |
+| `what-time-is-the-gym-least-busy-data-backed-windows` | 4 |
+
+**~93 sessions across 14 articles. Total site: 4,151. The blog is 2.2% of
+traffic.**
+
+The report cut off at 4 sessions. **So 487 of 501 articles drew 3 or fewer
+sessions in 90 days** — under 0.03/day each. The prune-heavy call is correct,
+and the data supports it more strongly than the sampling did.
+
+### 🔴 A German storefront locale is live
+
+`/de/blogs/news/jump-rope-workouts-…` — **5 sessions.** Alongside
+`/collections/damen` (7) and `/collections/herren` (5).
+
+This is not just leftover metafields. **A `/de/` locale is serving pages and
+earning traffic.** Any prune that ignores it will orphan German URLs, and any
+redirect map must cover both `/blogs/` and `/de/blogs/`. Recorded in
+`APP-CONFLICTS.md`.
+
+## Survivor set — 13 candidates
+
+`common-perfume-mistakes-to-avoid` is **deleted regardless of its 9 sessions**,
+per §3.5: off-category, perfume.
+
+The strongest survivors are not the product round-ups — they are the
+**garment-care** pieces, which are close to category-neutral and survive a
+repositioning with light editing:
+
+| Candidate | Why it survives |
+|---|---|
+| `should-you-put-gym-clothes-in-the-dryer` | Care principle, applies to any knit |
+| `how-to-dry-gym-clothes-fast-when-you-train-daily` | Same |
+| `washing-white-activewear-keeping-it-bright-without-bleach` | Same |
+| `removing-deodorant-stains-from-black-workout-tops` | Same |
+| `how-long-do-leggings-last-lifespan-and-replacement-signs` | Garment-lifespan principle |
+| `thermal-regulation-how-fabric-keeps-you-cool-and-warm` | Fabric science, fully category-neutral |
+| `hot-yoga-outfits-what-survives-105-degrees` | Highest traffic; needs heavy rewrite |
+| `best-gym-clothes-that-hide-sweat` | Rewritable as a fabric-behaviour piece |
+| `bulgarian-split-squats-…`, `breathing-while-running-…`, `what-time-is-the-gym-least-busy-…` | Training content, no product claims — **keep as-is** candidates |
+
+**These six care pieces are queue item 10.** The care guide should be built by
+consolidating them rather than written from scratch — they already earn traffic
+and already rank.
+
+## Not executed this session
+
+**No article was deleted, redirected, or edited.** The prune is designed, not
+performed.
+
+Reason, stated plainly: §3.4 requires redirects created **before** deletion.
+Doing 487 deletions plus a redirect map across two locales is a batch job larger
+than the budget left in this session, and a half-finished prune — some articles
+gone, some redirects missing — is materially worse than an untouched corpus. It
+would create exactly the E6 defects at scale that this build has been closing.
+
+**Recommended execution order for the next session:**
+
+1. Build the redirect map first, covering `/blogs/news/*` **and** `/de/blogs/news/*`.
+2. Create every redirect. Verify.
+3. Delete in batches of 50, re-counting `articlesCount` after each.
+4. Strip embedded JSON-LD from the ~13 survivors only — deleting the other ~488
+   removes their bad schema at no cost.
+5. Consolidate the six care articles into the care guide.

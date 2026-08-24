@@ -237,3 +237,31 @@ Hero imagery · category tiles · collection banners · final `product.json` /
 wiring · delivery copy, per-market table, duties language · photographic
 language lock · zero-empty verification · squint, grid, five-second, density,
 speed and 375px criteria.
+
+---
+
+# Phase 5 status
+
+| Item | Status |
+|---|---|
+| §1 structural correction absorbed | ✅ pages now treated as production writes |
+| §2 live Returns figures corrected | ✅ both applied, read back, verified |
+| §2 claims audit of all published pages | ✅ `CLAIMS-REGISTER.md` |
+| §2 **third fabrication found** | ✅ **five more unsourced claims, removed** |
+| §3.1 JSON-LD scanned | ✅ 50/50 carry it, 42/50 make claims |
+| §3.1 JSON-LD stripped | ❌ **deferred behind the prune** — see `BLOG-AUDIT.md` |
+| §3.2 per-article traffic | ✅ measured — 14 articles above 4 sessions, blog is 2.2% of traffic |
+| §3.3 classification against data | ✅ 13 survivors identified |
+| §3.4 prune executed | ❌ **not executed** — designed and handed over |
+| §4 Tapstitch conflict documented | ✅ `ASSUMPTIONS.md` |
+| 7 Policy suite (Privacy, Accessibility, Contact) | ❌ not done |
+| 8 FAQ | ❌ not done |
+| 9 About | ❌ not done |
+| 10 Care guide | ⚠️ **source identified** — six surviving care articles to consolidate |
+| 11–16 | ❌ not done |
+
+## Live theme — session-start status, unchanged
+
+`templates/product.json` on `158743363816`: **6,844 bytes, `updatedAt
+2026-08-23T23:17:18Z`.** Byte-identical to install. Testimonials, "Organic
+cotton" and the "extra 10% off" banner all still present. Owner-side removal.
