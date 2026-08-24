@@ -86,3 +86,60 @@ No theme write. No article deleted, redirected or edited.
 New: `LOCALE-AUDIT.md`.
 Updated: `CLAIMS-REGISTER.md` (open rows now at top), `BLOG-AUDIT.md` (correction),
 `VERIFICATION-PARTIAL.md`, `CONTENT-INVENTORY.md`, `ASSUMPTIONS.md`.
+
+## 2026-08-24 — Track A §3.1 · Legacy contamination sweep
+
+### Shopify changes
+
+**None. This was a read-only sweep.** No shop-level resource was created,
+modified or deleted. Every finding below is classification, not action.
+
+The only Shopify write this session preceded the sweep: `/pages/shipping-delivery`
+set `isPublished: false` (§2 immediate action), verified by read-back.
+
+### Surfaces enumerated in full
+
+| Surface | Count | Method |
+|---|--:|---|
+| URL redirects | **331** | `urlRedirectsCount` + full row dump, reconciled |
+| Pages | 18 | full enumeration |
+| Collections | 15 | full enumeration |
+| Menus | 9 | full enumeration |
+| Metafield definitions | 38 | 5 owner types |
+| Metaobject definitions | 4 | full enumeration |
+| Files | 150 | full enumeration, 3 pages |
+| Shop policies | 5 | full bodies read |
+| Locales · markets · themes | 2 · 2 · 3 | full enumeration |
+
+### Findings that changed the plan
+
+1. **Catalog is empty — `productsCount: 0`**, confirmed three ways (`productsCount`,
+   `products(first:5)`, `productVariantsCount`). All 15 collections hold 0 products.
+   Makes metafield/menu/file cleanup free of data loss.
+2. **Fifth fabrication surface found: shop policies.** The 2–4 / 8–14 shipping
+   figures the brand block ruled out for reuse are live in Shipping, Terms §5 and
+   Contact. Refund policy says "5-7 business days" where the owner-confirmed page
+   says 5. Terms §1 claims the registered entity is "HIVOLT", not **Dn Global
+   Trading LLC**. → 7 new open rows in `CLAIMS-REGISTER.md`.
+3. **Unpublishing `shipping-delivery` created 4 dead links** in `footer`,
+   `footer-help`, `footer-legal` and one redirect target. Fix is menu edits.
+4. **`LOCALE-AUDIT.md` corrected** — 170 `/de/blogs/news/*` redirects, not "a
+   handful". The German blog *was* a full mirror; it is already redirect-covered.
+5. **Three redirect ↔ page handle collisions** (`size-chart`, `fabric-weight-index`,
+   `voltcore`) — publishing any of those pages silently disables a redirect.
+6. **Four redirects point at non-existent targets**; 14 point women's and perfume
+   URLs at an empty men's polo collection.
+7. **Build-record correction** — only 2 of the 4 recorded brand files are on the
+   store. `hivolt-lockup-light.png` and `hivolt-lockup.png` were never uploaded.
+
+### Repository changes
+- `impulse-rebuild/LEGACY-AUDIT.md` — **new**, the §3.1 deliverable
+- `impulse-rebuild/CLAIMS-REGISTER.md` — open rows 4–5 closed, rows 7–13 opened;
+  Returns reclassified **provisional pending supplier**; house standard codified
+  from `size-guide` per §1.6
+- `impulse-rebuild/LOCALE-AUDIT.md` — corrected, with method and cause
+- `impulse-rebuild/CHANGELOG.md` — this entry
+
+### Blog prune (§3.2) status
+**Step 1 complete.** All 331 redirects pulled and reconciled; no conflicts in the
+`/blogs/news/*` namespace. Step 2 (deletion map) needs no further reads.

@@ -62,6 +62,31 @@ being served from a translation set today. The redirect map does **not** need a
 full second locale arm — but `/de/blogs/news/*` should still be covered for the
 handful of paths search engines retain.
 
+> ### 🔴 CORRECTION — 2026-08-24, legacy contamination sweep
+>
+> **"the handful of paths search engines retain" was wrong.** It is not a handful.
+>
+> `urlRedirectsCount(query:"path:/de/blogs/news*")` returns **170**. The German
+> blog **was** a full mirror of the English corpus — roughly a third of the 501
+> articles have a standing `/de/` redirect, and all 170 point at their English
+> counterpart.
+>
+> **What survives:** the operative conclusion. The mirror is *already fully
+> redirect-covered*, so the prune still needs no separate German arm — the arm
+> exists. What changes is the work per deleted article: removing an English
+> article orphans **two** redirects, its own and the `/de/` one targeting it.
+> Both must be repointed.
+>
+> **Method (§1.3):** 170 is a query count over the live redirect set — a count,
+> not an extrapolation, not a sample. The 242-row `/de*` bucket reconciles exactly
+> against its five sub-buckets and the remainder, so no row is unaccounted for.
+> Falsified if the same query returns anything other than 170.
+>
+> **What produced the error:** I inferred corpus scale from `shopLocales.published
+> = false` and from analytics traffic, and never enumerated the redirect table.
+> An unpublished locale says nothing about how much was published *before* it was
+> unpublished. Full detail: `LEGACY-AUDIT.md` §2.2.
+
 **Confidence: medium.** I could not fetch a URL to see what `/de/...` actually
 returns — storefront egress is 403 at CONNECT. The conclusion rests on
 `shopLocales.published = false` plus the absence of a market web presence, which
