@@ -33,16 +33,48 @@ self-healing and intentional — do not delete those redirects preemptively.
 
 ---
 
-## 2. Theme role — verify immediately before every write
+## 🔴 2. THE ROLES SWAPPED. `158753652968` IS NOW LIVE.
 
-Never infer role from a theme ID or name. Query `themes { role }` and confirm the
-target is `UNPUBLISHED` in the same session as the write. As of 2026-08-24:
+**Read this before any theme write. The build target became production on
+2026-08-25T01:37Z.** The owner published it.
 
-| Theme | Role |
-|---|---|
-| `158743363816` Impulse | **MAIN** |
-| `158753652968` IMPULSE-REBUILD-2026-08-24 | UNPUBLISHED ← build target |
-| `158753849576` Copy of Impulse | UNPUBLISHED |
+| Theme | Role as of 2026-08-25 | Was |
+|---|---|---|
+| `158753652968` IMPULSE-REBUILD-2026-08-24 | **MAIN — LIVE** | UNPUBLISHED |
+| `158743363816` Impulse | UNPUBLISHED | MAIN |
+| `158753849576` Copy of Impulse | UNPUBLISHED | UNPUBLISHED |
+
+**Every prior session's standing instruction said "dev theme `158753652968`
+only, no live-theme writes." That instruction is now self-contradictory —
+`158753652968` IS the live theme.** Following it literally would write straight
+to production.
+
+Consequences, all of them live now:
+
+- A write to `158753652968` is a **production modification** and needs explicit
+  authorization for one. The connector also blocks `themeFilesUpsert` against
+  MAIN, so it will be refused at the tool layer regardless.
+- The homepage, header, footer, 404, cart, About and Help Center built on
+  2026-08-24 are **live**.
+- **The three known live-theme defects came off with the swap.** The five
+  fabricated testimonials, the "Organic cotton" sales point and the "extra 10%
+  off" banner were in `158743363816`'s `product.json` / `collection.json`. That
+  theme is now unpublished, and the newly-live theme's own `product.json`
+  (2,148 b) and `collection.json` (1,448 b) were read in full and contain none
+  of them.
+- **Collection pages now render live with zero products.** No menu links to
+  them, so they are reachable only by direct URL or search — but analytics
+  recorded real sessions on `/collections/leggings`, `/collections/tops` and
+  others. This is the "empty collection is worse than a 404" problem, now on
+  the live storefront. It resolves only by importing the catalogue.
+
+**This is the third role swap in this engagement.** It is exactly why role is
+read live and never inferred from a theme's ID, name, or a prior session's note.
+
+### Theme role — verify immediately before every write
+
+Never infer role from a theme ID or name. Query `themes { role }` in the same
+session as the write.
 
 ---
 

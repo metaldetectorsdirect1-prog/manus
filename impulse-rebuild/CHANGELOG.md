@@ -405,3 +405,51 @@ fabricated GSM ranges (220–270, 170–230 g/m²), size ranges that contradict
 themselves within one description, "moisture-wicking" and "squat-proof", and a
 "15% off both" discount offer. `womens-activewear` claiming moisture-wicking
 directly contradicts About and Terms §1. Details in `CLAIMS-REGISTER.md`.
+
+## 2026-08-25 — Collection copy remediated; 🔴 THEME ROLES SWAPPED MID-SESSION
+
+### 🔴 `158753652968` is now MAIN. The owner published it at 01:37Z.
+Verified live, not inferred. `158743363816` Impulse is now UNPUBLISHED.
+
+**The standing instruction "dev theme `158753652968` only, no live-theme writes"
+is now self-contradictory** — that theme IS live. Recorded at the top of
+`PUBLISH-CHECKLIST.md` §2 so no session follows it into production.
+
+**Net effect is good:** the five fabricated testimonials, the "Organic cotton"
+sales point and the "extra 10% off" banner lived in the old theme's
+`product.json` / `collection.json`. That theme is now unpublished, and the
+newly-live theme's own templates were read in full — 2,148 b and 1,448 b — and
+carry none of them. **All three known live defects came off the storefront.**
+
+Now live and not fixable without a catalogue: collection pages render empty. No
+menu links to them, but analytics recorded real sessions on several.
+
+### Tenth surface remediated — all 15 collections
+Deleted, with nothing invented to replace them:
+
+| Was | Collection |
+|---|---|
+| "220–270 g/m² compression knit", "170–230 g/m²" | `womens-activewear`, `tops` |
+| "premium moisture-wicking, squat-proof fabrics" | `womens-activewear` |
+| "Sizes 2XS–XL" and "Sizes 2XS–2XL" in one description | `womens-activewear` |
+| "squat-proof", "stay opaque through every rep" | `leggings` |
+| "tummy control", "squat-proof and opaque" | `shorts` |
+| "Three styles", polo-era copy | both polo collections |
+
+Scripted check across all 15 rewritten descriptions: **zero matches** on
+fabricated g/m², invented size ranges, performance claims, and unverified
+superlatives. All 15 `seo.description` values rewritten to 110–135 characters,
+under the ~155 truncation limit and unique.
+
+### Eleventh surface checked — mostly clean, one claim confirmed TRUE
+`discountNodes` queried for the first time. Four active discounts. **The `sets`
+collection's "buy any two pieces and 15% comes off" is sourced** — an automatic
+"Two or more — 15% off" discount is live, minimum quantity 2, no code required.
+The claim was kept and made more precise: the discount applies to any two items,
+not only to sets.
+
+Worth an owner glance: "Welcome 10% off first order" and "Launch Offer — 20% Off
+First Order" are both ACTIVE with no end date and both scoped to a first order.
+Not a claims defect — nothing on the storefront advertises either — but two
+overlapping first-order offers on a store with zero products is probably not
+intended.
