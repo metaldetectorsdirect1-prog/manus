@@ -453,3 +453,46 @@ First Order" are both ACTIVE with no end date and both scoped to a first order.
 Not a claims defect — nothing on the storefront advertises either — but two
 overlapping first-order offers on a store with zero products is probably not
 intended.
+
+## 2026-08-26 — Google Merchant Center readiness pass (`topgoogle` playbook)
+
+Audited the live store against the playbook's Checklist A (approval) and
+Checklist B (compliance). Full audit in `GMC-READINESS.md`.
+
+### Fixed
+| Item | Was | Now |
+|---|---|---|
+| Collection named "All Products" — an explicit checklist prohibition | literal "All Products" | **"Women's & Men's Apparel"** |
+| **Payment Policy** — a named required legal page | **did not exist** | `/pages/payment-policy`, published, values read from live config |
+| Legal pages reachable in nav | Terms pointed at page not policy; no payment policy | footer About column now carries all five named policies |
+| Company↔store relationship | implied | *"HIVOLT is owned and operated by Dn Global Trading LLC"* |
+
+### Blocked at the tool layer — not worked around
+- `publishableUnpublish` refused: *"Unpublishing is blocked to prevent accidental storefront catalog removal."* The **14 empty collections stay live**, and "empty collections" is on Google's prohibited list. Owner action.
+- `shopPolicyUpdate` still denied. The four corrected bodies remain in `policies/`.
+
+### 🔴 The policy mismatch is now a GMC blocker, and one half of it is my doing
+Checklist A requires returns/shipping values to match the on-site policies **word
+for word**. Fixing the pages while unable to fix the policies *widened* the gap:
+pages now correctly publish no dispatch/delivery window while the policies still
+publish the ruled-out 2–4 / 8–14. Right call for honesty, wrong shape for GMC,
+and it closes the moment the bodies are pasted.
+
+### Where HIVOLT is unusually strong
+Every prohibited item on Checklist B except empty collections is already clean —
+zero fake reviews, no countdown timers, `inventory_enable: false`, `vendor_enable:
+false`, no permanent clearance, max discount 15% against a 50% ceiling. Six
+sessions of claims work map almost exactly onto Google's misrepresentation list.
+
+### Found
+- **Two feed systems installed.** Simprosys (the app the playbook recommends) *and* the "Google & YouTube" sales channel. Both can submit to one Merchant Center. Confirm which owns the feed before importing.
+- **Four active discounts**, all under the ceiling. Two overlapping first-order codes (10% and 20%) both live with no end date.
+- **No warehouse address, no Instagram, no Trustpilot** — all three are checklist items.
+- Phone area code **914 (New York)** against an **Illinois** registered address.
+
+### Sequencing warning recorded
+The store has **zero products**, so it cannot yet run the deliberate
+misrepresentation campaign the playbook requires — that campaign wants ~5 clean
+products in one category, because appealing across five is survivable and
+appealing across hundreds is not. **The first import must be small and narrow,
+not the full catalogue.**
