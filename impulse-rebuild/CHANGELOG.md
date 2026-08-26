@@ -496,3 +496,37 @@ misrepresentation campaign the playbook requires — that campaign wants ~5 clea
 products in one category, because appealing across five is survivable and
 appealing across hundreds is not. **The first import must be small and narrow,
 not the full catalogue.**
+
+## 2026-08-26 — Product/category research (`topgoogle` Module 7.1)
+
+`PRODUCT-RESEARCH.md` — new. **Nothing was added to Shopify; the store still holds
+zero products.**
+
+### Measured (TrendTrack, live)
+Apparel shops, ≥20 active ads, ≥50k monthly visits, US audience: **19 shops, 13
+running live Google ads, 633 combined live ads, 119 launched in the last 30 days.**
+
+Two findings worth acting on:
+- **Almost nobody is at the playbook's 500–700 catalogue target.** Of 13 Google-advertising apparel shops, one (nautinati, 500 products) is in band. The rest run small catalogues hard — selurewear is 29 products against 103 live Google ads. That is a different business model from the playbook's feed-volume one, and HIVOLT should pick deliberately.
+- **The top Google spender shows the exact failure §8.2 warns about.** daisysilk.com's 271 live ads split Search 497 / Other 80 / YouTube 58 / **Shopping 43** — the signature of PMax asset-optimization left enabled, bleeding budget out of the Shopping feed.
+
+### Not measured, and not invented
+Keyword Planner volume bands and Google Trends curves need a Google Ads login
+this integration does not have. **No search volume in that document is a number I
+produced.** The exact 20-minute procedure to run both is written out instead.
+
+### Recommendation
+Opening batch is **5 products, knitwear only** — because Q4 timing is correct
+right now, fibre composition is the decisive spec in knitwear and therefore plays
+to the store's published standard, and `/pages/care-guide` already covers wool,
+merino and cashmere with cited standards, so a reviewer landing on a knitwear page
+can follow a link to genuine sourced content the store already owns.
+
+Five titles drafted on the playbook's formula, naming winter as the upcoming
+season. Keywords must be verified in Keyword Planner before use.
+
+### Restated blocker
+No supplier is confirmed, so no composition, fabric weight or measurement exists —
+a HIVOLT product page cannot currently meet the store's own published standard.
+Which is the argument for five products, not five hundred: five is few enough to
+obtain real specification sheets for.
