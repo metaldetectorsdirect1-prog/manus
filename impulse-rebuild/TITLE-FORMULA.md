@@ -35,3 +35,18 @@ overlap is better.
 can retrigger review, and title–image mismatch is a misrepresentation flag — the
 same suspension class this whole engagement exists to avoid. The validator's
 trademark/medical screens apply to titles regardless of formula fit.
+
+## Two rules from the Martina dissection
+
+**Use the searched form of the word.** "Warmth" and "warm" are one concept but
+only one is a query: shoppers type *warm winter jacket*, never *warmth*. Nouns
+of feeling (warmth, elegance, style) are pure decoration; their adjective forms
+(warm, elegant, stylish) at least sit in real queries. When a word can take
+either form, take the one people search — the stack counter scores them
+differently because Google does.
+
+**Season words name the UPCOMING season — relative to today, not the course.**
+The recording says "call it spring instead" because it was filmed in winter.
+The rule is relative: from late August, *winter* IS the upcoming season, so
+"warm winter jacket" is currently correct here. Re-derive from the calendar,
+never copy the recording's answer.
