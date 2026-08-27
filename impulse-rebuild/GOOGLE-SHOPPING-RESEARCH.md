@@ -143,3 +143,55 @@ Two coherent options. Both are fine; the mix is not:
 Running a 700-SKU general catalogue **on hivolt-usa.com** would put the store's own
 About page in contradiction with its product pages — which is the definition of
 misrepresentation, and the exact suspension reason this account is most exposed to.
+
+---
+
+## §7 The course's manual method (competitor-research module)
+
+Captured from the module as streamed 2026-08-27. The course does this by hand
+with three tools; §1's TrendTrack pass assembles the same fields in one query.
+The value here is the **screening bars**, which the course states only by
+demonstration.
+
+**Why competitors matter:** product discovery. When a seasonal window opens
+(their example: needing leather jackets), check what competitors already launched
+before researching from scratch. Match competitor markets **by season** —
+Europe/US share a season, Australia is opposite. Copy from same-season markets
+only.
+
+**The stack:**
+
+| Tool | Role | Notes |
+|---|---|---|
+| Browser search, on a **VPN in the target market** | Find stores (searched "letter jackets") | SERPs and Shopping ads are geo-targeted; he researches the UK from a UK NordVPN exit. Any VPN works. |
+| **PPSPY** (free browser extension, account required) | Inspect a Shopify store: product count, catalogue | His demo store showed 789 products. |
+| **SimilarWeb** | Traffic check on each candidate | The number that qualifies or kills a store. |
+
+**Destination:** qualifying URLs go straight into the competitor sheet — the
+same template the tracker CSV in this repo mirrors.
+
+**Screening bars, from the live demo (each is a real store he judged):**
+
+| Store seen | Verdict | The bar it reveals |
+|---|---|---|
+| 789 products, **17k visits/mo** | Skip | In a **"big five" market** (he names UK, US, Australia) 17k/month "is not much at all." The bar is market-relative — small markets can qualify lower (cf. smukoslo.no, §2). |
+| ~500 products, **started in October** (~2 months old) | Skip | Recency screen: a young store with no trajectory proves nothing, whatever its catalogue size. |
+| **1,300 products, steep traffic uptrend**, projected 50k+/mo | **Save to sheet** | The qualify shape: real catalogue + **rising trend** heading past ~50k in a big-five market. |
+
+**Dropshipper identification** (how he tells a dropship competitor from retail,
+worth copying *from*): lower price points than retail; **city names in store
+names**; recognizable dropship products. He notes most of the UK-results
+operators "are gonna be Netherlands" — NL-based stores working the UK market.
+
+**Recording date:** he says "this month, December" — this module was recorded in
+winter. Per the season rule, none of its seasonal examples (letter jackets,
+leather jackets) transfer to today's calendar without re-deriving from
+FEED-CALENDAR.md.
+
+**How the §2 tracker rows hold up against these bars:** all fifteen rows sit at
+≥30k visits/month (the TrendTrack query floor), above the 17k dismissal; none
+was born within the last two months (youngest: pointcarre.be, 2025-04). The one
+screen my ranking did not apply is his **uptrend** test — I ranked by ad-launch
+velocity, and reported `growth30d` was 1–3% across the sample (§1, caveat 1).
+If a row must be cut to match the course exactly, cut on flat growth, not on
+traffic.
