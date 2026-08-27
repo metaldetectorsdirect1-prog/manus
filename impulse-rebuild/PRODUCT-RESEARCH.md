@@ -224,6 +224,26 @@ against (640→648). Gate: titles/prices/handles/vendor pass; full `--batch`
 re-runs at import with real images and copy (image-less products are
 refused by design). Blocked on: AutoDS store link (LAUNCH-RUNBOOK 0.2).
 
+### §4.4 Upload spec — executable from any session once a store row exists
+
+Preconditions: `list_stores_api` returns ≥1 store (capture its AutoDS store
+id); connector account = the one holding the store. Then three
+`upload_products` calls (buy_site_id is per-request), each with
+`region: 1` (US), `status: 1` (**draft**), `upload_settings.tag:
+["knitwear"]`:
+
+| Call | `buy_site_id` | `new_products[].asin` |
+|---|---|---|
+| AliExpress | 2 | `3256807242236207` (Elena, $44.95) · `3256807073935486` (Ivy, $39.95) |
+| Walmart | 4 | `5030481746` (Nora, $59.95) · `326807556` (Warm cable, $79.95) |
+| Private supplier | (resolve enum from server instructions; if unsupported, add item `10282354278688` manually in AutoDS UI) | `10282354278688` (Elegant longline, $49.95) |
+
+Pass each product's retail as `price`. Poll `get_bulk_action_items` with the
+returned `bulk_action.id`. Then verify in **Shopify** (authoritative read:
+products exist, status DRAFT), run the SOP pass per §4.1/§4.3, and only then
+continue the LAUNCH-RUNBOOK sequence. Owner image spot-check in AutoDS
+before anything publishes — this environment cannot render the image CDNs.
+
 - Images: single product, neutral background, **no AliExpress photos, watermarks, logos or Chinese text**
 - **No images inside the description** — a named suspension trigger
 - **URL handle must match the final title** — the playbook calls this *"a top automatic-indexing trigger"*
