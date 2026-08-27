@@ -108,3 +108,25 @@ module's own narration confirms four. Resolution:
 - Throughout the freeze the **PMax warm-up stays live at $5/day**. Pausing ads
   on an approved GMC is itself a suspension risk — a GMC with no spend reads as
   abandoned. The freeze freezes the *feed*, never the ads.
+
+## §7 Draft triggers — the four reasons a product leaves the feed
+
+All drafts, never deletions. Rebalance rule applies: draft 50 → import 50.
+
+| Trigger | Threshold | Source |
+|---|---|---|
+| **Zombie** | no spend or no sales in **90 days** | Pythago / manual |
+| **Season over** | category past its peak (draft winter coats when spring demand arrives — by the *curve*, not the calendar) | `scored-list.csv` draft_month |
+| **Spend without return** | getting spend, bad ROAS — Pythago review: min spend 19, max ROAS 2, read 30d→14d→7d | Pythago, bi-weekly |
+| **High refund rate** | product-level refund outlier | **Pythago — new lens this module** |
+
+**Why drafting on time matters more than it looks — the spend-hogging argument:**
+a mediocre product that absorbs spend isn't just underperforming, it is
+**starving every other product of impressions** — and some of the starved ones
+may be better than the hog. Budget is zero-sum inside the feed; a draft is not
+an admission of failure, it is reallocating oxygen. This is also why
+out-of-season products get drafted *promptly*: their decaying performance drags
+spend away from in-season products at exactly the moment those need it.
+
+Even with zero drafts, seasonal imports continue on the calendar — the feed
+rotates forward regardless of what leaves.
