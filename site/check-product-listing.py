@@ -108,6 +108,10 @@ def check(product):
         m = DUPE.search(text)
         if m:
             errs.append(f"{field}: dupe/replica phrasing {m.group(0)!r} — trademark flag")
+        if field != "DESC":  # DESC already screened below with the same regex
+            m = MEDICAL.search(text)
+            if m:
+                errs.append(f"{field}: medical/health claim {m.group(0)!r} — health-adjacent products are excluded long-term")
 
     # 3. Descriptions
     if re.search(r"<img\b", body, re.I):
@@ -248,6 +252,8 @@ def self_test():
         (dict(good, currency="DKK", variants=[{"price": "251", "compare_at_price": None}]), "round"),
         (dict(good, body_html="<p>Orthopedic support, clinically proven.</p>"), "medical"),
         (dict(good, title="Gucci style leather jacket"), "trademark"),
+        (dict(good, title="Elegant orthopedic high heels"), "medical"),
+        (dict(good, tags=["orthopedic", "heels"]), "medical"),
         (dict(good, body_html="<p>A perfect Skims dupe.</p>"), "TERMINAL"),
         (dict(good, tags=["dr martens", "boots"]), "trademark"),
     ]
