@@ -114,7 +114,7 @@ same place.
 
 1. **Which supplier app is connected, and how do I read its catalogue?** `appInstallations` is denied to this integration, so I cannot enumerate installed apps. A `Tapstitch: Special Line` delivery profile exists but carries **no fulfillment-service location**, which is why I read sourcing as absent. Tell me the app name and I can work out the import path.
 2. **Which store is this — HIVOLT, or a new domain?** See §6. This one matters most.
-3. **Target market.** All analysis above assumes **US**. `smukoslo.no` is a live argument for a smaller market instead.
+3. **Target market.** ~~All analysis above assumes US.~~ **Resolved: US + UK**, per the owner. The market-selection module (§8) endorses both as top-four markets and attaches two risk caveats to exactly this pair.
 
 ---
 
@@ -261,3 +261,37 @@ Output: `competitor-tracker.csv` (US, 15 players + WATCH + OUTLIER) and
 tiers per the module's taxonomy. Figures are TrendTrack indexed values read
 2026-08-27; `shopAds` (platform split) was unindexed for most uptrend rows, so
 Google activity is evidenced by `liveAds` counts instead.
+
+---
+
+## §8 Market selection — the course's criteria, and where US + UK sits
+
+Captured from the market-selection module, 2026-08-27 (second lecturer; refers
+back to "Brian" for the GMC-is-the-business rule).
+
+**Five criteria for entering a market:**
+
+| Criterion | The course's read |
+|---|---|
+| **GMC approval rate** | Varies by country. Their experience: **European countries approve slightly easier than the big five** — flagged by the lecturer himself as "not a proven theory," kept here with that flag intact. |
+| **Conversion rate / AOV** | Follows purchasing power and consumer behavior — research the demographic before entering. |
+| **Chargeback / dispute culture** | **US is the worst, UK close behind** — chargebacks are habitual there in a way they are not in Europe. Don't enter if you can't absorb disputes. |
+| **Consumer trust in e-commerce** | Big five + Western Europe: established. Frontier markets (Brazil, Mexico named): high potential, expensive to develop — avoid as a beginner. |
+| **Payment methods** | Local payment methods are hard to obtain. Beginners: **credit-card-only markets** so there is one payment rail to manage. |
+
+**The course's top four credit-card-only beginner markets: United States,
+United Kingdom, Australia, Denmark.**
+
+Denmark's inclusion retroactively grounds two things already in this repo: the
+DKK round-to-0/5 pricing rule in `site/check-product-listing.py`, and the DKK
+entries in the skill's price table — both anticipated a course market we hadn't
+seen named yet.
+
+**Where our US + UK choice sits.** Both are top-four, so the choice stands
+endorsed. But note plainly: this pair is also the module's *worst case on both
+risk axes* — big-five GMC approval difficulty **and** the two heaviest
+chargeback cultures. The course's own easy-mode option under these criteria is
+Denmark (EU-side approval experience, credit-card-only, low dispute culture).
+Not a recommendation to change course — a recorded trade-off, so the first
+chargebacks and any GMC approval friction read as expected properties of the
+chosen markets, not as surprises.
