@@ -147,3 +147,31 @@ statement — either way it aligns with the Pythago feed review rhythm.
 the standing owner action from `GMC-READINESS.md`. If a general store launches
 on a fresh domain instead, its collections must be created *populated*, never
 scaffolded empty.
+
+## Launch mechanics — two modes, and the switch rule
+
+**Batch mode (the safe default, and how the team runs earning stores):**
+lister uploads **50–100 products per week as drafts**; once a week, all of them
+launch **simultaneously**. One launch = one feed-change event = one dice roll,
+instead of fifty.
+
+**Daily mode (faster, riskier — one situation only):** a fresh GMC, just
+approved on 5 products, *after* the post-approval freeze. Then 5→10→15→20→25
+products per day for a few weeks.
+
+**Switch from daily to batches when EITHER condition hits, whichever is first:**
+
+| Trigger | Threshold |
+|---|---|
+| Count | **400–600 products** |
+| Money | the store turns **profitable/consistent** — even below the count |
+
+The second trigger is the operative one: *"as soon as you're profitable, you
+don't want to risk anything anymore. It's not worth it."* A money-making GMC
+never takes daily-import risk again.
+
+**Shopify-mechanical translation for this pipeline:**
+1. `productCreate` with `status: DRAFT` — validator (single-product mode) runs here, at listing time
+2. Weekly: assemble the batch → validator `--batch` runs across all drafts (uniqueness + discount-mix)
+3. One aliased mutation flips the whole batch `DRAFT → ACTIVE` — the single feed-change event
+4. Never trickle drafts live individually; the simultaneity *is* the safety
