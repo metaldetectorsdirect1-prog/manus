@@ -318,3 +318,39 @@ spent six sessions removing.
 
 Google's policies and the GMC interface change; verify anything time-sensitive
 before acting on it.
+
+---
+
+## §8 The 400 — Phase 5 allocation (provisional, awaiting scored keywords)
+
+Owner asked (2026-08-27) to add 400 women's fashion products. The skill's
+timeline is unambiguous: **400–600 is Phase 5, imported at 25/day or
+50–100/week starting when the 4-week post-approval freeze ends** — with the
+gauntlet starting now, that is roughly late October. Importing 400 before the
+misrepresentation suspension clears would put all 400 inside the appeal
+(3 appeals per GMC, then dead). The research starts now; the imports start on
+the timeline.
+
+Provisional allocation per FEED-CALENDAR §4 mix (40% permanent / 45%
+in-season / 15% early-next), sized for a late-Oct start toward the Nov–Dec
+peak. Counts firm up when the owner's Keyword Planner run fills
+`keywords/scored-list.csv`:
+
+| Block | Category | Count |
+|---|---|---|
+| Permanent (160) | Jeans & denim | 40 |
+| | Everyday dresses | 40 |
+| | Tops & basics | 40 |
+| | Lounge & activewear | 25 |
+| | Knit basics | 15 |
+| In-season (180) | Coats & jackets (wool, puffer, leather/suede) | 60 |
+| | Knitwear expansion (cardigans, sweaters, vests) | 50 |
+| | Holiday & party dresses | 40 |
+| | Boots | 30 |
+| Early-next (60) | Spring dresses | 25 |
+| | Light jackets & trench | 20 |
+| | Spring knits | 15 |
+
+Sourcing per batch runs the §4.1 pick rules through AutoDS (now linked) plus
+the competitor sourcing index (big players in both tracker CSVs); every batch
+takes the SOP pass and the compliance gate before it accumulates as drafts.
