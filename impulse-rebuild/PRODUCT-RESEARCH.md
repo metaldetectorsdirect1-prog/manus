@@ -197,10 +197,32 @@ $41.58 landed would need $79.95 retail; held as alternate, not a pick.
 Round 3 running: one distinct fifth silhouette (sweater vest, or plain button
 cardigan without cable/chunky).
 
-Dropped with reasons across rounds: DOKOTOO cardigan (cost), first
-private-supplier longline (no composition stated — unpublishable under §1.2),
-all single-variant Walmart/Amazon listings, v28 sweater dresses (wrong
-garment + cost), everything with unstated composition.
+Dropped with reasons across rounds: first private-supplier longline (no
+composition stated — unpublishable under §1.2), all single-variant
+Walmart/Amazon listings, v28 sweater dresses (wrong garment + cost),
+everything with unstated composition.
+
+### §4.3 THE BATCH — final five, locked 2026-08-27
+
+Round 3 found no compliant fifth silhouette (all US-warehouse vests and
+button cardigans land ≥$34.98; the sole under-cap item had no stated
+composition). Decision: the round-1 DOKOTOO cable-pocket cardigan enters at
+an honest 1.9× ($79.95 on $41.58 landed) — thin margin accepted, carried by
+US 1–2-day shipping; **no fabricated compare-at price.**
+
+| # | Final title (stack ≥3 ✓) | AutoDS `_id` | Retail |
+|---|---|---|---|
+| 1 | Elena relaxed merino wool mock neck sweater | `6957787ef76d530001901236` | $44.95 |
+| 2 | Nora oversized chunky knit winter sweater | `6a03c53539ba4b00017a54f5` | $59.95 |
+| 3 | Elegant longline wool blend cardigan | `6a2a0d70b2166070237a654b` | $49.95 |
+| 4 | Ivy soft knit merino blend mock neck sweater | `673bc7b27126c18f62f09c9d` | $39.95 |
+| 5 | Warm cable knit cardigan with pockets | `6d5a06926ee704c7a6d14530` | $79.95 |
+
+Titles renamed true-to-garment (mock neck, not turtleneck — the honesty rule
+outranks keyword volume); master list grew 8 forms the titles were designed
+against (640→648). Gate: titles/prices/handles/vendor pass; full `--batch`
+re-runs at import with real images and copy (image-less products are
+refused by design). Blocked on: AutoDS store link (LAUNCH-RUNBOOK 0.2).
 
 - Images: single product, neutral background, **no AliExpress photos, watermarks, logos or Chinese text**
 - **No images inside the description** — a named suspension trigger
