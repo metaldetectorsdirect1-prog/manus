@@ -207,6 +207,23 @@ def check_batch(products):
             errs.append(f"BATCH: every discount is {nonzero[0]}% — vary the levels (0/20/40, best sellers 50)")
     return errs
 
+def _norm_tokens(text):
+    t = re.sub(r"[-/&']", " ", text.lower())
+    toks = set(re.findall(r"[a-z0-9]+", t))
+    return toks | {x[:-1] for x in toks if x.endswith("s") and len(x) > 3} | {x + "s" for x in toks}
+
+def stack(title, keywords):
+    """Which researched keywords does this title catch? Bag-of-words match —
+    all tokens of the keyword present in the title (Google matches tokens, not
+    contiguous phrases: 'knee-high heeled cowboy boots' catches 'knee high boots')."""
+    tt = _norm_tokens(title)
+    hits = []
+    for kw in keywords:
+        kt = set(re.findall(r"[a-z0-9]+", re.sub(r"[-/&']", " ", kw.lower())))
+        if kt and kt <= tt:
+            hits.append(kw)
+    return sorted(hits, key=lambda k: (-len(k.split()), k))
+
 def self_test():
     good = {"title": "Elena relaxed merino wool turtleneck sweater",
             "body_html": "<p>Merino wool knit.</p><ul><li>Ribbed cuffs</li></ul>",
@@ -240,6 +257,9 @@ def self_test():
     be = check_batch([good, dict(good, handle="other-handle"), dict(good, title="Different Title Here")])
     assert any("duplicate title" in x for x in be) and any("duplicate handle" in x for x in be), be
     assert check_batch([good, dict(good, title="Unique B", handle="unique-b")]) == []
+    hits = stack("Maria Women's Knee-High Heeled Cowboy Boots",
+                 ["cowboy boots", "heeled boots", "knee high boots", "boots", "ankle boots", "midi dress"])
+    assert hits == ["knee high boots", "cowboy boots", "heeled boots", "boots"], hits
     _, w = check(dict(good, title="Elena elegant stylish winter jacket with style and warmth extra"))
     assert any("feeling" in x for x in w) and any("words" in x for x in w), w
     _, w = check(dict(good, title="Nora midi dress knit midi dress"))
@@ -249,17 +269,26 @@ def self_test():
     assert any("all 12 products discounted" in x for x in be) and any("every discount is 50%" in x for x in be), be
     mixed = uni[:6] + [dict(good, title=f"F {i}", handle=f"f-{i}", variants=[{"price": "24.95", "compare_at_price": None}]) for i in range(6)]
     assert check_batch(mixed) == [], check_batch(mixed)
-    print(f"self-test: {7 + len(cases)}/{7 + len(cases)} passed")
+    print(f"self-test: {8 + len(cases)}/{8 + len(cases)} passed")
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--product")
     ap.add_argument("--batch", help="JSON array or JSONL of products; adds cross-catalog uniqueness checks")
+    ap.add_argument("--stack", metavar="TITLE", help="show which researched keywords a title catches")
+    ap.add_argument("--keywords", default="impulse-rebuild/keywords/keyword-master-list.txt")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
         self_test(); return 0
+    if a.stack:
+        kws = [l.strip() for l in open(a.keywords) if l.strip()]
+        hits = stack(a.stack, kws)
+        print(f"{len(hits)} keyword(s) caught:")
+        for h in hits: print(f"  {h}")
+        if len(hits) < 3: print("warn    fewer than 3 — formula targets 3-4 stacked keywords")
+        return 0
     if a.batch:
         raw = open(a.batch).read().strip()
         prods = json.loads(raw) if raw.startswith("[") else [json.loads(l) for l in raw.splitlines() if l.strip()]
