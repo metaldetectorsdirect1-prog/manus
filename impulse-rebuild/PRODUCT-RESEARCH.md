@@ -224,6 +224,31 @@ against (640→648). Gate: titles/prices/handles/vendor pass; full `--batch`
 re-runs at import with real images and copy (image-less products are
 refused by design). Blocked on: AutoDS store link (LAUNCH-RUNBOOK 0.2).
 
+### §4.3.1 OUTCOME — four of five live as Shopify drafts, 2026-08-27
+
+Store linked (AutoDS store id `5685625`) and uploaded through AutoDS for
+fulfillment mapping, then SOP-passed in Shopify (status→DRAFT, sentence-case
+titles, clean descriptions, tags). All images re-hosted on the store's CDN.
+
+| Product | Shopify GID | Price | Variants |
+|---|---|---|---|
+| Elena relaxed merino wool mock neck sweater | `9613182468328` | 44.95 | 68 |
+| Nora oversized chunky knit winter sweater | `9613182435560` | 59.95 | 1 |
+| Ivy soft chunky knit turtleneck sweater | `9613182370024` | 54.95 | 1 |
+| Warm cable knit cardigan with pockets | `9613182402792` | 79.95 | 1 |
+
+Changes from §4.3 as planned: the original Ivy (merino-blend mock neck,
+AliExpress `3256807073935486`) died at upload — supplier listing gone
+("ScrapersProductOOS") — replaced by the round-1 Amazon alternate
+`B09MYYL7D6` as a chunky turtleneck (title stacks 3). **Single-variant
+reality accepted:** Walmart/Amazon supplier listings sell one size/color per
+listing; padding Shopify variants beyond what the supplier item delivers
+would sell unfulfillable goods, so those three stay 1-variant. Fifth product
+(private-supplier longline `10282354278688`): no documented API site enum —
+owner imports it in the AutoDS marketplace UI (search the item id → import
+as draft), then it gets the same SOP pass. Owner image spot-check before
+anything publishes still stands.
+
 ### §4.4 Upload spec — executable from any session once a store row exists
 
 Preconditions: `list_stores_api` returns ≥1 store (capture its AutoDS store
