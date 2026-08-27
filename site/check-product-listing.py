@@ -50,6 +50,26 @@ def _has_emoji_or_symbols(text):
             return ch
     return None
 
+FEELING = re.compile(
+    r"\b(elegant|elegance|effortless|stylish|chic|cozy|cosy|luxurious|luxe|dreamy|"
+    r"timeless|graceful|flattering|sleek|classy)\b", re.I)
+
+def _style_warnings(title):
+    """Title-formula style layer (7.3): warnings, not refusals — the lexicon
+    is a floor and some feeling words double as real queries (rule 4)."""
+    w = []
+    words = title.split()
+    if len(words) > 8:
+        w.append(f"STYLE: {len(words)} words — formula targets ~8 max (mobile fold)")
+    feels = FEELING.findall(title)
+    if len(feels) >= 2:
+        w.append(f"STYLE: {len(feels)} feeling words {feels} — exactly one; spend the slot on a keyword")
+    sig = [x.lower().strip(",.-") for x in words if len(x) >= 4]
+    dupes = {x for x in sig if sig.count(x) > 1}
+    if dupes:
+        w.append(f"STYLE: repeated word(s) {sorted(dupes)} — no keyword twice")
+    return w
+
 def _slug(title):
     s = unicodedata.normalize("NFKD", title.lower())
     s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
@@ -144,6 +164,7 @@ def check(product):
             errs.append(f"HANDLE: {handle!r} does not match title slug {tslug!r}")
 
     # 1. Images (what is checkable without fetching pixels)
+    warns += _style_warnings(title)
     imgs = product.get("images") or []
     if not imgs:
         errs.append("IMAGES: none")
@@ -219,12 +240,16 @@ def self_test():
     be = check_batch([good, dict(good, handle="other-handle"), dict(good, title="Different Title Here")])
     assert any("duplicate title" in x for x in be) and any("duplicate handle" in x for x in be), be
     assert check_batch([good, dict(good, title="Unique B", handle="unique-b")]) == []
+    _, w = check(dict(good, title="Elena elegant stylish winter jacket with style and warmth extra"))
+    assert any("feeling" in x for x in w) and any("words" in x for x in w), w
+    _, w = check(dict(good, title="Nora midi dress knit midi dress"))
+    assert any("repeated" in x for x in w), w
     uni = [dict(good, title=f"T {i}", handle=f"h-{i}", variants=[{"price": "24.95", "compare_at_price": "49.95"}]) for i in range(12)]
     be = check_batch(uni)
     assert any("all 12 products discounted" in x for x in be) and any("every discount is 50%" in x for x in be), be
     mixed = uni[:6] + [dict(good, title=f"F {i}", handle=f"f-{i}", variants=[{"price": "24.95", "compare_at_price": None}]) for i in range(6)]
     assert check_batch(mixed) == [], check_batch(mixed)
-    print(f"self-test: {5 + len(cases)}/{5 + len(cases)} passed")
+    print(f"self-test: {7 + len(cases)}/{7 + len(cases)} passed")
 
 def main():
     ap = argparse.ArgumentParser()
