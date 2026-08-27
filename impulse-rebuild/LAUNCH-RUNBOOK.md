@@ -34,6 +34,17 @@ self-test **24/24**.
 - 🟡 Course GMC policy templates: Notion page egress-blocked here — pull locally (Browser MCP) or paste; I diff against `policies/` before anything changes.
 - 🔴 14 empty collections need unpublishing (connector-blocked; owner action).
 - 🔴 Owner: Instagram 25+ posts, Trustpilot, warehouse address, feed-app choice (Simprosys vs Google & YouTube — both installed; pick ONE feed owner).
+- 🟡 **Design rebuild** sequenced after the first import lands: nav + collection
+  structure for a fashion catalogue, homepage converted from spec-first
+  positioning — built on an **unpublished theme** (MAIN-theme writes are
+  connector-blocked; owner publishes when ready). Doing it before products
+  exist would be styling empty shelves. Committing this design on
+  hivolt-usa.com is the Option A choice (0.1).
+- 🟡 **Google Ads access**: no session tooling reaches Google Ads yet — Windsor
+  holds only the old Meta account. Owner authorizes Google Ads into Windsor:
+  https://onboard.windsor.ai/connect?connector=google_ads&next=/google_ads/authorize
+  Then this session can create/manage campaigns (PMax at $5/day per Phase 4) —
+  though the playbook still hands ads to a media buyer at ~500 spend.
 
 ## Phase 3 — First import (blocked on 0.1 + 0.2; the sequence is fixed)
 

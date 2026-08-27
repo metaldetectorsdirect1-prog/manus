@@ -137,7 +137,36 @@ Each carries 3–4 keywords, one feeling word, and names **winter** — the upco
 season, not the current one. Verify every keyword in Keyword Planner before use;
 I have not measured their volume.
 
-### Per-product rules that must hold at import (Checklist C)
+### §4.1 AutoDS sourcing brief — how the owner fills the 5 slots (added 2026-08-27)
+
+AutoDS is the confirmed supplier route (fulfillment service live on the store).
+In the AutoDS marketplace, one search per slot; import each pick as **DRAFT**:
+
+| Slot | Search in AutoDS | Title waiting for it |
+|---|---|---|
+| 1 | `merino wool turtleneck sweater women` | Elena relaxed merino wool turtleneck sweater |
+| 2 | `cable knit cardigan pockets` | Warm cable knit cardigan with pockets |
+| 3 | `oversized chunky knit sweater` | Nora oversized chunky knit winter sweater |
+| 4 | `longline wool blend cardigan` | Elegant longline wool blend cardigan |
+| 5 | `ribbed knit turtleneck jumper` | Ivy soft ribbed knit turtleneck jumper |
+
+Pick rules, in refusal order (skip a candidate the moment it fails one):
+
+1. **No brand names, logos, or lookalike branding anywhere** on garment or
+   images — copyright is the terminal, unappealable suspension.
+2. **Images**: single product, neutral background, no watermarks, no text
+   overlays, no Chinese characters, not obviously AliExpress-staged.
+3. **Variant depth**: target ≥4 sizes × ≥3 colors (playbook ideal ≈ 6×5).
+4. **Ships US and UK**, stated delivery ≤ ~12 days.
+5. **Cost** such that retail lands **$34.95–$59.95** at 2.5–3× markup,
+   shipping included.
+6. Composition listed by the supplier (we publish only what the supplier
+   states — no invented fabric claims; gaps become `[[NEEDS:]]`).
+
+Titles above are pre-built to the formula but **unverified in Keyword
+Planner** — the §5 owner run still applies before ads spend against them.
+On landing, every draft gets the full SOP pass (title/description rewrite,
+EXIF strip, handle regen, .95 price, vendor = store name, `--batch` gate).
 
 - Images: single product, neutral background, **no AliExpress photos, watermarks, logos or Chinese text**
 - **No images inside the description** — a named suspension trigger
