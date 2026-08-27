@@ -1,0 +1,145 @@
+# GOOGLE-SHOPPING-RESEARCH.md
+
+Which women's / general apparel stores are actually scaling **on Google Shopping**,
+2026-08-26. Google only — Meta-driven shops are excluded by construction.
+
+---
+
+## §1 Method, and its limits
+
+**Source:** TrendTrack shop index. Two queries (`women`, `dress`), US audience,
+≥30,000 monthly visits, merged and deduplicated.
+
+**The Google-only filter that matters:** every shop below has a
+`platformMix` entry for **`Shopping`** with a non-zero ad count. A shop running
+only Search or YouTube ads is excluded even if its Google spend is large.
+
+| | |
+|---|--:|
+| Apparel shops found running **live Google Shopping ads** | **52** |
+| Combined Shopping ads across the sample | ~600 |
+
+### Three caveats, stated rather than buried
+
+1. **"Scaling" here means ad-launch velocity, not traffic growth.** I ranked by `adsLaunched30d` — new Google ads put live in the last 30 days. Reported `growth30d` for most of these shops is **1–3%**, not the double-digit growth the word "scaling" implies.
+2. **A filter I set did not apply.** I requested `traffic_growth last30d ≥ 15%`; results came back at 1–3%. The filter appears not to have constrained the result set, so every growth figure below is read from the returned field directly, not from the filter.
+3. **This is not a census.** It is the shops TrendTrack indexes in its trending feed above the traffic floor, from two keyword queries. Shops it does not index are invisible here.
+
+---
+
+## §2 The stores actually scaling on Google Shopping
+
+Ranked by Google ads launched in the last 30 days.
+
+| # | Store | Country | Born | Products | Monthly visits | Shopping ads | **New ads 30d** |
+|--:|---|---|---|--:|--:|--:|--:|
+| 1 | **pomuyoo.com** | 🇨🇳 CN | 2023-05 | **1,786** | 184,571 | 75 | **66** |
+| 2 | **smukoslo.no** | 🇳🇴 NO | 2024-01 | 250 | 30,631 | **89** | **28** |
+| 3 | **averymae.com** | 🇺🇸 US | 2024-06 | **4,961** | 52,007 | 12 | **23** |
+| 4 | pointcarre.be | 🇧🇪 BE | 2025-04 | 16,056 | 129,684 | 36 | 13 |
+| 5 | francisbyfb.com | 🇳🇱 NL | 2021-02 | 191 | 180,906 | 3 | 12 |
+| 6 | vrajbhoomi.in | 🇮🇳 IN | 2023-02 | 250 | 78,847 | 21 | 11 |
+| 7 | outdoorvoices.com | 🇺🇸 US | 2020-11 | 573 | 342,312 | 21 | 10 |
+| 8 | fkofficial.it | 🇮🇹 IT | 2022-09 | 2,724 | 119,477 | 22 | 9 |
+
+### The three worth studying
+
+**`pomuyoo.com`** — the closest match to the model being described here.
+Chinese-registered, three years old, 1,786 products, and **66 new Google ads in
+30 days — the highest launch velocity in the sample.** All 279 of its Google ads
+target the **US only**. Its catalogue is unisex, not women's-only (bestsellers are
+men's three-piece suits at $139).
+
+One detail worth copying: its top "bestseller" is **"Chiffon Swatches" at $1**.
+Cheap swatch SKUs are a known way to widen a Shopping feed and pick up
+low-competition impressions. It is a feed tactic, not a margin product.
+
+**`smukoslo.no`** — the cleanest **women's general fashion** store scaling here.
+Norway only, 250 products, **89 Shopping ads** — the second-highest Shopping count
+in the sample from a quarter of pomuyoo's catalogue. Coat dresses, jeans, hair
+claws. This is the playbook's *"on a tight budget, start in smaller markets — GMC
+approval is easier and lasts longer"* thesis, running live.
+
+**`averymae.com`** — US women's, opened **June 2024**, already at **4,961
+products** with 23 new Google ads in 30 days. Bestsellers are Judy Blue denim and
+reversible basics. A US boutique operating at roughly **7× the playbook's 500–700
+target** and still launching ads.
+
+### The outlier worth understanding
+
+**`xenaworkwear.com`** — US, **29 products**, and **555 Shopping ads**. Women's
+safety footwear. Its entire Google mix is Shopping 555 / Search 168 / Other 6 — a
+near-pure Shopping account. It is the inverse of the feed-volume model: a tiny,
+tightly-defined catalogue pushed extremely hard. Not a general store, but proof
+that catalogue size is not what wins Shopping.
+
+---
+
+## §3 What the data actually says about catalogue size
+
+| Products | Store | Shopping ads |
+|--:|---|--:|
+| 29 | xenaworkwear.com | **555** |
+| 250 | smukoslo.no | 89 |
+| 1,786 | pomuyoo.com | 75 |
+| 4,961 | averymae.com | 12 |
+| 16,056 | pointcarre.be | 36 |
+
+**Shopping ad volume does not track catalogue size in this sample — if anything it
+runs the other way.** The 29-product store has 46× the Shopping ads of the
+4,961-product store.
+
+That does not disprove the playbook's 500–700 target; the playbook's argument is
+about *feed breadth capturing more long-tail searches*, which is a different
+measure from ad count. But it does mean **"more products" is not on its own the
+lever**, and 600–700 should be treated as a target to grow into rather than a
+number to hit on day one.
+
+---
+
+## §4 The import gate — unchanged
+
+Noted once, not laboured. The store has **zero products** and has **not run the
+deliberate misrepresentation campaign**. The playbook allows **3 appeals per GMC,
+then the GMC is dead**. Appealing a suspension across ~5 products is survivable;
+across 600–700 it is not.
+
+So the sequence to 600–700 is: **5 → suspension → appeal → approval → 4-week
+freeze → 25/day or 50/week → 600–700.** Roughly 10–12 weeks, and it ends in the
+same place.
+
+---
+
+## §5 Open questions I need answered
+
+1. **Which supplier app is connected, and how do I read its catalogue?** `appInstallations` is denied to this integration, so I cannot enumerate installed apps. A `Tapstitch: Special Line` delivery profile exists but carries **no fulfillment-service location**, which is why I read sourcing as absent. Tell me the app name and I can work out the import path.
+2. **Which store is this — HIVOLT, or a new domain?** See §6. This one matters most.
+3. **Target market.** All analysis above assumes **US**. `smukoslo.no` is a live argument for a smaller market instead.
+
+---
+
+## §6 🔴 A collision worth naming before anything is imported
+
+HIVOLT is live, and its published position is explicit, on the homepage, the
+About page, the Help Center and the Terms:
+
+> *"Every figure we publish carries its source. Where we don't have one, we say so
+> instead of guessing."*
+> *"We publish the details that usually stay hidden — fabric weight, composition,
+> how a seam is finished."*
+
+**A 600–700 SKU general dropship catalogue cannot meet that standard.** No
+supplier of that breadth supplies verified fabric weight, composition and garment
+measurements per SKU, and six sessions of this rebuild have been spent removing
+exactly the invented figures that fill that gap.
+
+Two coherent options. Both are fine; the mix is not:
+
+| | |
+|---|---|
+| **A. Keep the position, narrow the catalogue** | HIVOLT stays a spec-published store. Fewer SKUs, real supplier documents. The published standard survives. |
+| **B. Keep the catalogue, change the store** | The general 600–700 dropship store runs on a **separate domain and a separate GMC**, and HIVOLT's promises do not follow it. The playbook recommends separate domains and companies anyway. |
+
+Running a 700-SKU general catalogue **on hivolt-usa.com** would put the store's own
+About page in contradiction with its product pages — which is the definition of
+misrepresentation, and the exact suspension reason this account is most exposed to.
