@@ -1,5 +1,19 @@
 # policies/ — corrected policy bodies, BLOCKED on scope
 
+**Reconstructed 2026-08-27.** The corrected bodies this README describes were
+never committed (only this README survived); the live policies still carried
+every flagged claim. The four `.html` files now present were rebuilt from the
+live policy read-back + every documented correction below, **plus the Option A
+changes**: Terms §1 now says women's clothing (activewear and the spec-first
+publishing promises removed); shipping/delivery windows are now
+**supplier-stated facts** from the live catalog — 2–6 business days
+(US-warehouse items: Walmart 1–2d, Amazon 2–6d) and 10–15 business days
+(international: AliExpress ~13d, private supplier 11–14d); unsourced
+operational claims (PO Boxes, carriers, 24h tracking, 12h windows,
+"production") stay deleted. Privacy remains untouched (Shopify template).
+Paste procedure unchanged (below). **These same bodies are the source for the
+GMC shipping/returns settings — mirror word-for-word.**
+
 **These are not applied.** `shopPolicyUpdate` is denied to this connector:
 
 ```
