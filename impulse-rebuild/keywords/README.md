@@ -73,3 +73,21 @@ supply**, and each half is read in a different place:
 The scored sheet gets one extra optional column for this: `supply` = thin /
 contested, filled from the Shopping-tab check. Thin-supply permanents are the
 highest-priority imports in the whole list — they compound the longest.
+
+## Target markets: US + UK — two sheets, not one
+
+The research source covers general dropshipping for **USA and UK**. Both are in
+the playbook's beginner set (US, UK, AU, DK — card-only markets), with its
+caveat that big markets bring more traffic, more bad reviews and stricter
+Google enforcement.
+
+Operationally: **run the Trends pass once per country.** Curves genuinely
+differ — letterman jackets are the proof already on file (UK shows a second
+April peak; the US curve is dominated by the autumn one). So the scored sheet
+carries one row per keyword **per country**, and a category can be
+import-worthy in one market while marginal in the other. Planner volume should
+also be pulled per-market (set location US, then UK) rather than once globally.
+
+Structural reminder from the playbook if both markets go live: **1 domain =
+1 GMC = 1 Ads account = 1 card** — a US store and a UK store are two stores,
+two feeds, two calendars. One store cannot serve both markets on one GMC.
