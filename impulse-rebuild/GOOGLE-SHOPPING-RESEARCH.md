@@ -232,3 +232,32 @@ screen my ranking did not apply is his **uptrend** test — I ranked by ad-launc
 velocity, and reported `growth30d` was 1–3% across the sample (§1, caveat 1).
 If a row must be cut to match the course exactly, cut on flat growth, not on
 traffic.
+
+### §7.1 The top-up pass, 2026-08-27 — filters set the course's way
+
+Re-queried TrendTrack with the module's bars as literal filters: category
+`Women's Clothing`, products ≥1,000, visits ≥30k (US) / ≥20k (GB), **sorted by
+30-day traffic growth** for the uptrend screen, then post-filtered to shops with
+live Google ads and ≥40% target-market audience share. Three corrections to
+earlier caveats:
+
+1. **The growth sort works.** §1 caveat 2 reported the traffic-growth filter not
+   constraining results; sorting by `growth30d` this time returned a real 5–79%
+   spread for the US. The earlier flatline was a property of ranking by
+   ad-launch velocity, not of the data.
+2. **"Most is gonna be Netherlands" is confirmed in the data.** The US uptrend
+   page alone carries three NL-registered shops trading under anglo family
+   names on ≥90% US traffic (susan-michael.com, theharringtonsisters.com,
+   thewilsonfamilypalmbeach.com); the GB pass adds lunelondon.co.uk — NL HQ,
+   London in the name, 25,000 products. The course's dropshipper tells (family
+   or city name, young store, off-market HQ) select these rows mechanically.
+3. **Recency needs the traffic exception.** The course skipped a 2-month-old
+   store *with no traffic*. averylanebrighton.com is 2 months old with 138k
+   monthly GB visits and rising — a young store already carrying traffic is the
+   most informative row on the sheet, not a skip.
+
+Output: `competitor-tracker.csv` (US, 15 players + WATCH + OUTLIER) and
+`competitor-tracker-uk.csv` (12 rows) — both in the sheet's column layout,
+tiers per the module's taxonomy. Figures are TrendTrack indexed values read
+2026-08-27; `shopAds` (platform split) was unindexed for most uptrend rows, so
+Google activity is evidenced by `liveAds` counts instead.
