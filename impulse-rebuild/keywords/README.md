@@ -55,3 +55,21 @@ Derivation rules, mechanical:
 - **permanent** = flat/consistent curve → backbone, never drafted.
 - The exact volume number no longer matters — Google only shows bands. The band gets the keyword *onto* the sheet; the **curve decides everything after that.**
 - **Run Trends against the target market's country, and against today's date** — a curve read for the wrong country or the recording's season gives the wrong import month.
+
+## The market-gap test (demand high, supply thin)
+
+The boyfriend-jeans case generalises. A gap keyword shows **high demand and low
+supply**, and each half is read in a different place:
+
+- **Demand** — the Planner band: 1K–10K or above.
+- **Supply** — search the exact keyword on Google, open the **Shopping tab**, and
+  look at who is actually advertising: few distinct merchants, weak or generic
+  listings, big brands absent → supply is thin. Many merchants with tight
+  listings → contested, you're buying your way in.
+- **Curve** — "tough to read" (flat, noisy, no clean peak) is not a bad sign; it
+  is the **permanent** signature. Gap + permanent = a backbone product you list
+  once and never draft.
+
+The scored sheet gets one extra optional column for this: `supply` = thin /
+contested, filled from the Shopping-tab check. Thin-supply permanents are the
+highest-priority imports in the whole list — they compound the longest.
