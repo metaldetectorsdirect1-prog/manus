@@ -91,3 +91,13 @@ also be pulled per-market (set location US, then UK) rather than once globally.
 Structural reminder from the playbook if both markets go live: **1 domain =
 1 GMC = 1 Ads account = 1 card** — a US store and a UK store are two stores,
 two feeds, two calendars. One store cannot serve both markets on one GMC.
+
+## scored-list.csv is seeded
+
+Twelve rows exist already — the categories the course itself confirmed on
+screen (bands read from the instructor's own Planner/Trends session, so
+`source=course-confirmed`, **not owner-verified**). Rows marked `pending` had a
+band named but no curve shown. The owner's own Planner + Trends run replaces
+`unknown`/`pending` cells and appends every additional survivor from the
+610-line master list. Course-confirmed rows should be spot-checked too —
+recorded curves age.
