@@ -38,10 +38,11 @@ October–November — means importing them **now**.
 | 🔴 now | **Coats & winter jackets** — puffers, wool coats, parkas, quilted | Nov–Dec | **open, closing through September** |
 | 🔴 now | **Knitwear** — cardigans, turtlenecks, cable knit, oversized sweaters | Nov–Jan | open |
 | 🔴 now | **Boots** — knee-high, heeled, chelsea (the playbook's own worked title example) | Oct–Dec | open |
+| 🔴 now | **Leather & suede jackets** — moto, cropped, faux leather, shackets | uptrend Aug → peak Oct–Dec | **late by ~4 wks but alive** — 5-month demand run, indexed by late Sep still catches Oct–Dec whole |
 | 🟠 next 2–3 wks | **Cocktail / party dresses** | peaks Nov (playbook: *"keep permanently"*) | open |
 | 🟠 next 2–3 wks | **Loungewear & matching sets** | rises Nov–Jan | open |
 | 🟠 September | Holiday-adjacent: sequins, velvet, satin slips | Dec | opens shortly |
-| ⚪ too late | Letterman/varsity jackets | Nov | playbook says import **end of July** — window largely missed this year |
+| ⚪ marginal | Letterman/varsity jackets | Nov | ideal entry was end of July; short runway. Contrast with leather jackets above: same trough, but leather's 5-month run keeps its window open while letterman's shorter one closes |
 | ⚫ do not import | Swim, summer dresses, linen, shorts | Jun–Jul | at their trough of *demand*, but their import window is **February–April**, not now |
 
 ---
