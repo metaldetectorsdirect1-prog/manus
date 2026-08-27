@@ -155,6 +155,21 @@ def check(product):
             warns.append(f"IMAGE {i}: missing alt text")
     return errs, warns
 
+def check_batch(products):
+    """Cross-catalog checks: title and handle uniqueness (case-insensitive)."""
+    errs = []
+    seen_t, seen_h = {}, {}
+    for i, p in enumerate(products):
+        t = (p.get("title") or "").strip().lower()
+        h = (p.get("handle") or "").strip().lower()
+        if t and t in seen_t:
+            errs.append(f"BATCH: duplicate title (items {seen_t[t]} and {i}): {p.get('title')!r}")
+        seen_t.setdefault(t, i)
+        if h and h in seen_h:
+            errs.append(f"BATCH: duplicate handle (items {seen_h[h]} and {i}): {h!r}")
+        seen_h.setdefault(h, i)
+    return errs
+
 def self_test():
     good = {"title": "Elena relaxed merino wool turtleneck sweater",
             "body_html": "<p>Merino wool knit.</p><ul><li>Ribbed cuffs</li></ul>",
@@ -185,18 +200,36 @@ def self_test():
     for prod, must in cases:
         e, _ = check(prod)
         assert any(must.lower() in x.lower() for x in e), f"expected {must!r} violation, got {e}"
-    print(f"self-test: {1 + len(cases)}/{1 + len(cases)} passed")
+    be = check_batch([good, dict(good, handle="other-handle"), dict(good, title="Different Title Here")])
+    assert any("duplicate title" in x for x in be) and any("duplicate handle" in x for x in be), be
+    assert check_batch([good, dict(good, title="Unique B", handle="unique-b")]) == []
+    print(f"self-test: {3 + len(cases)}/{3 + len(cases)} passed")
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--product")
+    ap.add_argument("--batch", help="JSON array or JSONL of products; adds cross-catalog uniqueness checks")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
         self_test(); return 0
+    if a.batch:
+        raw = open(a.batch).read().strip()
+        prods = json.loads(raw) if raw.startswith("[") else [json.loads(l) for l in raw.splitlines() if l.strip()]
+        errs, warns = [], []
+        for i, p in enumerate(prods):
+            e, w = check(p)
+            errs += [f"[{i}] {p.get('handle','?')}: {x}" for x in e]
+            warns += [f"[{i}] {p.get('handle','?')}: {x}" for x in w]
+        errs += check_batch(prods)
+        for e in errs: print(f"REFUSE  {e}")
+        for w in warns: print(f"warn    {w}")
+        if not errs:
+            print(f"PASS — {len(prods)} products SOP compliant" + (f" ({len(warns)} warning(s))" if warns else ""))
+        return 1 if errs else 0
     if not a.product:
-        ap.error("--product or --self-test required")
+        ap.error("--product, --batch or --self-test required")
     p = json.load(open(a.product))
     errs, warns = check(p)
     if a.report or errs or warns:

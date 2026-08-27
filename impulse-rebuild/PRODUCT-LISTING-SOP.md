@@ -82,3 +82,23 @@ title does nothing — Google matches shopping queries against titles, so the
 scored-list keywords must literally appear in the titles of the products bought
 against them. Research → scored sheet → supplier pick → **keyword into title** is
 one unbroken chain; break the last link and the first three were wasted.
+
+## Batch mode and the competitor-import hygiene chain
+
+`--batch file.json` (array or JSONL) validates a whole import batch: every
+per-product rule, plus **catalog-level title and handle uniqueness** — a rule a
+single-product check cannot see. Run it on each weekly 50-batch before launch.
+
+Competitor sourcing is allowed but the de-linking must be total, in this order:
+1. **Title rewritten from scratch** (the formula, not a paraphrase)
+2. **Description rewritten from scratch**
+3. **Image metadata stripped** — EXIF ties a photo to its source site. At import:
+   `exiftool -all= img.jpg` or a PIL re-save. Shopify's CDN re-encodes uploads,
+   which strips most EXIF, but strip *before* upload rather than relying on it.
+4. Handle regenerated from the new title (enforced by the validator)
+
+And the description rule now stated with its reason: images inside descriptions
+are refused **because they break** — each is a link out of Shopify's asset
+pipeline that 404s when the source moves, and broken product pages are a named
+suspension trigger. Size charts in descriptions are welcome — as text/tables,
+never as images.
