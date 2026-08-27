@@ -94,3 +94,17 @@ rotates with §3.
 1. **Sequence:** first import is still ~5 products → misrep → appeal → 4-week freeze → *then* 25/day toward 700. The calendar above is what you fill the feed *with*; it does not skip the gate.
 2. **Which store:** 700 generic SKUs on hivolt-usa.com contradicts its published spec-first position → separate domain/GMC, or the position changes. Still needs your call.
 3. **Supplier:** named app still unknown to me (`appInstallations` denied) — tell me what it is and I'll map the import path, including whether its products carry the size/colour depth §1 requires.
+
+## §6 The freeze clock — resolved to 4 weeks, two different clocks explained
+
+Module 1.2 said "wait three weeks"; the master timeline and the scaling module
+both say **four weeks of touching nothing after approval** — and the scaling
+module's own narration confirms four. Resolution:
+
+- **Feed freeze = 4 weeks.** No imports, no feed edits, no site changes.
+- **The "3+ weeks" figure belongs to a different clock** — the media-buyer
+  handover gate ("GMC approved 3+ weeks") measures GMC age at onboarding, not
+  the freeze length.
+- Throughout the freeze the **PMax warm-up stays live at $5/day**. Pausing ads
+  on an approved GMC is itself a suspension risk — a GMC with no spend reads as
+  abandoned. The freeze freezes the *feed*, never the ads.
