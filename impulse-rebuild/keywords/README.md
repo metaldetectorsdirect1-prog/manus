@@ -35,3 +35,23 @@ Season skew: the list is deliberately weighted toward the **currently-open Q4
 import window** (coats, knitwear, boots, party) per `FEED-CALENDAR.md` §2, with
 the permanent backbone fully covered and only a thin summer set (those import
 February–April).
+
+## The scored-list template (step 6 lands here)
+
+`scored-list.csv` columns — one row per surviving keyword:
+
+```
+keyword,country,volume_band,change_3m,ath_month,atl_month,class,import_month,draft_month
+letterman jacket,GB,1K-10K,+,Nov & Apr,Jul,dual-peak,Jul & Jan,Dec & May
+cocktail dress,US,10K-100K,flat,Nov,—,permanent,keep listed,never
+flare jeans,US,10K-100K,flat,—,—,permanent,keep listed,never
+```
+
+Derivation rules, mechanical:
+
+- **import_month = trough month** (all-time low on the 5-year curve) — never the peak.
+- **draft_month = the month after the peak ends.**
+- **dual-peak** (like letterman jackets in the UK: Nov *and* Apr highs, Jul low) → **two import windows**: at the trough for the autumn peak, and again ~Jan for the spring peak. One-peak logic would leave half the year's demand on the table.
+- **permanent** = flat/consistent curve → backbone, never drafted.
+- The exact volume number no longer matters — Google only shows bands. The band gets the keyword *onto* the sheet; the **curve decides everything after that.**
+- **Run Trends against the target market's country, and against today's date** — a curve read for the wrong country or the recording's season gives the wrong import month.
