@@ -1,5 +1,9 @@
 # PRODUCT-LISTING-SOP.md
 
+> **Internal operating document.** Distilled from paid course material for this
+> store's own operations and its product listers — the use the course licenses.
+> Do not redistribute, publish, or share outside the team.
+
 The per-product compliance SOP for Google Merchant Center, as supplied by the
 owner 2026-08-26. **Enforced mechanically by `site/check-product-listing.py`**
 (12/12 self-tests) — run it against every product JSON before publishing; exit 1
