@@ -102,3 +102,23 @@ are refused **because they break** — each is a link out of Shopify's asset
 pipeline that 404s when the source moves, and broken product pages are a named
 suspension trigger. Size charts in descriptions are welcome — as text/tables,
 never as images.
+
+## Health-adjacent products: short-term money, long-term exclusion
+
+Orthotic/orthopedic-class products (posture, compression-as-therapy, arch
+support) can make short-term revenue but are named as incompatible with a
+long-term store. **This supersedes the course's own Module 7.3 title examples**
+("orthopedic high heels", "orthopedic wedge sandals") — an internal
+contradiction resolved in favour of the stricter rule. The validator's medical
+screen (orthopedic, therapeutic, clinically proven, medical-grade…) stays
+strict; body-shaping terms without health claims (shapewear, tummy control)
+remain allowed.
+
+## Sale framing: seasonal names only, and the rules tightened over time
+
+Closure/clearance sales worked on the team's first GMC "back then" — **that era
+is over.** Only time-boxed seasonal framing survives: *Black Friday sale, winter
+sale, seasonal sale.* Their Q4 numbers came from exactly these. Never
+"closing down", "clearance", "everything must go" — and note the general lesson:
+Google's tolerance ratchets down over time, so a tactic that worked on an old
+GMC is not evidence it works on a new one.
