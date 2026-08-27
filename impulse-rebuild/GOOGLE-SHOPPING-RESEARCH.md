@@ -183,10 +183,32 @@ worth copying *from*): lower price points than retail; **city names in store
 names**; recognizable dropship products. He notes most of the UK-results
 operators "are gonna be Netherlands" — NL-based stores working the UK market.
 
-**Recording date:** he says "this month, December" — this module was recorded in
-winter. Per the season rule, none of its seasonal examples (letter jackets,
-leather jackets) transfer to today's calendar without re-deriving from
-FEED-CALENDAR.md.
+**Recording date:** stated outright while filling the sheet — **"today is the
+sixth of January two thousand twenty six."** (The earlier "December" was him
+reading a SimilarWeb chart month, not the date.) Recorded in winter either way:
+none of its seasonal examples (letter jackets, leather jackets) transfer to late
+August without re-deriving from FEED-CALENDAR.md.
+
+**Status taxonomy and the product-count floor.** The sheet's Status column takes
+**"mid player"** or **"big player"** — thresholds are yours to set, but the demo
+draws them: 1,338 products (UK) = mid player; 3,300 products + 93k visitors =
+big player; **260 products = "not enough," skipped**. Target **10–15
+competitors, mostly mid and big players**, then repeat the whole pass per
+market — UK done, then USA, Netherlands, Germany — so you hold same-season
+competitors "all around the globe."
+
+**A fourth dropshipper tell:** the stores *look alike*. Same themes, same
+layouts — visual similarity across candidates is itself the signature, alongside
+lower prices, city-name store names, and recognizable dropship products.
+
+**What the list is actually for — this is the module's point.** The competitor
+sheet is a **product-sourcing index**, not a watchlist. When Trends says a
+category will trend (letter jackets for spring/summer), you don't research
+products from scratch — you open a favorite competitor, search "letter jackets"
+*on their store*, and import what they already range. That is why the
+product-count floor exists: a 260-product boutique can't answer a category
+query; a 3,300-product catalogue can. Catalogue breadth is the qualifying
+feature because breadth is what you'll be searching.
 
 **How the §2 tracker rows hold up against these bars:** all fifteen rows sit at
 ≥30k visits/month (the TrendTrack query floor), above the 17k dismissal; none
