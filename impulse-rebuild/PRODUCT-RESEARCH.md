@@ -180,13 +180,27 @@ spot-check for watermarks/Chinese text before publishing**):
 | 3 | `6a03c53539ba4b00017a54f5` | Walmart 5030481746 (US warehouse, 1–2d) | ~$30–32 | 5 sizes × 9 colors (full matrix) | 45% acrylic / 55% polyester | $59.95 |
 | 5 (fallback) | `673bc7b27126c18f62f09c9d` | AliExpress 3256807073935486 | ~$16, free ship 13d | 4 sizes × 10 colors | conflicting — publish only "30% merino wool blend" | $39.95 |
 
-Slots 2, 4, 5 failed round 1 (cost, composition-missing, or single-variant);
-round 2 re-searches running with the agent's own terms. Rule flexes recorded:
-shipping ≤14 stated days (policy pages will state 8–15 business days
-honestly); US-warehouse landed cost to $32 with a real variant matrix.
-Dropped with reasons: DOKOTOO cardigan ($41.60 landed), private-supplier
-longline (no composition stated — unpublishable under §1.2), all
-single-variant Walmart/Amazon listings.
+Rule flexes recorded: shipping ≤14 stated days (policy pages will state 8–15
+business days honestly); US-warehouse landed cost to $32 with a real variant
+matrix.
+
+**Round 2 (same day):** slot 4 filled — private-supplier wool-blend longline
+cardigan, `6a2a0d70b2166070237a654b` (item 10282354278688), $18.30 landed,
+free 11–14d, **5 sizes × 6 colors = 30 variants**, publishable only as
+"wool blend" (no percentages stated) → retail $49.95. ⚠️ Its image filenames
+read Dutch ("kath-vest-van-wol-en-mohair…deqalli") — likely lifted from
+another store ("Deqalli"); the de-linking chain plus a human image check is
+mandatory before it publishes. Slot 5 = the round-1 fallback promoted (13-day
+shipping now inside the flex). **Slot 2: no compliant cable-pocket cardigan
+exists in the catalog** — nearest miss DOKOTOO `6d5a06926ee704c7a6d14530` at
+$41.58 landed would need $79.95 retail; held as alternate, not a pick.
+Round 3 running: one distinct fifth silhouette (sweater vest, or plain button
+cardigan without cable/chunky).
+
+Dropped with reasons across rounds: DOKOTOO cardigan (cost), first
+private-supplier longline (no composition stated — unpublishable under §1.2),
+all single-variant Walmart/Amazon listings, v28 sweater dresses (wrong
+garment + cost), everything with unstated composition.
 
 - Images: single product, neutral background, **no AliExpress photos, watermarks, logos or Chinese text**
 - **No images inside the description** — a named suspension trigger
