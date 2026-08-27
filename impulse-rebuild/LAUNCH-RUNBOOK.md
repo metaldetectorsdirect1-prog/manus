@@ -18,7 +18,8 @@ self-test **24/24**.
 |---|---|---|
 | 0.1 | **Domain**: general store on hivolt-usa.com **or** fresh domain + fresh GMC. The published HIVOLT spec-first standard cannot share a domain with a 600–700 SKU generic catalogue (GOOGLE-SHOPPING-RESEARCH §6). Recommendation on file: fresh domain. | 🔴 OPEN |
 | 0.2 | **Supplier**: confirm which installed service is the China supplier — **AutoDS is the likely answer** (general-catalogue dropship automation; ODMPOD/Tapstitch are POD apparel; Supliful is supplements). **Smallest action: authorize the AutoDS connector in claude.ai → Settings → Connectors** — then this session can read its catalogue and wire the import path. | 🟡 NARROWED |
-| 0.3 | **GMC `5838274874`**: owner confirms 2026-08-27 the merchant account is **verified**. Verification (business identity, website claim) is not misrepresentation clearance — a verified GMC with zero products has not yet faced the misrep review that Phase 4 deliberately triggers, so the 5-product gauntlet still applies. No suspension reported → assume **3/3 appeals available**. Remaining sub-question: which feed app owns the feed (Simprosys vs Google & YouTube — both installed; pick ONE before products flow). | 🟢 VERIFIED |
+| 0.3 | **GMC `5838274874`**: owner confirms 2026-08-27 the merchant account is **verified**. Verification (business identity, website claim) is not misrepresentation clearance — a verified GMC with zero products has not yet faced the misrep review that Phase 4 deliberately triggers, so the 5-product gauntlet still applies. No suspension reported → assume **3/3 appeals available**. Feed owner: **Simprosys — settled by the skill's master timeline** ("Simprosys, not the Google & YouTube app"); disable the Google & YouTube channel's feed sync before any product flows. | 🟢 VERIFIED |
+| ⚠️ | **Sequence deviation, named:** the timeline requires the store finished **before** the GMC exists; ours exists against an unfinished store. Not reversible — consequence: every Phase-0/2 store item below completes **before the first feed sync**, and nothing changes during review ("every edit is a tracked feed change"). | RECORDED |
 | ✅ | Markets: **US + UK** — both top-4 (§8); worst pair on GMC-approval difficulty and chargeback culture; trade-off recorded, accepted. | DECIDED |
 | ✅ | Niche: **general women's fashion** — the course's only endorsed niche. | DECIDED |
 
@@ -59,7 +60,18 @@ all** (§1.2 honesty rule; PRODUCT-RESEARCH §4 carries the candidate titles).
 
 ## Phase 4 — GMC gauntlet (course sequence, verbatim on file)
 
-€5/day on the 5 products → expect **misrepresentation suspension** (deliberate)
+Pre-feed gate (timeline, Phases 0–1): policies pasted on site **and mirrored
+word-for-word in GMC shipping/returns settings**; dead-link scan clean
+(deadlinkchecker.com) **before** the feed syncs; trust assets up; Simprosys
+owns the feed; then **change nothing during review** (3–5 business days SLA;
+past 5, the scripted support push). Ads account: same Gmail, timezone is
+permanent, billing country = paying entity, **one unique card** (1 domain =
+1 GMC = 1 Ads = 1 card). PMax: Purchases goal, target country only.
+
+€5/day on the 5 products → expect **misrepresentation suspension** in 5–7 days
+(deliberate; if nothing after 7, add 5 more same-niche products to force it) →
+**classify before appealing** — fix a *Shopping ads* suspension, ignore a
+free-listings-only one (fixing it can cause the real one later) →
 → appeal (3 per GMC lifetime — count against 0.3) → approval →
 **three concurrent clocks** (GOOGLE-ADS §3): 4-week feed freeze (no imports, no
 edits) · 2–3-week campaign warm-up (revenue unreadable, judge nothing) ·
