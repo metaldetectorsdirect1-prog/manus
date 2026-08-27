@@ -205,10 +205,25 @@ lower prices, city-name store names, and recognizable dropship products.
 sheet is a **product-sourcing index**, not a watchlist. When Trends says a
 category will trend (letter jackets for spring/summer), you don't research
 products from scratch — you open a favorite competitor, search "letter jackets"
-*on their store*, and import what they already range. That is why the
-product-count floor exists: a 260-product boutique can't answer a category
-query; a 3,300-product catalogue can. Catalogue breadth is the qualifying
-feature because breadth is what you'll be searching.
+*on their store*, and **import the first page of results** — ahead of the trend,
+"so we can catch the momentum when it's there." That is why the product-count
+floor exists: a 260-product boutique can't answer a category query; a
+3,300-product catalogue can. Catalogue breadth is the qualifying feature because
+breadth is what you'll be searching.
+
+⚠️ **"Import the first page" does not suspend the listing module's own rules.**
+Every competitor import still runs the de-linking chain in
+PRODUCT-LISTING-SOP.md: title and description rewritten from scratch, EXIF
+stripped before upload, handle regenerated. A first-page bulk import that skips
+the chain is a first-page bulk *fingerprint*.
+
+**Two closing rules:**
+
+- **Competitors are also a design reference.** Study the site itself — layout,
+  features you don't see elsewhere. "He's doing well — why can I not?"
+- **Cadence: monthly.** Re-run the pass every month — new products they launch,
+  and new competitors entering the market. The sheet is a living document, not
+  a one-time exercise.
 
 **How the §2 tracker rows hold up against these bars:** all fifteen rows sit at
 ≥30k visits/month (the TrendTrack query floor), above the 17k dismissal; none
