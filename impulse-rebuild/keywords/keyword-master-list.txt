@@ -305,3 +305,306 @@ slip shorts
 sculpting bodysuit
 sticky bra
 seamless underwear
+zip up hoodie
+full zip hoodie
+half zip hoodie
+oversized hoodie
+cropped hoodie
+graphic hoodie
+plain hoodie
+fleece hoodie
+sherpa lined hoodie
+hoodie dress
+zip up sweatshirt
+crewneck sweatshirt
+oversized sweatshirt
+cropped sweatshirt
+graphic sweatshirt
+quarter zip sweatshirt
+mock neck sweatshirt
+fleece sweatshirt
+tunic sweatshirt
+hoodie and sweatpants set
+matching hoodie set
+down jacket women
+down coat
+longline puffer coat
+belted puffer jacket
+cropped quilted jacket
+barn jacket
+chore jacket
+utility jacket women
+anorak jacket
+car coat
+cocoon coat
+camel coat
+checked wool coat
+houndstooth coat
+plaid coat
+suede jacket women
+faux suede jacket
+corduroy jacket women
+cropped trench coat
+hooded trench coat
+raincoat women
+waterproof jacket women
+softshell jacket women
+gilet women
+longline gilet
+snow pants women
+ski suit women
+aran sweater
+roll neck jumper
+grandpa cardigan
+cocoon cardigan
+knit shrug
+bolero shrug
+poncho sweater
+cape sweater
+batwing sweater
+balloon sleeve sweater
+off shoulder sweater
+one shoulder sweater
+cutout sweater
+knit polo top
+knit tank top
+sleeveless sweater
+knit maxi dress
+cardigan set
+knit twin set
+knit skirt set
+wedding dress
+prom dress
+bridesmaid dress
+homecoming dress
+graduation dress
+black tie dress
+gala dress
+mother of the bride dress
+rehearsal dinner dress
+engagement party dress
+white party dress
+new years eve dress
+summer dress
+sun dress
+beach dress
+floral dress
+floral midi dress
+white summer dress
+black cocktail dress
+t shirt dress
+denim dress
+linen dress
+boho dress
+milkmaid dress
+corset midi dress
+tube dress
+strapless dress
+backless dress
+high low dress
+ball gown
+a line dress
+empire waist dress
+fit and flare dress
+skater dress
+swing dress
+tunic dress
+kaftan dress
+pinafore dress
+velvet midi dress
+sequin mini dress
+fringe dress
+feather trim dress
+cutout dress
+mesh dress
+ruffle dress
+smocked midi dress
+tiered maxi dress
+peasant blouse
+boho top
+tube top
+bandeau top
+bralette top
+cowl neck top
+keyhole top
+cold shoulder top
+bell sleeve top
+puff sleeve top
+balloon sleeve blouse
+victorian blouse
+chiffon blouse
+linen shirt women
+flannel shirt women
+plaid shirt women
+henley top women
+polo shirt women
+baby tee
+muscle tank women
+racerback tank top
+lace camisole
+thermal henley women
+low rise jeans
+mid rise jeans
+high rise wide leg jeans
+cropped flare jeans
+kick flare jeans
+split hem jeans
+patchwork jeans
+distressed jeans
+ripped jeans
+carpenter jeans
+trouser jeans
+cuffed jeans
+denim shorts women
+bermuda denim shorts
+denim vest women
+denim corset top
+linen pants women
+drawstring linen pants
+harem pants
+track pants women
+parachute pants
+cargo joggers women
+stirrup leggings
+split hem leggings
+barrel leg pants
+chinos women
+pinstripe trousers
+velvet pants
+sequin pants
+satin wide leg trousers
+mini skirt
+midi skirt
+maxi skirt
+ruffle skirt
+tulle skirt
+chiffon skirt
+floral midi skirt
+pencil skirt
+bodycon skirt
+cargo skirt
+denim mini skirt
+asymmetrical skirt
+wrap midi skirt
+bubble skirt
+skater skirt
+workout set women
+gym leggings
+high waisted leggings
+seamless leggings
+biker shorts women
+sports bra
+longline sports bra
+tennis dress
+golf skirt women
+running jacket women
+one piece swimsuit
+high waisted bikini
+bandeau bikini
+halter bikini
+tummy control swimsuit
+swim dress
+swimsuit cover up
+crochet cover up
+sarong
+rash guard women
+crochet top
+crochet dress
+linen shorts women
+paperbag shorts
+flowy shorts
+linen co ord set
+sneakers women
+platform sneakers
+chunky sneakers
+retro sneakers
+slip on sneakers
+white sneakers women
+mules shoes
+heeled mules
+flat mules
+loafer mules
+penny loafers
+horsebit loafers
+tassel loafers
+espadrilles
+wedge sandals
+platform sandals
+strappy sandals
+slide sandals
+gladiator sandals
+fisherman sandals
+heeled sandals
+dress sandals
+snow boots women
+winter boots women
+duck boots women
+hiking boots women
+sock boots
+western booties
+pointed toe boots
+square toe boots
+patent leather boots
+rain boots women
+chelsea rain boots
+oxford shoes women
+brogues women
+court shoes
+ankle strap heels
+low heel pumps
+stiletto heels
+comfortable heels
+wedding shoes
+bridal heels
+gold heels
+silver heels
+bucket hat
+baseball cap women
+trapper hat
+ear muffs
+padded headband
+silk hair scarf
+phone crossbody bag
+mini backpack
+woven bag
+straw bag
+raffia bag
+bag charm
+puffer bag
+top handle bag
+satchel bag
+weekender bag
+laptop tote
+satin robe
+waffle robe
+pajama pants women
+pajama shorts set
+matching pajamas
+thermal pajamas women
+flannel pajama set
+cashmere lounge set
+ribbed lounge set
+slipper socks
+christmas sweater
+ugly christmas sweater
+holiday pajamas
+matching family pajamas
+maternity dress
+maternity jeans
+nursing top
+plus size dresses
+plus size jeans
+plus size coats
+petite jeans
+petite dresses
+tall jeans
+bralette
+lace bralette
+longline bralette
+bralette set
+boxer shorts women
+women's boxers
+boxer pajama shorts
+poplin boxer shorts
+lounge shorts women
+sleep shorts women

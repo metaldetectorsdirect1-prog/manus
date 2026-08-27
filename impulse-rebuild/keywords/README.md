@@ -1,6 +1,6 @@
 # keywords/ — the reusable category master list
 
-`keyword-master-list.txt` — **307 women's fashion category and subcategory
+`keyword-master-list.txt` — **574+ women's fashion category and subcategory
 keywords**, one per line, no icons, no headers. This is the saved, reusable list
 Module 7.1 says to build once and keep (its "Notion/Google Docs" step — here it
 lives in the repo instead).
