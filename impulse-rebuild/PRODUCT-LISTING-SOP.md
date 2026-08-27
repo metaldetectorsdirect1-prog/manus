@@ -122,3 +122,24 @@ sale, seasonal sale.* Their Q4 numbers came from exactly these. Never
 "closing down", "clearance", "everything must go" — and note the general lesson:
 Google's tolerance ratchets down over time, so a tactic that worked on an old
 GMC is not evidence it works on a new one.
+
+## Discount mix — enforced at batch level
+
+The pattern Google reads is longitudinal: *"running ads three months, always a
+sale, every product the same discount, the sale never ends."* The validator now
+refuses a batch (n≥10) where **everything** is discounted, or where every
+discount is one uniform rate. The intended distribution: some at 0%, some 20%,
+some 40%, **best sellers at 50%** — refreshed on the best-seller review.
+
+Cadence note: this narration says the best-seller sweep is **biweekly**; the
+earlier module notes said weekly. Recorded as biweekly per the more specific
+statement — either way it aligns with the Pythago feed review rhythm.
+
+## Empty collections — the SATA example, and HIVOLT's live exposure
+
+"A dress collection with zero products in it" is the suspension example given.
+**hivolt-usa.com currently has fourteen exactly-that collections live** —
+`publishableUnpublish` is blocked at the connector, so unpublishing them remains
+the standing owner action from `GMC-READINESS.md`. If a general store launches
+on a fresh domain instead, its collections must be created *populated*, never
+scaffolded empty.

@@ -168,6 +168,22 @@ def check_batch(products):
         if h and h in seen_h:
             errs.append(f"BATCH: duplicate handle (items {seen_h[h]} and {i}): {h!r}")
         seen_h.setdefault(h, i)
+    # Discount-mix pattern (n>=10): all-discounted or one uniform discount rate
+    # is the "sale never ends" signature Google reads across a feed.
+    discs = []
+    for p in products:
+        v = (p.get("variants") or [{}])[0]
+        try:
+            price, cap = float(v.get("price") or 0), float(v.get("compare_at_price") or 0)
+            discs.append(round((cap - price) / cap * 100) if cap > price > 0 else 0)
+        except (TypeError, ValueError, ZeroDivisionError):
+            discs.append(0)
+    if len(discs) >= 10:
+        nonzero = [d for d in discs if d > 0]
+        if len(nonzero) == len(discs):
+            errs.append(f"BATCH: all {len(discs)} products discounted — mix in full-price items")
+        if len(nonzero) >= 10 and len(set(nonzero)) == 1:
+            errs.append(f"BATCH: every discount is {nonzero[0]}% — vary the levels (0/20/40, best sellers 50)")
     return errs
 
 def self_test():
@@ -203,7 +219,12 @@ def self_test():
     be = check_batch([good, dict(good, handle="other-handle"), dict(good, title="Different Title Here")])
     assert any("duplicate title" in x for x in be) and any("duplicate handle" in x for x in be), be
     assert check_batch([good, dict(good, title="Unique B", handle="unique-b")]) == []
-    print(f"self-test: {3 + len(cases)}/{3 + len(cases)} passed")
+    uni = [dict(good, title=f"T {i}", handle=f"h-{i}", variants=[{"price": "24.95", "compare_at_price": "49.95"}]) for i in range(12)]
+    be = check_batch(uni)
+    assert any("all 12 products discounted" in x for x in be) and any("every discount is 50%" in x for x in be), be
+    mixed = uni[:6] + [dict(good, title=f"F {i}", handle=f"f-{i}", variants=[{"price": "24.95", "compare_at_price": None}]) for i in range(6)]
+    assert check_batch(mixed) == [], check_batch(mixed)
+    print(f"self-test: {5 + len(cases)}/{5 + len(cases)} passed")
 
 def main():
     ap = argparse.ArgumentParser()
