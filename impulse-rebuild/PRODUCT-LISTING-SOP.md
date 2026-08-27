@@ -68,3 +68,17 @@ then 25/day or 50/week per the calendar).
   explicit ("we don't always do it"). They help branding and consistency; their
   absence is not a compliance failure. The pasted SOP's "must have" is read as
   strong-default.
+
+## Suspension-trigger ranking (image review triage order)
+
+1. **Copyright product** — terminal, <1% recovery. Check first, always.
+2. **Watermark / text on image** — incl. Chinese text on supplier photos. A top
+   trigger but recoverable; the tell of an unedited AliExpress import.
+3. Everything else in the image rules (quality, ambiguity, backgrounds).
+
+And the title principle stated as a mechanism, not a rule: **the title is where
+the keyword research cashes out.** A researched keyword that is not in a product
+title does nothing — Google matches shopping queries against titles, so the
+scored-list keywords must literally appear in the titles of the products bought
+against them. Research → scored sheet → supplier pick → **keyword into title** is
+one unbroken chain; break the last link and the first three were wasted.
