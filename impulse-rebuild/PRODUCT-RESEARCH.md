@@ -168,6 +168,26 @@ Planner** — the §5 owner run still applies before ads spend against them.
 On landing, every draft gets the full SOP pass (title/description rewrite,
 EXIF strip, handle regen, .95 price, vendor = store name, `--batch` gate).
 
+### §4.2 Sourcing round 1 — AutoDS catalog, 2026-08-27 (agent sweep)
+
+Confirmed picks (screened for brand-risk, images-by-metadata, variants,
+shipping, margin; **image pixels unverifiable from this environment — human
+spot-check for watermarks/Chinese text before publishing**):
+
+| Slot | AutoDS `_id` | Site / item | Landed cost | Variants | Composition (supplier-stated) | Retail |
+|---|---|---|---|---|---|---|
+| 1 | `6957787ef76d530001901236` | AliExpress 3256807242236207 | ~$16–18, free ship 13d | 4 sizes × ~17 colors | "100% Australia Extrafine Merino Wool" (mock-neck) | $44.95 |
+| 3 | `6a03c53539ba4b00017a54f5` | Walmart 5030481746 (US warehouse, 1–2d) | ~$30–32 | 5 sizes × 9 colors (full matrix) | 45% acrylic / 55% polyester | $59.95 |
+| 5 (fallback) | `673bc7b27126c18f62f09c9d` | AliExpress 3256807073935486 | ~$16, free ship 13d | 4 sizes × 10 colors | conflicting — publish only "30% merino wool blend" | $39.95 |
+
+Slots 2, 4, 5 failed round 1 (cost, composition-missing, or single-variant);
+round 2 re-searches running with the agent's own terms. Rule flexes recorded:
+shipping ≤14 stated days (policy pages will state 8–15 business days
+honestly); US-warehouse landed cost to $32 with a real variant matrix.
+Dropped with reasons: DOKOTOO cardigan ($41.60 landed), private-supplier
+longline (no composition stated — unpublishable under §1.2), all
+single-variant Walmart/Amazon listings.
+
 - Images: single product, neutral background, **no AliExpress photos, watermarks, logos or Chinese text**
 - **No images inside the description** — a named suspension trigger
 - **URL handle must match the final title** — the playbook calls this *"a top automatic-indexing trigger"*
