@@ -18,7 +18,7 @@ self-test **24/24**.
 |---|---|---|
 | 0.1 | **Domain**: general store on hivolt-usa.com **or** fresh domain + fresh GMC. The published HIVOLT spec-first standard cannot share a domain with a 600–700 SKU generic catalogue (GOOGLE-SHOPPING-RESEARCH §6). Recommendation on file: fresh domain. | 🔴 OPEN |
 | 0.2 | **Supplier**: confirm which installed service is the China supplier — **AutoDS is the likely answer** (general-catalogue dropship automation; ODMPOD/Tapstitch are POD apparel; Supliful is supplements). **Smallest action: authorize the AutoDS connector in claude.ai → Settings → Connectors** — then this session can read its catalogue and wire the import path. | 🟡 NARROWED |
-| 0.3 | **GMC `5838274874`**: current status + appeals already used. Read from the GMC UI. | 🔴 OPEN |
+| 0.3 | **GMC `5838274874`**: owner confirms 2026-08-27 the merchant account is **verified**. Verification (business identity, website claim) is not misrepresentation clearance — a verified GMC with zero products has not yet faced the misrep review that Phase 4 deliberately triggers, so the 5-product gauntlet still applies. No suspension reported → assume **3/3 appeals available**. Remaining sub-question: which feed app owns the feed (Simprosys vs Google & YouTube — both installed; pick ONE before products flow). | 🟢 VERIFIED |
 | ✅ | Markets: **US + UK** — both top-4 (§8); worst pair on GMC-approval difficulty and chargeback culture; trade-off recorded, accepted. | DECIDED |
 | ✅ | Niche: **general women's fashion** — the course's only endorsed niche. | DECIDED |
 
