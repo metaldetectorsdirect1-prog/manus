@@ -175,3 +175,9 @@ never takes daily-import risk again.
 2. Weekly: assemble the batch → validator `--batch` runs across all drafts (uniqueness + discount-mix)
 3. One aliased mutation flips the whole batch `DRAFT → ACTIVE` — the single feed-change event
 4. Never trickle drafts live individually; the simultaneity *is* the safety
+
+**The second argument for batches — pattern camouflage:** real brands drop
+collections weekly or seasonally; nobody legitimate releases new clothes every
+day. A daily-import feed *looks like* a dropship operation to a reviewer; a
+weekly 50-batch looks like a retail drop. The batch doesn't just reduce how
+often the scan fires — it changes what the scan sees when it does.
