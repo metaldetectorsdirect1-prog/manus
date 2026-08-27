@@ -32,6 +32,14 @@ MEDICAL = re.compile(
     r"cures?|heals?|therapeutic|orthopedic|orthopaedic|anti[- ]?bacterial|"
     r"medical[- ]grade|fda[- ]approved|clinically\s+proven", re.I)
 SUPPLIER_VENDORS = re.compile(r"aliexpress|cj\s*drop|cjdropshipping|alibaba|temu|1688|taobao", re.I)
+# Copyright/trademark screen — a copyright suspension is terminal (<1% recovery).
+BRAND_MARKS = re.compile(
+    r"\bgucci|goyard|louis\s*vuitton|\blv\b|chanel|dior|prada|hermes|herm\u00e8s|balenciaga|"
+    r"fendi|versace|burberry|celine|ysl|saint\s*laurent|bottega|moncler|canada\s*goose|"
+    r"dr\.?\s*martens?|doc\s*martens?|birkenstock|\bugg\b|nike|adidas|jordan|yeezy|"
+    r"lululemon|north\s*face|patagonia|ralph\s*lauren|tommy\s*hilfiger|calvin\s*klein|"
+    r"skims|zara|shein", re.I)
+DUPE = re.compile(r"\bdupe\b|inspired\s+by|\breplica\b|(look|style)\s+of\s+[A-Z]|designer\s+style", re.I)
 
 def _has_emoji_or_symbols(text):
     for ch in text:
@@ -71,6 +79,15 @@ def check(product):
     bad = _has_emoji_or_symbols(title)
     if bad:
         errs.append(f"TITLE: symbol/emoji {bad!r}")
+    tags = product.get("tags") or []
+    if isinstance(tags, str): tags = [tags]
+    for field, text in (("TITLE", title), ("DESC", body), ("TAGS", " ".join(tags))):
+        m = BRAND_MARKS.search(text)
+        if m:
+            errs.append(f"{field}: trademark {m.group(0)!r} — copyright suspension is TERMINAL")
+        m = DUPE.search(text)
+        if m:
+            errs.append(f"{field}: dupe/replica phrasing {m.group(0)!r} — trademark flag")
 
     # 3. Descriptions
     if re.search(r"<img\b", body, re.I):
@@ -161,6 +178,9 @@ def self_test():
         (dict(good, images=[{"src": "https://ae01.alicdn.com/x.jpg", "alt": "a"}]), "IMAGE"),
         (dict(good, currency="DKK", variants=[{"price": "251", "compare_at_price": None}]), "round"),
         (dict(good, body_html="<p>Orthopedic support, clinically proven.</p>"), "medical"),
+        (dict(good, title="Gucci style leather jacket"), "trademark"),
+        (dict(good, body_html="<p>A perfect Skims dupe.</p>"), "TERMINAL"),
+        (dict(good, tags=["dr martens", "boots"]), "trademark"),
     ]
     for prod, must in cases:
         e, _ = check(prod)

@@ -57,3 +57,14 @@ then 25/day or 50/week per the calendar).
   by keeping their own stores alive — not Google's published policy text.
   Where an agency claim conflicts with it, the SOP wins here; where Google's
   actual policy conflicts, Google wins.
+
+- **Copyright is the terminal suspension** — fake Goyard/Gucci/Dr Martens class.
+  <1% recovery; the GMC never comes back. The validator now refuses ~30
+  frequently-counterfeited fashion marks in title, description or tags, and the
+  "dupe / inspired by / replica / designer style" phrasing that carries the same
+  trademark risk. The regex is a floor, not a licence: an unlisted brand name is
+  still a violation.
+- **Neutral backgrounds are preferred, not mandatory** — the narration is
+  explicit ("we don't always do it"). They help branding and consistency; their
+  absence is not a compliance failure. The pasted SOP's "must have" is read as
+  strong-default.
