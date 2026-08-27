@@ -1,0 +1,37 @@
+# PRODUCT-LISTING-SOP.md
+
+The per-product compliance SOP for Google Merchant Center, as supplied by the
+owner 2026-08-26. **Enforced mechanically by `site/check-product-listing.py`**
+(12/12 self-tests) — run it against every product JSON before publishing; exit 1
+is a refusal, not a suggestion.
+
+## What the validator enforces
+
+| Area | Refused |
+|---|---|
+| Titles | >150 chars · ALL CAPS (whole or per-word) · promo language ("free shipping", "% off", "sale", "best seller") · emoji, ★, ™, ✓ |
+| Descriptions | `<img>` tags · external links · CTAs ("click here", "buy now") · urgency ("limited stock", "flash sale", "only N left") · medical/health claims · **✓ characters** (use bullets) |
+| Pricing | EUR/USD/GBP/CAD/CHF/NZD not ending **.95** · DKK/PLN not rounded to 0/5 · discount >50% vs compare-at |
+| Organization | missing vendor · supplier-named vendor (AliExpress/CJ/Temu…) · no category · handle with trailing numbers (`dress-231`) · **handle ≠ title slug** (the top automatic trigger) |
+| Images | none · supplier-CDN URLs (alicdn etc.) · missing alt text (warning) |
+
+## Details this SOP added beyond the module notes
+
+- **Price psychology per currency**: .95 endings for EUR/USD/GBP/CAD/CHF/NZD; whole 0/5 for DKK/PLN.
+- **Discount tiers follow product quality**: high-quality products up to 50%, average 20–40%, poor images **no discount** — a bad photo with a big discount reads as bait.
+- **Vendor = the store name**, not merely "not the supplier."
+- **No checkmark characters inside descriptions** — bullets only. (Note: on this store's own product pages the spec sections use tables anyway.)
+- **No collages / multi-view composites** as a single image — one product, one frame.
+- Metafields completed, **especially size options** — which is also what feeds the ~33-SKUs-per-product variant math.
+
+## The one unspecified value
+
+The checklist says *"price meets minimum threshold"* but the SOP text does not
+state the number. `[[NEEDS: minimum price threshold]]` — do not invent it; take
+it from the course's pricing module or the owner.
+
+## Pipeline position
+
+Master list → Planner bands → Trends curves → gap test → `scored-list.csv` →
+supplier mapping → **this validator, per product** → import batch (5 first;
+then 25/day or 50/week per the calendar).
