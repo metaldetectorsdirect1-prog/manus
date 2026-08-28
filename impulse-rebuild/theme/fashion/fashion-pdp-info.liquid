@@ -13,6 +13,11 @@
 -%}
 
 <div class="pdp-info page-width">
+  {%- assign jm = product.metafields.judgeme.review_widget_data.value -%}
+  {%- if jm.number_of_reviews > 0 -%}
+    <div class="pdp-info__rating">{{ product.metafields.judgeme.badge }}</div>
+  {%- endif -%}
+
   {%- if lede != blank -%}
     <div class="pdp-info__lede">{{ lede | newline_to_br }}</div>
   {%- endif -%}
@@ -89,6 +94,8 @@
     max-width: 760px;
     margin: 24px auto 40px;
   }
+  .pdp-info__rating { margin: 0 0 12px; }
+  .pdp-info__rating .jdgm-prev-badge { display: block !important; }
   .pdp-info__lede {
     font-size: 16px;
     line-height: 1.6;

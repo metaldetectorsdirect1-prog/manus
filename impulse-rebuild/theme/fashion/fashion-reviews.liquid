@@ -1,0 +1,25 @@
+{%- comment -%}
+  Judge.me full review widget — honest zero state, lower PDP.
+  Judge.me's app embed hydrates the div; with the embed disabled this
+  renders nothing visible. No reviews are ever fabricated; the zero state
+  is Judge.me's own "be the first to write a review" invitation.
+{%- endcomment -%}
+
+<div class="pdp-reviews page-width">
+  <div class="jdgm-widget jdgm-review-widget" data-product-id="{{ product.id }}"></div>
+</div>
+
+{% style %}
+  .pdp-reviews {
+    max-width: 900px;
+    margin: 8px auto 48px;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Reviews (Judge.me)",
+  "settings": [],
+  "presets": [ { "name": "Reviews (Judge.me)" } ]
+}
+{% endschema %}

@@ -67,11 +67,16 @@
       "settings": {
         "recent_count": 4
       }
+    },
+    "reviews": {
+      "type": "fashion-reviews",
+      "settings": {}
     }
   },
   "order": [
     "main",
     "pdp-info",
+    "reviews",
     "product-recommendations",
     "recently-viewed"
   ]

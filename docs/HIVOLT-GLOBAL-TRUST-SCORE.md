@@ -6,7 +6,22 @@ payment wallets, metafield/metaobject definitions, menus, pages, policies,
 theme files). Scores are deliberately honest: a beautiful theme with 4 DRAFT
 products, unpasted policies and zero reviews does not score highly.
 
-## HIVOLT GLOBAL COMMERCE READINESS SCORE: 32 / 100
+## HIVOLT GLOBAL COMMERCE READINESS SCORE: 34 / 100
+
+> **P0 authorized-pass recalculation (later on 2026-08-28), evidence-backed
+> changes only:** Trust 40→**45** (three live-footer 404 links fixed and
+> read-back verified; verified-truthful FAQ presentation live on the dev
+> preview; honest zero-review strategy implemented). PDP Conversion
+> 45→**50** (Judge.me review widget + review-count-gated rating badge wired
+> and checksum-verified). Retention 25→**30** (review widget + acquisition
+> sequence in place; still zero reviews). SEO/Merchant 35→**37** (genuine
+> FAQPage JSON-LD now emitted from the verified FAQ template; live footer
+> crawl 404s removed). Unchanged for lack of evidence: Product Data 30,
+> Fit 15, Markets 20, Merchandising 35 (collection unpublish
+> connector-blocked → owner action), Analytics 10 (GA4 owner connection
+> required), Performance 40 (GemPages deletion connector-blocked; unused
+> files carry zero runtime weight anyway), Accessibility 40, Creative 50
+> (0/31 approved), Brand 55. Previous total 32 → **34**.
 
 | # | System | Current | Target | Severity | Top gaps | Fixable now | Requires owner |
 |---|---|---|---|---|---|---|---|

@@ -37,6 +37,32 @@ the live "footer" menu → owner approval (included in the package below).
 > remove the two golf links from the live footer menu; deletion of retired
 > activewear/golf collections may follow after 30 days."
 
-Nothing has been unpublished, deleted, or re-linked. On approval the
-unpublish operations run with per-collection read-backs; renames and
-deletions remain a second, later step.
+## Execution record — 2026-08-28 authorized pass
+
+Owner approved Decision B. Outcome:
+
+- **Collection unpublishing: BLOCKED BY CONNECTOR.** `publishableUnpublish`
+  is refused by the MCP server's safety policy ("Unpublishing is blocked to
+  prevent accidental storefront catalog removal") — independent of owner
+  authorization. Zero collection writes occurred (spot-check read-backs
+  confirm all publication states unchanged). No workaround was attempted.
+  **Smallest owner action (~2 min):** Admin → Products → Collections →
+  select the 11 rows above → make unavailable on Online Store, Shop, and
+  where listed, Google & YouTube / AfterShip / POS / Facebook & Instagram.
+- **Live footer 404s: FIXED + read-back verified.** Before: "Shop" column
+  parent and two children pointed at the unpublished golf collections
+  (mens-golf-polos, long-sleeve-golf-polos) — three 404 targets. After:
+  parent "Shop" → /collections/all, single child "Shop all" →
+  /collections/all; golf items removed; every other footer destination
+  re-verified published (shipping-delivery ✓, terms-of-service ✓). Menu
+  item IDs preserved; nothing replaced with unrelated filler.
+- `/pages/size-guide` links were NOT touched: the page is published (stale
+  golf content — a Decision-F rewrite item, not a 404).
+
+| Menu item | Before | After |
+|---|---|---|
+| Shop (parent) | /collections/mens-golf-polos (404) | /collections/all |
+| The Polo Collection | /collections/mens-golf-polos (404) | **removed** |
+| The Championship Capsule | /collections/long-sleeve-golf-polos (404) | **removed** |
+| Shop all | /collections/all | unchanged |
+| all other items | verified published destinations | unchanged |

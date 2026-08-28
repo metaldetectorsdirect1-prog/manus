@@ -31,5 +31,32 @@ with this profile; measurable only on the rendered preview/live —
 owner-side Lighthouse run at stage 15 of the publish runbook.
 
 Cleanup rule applied: theme-local deletions only after proving zero
-references (needs the remaining file-listing pages); GemPages removal is
-app infrastructure → Decision E.
+references; GemPages removal is app infrastructure → Decision E.
+
+## Decision E execution record — 2026-08-28
+
+Reference proof completed (full 2-page file inventory + template-suffix
+read across all pages/collections/products):
+
+| GemPages file | Class | Evidence |
+|---|---|---|
+| assets/gp-global.css (70KB) | UNREFERENCED | loaded only by gempages layouts; theme.liquid clean |
+| layout/theme.gempages.{blank,footer,header}.liquid (~45KB) | UNREFERENCED | no template declares a gempages layout; no resource uses a gp template suffix |
+| snippets/gp-head.liquid | UNREFERENCED | rendered only by gempages layouts |
+| sections/gp-variant-selected.liquid | UNREFERENCED | referenced only by gp templates |
+| templates/{collection,index,product}.gp-template-bk-default.json (~19KB) | UNREFERENCED | zero pages/collections/products carry suffix "gp-template-bk-default" (fresh read) |
+
+Total: 9 files, ~135KB of theme residue.
+
+**Deletion: BLOCKED BY CONNECTOR.** `themeFilesDelete` is refused by the
+MCP server safety policy (all theme deletion operations blocked). No
+workaround attempted. Owner action (~2 min): Online Store → Themes →
+Copy of Impulse → Edit code → delete the 9 files listed.
+
+Honesty note on impact: unreferenced theme files add **zero runtime page
+weight** — Shopify serves assets on demand. This cleanup is theme hygiene
+and editor clarity, not page speed. The password background and demo
+textures likewise cost shoppers nothing while unreferenced; they remain
+retained pending the same owner cleanup. Real page-speed posture is
+governed by the verified-good behaviors above and can only be measured on
+rendered pixels (owner Lighthouse at publish runbook stage 15).

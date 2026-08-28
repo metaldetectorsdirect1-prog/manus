@@ -1,0 +1,90 @@
+{
+  "sections": {
+    "main": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "title": "How long does delivery take?",
+            "text": "<p>Free tracked shipping on every US order. Items stocked in US warehouses typically arrive in 2\u20136 business days; internationally stocked items typically arrive in 10\u201315 business days.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "title": "What does shipping cost?",
+            "text": "<p>Nothing \u2014 shipping is free on every US order, with no minimum. It shows as $0.00 at checkout.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "title": "Do you ship outside the United States?",
+            "text": "<p>Not yet. HIVOLT currently sells and ships within the United States only.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "title": "What is your return policy?",
+            "text": "<p>Every order has 60 days from delivery to return, for any reason. Returns are free \u2014 once your return is approved we send a prepaid return label, and there is no restocking fee. Email <a href=\"mailto:support@hivolt-usa.com\">support@hivolt-usa.com</a> with your order number to start a return.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "title": "When will I receive my refund?",
+            "text": "<p>Refunds are issued to the original payment method within 5 business days of your return reaching us. Depending on your bank, it can take a further 5\u201310 days to appear on your statement.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "title": "How do I track my order?",
+            "text": "<p>Every order is tracked. Use our <a href=\"/pages/track-order\">Track Your Order</a> page with your order number.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "title": "Which payment methods do you accept?",
+            "text": "<p>Checkout runs on Shopify's secure checkout. Cards are accepted, along with Shop\u00a0Pay, Apple\u00a0Pay and Google\u00a0Pay. Any applicable sales tax is shown at checkout before you pay.</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "title": "Do I need an account to order?",
+            "text": "<p>No \u2014 guest checkout is available. Creating an account simply keeps your orders in one place.</p>"
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "title": "How do I contact HIVOLT?",
+            "text": "<p>Email <a href=\"mailto:support@hivolt-usa.com\">support@hivolt-usa.com</a>, call +1\u00a0914-650-2041, or use our <a href=\"/pages/contact-us\">contact page</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9"
+      ],
+      "settings": {
+        "title": "Help Center",
+        "heading_size": "h1"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
