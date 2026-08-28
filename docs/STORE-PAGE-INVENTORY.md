@@ -43,11 +43,14 @@ All page/template facts below are same-day Shopify read-backs, not memory.
 | Collections index | `list-collections.json` | Yes (native) | native | native | no JSON-LD emitted (verified) | — | r2 UNPUBLISHED |
 | Fabric index / Google verify / Materials | `page.fabric.json`, `page.google-verify.json` **created this pass** | Yes | native | native | — | real | pages live |
 
-**Header/nav:** new store menu `master-storefront-nav` (New in · Knitwear ·
-Journal · About ×4 children · Help ×6 children — every destination a real
-published surface) wired into r2's header-group only; live MAIN still reads
-`fashion-main`. Favicon (512px HV mark) wired in r2 settings. Announcement
-bar: two truthful messages, sticky.
+**Header/nav:** new store menu `master-storefront-nav` (Journal · About ×4
+children · Help ×6 children — every destination a real published surface)
+wired into r2's header-group only; live MAIN still reads `fashion-main`.
+The "New in"/"Knitwear" collection links were removed at certification
+(2026-08-28) because all 23 products are DRAFT and both collections render
+empty — re-add them after product activation (see
+PRODUCTION-CUTOVER-PLAN.md). Favicon (512px HV mark) wired in r2 settings.
+Announcement bar: two truthful messages, sticky.
 
 **No page is forgotten; nothing fake fills a slot.** Remaining gates are the
 same three external facts: remote preview (rendered walk of native Impulse
