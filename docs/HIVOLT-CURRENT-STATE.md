@@ -9,6 +9,17 @@ Queried: **2026-08-28T21:15Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.co
 manually in Shopify admin") — verified by an actual refused attempt at
 21:15Z with roles re-verified unchanged afterwards. **The owner publishes
 r2 manually**, then follows `docs/PRODUCTION-CUTOVER-PLAN.md`.
+
+**Theme-admin activity 21:33–21:52Z (observed via role/updatedAt reads):**
+the old MAIN was unpublished ~21:33:01, r2 was touched ~21:33:42 (briefly
+published, most likely), IMPULSE-REBUILD ~21:35:58, and at **21:36:35 the
+STOCK "Impulse" demo theme (`158743363816`) became MAIN — the live
+storefront is running an uncustomized demo theme**. A fifth theme,
+"Horizon" (`158882693352`), was added ~21:52 — the owner appears to be
+actively exploring themes. r2 re-verified checksum-intact at 21:45Z (all 8
+certified files identical); owner push-notified at 21:45Z naming the exact
+theme to publish. The certified storefront remains one click away:
+**Themes → "GENERAL STORE — MASTER r2 (approved image swaps)" → Publish.**
 **Catalog at 21:15Z:** 819 products (344 ACTIVE, rest DRAFT), **0 published
 to the Online Store channel** — the storefront still shows zero products.
 Theme publication ≠ commerce launch: analytics NOT CONFIGURED, do not send
