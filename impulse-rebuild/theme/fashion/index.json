@@ -3,14 +3,14 @@
     "hero": {
       "type": "fashion-hero",
       "settings": {
-        "image_desktop": "shopify://shop_images/hivolt-v3-hero-desktop.png",
-        "image_mobile": "shopify://shop_images/hivolt-v3-portrait-01.png",
+        "image_desktop": "shopify://shop_images/hivolt-golf-hero-desktop.png",
+        "image_mobile": "shopify://shop_images/hivolt-golf-portrait-01.png",
         "is_first": true,
-        "preheading": "HIVOLT · New season",
-        "heading": "Modern essentials, redefined.",
-        "subtext": "",
-        "cta1_label": "",
-        "cta1_link": "",
+        "preheading": "HIVOLT \u00b7 The Global Golf Club",
+        "heading": "The modern golf uniform.",
+        "subtext": "Premium polos designed for the course, the clubhouse and everywhere after.",
+        "cta1_label": "Discover HIVOLT",
+        "cta1_link": "/pages/about-us",
         "cta2_label": "",
         "cta2_link": "",
         "text_position": "left",
@@ -22,49 +22,68 @@
     "brand-strip": {
       "type": "fashion-strip",
       "settings": {
-        "text": "Free tracked US shipping · 60-day free returns · No restocking fees",
-        "scheme": "dark"
+        "text": "Free tracked US shipping \u00b7 60-day free returns \u00b7 No restocking fees",
+        "scheme": "forest"
       }
     },
-    "trending": {
+    "shop-polos": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "title": "The polos",
+        "heading_size": "h2",
+        "home_featured_products": "mens-golf-polos",
+        "per_row": 4,
+        "rows": 1,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "find-your-game": {
       "type": "image-grid",
       "blocks": {
         "b1": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-trend-01.png",
+            "image": "shopify://shop_images/hivolt-golf-game-classic.png",
             "link": "",
-            "heading": "Knitwear"
+            "heading": "Classic"
           }
         },
         "b2": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-trend-02.png",
+            "image": "shopify://shop_images/hivolt-golf-game-performance.png",
             "link": "",
-            "heading": "New season"
+            "heading": "Performance"
           }
         },
         "b3": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-trend-03.png",
+            "image": "shopify://shop_images/hivolt-golf-game-clubhouse.png",
             "link": "",
-            "heading": "Essentials"
+            "heading": "Clubhouse"
           }
         },
         "b4": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-trend-04.png",
+            "image": "shopify://shop_images/hivolt-golf-game-tournament.png",
             "link": "",
-            "heading": "Layers"
+            "heading": "Tournament"
           }
         }
       },
-      "block_order": ["b1", "b2", "b3", "b4"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
       "settings": {
-        "heading": "Trending now",
+        "heading": "Find your game",
         "heading_size": "h2",
         "text_alignment": "left",
         "images_per_row": 4,
@@ -79,14 +98,14 @@
         "overlay_opacity": 15
       }
     },
-    "campaign-a": {
+    "campaign-19th": {
       "type": "fashion-hero",
       "settings": {
-        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-a.png",
-        "image_mobile": "shopify://shop_images/hivolt-v3-portrait-02.png",
+        "image_desktop": "shopify://shop_images/hivolt-golf-campaign-19th.png",
+        "image_mobile": "shopify://shop_images/hivolt-golf-portrait-03.png",
         "is_first": false,
         "preheading": "The campaign",
-        "heading": "Two ways to layer",
+        "heading": "Built for 18 holes. Refined for the 19th.",
         "subtext": "",
         "cta1_label": "",
         "cta1_link": "",
@@ -98,162 +117,219 @@
         "desktop_focal": "center center"
       }
     },
-    "campaign-b": {
-      "type": "fashion-hero",
-      "settings": {
-        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-b.png",
-        "image_mobile": "shopify://shop_images/hivolt-v3-portrait-03.png",
-        "is_first": false,
-        "preheading": "Women",
-        "heading": "The new season edit",
-        "subtext": "",
-        "cta1_label": "",
-        "cta1_link": "",
-        "cta2_label": "",
-        "cta2_link": "",
-        "text_position": "left",
-        "overlay_opacity": 35,
-        "desktop_height": 74,
-        "desktop_focal": "center center"
-      }
-    },
-    "category-strip": {
-      "type": "fashion-category-strip",
+    "brand-statement": {
+      "type": "rich-text",
       "blocks": {
-        "c1": {
-          "type": "tile",
+        "heading": {
+          "type": "heading",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-cat-01.png",
-            "label": "Knitwear",
-            "link": ""
+            "title": "The polo, perfected.",
+            "heading_size": "h2"
           }
         },
-        "c2": {
-          "type": "tile",
+        "text": {
+          "type": "text",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-cat-02.png",
-            "label": "Sweaters",
-            "link": ""
-          }
-        },
-        "c3": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-v3-cat-03.png",
-            "label": "Cardigans",
-            "link": ""
-          }
-        },
-        "c4": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-v3-cat-04.png",
-            "label": "New in",
-            "link": ""
-          }
-        },
-        "c5": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-v3-cat-05.png",
-            "label": "Essentials",
-            "link": ""
-          }
-        },
-        "c6": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-v3-cat-06.png",
-            "label": "Layers",
-            "link": ""
+            "enlarge_text": true,
+            "text": "<p>HIVOLT is building the modern golf wardrobe, starting with the polo \u2014 cut for the course, finished for everything after. We publish what we can verify about every garment and leave out what we can\u2019t.</p>"
           }
         }
       },
-      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"],
+      "block_order": [
+        "heading",
+        "text"
+      ],
       "settings": {
-        "heading": "Shop by category"
+        "align_text": "left",
+        "narrow_column": true,
+        "divider": false
       }
     },
-    "campaign-c": {
-      "type": "fashion-hero",
-      "settings": {
-        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-c.png",
-        "image_mobile": "",
-        "is_first": false,
-        "preheading": "In motion",
-        "heading": "Made to move",
-        "subtext": "",
-        "cta1_label": "",
-        "cta1_link": "",
-        "cta2_label": "",
-        "cta2_link": "",
-        "text_position": "left",
-        "overlay_opacity": 35,
-        "desktop_height": 70,
-        "desktop_focal": "center center"
-      }
-    },
-    "collage": {
+    "craft": {
       "type": "fashion-collage",
       "blocks": {
         "t1": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-collage-anchor.png",
-            "title": "The full look",
+            "image": "shopify://shop_images/hivolt-golf-studio-polo.png",
+            "title": "The polo",
             "link": ""
           }
         },
         "t2": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-collage-01.png",
-            "title": "Cable knit",
+            "image": "shopify://shop_images/hivolt-golf-macro-collar.png",
+            "title": "Collar",
             "link": ""
           }
         },
         "t3": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-collage-02.png",
-            "title": "Knit details",
+            "image": "shopify://shop_images/hivolt-golf-macro-placket.png",
+            "title": "Placket",
             "link": ""
           }
         },
         "t4": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-collage-03.png",
-            "title": "Sweaters",
+            "image": "shopify://shop_images/hivolt-golf-macro-fabric.png",
+            "title": "Pique",
             "link": ""
           }
         },
         "t5": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-collage-04.png",
-            "title": "Layers",
+            "image": "shopify://shop_images/hivolt-golf-macro-cuff.png",
+            "title": "Cuff",
             "link": ""
           }
         }
       },
-      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
       "settings": {
-        "heading": "Explore the collection"
+        "heading": "The polo, in detail"
       }
     },
-    "latest": {
-      "type": "featured-collection",
-      "disabled": true,
+    "global-club": {
+      "type": "image-grid",
+      "blocks": {
+        "b1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-club-links.png",
+            "link": "",
+            "heading": "Links"
+          }
+        },
+        "b2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-club-desert.png",
+            "link": "",
+            "heading": "Desert"
+          }
+        },
+        "b3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-club-parkland.png",
+            "link": "",
+            "heading": "Parkland"
+          }
+        },
+        "b4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-club-alpine.png",
+            "link": "",
+            "heading": "Alpine"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
       "settings": {
-        "title": "The latest",
+        "heading": "The Global Club",
         "heading_size": "h2",
-        "home_featured_products": "knitwear",
-        "per_row": 4,
-        "rows": 2,
-        "mobile_scrollable": true,
-        "view_all": true,
-        "divider": false
+        "text_alignment": "left",
+        "images_per_row": 4,
+        "image_shape": "portrait",
+        "grid_spacing": 8,
+        "full_width": false,
+        "space_above": false,
+        "space_below": false,
+        "divider": false,
+        "overlay_text_color": "#ffffff",
+        "overlay_color": "#0A0A0B",
+        "overlay_opacity": 15
+      }
+    },
+    "the-course": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-golf-course-dusk.png",
+        "image_mobile": "",
+        "is_first": false,
+        "preheading": "The course",
+        "heading": "From first tee to last light.",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 74,
+        "desktop_focal": "center center"
+      }
+    },
+    "clubhouse": {
+      "type": "fashion-collage",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-clubhouse-anchor.png",
+            "title": "After the round",
+            "link": ""
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-clubhouse-cart.png",
+            "title": "The cart",
+            "link": ""
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-clubhouse-locker.png",
+            "title": "The locker room",
+            "link": ""
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-clubhouse-terrace.png",
+            "title": "The terrace",
+            "link": ""
+          }
+        },
+        "t5": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-golf-clubhouse-putting.png",
+            "title": "The green",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "settings": {
+        "heading": "The clubhouse"
       }
     },
     "newsletter": {
@@ -262,14 +338,14 @@
         "title": {
           "type": "title",
           "settings": {
-            "title": "Be first to know",
+            "title": "Join the club",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>New drops, restocks and HIVOLT edits. Unsubscribe in one click, any time — see our <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>"
+            "text": "<p>New releases, tournament edits and stories from HIVOLT. Unsubscribe in one click, any time \u2014 see our <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>"
           }
         },
         "form": {
@@ -277,127 +353,35 @@
           "settings": {}
         }
       },
-      "block_order": ["title", "text", "form"],
+      "block_order": [
+        "title",
+        "text",
+        "form"
+      ],
       "settings": {
         "align_text": "left",
-        "image": "shopify://shop_images/hivolt-v3-newsletter.png",
+        "image": "shopify://shop_images/hivolt-golf-newsletter.png",
         "image_width": "50",
         "image_mask": "none",
         "image_position": "right",
-        "color_background": "#F7F7F5",
+        "color_background": "#F6F3EC",
         "color_text": "#0A0A0B",
         "top_padding": true,
         "bottom_padding": true
       }
-    },
-    "master-hero-disabled": {
-      "type": "fashion-hero",
-      "settings": {
-        "image_desktop": "shopify://shop_images/hivolt-master-hero-desktop.png",
-        "image_mobile": "shopify://shop_images/hivolt-master-hero-mobile.png",
-        "is_first": false,
-        "preheading": "HIVOLT",
-        "heading": "Women and men, one standard",
-        "subtext": "",
-        "cta1_label": "",
-        "cta1_link": "",
-        "cta2_label": "",
-        "cta2_link": "",
-        "text_position": "left",
-        "overlay_opacity": 35,
-        "desktop_height": 80,
-        "desktop_focal": "center center"
-      },
-      "disabled": true
-    },
-    "men-hero-disabled": {
-      "type": "fashion-hero",
-      "settings": {
-        "image_desktop": "shopify://shop_images/hivolt-men-editorial-desktop.png",
-        "image_mobile": "shopify://shop_images/hivolt-men-editorial-mobile.png",
-        "is_first": false,
-        "preheading": "Men",
-        "heading": "The men's edit",
-        "subtext": "",
-        "cta1_label": "",
-        "cta1_link": "",
-        "cta2_label": "",
-        "cta2_link": "",
-        "text_position": "left",
-        "overlay_opacity": 35,
-        "desktop_height": 70,
-        "desktop_focal": "center center"
-      },
-      "disabled": true
-    },
-    "men-trends-disabled": {
-      "type": "image-grid",
-      "blocks": {
-        "b1": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-men-new-season.png",
-            "link": "",
-            "heading": "New season"
-          }
-        },
-        "b2": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-men-smart-casual.png",
-            "link": "",
-            "heading": "Smart casual"
-          }
-        },
-        "b3": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-men-street-style.png",
-            "link": "",
-            "heading": "Street style"
-          }
-        },
-        "b4": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/hivolt-men-denim.png",
-            "link": "",
-            "heading": "Denim"
-          }
-        }
-      },
-      "block_order": ["b1", "b2", "b3", "b4"],
-      "settings": {
-        "heading": "For him",
-        "heading_size": "h2",
-        "text_alignment": "left",
-        "images_per_row": 4,
-        "image_shape": "portrait",
-        "grid_spacing": 8,
-        "full_width": false,
-        "space_above": false,
-        "space_below": false,
-        "divider": false,
-        "overlay_text_color": "#ffffff",
-        "overlay_color": "#0A0A0B",
-        "overlay_opacity": 15
-      },
-      "disabled": true
     }
   },
   "order": [
     "hero",
     "brand-strip",
-    "trending",
-    "campaign-a",
-    "campaign-b",
-    "category-strip",
-    "campaign-c",
-    "collage",
-    "latest",
-    "newsletter",
-    "master-hero-disabled",
-    "men-hero-disabled",
-    "men-trends-disabled"
+    "shop-polos",
+    "find-your-game",
+    "campaign-19th",
+    "brand-statement",
+    "craft",
+    "global-club",
+    "the-course",
+    "clubhouse",
+    "newsletter"
   ]
 }

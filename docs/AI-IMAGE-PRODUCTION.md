@@ -127,3 +127,21 @@ Full per-slot index — filenames, job ids, gallery frame numbers, MediaImage
 ids, alternates and swap commands — lives in `HIVOLT-V3-IMAGE-REVIEW.md`.
 All 31 are **PREVIEW ACTIVE — OWNER APPROVAL PENDING**; approved: 0.
 Correction tool on standby: `nano_banana_2` mask inpaint.
+
+
+## V5 golf program — 2026-08-28 (creative-direction pivot)
+
+The owner redirected HIVOLT to a premium men's golf polo brand and rejected
+the womenswear direction wholesale. Consequence: **all 31 V3 women's
+assets are demoted to NOT ACTIVE** (files remain as history; zero section
+references). The V5 golf program: 33 images requested on `nano_banana_2`
+(2k), served on `nano_banana_flash` (recorded truthfully), 33/33 completed,
+0 failures. Golf-specific cleanliness battery in every prompt: plain polo
+chest (no crest/embroidery — the single highest logo-risk zone for polos),
+unbranded bag/clubs/glove/cap, solid-color pin flags with no numbers, no
+scoreboards/signage/banners/sponsor boards, no third-party or baked-in
+HIVOLT logo (branding is theme-applied only). Plan:
+`HIVOLT-GOLF-IMAGE-PLAN.md`. Index with approval commands:
+`HIVOLT-GOLF-IMAGE-REVIEW.md`. 24 wired + 9 alternates. **Approved: 0 —
+OWNER VISUAL APPROVAL REQUIRED on every asset; prompts prove nothing about
+pixels.**
