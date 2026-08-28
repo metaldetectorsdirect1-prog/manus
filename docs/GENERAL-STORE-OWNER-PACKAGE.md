@@ -11,10 +11,19 @@ draft products in the template picker); the plain preview link 404s drafts.
 Nothing here publishes anything. MAIN (`158753652968`) is untouched; the
 candidate stays UNPUBLISHED; PR #2 stays open and unmerged.
 
-1. **Review the 31-image contact sheet** (`docs/review/hivolt-v3-contact-sheet.html`,
-   also delivered in chat). Approve / reject / replace / regenerate /
-   inpaint by number. Approved today: 0/31. — *This is the single NEXT TASK
-   (lowest score: Visual Approval 0/100).*
+1. **Review the 12-image FINAL SHORTLIST**
+   (`docs/review/GENERAL-STORE-FINAL-SHORTLIST.html`, also delivered in
+   chat). Technical pixel QA has already inspected all 31 originals, cut 4,
+   technically approved 11 supporting assets, and regenerated 1 — you review
+   only the 12 primary frames. "Approve: 1, 2, 3…" / "Reject: N" /
+   "Replace N with BX". Approved today: 0/28. — *This is the single NEXT
+   TASK (lowest score: Owner Visual Approval 0/100).* The full 31-frame
+   sheet (`hivolt-v3-contact-sheet.html`) stays available for spot-checks.
+   After approval, one build pass applies the three art-direction settings
+   the in-context QA proved out (mobile hero bottom-darken + white copy;
+   darken overlays on mobile campaign bands), fixes campaign B's mobile
+   copy pairing (image 10 is a coat — use layering copy, not
+   "cardigan"), and swaps tile 14→24 and campaign-c 17→A9.
 2. **Mobile sticky add-to-cart bar** — open a draft PDP in theme-editor
    preview on a phone-width viewport, scroll past the buy button, confirm
    the bar appears, mirrors price/sold-out truthfully, and adds to cart.

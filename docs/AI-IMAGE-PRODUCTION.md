@@ -162,3 +162,21 @@ honest: **0 approved anywhere — every active V3 asset remains OWNER VISUAL
 APPROVAL REQUIRED** (index: HIVOLT-V3-IMAGE-REVIEW.md, un-superseded by
 this note for the active set; HIVOLT-GOLF-IMAGE-REVIEW.md now describes a
 dormant program).
+
+## V3 technical pixel QA + targeted regen — 2026-08-28 (later same day)
+
+Pixel inspection became possible in-session: assets fetched at native
+resolution through the Higgsfield cloud sandbox (sanctioned internet-capable
+tooling), size-capped WebP re-encode, md5-verified local decode, reviewed
+with actual vision; nine risk zones re-inspected as native-res crops. The
+"cannot fetch the image CDNs" limitation in this file's header is therefore
+**closed for QA purposes** (theme/browser egress is still blocked — only the
+QA pipeline changed). Results: 27/31 pass, 4 rejected (14 hard AI defect —
+six repeated torsos; A6 crop hazard; A1/A10 redundant), owner burden cut to
+12 frames (docs/review/GENERAL-STORE-FINAL-SHORTLIST.html).
+
+One targeted regeneration (directive cap: 5; used: 1):
+
+| # | Slot | Ratio | Model req→served | Higgsfield job | Shopify file | Filename | Status |
+|---|---|---|---|---|---|---|---|
+| 24 | Category tile — New in (replaces 14) | 1:1 | nano_banana_2 → **nano_banana_flash** (1024²) | `f4b17de2` | `40464845897960` | hivolt-v3-cat-04-b.png | UPLOADED, pixel-QA'd pre-upload, CDN copy RMSE 0 vs source, **unwired** — swap 14→24 only after owner approval |

@@ -1,0 +1,122 @@
+[
+  {
+    "viewport": 390,
+    "jsErrors": 0,
+    "overflowX": false,
+    "pageHeight": 9252,
+    "firstShoppingSurfaceY": 598,
+    "brokenImages": 0,
+    "shots": [
+      {
+        "name": "hero",
+        "top": 50,
+        "height": 456
+      },
+      {
+        "name": "trending",
+        "top": 598,
+        "height": 510
+      },
+      {
+        "name": "grid",
+        "top": 1142,
+        "height": 1919
+      },
+      {
+        "name": "campaign-a",
+        "top": 3097,
+        "height": 625
+      },
+      {
+        "name": "cats",
+        "top": 3758,
+        "height": 277
+      },
+      {
+        "name": "campaign-b",
+        "top": 6023,
+        "height": 625
+      },
+      {
+        "name": "collage",
+        "top": 6684,
+        "height": 871
+      },
+      {
+        "name": "campaign-c",
+        "top": 7590,
+        "height": 625
+      },
+      {
+        "name": "newsletter",
+        "top": 8259,
+        "height": 534
+      },
+      {
+        "name": "footer",
+        "top": 8848,
+        "height": 404
+      }
+    ]
+  },
+  {
+    "viewport": 1440,
+    "jsErrors": 0,
+    "overflowX": false,
+    "pageHeight": 8923,
+    "firstShoppingSurfaceY": 904,
+    "brokenImages": 0,
+    "shots": [
+      {
+        "name": "hero",
+        "top": 35,
+        "height": 792
+      },
+      {
+        "name": "trending",
+        "top": 904,
+        "height": 498
+      },
+      {
+        "name": "grid",
+        "top": 1436,
+        "height": 1656
+      },
+      {
+        "name": "campaign-a",
+        "top": 3128,
+        "height": 666
+      },
+      {
+        "name": "cats",
+        "top": 3830,
+        "height": 269
+      },
+      {
+        "name": "campaign-b",
+        "top": 5826,
+        "height": 666
+      },
+      {
+        "name": "collage",
+        "top": 6528,
+        "height": 907
+      },
+      {
+        "name": "campaign-c",
+        "top": 7471,
+        "height": 666
+      },
+      {
+        "name": "newsletter",
+        "top": 8181,
+        "height": 420
+      },
+      {
+        "name": "footer",
+        "top": 8657,
+        "height": 266
+      }
+    ]
+  }
+]

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QA FIXTURE — V3 in-context homepage harness (local only)</title>
+<style>
+  :root{--ink:#0A0A0B;--sale:#D0021B;--soft:#F7F7F5;--line:#E5E5E5;--muted:#6D6D6D}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:16px}
+  img{display:block;max-width:100%}
+  .page-width{max-width:1420px;margin:0 auto;padding:0 20px}
+  .announce{background:var(--ink);color:#fff;text-align:center;font-size:13px;padding:10px 16px;letter-spacing:.06em}
+  .btn{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;margin-top:18px}
+  .btn--ghost{background:#fff;color:var(--ink)}
+  /* hero: image 01 desktop (model right of center, clean wall left) / image 02 mobile (light studio) */
+  .hero{position:relative;height:88vh;min-height:420px;overflow:hidden}
+  .hero picture,.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 30%}
+  @media(max-width:767px){.hero{height:117vw;max-height:88vh}.hero img{object-position:50% 32%}}
+  .hero__copy{position:absolute;left:20px;top:50%;transform:translateY(-50%);max-width:560px;color:var(--ink)}
+  @media(max-width:767px){
+    .hero__copy{top:auto;bottom:6%;transform:none;right:20px;color:#fff}
+    .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(transparent,rgba(0,0,0,.55))}
+    .hero__copy{z-index:1}
+    .hero .btn{background:#fff;color:var(--ink)}
+  }
+  .hero__pre{font-size:13px;letter-spacing:.22em;text-transform:uppercase;margin:0 0 8px}
+  .hero__h{font-size:clamp(36px,4.6vw,62px);line-height:1.05;text-transform:uppercase;margin:0}
+  @media(max-width:767px){.hero__h{font-size:34px}}
+  .strip{background:var(--ink);color:#fff;text-align:center;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:14px 20px}
+  h2{font-size:26px;text-transform:uppercase;margin:34px 0 16px}
+  /* trending tiles 03-06 */
+  .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  @media(min-width:768px){.tiles{grid-template-columns:repeat(4,1fr)}}
+  .tile{aspect-ratio:3/4;position:relative;overflow:hidden;background:#eee}
+  .tile img{width:100%;height:100%;object-fit:cover}
+  .tile span{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 10px;color:#fff;text-transform:uppercase;font-size:13px;letter-spacing:.1em;background:linear-gradient(transparent,rgba(0,0,0,.45))}
+  /* campaign bands */
+  .campaign{position:relative;height:74vh;min-height:380px;margin:36px 0;overflow:hidden}
+  .campaign picture,.campaign img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  /* mobile: theme-equivalent darken overlay so campaign copy clears light garments */
+  @media(max-width:767px){.campaign::after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;background:linear-gradient(transparent,rgba(0,0,0,.55));pointer-events:none}.campaign__copy{z-index:1}}
+  .campaign__copy{position:absolute;max-width:480px}
+  .campaign__h{font-size:clamp(30px,3.8vw,52px);line-height:1.06;text-transform:uppercase;margin:0}
+  /* A: image 07 — models left/center, clean concrete right; white copy right w/ scrim */
+  .campaign--a img{object-position:42% 28%}
+  .campaign--a .campaign__copy{right:4%;bottom:10%;color:#fff;text-shadow:0 1px 24px rgba(0,0,0,.35)}
+  @media(max-width:767px){.campaign--a img{object-position:50% 30%}.campaign--a .campaign__copy{left:20px;right:20px;bottom:7%}}
+  /* B: image 09 — model left, white wall right; ink copy right */
+  .campaign--b img{object-position:28% 38%}
+  .campaign--b .campaign__copy{right:4%;top:50%;transform:translateY(-50%);color:var(--ink)}
+  @media(max-width:767px){.campaign--b img{object-position:55% 40%}.campaign--b .campaign__copy{left:20px;right:20px;top:auto;bottom:7%;transform:none;color:#fff;text-shadow:0 1px 24px rgba(0,0,0,.35)}}
+  /* C: image A9 — face right-center, empty taupe left; white copy left */
+  .campaign--c img{object-position:66% 34%}
+  .campaign--c .campaign__copy{left:4%;top:50%;transform:translateY(-50%);color:#fff;text-shadow:0 1px 20px rgba(0,0,0,.28)}
+  @media(max-width:767px){.campaign--c .campaign__copy{left:20px;right:20px;top:auto;bottom:7%;transform:none}}
+  /* category strip: 6 square tiles */
+  .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media(min-width:768px){.cats{grid-template-columns:repeat(6,1fr)}}
+  .cat{position:relative;aspect-ratio:1;overflow:hidden;background:#eee}
+  .cat img{width:100%;height:100%;object-fit:cover}
+  .cat span{position:absolute;left:0;right:0;bottom:0;text-align:center;padding:20px 6px 8px;color:#fff;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(transparent,rgba(0,0,0,.5))}
+  /* product grid */
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 8px}
+  @media(min-width:1024px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 10px}}
+  .card{min-width:0}
+  .card__media{aspect-ratio:3/4;background:var(--soft);position:relative}
+  .card__badge{position:absolute;top:8px;left:8px;background:var(--sale);color:#fff;font-size:11px;font-weight:700;padding:3px 7px}
+  .card__title{font-size:14px;line-height:1.35;margin:10px 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+  .price{font-weight:700;font-size:15px}
+  .price--sale{color:var(--sale)}
+  /* collage: anchor 18 tall + 4 tiles */
+  .collage{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  @media(min-width:768px){.collage{grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:1fr 1fr}}
+  .collage figure{margin:0;overflow:hidden;background:#eee}
+  .collage img{width:100%;height:100%;object-fit:cover}
+  .collage .anchor{grid-row:span 2;aspect-ratio:3/4}
+  @media(max-width:767px){.collage .anchor{grid-column:span 2;aspect-ratio:3/4}}
+  .collage figure:not(.anchor){aspect-ratio:1}
+  /* newsletter with 23 */
+  .newsletter{display:grid;gap:0;background:var(--soft);margin-top:44px}
+  @media(min-width:768px){.newsletter{grid-template-columns:1fr 1fr}}
+  .newsletter__body{padding:56px 32px;align-self:center}
+  .newsletter img{width:100%;height:100%;object-fit:cover;max-height:420px}
+  .newsletter input{border:1px solid var(--ink);padding:13px 14px;font-size:14px;width:min(320px,100%)}
+  .newsletter button{background:var(--ink);color:#fff;border:0;padding:14px 22px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+  footer{background:var(--ink);color:#fff;margin-top:56px;padding:48px 0 28px}
+  .foot{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+  @media(min-width:768px){.foot{grid-template-columns:repeat(4,1fr)}}
+  footer h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px}
+  footer a{color:#cfcfcf;text-decoration:none;font-size:14px;display:block;margin:7px 0}
+  .legal{border-top:1px solid #2a2a2c;margin-top:36px;padding-top:20px;font-size:12px;color:#9a9a9a}
+  a.skip:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #1a73e8;outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="announce">FREE TRACKED SHIPPING — ON EVERY US ORDER, NO MINIMUM</div>
+
+<section class="hero" data-shot="hero">
+  <picture>
+    <source media="(min-width:768px)" srcset="visual-review/v3/01-hivolt-v3-hero-desktop.png">
+    <img src="visual-review/v3/02-hivolt-v3-portrait-01.png" alt="">
+  </picture>
+  <div class="hero__copy page-width">
+    <p class="hero__pre">HIVOLT · NEW SEASON</p>
+    <h1 class="hero__h">Modern essentials, redefined.</h1>
+    <a class="btn" href="#">Shop new in</a>
+  </div>
+</section>
+
+<div class="strip">Free tracked US shipping · 60-day free returns · No restocking fees</div>
+
+<main class="page-width">
+  <section data-first-shopping-surface data-shot="trending">
+    <h2>Trending now</h2>
+    <div class="tiles">
+      <div class="tile"><img src="visual-review/v3/03-hivolt-v3-trend-01.png" alt=""><span>Knitwear</span></div>
+      <div class="tile"><img src="visual-review/v3/04-hivolt-v3-trend-02.png" alt=""><span>Coats</span></div>
+      <div class="tile"><img src="visual-review/v3/05-hivolt-v3-trend-03.png" alt=""><span>Essentials</span></div>
+      <div class="tile"><img src="visual-review/v3/06-hivolt-v3-trend-04.png" alt=""><span>Layers</span></div>
+    </div>
+  </section>
+  <section data-shot="grid">
+    <h2>New this week</h2>
+    <div class="grid" id="grid1"></div>
+  </section>
+</main>
+
+<section class="campaign campaign--a" data-shot="campaign-a">
+  <picture>
+    <source media="(min-width:768px)" srcset="visual-review/v3/07-hivolt-v3-campaign-a.png">
+    <img src="visual-review/v3/08-hivolt-v3-portrait-02.png" alt="">
+  </picture>
+  <div class="campaign__copy">
+    <p class="hero__pre">The campaign</p>
+    <h2 class="campaign__h">Two ways to layer</h2>
+    <a class="btn btn--ghost" href="#">Shop the look</a>
+  </div>
+</section>
+
+<main class="page-width">
+  <section data-shot="cats">
+    <h2>Shop by category</h2>
+    <div class="cats">
+      <div class="cat"><img src="visual-review/v3/11-hivolt-v3-cat-01.png" alt=""><span>Knitwear</span></div>
+      <div class="cat"><img src="visual-review/v3/12-hivolt-v3-cat-02.png" alt=""><span>Sweaters</span></div>
+      <div class="cat"><img src="visual-review/v3/13-hivolt-v3-cat-03.png" alt=""><span>Cardigans</span></div>
+      <div class="cat"><img src="visual-review/v3/regen/24-hivolt-v3-cat-04-b.png" alt=""><span>New in</span></div>
+      <div class="cat"><img src="visual-review/v3/15-hivolt-v3-cat-05.png" alt=""><span>Essentials</span></div>
+      <div class="cat"><img src="visual-review/v3/16-hivolt-v3-cat-06.png" alt=""><span>Layers</span></div>
+    </div>
+  </section>
+  <section>
+    <h2>Most wanted</h2>
+    <div class="grid" id="grid2"></div>
+  </section>
+</main>
+
+<section class="campaign campaign--b" data-shot="campaign-b">
+  <picture>
+    <source media="(min-width:768px)" srcset="visual-review/v3/09-hivolt-v3-campaign-b.png">
+    <img src="visual-review/v3/10-hivolt-v3-portrait-03.png" alt="">
+  </picture>
+  <div class="campaign__copy">
+    <p class="hero__pre">Layer two</p>
+    <h2 class="campaign__h">The long cardigan</h2>
+    <a class="btn" href="#">Shop cardigans</a>
+  </div>
+</section>
+
+<main class="page-width">
+  <section data-shot="collage">
+    <h2>Made to keep</h2>
+    <div class="collage">
+      <figure class="anchor"><img src="visual-review/v3/18-hivolt-v3-collage-anchor.png" alt=""></figure>
+      <figure><img src="visual-review/v3/19-hivolt-v3-collage-01.png" alt=""></figure>
+      <figure><img src="visual-review/v3/20-hivolt-v3-collage-02.png" alt=""></figure>
+      <figure><img src="visual-review/v3/21-hivolt-v3-collage-03.png" alt=""></figure>
+      <figure><img src="visual-review/v3/22-hivolt-v3-collage-04.png" alt=""></figure>
+    </div>
+  </section>
+</main>
+
+<section class="campaign campaign--c" data-shot="campaign-c">
+  <img src="visual-review/v3/A9-hivolt-v3-campaign-c-alt-b.png" alt="">
+  <div class="campaign__copy">
+    <p class="hero__pre">Feel the knit</p>
+    <h2 class="campaign__h">Built for the cold months</h2>
+    <a class="btn btn--ghost" href="#">Explore knitwear</a>
+  </div>
+</section>
+
+<div class="page-width">
+  <section class="newsletter" data-shot="newsletter">
+    <div class="newsletter__body">
+      <h2 style="margin-top:0">Be first to know</h2>
+      <p>New drops, restocks and HIVOLT edits.</p>
+      <form onsubmit="return false"><input type="email" placeholder="Email address" aria-label="Email address"> <button>Sign up</button></form>
+    </div>
+    <img src="visual-review/v3/23-hivolt-v3-newsletter.png" alt="">
+  </section>
+</div>
+
+<footer data-shot="footer">
+  <div class="page-width">
+    <div class="foot">
+      <div><h4>Shop</h4><a href="#">New in</a><a href="#">Knitwear</a><a href="#">Coats</a><a href="#">Essentials</a></div>
+      <div><h4>Help</h4><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Size guide</a><a href="#">Contact</a></div>
+      <div><h4>About</h4><a href="#">Our story</a><a href="#">Materials</a><a href="#">Care</a></div>
+      <div><h4>Newsletter</h4><a href="#">Sign up</a></div>
+    </div>
+    <div class="legal">© HIVOLT — QA FIXTURE, local harness only. Imagery: V3 review copies (≤520px), layout evaluation only.</div>
+  </div>
+</footer>
+
+<script src="fixture-data.js"></script>
+<script>
+(function(products){
+  function fill(id, list){
+    const grid=document.getElementById(id);
+    for(const p of list){
+      const sale=p.compare_at&&p.compare_at>p.price;
+      const pct=sale?Math.round((p.compare_at-p.price)*100/p.compare_at):0;
+      const el=document.createElement('article');el.className='card';
+      el.innerHTML=`<div class="card__media">${sale?`<span class="card__badge">-${pct}%</span>`:''}</div>
+        <h3 class="card__title">${p.title}</h3>
+        <span class="price ${sale?'price--sale':''}">$${p.price.toFixed(2)}</span>`;
+      grid.appendChild(el);
+    }
+  }
+  fill('grid1', products.slice(0,12));
+  fill('grid2', products.slice(12,24));
+})(window.QA_FIXTURE);
+</script>
+</body>
+</html>
