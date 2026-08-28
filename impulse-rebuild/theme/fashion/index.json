@@ -62,7 +62,12 @@
           }
         }
       },
-      "block_order": ["b1", "b2", "b3", "b4"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
       "settings": {
         "heading": "Trending now",
         "heading_size": "h2",
@@ -169,7 +174,14 @@
           }
         }
       },
-      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
       "settings": {
         "heading": "Shop by category"
       }
@@ -237,7 +249,13 @@
           }
         }
       },
-      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
       "settings": {
         "heading": "Explore the collection"
       }
@@ -277,15 +295,18 @@
           "settings": {}
         }
       },
-      "block_order": ["title", "text", "form"],
+      "block_order": [
+        "title",
+        "text",
+        "form"
+      ],
       "settings": {
         "align_text": "left",
-        "image": "shopify://shop_images/hivolt-v3-newsletter.png",
         "image_width": "50",
         "image_mask": "none",
         "image_position": "right",
-        "color_background": "#F7F7F5",
-        "color_text": "#0A0A0B",
+        "color_background": "#D0021B",
+        "color_text": "#FFFFFF",
         "top_padding": true,
         "bottom_padding": true
       }
@@ -366,7 +387,12 @@
           }
         }
       },
-      "block_order": ["b1", "b2", "b3", "b4"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
       "settings": {
         "heading": "For him",
         "heading_size": "h2",
@@ -383,18 +409,40 @@
         "overlay_opacity": 15
       },
       "disabled": true
+    },
+    "category-circles": {
+      "type": "fashion-category-circles",
+      "settings": {
+        "circle_size": 84,
+        "highlight_color": "#D0021B"
+      }
+    },
+    "value-strip": {
+      "type": "fashion-value-strip",
+      "settings": {
+        "scheme": "white"
+      }
+    },
+    "edit-cards": {
+      "type": "fashion-edit-cards",
+      "settings": {
+        "heading": "The Edit"
+      }
     }
   },
   "order": [
     "hero",
+    "category-circles",
+    "value-strip",
     "brand-strip",
+    "edit-cards",
     "trending",
     "campaign-a",
-    "campaign-b",
     "category-strip",
-    "campaign-c",
-    "collage",
     "latest",
+    "campaign-b",
+    "collage",
+    "campaign-c",
     "newsletter",
     "master-hero-disabled",
     "men-hero-disabled",

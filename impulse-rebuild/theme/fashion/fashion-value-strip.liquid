@@ -1,0 +1,108 @@
+{%- comment -%}
+  Service value strip — icon + label + caption columns (reference 1.6).
+  TRUTH GATE: ships with zero blocks. A block renders only when its label
+  is set; the merchant is responsible for configuring only claims that are
+  actually true for this store (policies, shipping settings, payment
+  gateway). No claim is hardcoded.
+{%- endcomment -%}
+
+{%- liquid
+  assign qualified = 0
+  for block in section.blocks
+    if block.settings.label != blank
+      assign qualified = qualified | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if qualified > 0 -%}
+<div class="fashion-values fashion-values--{{ section.settings.scheme }}">
+  <div class="page-width">
+    <ul class="fashion-values__row fashion-values__row--{{ qualified }}" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.label != blank -%}
+          <li class="fashion-values__item" {{ block.shopify_attributes }}>
+            <span class="fashion-values__icon" aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when 'truck' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 5h13v11H1zM14 9h4l3 3v4h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>
+                {%- when 'returns' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l4-4M3 9l4 4M3 9h12a6 6 0 1 1 0 12H9"/></svg>
+                {%- when 'payment' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="1"/><path d="M2 10h20M6 15h5"/></svg>
+                {%- when 'shield' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l8 3v6c0 5-3.5 7.8-8 9-4.5-1.2-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg>
+                {%- when 'tag' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="8" cy="8" r="1.6"/></svg>
+              {%- endcase -%}
+            </span>
+            <span class="fashion-values__label">{{ block.settings.label | escape }}</span>
+            {%- if block.settings.caption != blank -%}
+              <span class="fashion-values__caption">{{ block.settings.caption | escape }}</span>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% style %}
+  .fashion-values { border-top: 1px solid #E4E4E4; border-bottom: 1px solid #E4E4E4; }
+  .fashion-values--soft { background: #F7F7F5; border-color: transparent; }
+  .fashion-values__row {
+    display: grid; gap: 8px; list-style: none; margin: 0; padding: 22px 0;
+  }
+  .fashion-values__row--1 { grid-template-columns: 1fr; }
+  .fashion-values__row--2 { grid-template-columns: repeat(2, 1fr); }
+  .fashion-values__row--3 { grid-template-columns: repeat(3, 1fr); }
+  .fashion-values__row--4 { grid-template-columns: repeat(4, 1fr); }
+  .fashion-values__item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5px; }
+  .fashion-values__icon { width: 26px; height: 26px; color: #0A0A0B; }
+  .fashion-values__icon svg { width: 100%; height: 100%; }
+  .fashion-values__label { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .fashion-values__caption { font-size: 12px; color: #6B6B6B; }
+  @media (max-width: 767px) {
+    .fashion-values__row--3, .fashion-values__row--4 { grid-template-columns: 1fr; gap: 14px; }
+    .fashion-values__row { padding: 18px 0; }
+    .fashion-values__item { flex-direction: row; gap: 12px; text-align: left; justify-content: center; }
+    .fashion-values__item .fashion-values__caption { display: inline; }
+  }
+{% endstyle %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Value strip",
+  "class": "index-section--flush",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Trust strip. Configure ONLY claims that are true for this store (shipping settings, published policies, actually-enabled payment options). Ships empty on purpose."
+    },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "white", "options": [
+      { "value": "white", "label": "White" },
+      { "value": "soft", "label": "Soft" }
+    ] }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "truck", "options": [
+          { "value": "truck", "label": "Shipping" },
+          { "value": "returns", "label": "Returns" },
+          { "value": "payment", "label": "Payment" },
+          { "value": "shield", "label": "Security" },
+          { "value": "tag", "label": "Offer" }
+        ] },
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "caption", "label": "Caption" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Value strip" } ]
+}
+{% endschema %}

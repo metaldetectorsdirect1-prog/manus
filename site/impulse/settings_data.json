@@ -41,7 +41,7 @@
     "type_header_spacing": "0",
     "type_header_base_size": 40,
     "type_header_line_height": 1.1,
-    "type_header_capitalize": true,
+    "type_header_capitalize": false,
     "type_headers_align_text": "left",
     "type_base_font_family": "inter_n4",
     "type_base_spacing": "25",
