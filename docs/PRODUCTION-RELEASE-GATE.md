@@ -51,3 +51,31 @@ Exactly one, release-blocking-repair scope: menu `master-storefront-nav`
 (`254991532264`) — removed the two links to collections that render empty
 at cutover; independent read-back verified; MAIN provably unaffected.
 No theme file was modified; both theme updatedAt values are unchanged.
+
+---
+
+## CUTOVER EXECUTION RECORD — 2026-08-28 ~21:15 UTC (appended; certification above unchanged)
+
+- CUTOVER EXECUTED: **NO — publish blocked by connector policy.** The owner
+  explicitly authorized publication of MASTER r2; pre-flight and drift
+  detection PASSED (exactly one MAIN; r2 UNPUBLISHED, updatedAt unmoved at
+  16:23:54; all 8 critical certified checksums identical; nav repair
+  intact). The validated `themePublish` mutation was then refused by the
+  Shopify MCP server's safety policy: "Publishing a theme is blocked —
+  making a theme live must be done manually in Shopify admin." This block
+  is categorical and session-independent; it was not worked around.
+- POST-CUTOVER RESULT: N/A — roles re-verified unchanged after the refusal
+  (MAIN still `158753849576`, r2 still UNPUBLISHED). Production untouched.
+- ROLLBACK STATUS: not needed; ROLLBACK_THEME recorded as `158753849576`
+  ("GENERAL STORE — IMPULSE MASTER CANDIDATE", updatedAt 2026-08-28T15:41:08Z).
+- REMOTE CHECK STATUS: storefront/CDN egress still denied —
+  REMOTE PRODUCTION VISUAL WALK PENDING (owner runs the plan's 5/30-minute
+  checks after publishing).
+- Catalog movement since certification (external, does not affect theme
+  gates): 819 products total, 344 ACTIVE, **0 published to the Online
+  Store channel** (spot-verified `publishedAt: null`) — storefront still
+  shows zero products, so the certified zero-catalog posture and the nav
+  repair remain exactly correct at publish time.
+- THE ONE HUMAN ACTION: Shopify admin → Online Store → Themes →
+  "GENERAL STORE — MASTER r2 (approved image swaps)" → Publish.
+  Then follow docs/PRODUCTION-CUTOVER-PLAN.md steps 5–15.

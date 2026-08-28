@@ -2,7 +2,17 @@
 
 **Operational source of truth for future sessions. Not a history.**
 
-Queried: **2026-08-28T16:20Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+Queried: **2026-08-28T21:15Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+
+**Cutover status:** MASTER r2 is certified READY and owner-authorized, but
+`themePublish` is categorically blocked by the MCP connector ("must be done
+manually in Shopify admin") — verified by an actual refused attempt at
+21:15Z with roles re-verified unchanged afterwards. **The owner publishes
+r2 manually**, then follows `docs/PRODUCTION-CUTOVER-PLAN.md`.
+**Catalog at 21:15Z:** 819 products (344 ACTIVE, rest DRAFT), **0 published
+to the Online Store channel** — the storefront still shows zero products.
+Theme publication ≠ commerce launch: analytics NOT CONFIGURED, do not send
+paid traffic.
 
 > ## This file is a convenience, not an authority.
 >
