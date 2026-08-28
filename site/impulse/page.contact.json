@@ -1,0 +1,43 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "title": "Get in touch"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Email <a href=\"mailto:support@hivolt-usa.com\">support@hivolt-usa.com</a> or call <a href=\"tel:+19146502041\">+1 914-650-2041</a>. We answer every message.</p><p>Fastest answers: our <a href=\"/pages/faq\">Help Center</a> covers shipping, returns and payments · <a href=\"/pages/track-order\">Track your order</a> · <a href=\"/pages/returns-refunds\">Start a return</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "align_text": "left",
+        "narrow_column": true
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "rich-text",
+    "form"
+  ]
+}
