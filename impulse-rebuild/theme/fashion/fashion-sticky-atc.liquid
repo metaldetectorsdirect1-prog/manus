@@ -1,0 +1,165 @@
+{%- comment -%}
+  fashion-sticky-atc — mobile sticky add-to-cart bar + desktop sticky purchase panel.
+  MIRRORS the main product form (AddToCartForm-*) — it owns no cart logic of its
+  own: price, label, and disabled state are copied from the live PDP nodes, and
+  the CTA submits the main form itself, so quantity/variant selection are always
+  respected and sold-out state can never disagree with the PDP.
+{%- endcomment -%}
+
+{%- if section.settings.enable_desktop_sticky -%}
+  {%- style -%}
+    @media (min-width: 769px) {
+      .grid__item:has(> .product-single__meta) {
+        position: sticky;
+        top: {{ section.settings.desktop_top_offset }}px;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{%- if section.settings.enable_mobile_bar and product.empty? != true -%}
+<div id="StickyAtc-{{ section.id }}" class="sticky-atc" data-sticky-atc aria-hidden="true">
+  <div class="sticky-atc__inner">
+    {%- if section.settings.show_image and product.featured_media -%}
+      <img class="sticky-atc__thumb"
+        src="{{ product.featured_media | image_url: width: 120 }}"
+        alt="" width="44" height="55" loading="lazy">
+    {%- endif -%}
+    <div class="sticky-atc__info">
+      <span class="sticky-atc__title">{{ product.title }}</span>
+      <span class="sticky-atc__price">
+        <span data-sticky-price></span>
+        <s class="sticky-atc__compare" data-sticky-compare hidden></s>
+      </span>
+    </div>
+    <button type="button" class="btn sticky-atc__btn" data-sticky-submit>
+      {{ 'products.product.add_to_cart' | t }}
+    </button>
+  </div>
+</div>
+
+{%- style -%}
+  .sticky-atc {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 20;
+    background: #fff;
+    border-top: 1px solid #E5E5E5;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(110%);
+    visibility: hidden;
+    transition: transform .22s ease, visibility .22s;
+  }
+  .sticky-atc.is-active { transform: translateY(0); visibility: visible; }
+  .sticky-atc__inner { display: flex; align-items: center; gap: 12px; max-width: 640px; margin: 0 auto; }
+  .sticky-atc__thumb { flex: 0 0 44px; width: 44px; height: 55px; object-fit: cover; }
+  .sticky-atc__info { flex: 1 1 auto; min-width: 0; }
+  .sticky-atc__title {
+    display: block; font-size: 13px; font-weight: 600; line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sticky-atc__price { display: block; font-size: 14px; font-weight: 700; }
+  .sticky-atc__compare { font-weight: 400; opacity: .6; margin-left: 6px; font-size: 12px; }
+  .sticky-atc__btn { flex: 0 0 auto; min-height: 44px; padding: 0 22px; }
+  .sticky-atc__btn[disabled] { opacity: .5; cursor: default; }
+  @media (min-width: 769px) { .sticky-atc { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .sticky-atc { transition: none; } }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var bar = document.getElementById('StickyAtc-{{ section.id }}');
+    if (!bar) return;
+    var mainForm = document.querySelector('form[id^="AddToCartForm"]');
+    var mainBtn = mainForm && mainForm.querySelector('[name="add"]');
+    // No main form on the page (e.g. onboarding/empty product): never show the bar.
+    if (!mainForm || !mainBtn) return;
+
+    var meta = document.querySelector('.product-single__meta') || document;
+    var priceSrc = meta.querySelector('[data-product-price]');
+    var compareSrc = meta.querySelector('[data-compare-price]');
+    var priceDst = bar.querySelector('[data-sticky-price]');
+    var compareDst = bar.querySelector('[data-sticky-compare]');
+    var btnDst = bar.querySelector('[data-sticky-submit]');
+
+    function mirror() {
+      if (priceSrc && priceDst) priceDst.textContent = priceSrc.textContent.trim();
+      if (compareDst) {
+        var cmp = compareSrc ? compareSrc.textContent.trim() : '';
+        compareDst.hidden = cmp === '';
+        compareDst.textContent = cmp;
+      }
+      var label = (mainBtn.textContent || '').trim();
+      if (label) btnDst.textContent = label;
+      btnDst.disabled = mainBtn.disabled || mainBtn.getAttribute('aria-disabled') === 'true';
+    }
+    mirror();
+
+    var mo = new MutationObserver(mirror);
+    mo.observe(mainBtn, { attributes: true, childList: true, subtree: true, characterData: true });
+    if (priceSrc) mo.observe(priceSrc, { childList: true, subtree: true, characterData: true });
+    if (compareSrc) mo.observe(compareSrc, { childList: true, subtree: true, characterData: true });
+
+    function setActive(on) {
+      bar.classList.toggle('is-active', on);
+      bar.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        var e = entries[0];
+        // Show only after the real button has scrolled ABOVE the viewport.
+        setActive(!e.isIntersecting && e.boundingClientRect.top < 0);
+      }, { threshold: 0 }).observe(mainBtn);
+    }
+
+    btnDst.addEventListener('click', function () {
+      if (btnDst.disabled) return;
+      if (typeof mainForm.requestSubmit === 'function') {
+        mainForm.requestSubmit(mainBtn);
+      } else {
+        mainBtn.click();
+      }
+    });
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sticky add to cart",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_bar",
+      "label": "Mobile sticky bar",
+      "info": "Appears after the buy button scrolls out of view. Submits the main product form — quantity and variant selection are always respected.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show product image in bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_desktop_sticky",
+      "label": "Desktop sticky purchase panel",
+      "info": "Keeps the product info column pinned while long image stacks scroll (mirrors the theme's native sticky-images behavior).",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "desktop_top_offset",
+      "label": "Desktop sticky top offset",
+      "min": 60,
+      "max": 160,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "enabled_on": { "templates": ["product"] },
+  "presets": [{ "name": "Sticky add to cart" }]
+}
+{% endschema %}

@@ -58,3 +58,4 @@ site/sm-shot-*.jpg
 # that adds this rule.
 __pycache__/
 *.pyc
+qa/node_modules/

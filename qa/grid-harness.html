@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QA FIXTURE — 48-card grid stress harness (local only, never production)</title>
+<style>
+  /* Local reproduction of the GENERAL STORE card design language.
+     QA FIXTURE ONLY — image CDNs are egress-blocked in this environment,
+     so media boxes are aspect-correct placeholders. This validates layout
+     scalability, not Impulse runtime behavior. */
+  :root{
+    --ink:#0A0A0B; --sale:#D0021B; --soft:#F7F7F5; --line:#E5E5E5; --muted:#6D6D6D;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:16px}
+  .page-width{max-width:1420px;margin:0 auto;padding:0 20px}
+  h1{font-size:28px;text-transform:uppercase;letter-spacing:.01em;margin:24px 0 4px}
+  .count{color:var(--muted);font-size:14px;margin:0 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 8px}
+  @media(min-width:768px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px}}
+  @media(min-width:1024px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 10px}}
+  .card{position:relative;display:flex;flex-direction:column;min-width:0}
+  .card__media{position:relative;aspect-ratio:3/4;background:var(--soft);overflow:hidden}
+  .card__media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c9c5bd;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .card__badge{position:absolute;top:8px;left:8px;background:var(--sale);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 7px;z-index:2}
+  .card__badge--soldout{background:var(--ink)}
+  .card__quick{position:absolute;left:8px;right:8px;bottom:8px;background:var(--ink);color:#fff;border:0;min-height:38px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;opacity:0;transition:opacity .15s;cursor:pointer}
+  .card:hover .card__quick,.card:focus-within .card__quick{opacity:1}
+  @media(max-width:767px){.card__quick{opacity:1;position:static;margin-top:8px;min-height:40px}}
+  .card__quick:focus-visible{outline:2px solid var(--ink);outline-offset:2px;opacity:1}
+  .card__title{font-size:14px;line-height:1.35;margin:10px 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+  .card__price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:15px}
+  .price{font-weight:700}
+  .price--sale{color:var(--sale)}
+  .price--compare{color:var(--muted);text-decoration:line-through;font-size:13px}
+  .save{color:var(--sale);font-size:12px;font-weight:700}
+  .swatches{display:flex;gap:5px;margin-top:6px;min-height:14px}
+  .sw{width:13px;height:13px;border-radius:50%;border:1px solid var(--line)}
+  .rating{font-size:12px;color:var(--muted);margin-top:4px;min-height:1.2em}
+  .soldout-label{color:var(--muted);font-weight:600}
+</style>
+</head>
+<body>
+<main class="page-width">
+  <h1>The latest</h1>
+  <p class="count" id="count"></p>
+  <div class="grid" id="grid"></div>
+</main>
+<script src="fixture-data.js"></script>
+<script>
+const SWATCH_COLORS = {Black:'#111',White:'#fff',Red:'#c0182b',Blue:'#27548e',Green:'#2e6b45',Beige:'#d8cdb8',Grey:'#8a8a8a',Navy:'#1d2a44',Olive:'#5c5b33'};
+(function(products){
+  document.getElementById('count').textContent = products.length + ' products · QA FIXTURE DATA — local layout test only';
+  const grid = document.getElementById('grid');
+  for (const p of products){
+    const sale = p.compare_at && p.compare_at > p.price;
+    const pct = sale ? Math.round((p.compare_at - p.price) * 100 / p.compare_at) : 0;
+    const el = document.createElement('article');
+    el.className = 'card';
+    el.innerHTML = `
+      <div class="card__media">
+        ${sale ? `<span class="card__badge">-${pct}%</span>` : ''}
+        ${p.sold_out ? `<span class="card__badge card__badge--soldout">Sold out</span>` : ''}
+        <span class="ph">QA fixture ${p.has_second_image ? '· hover alt' : ''}</span>
+        <button class="card__quick" ${p.sold_out ? 'disabled' : ''} aria-label="${p.requires_variant_selection ? 'Choose options' : 'Quick add'}: ${p.title.replace(/"/g,'')}">
+          ${p.sold_out ? 'Sold out' : (p.requires_variant_selection ? 'Choose options' : 'Quick add')}
+        </button>
+      </div>
+      <h3 class="card__title">${p.title}</h3>
+      <div class="card__price-row">
+        ${p.sold_out ? `<span class="soldout-label">Sold out</span>` : ''}
+        <span class="price ${sale ? 'price--sale' : ''}">$${p.price.toFixed(2)}</span>
+        ${sale ? `<span class="price--compare">$${p.compare_at.toFixed(2)}</span><span class="save">Save ${pct}%</span>` : ''}
+      </div>
+      <div class="swatches">${(p.colors||[]).map(c=>`<span class="sw" title="${c}" style="background:${SWATCH_COLORS[c]||'#ccc'}"></span>`).join('')}</div>
+      <div class="rating">${p.rating ? '★ ' + p.rating.toFixed(1) + ' (' + p.rating_count + ')' : ''}</div>`;
+    grid.appendChild(el);
+  }
+})(window.QA_FIXTURE);
+</script>
+</body>
+</html>

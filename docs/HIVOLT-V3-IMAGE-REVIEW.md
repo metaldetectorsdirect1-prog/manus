@@ -18,6 +18,11 @@ chat. No image may reach a published HIVOLT storefront until it passes owner
 review for: logos, fake logos, lettering, watermarks, anatomy, hands, faces,
 clothing artifacts, overall premium quality.
 
+**Contact sheet:** `docs/review/hivolt-v3-contact-sheet.html` renders all 31
+images (Shopify CDN, loads in the owner's browser) numbered to match this
+index, with per-image inspection lists. Generated 2026-08-28; no pixel
+scores — the build environment cannot see the pixels.
+
 ## Commands (no ambiguity)
 
 - **"replace image N with alternate X"** — e.g. "replace image 1 with A2".
