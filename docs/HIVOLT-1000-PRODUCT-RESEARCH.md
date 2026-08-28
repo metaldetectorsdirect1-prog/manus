@@ -252,6 +252,44 @@ scene (noted in its description; swap candidate at activation review).
 **Batch running total: 19 of 50 created; 30 eyeballed; 11 rejected
 (37% rejection rate — the gate is doing real work).**
 
+### Tranche 3 — 2026-08-28 ~16:50 UTC
+
+8 candidates (puffers, varsity bombers, fleece-lined leggings; thumbnails
+in `qa/sourcing/batch1c/`). **5 rejected, 3 created and read-back
+verified.** Pre-eyeball screening removed men's-only listings, dog
+clothes, a real-fur $325 coat, and an $88+$21-ship sukajan.
+
+Rejected at the eyeball gate:
+
+| Candidate | Reason |
+|---|---|
+| MAGCOMSEN puffer (3256805981962571) | Supplier watermark on image |
+| Booer Jue varsity (1005007345346054) | Supplier watermark on image |
+| soqoool fleece leggings (3256804942174044) | Overlaid badge graphic on garment area of photo |
+| TIKITIKI plush leggings (3256805535316856) | Supplier watermark on image |
+| Thermal translucent tights (3256807285939873) | Overlaid flame graphic; "fake translucent" category carries deceptive-marketing baggage |
+
+**Fleece-lined leggings quota went 0-for-3 on image compliance this
+tranche — source cleaner suppliers (US-warehouse or brand stores) next
+batch.**
+
+Created (same discipline):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Toasty long hooded puffer parka coat (9614472118504) | 1005007234316536 | $23.46–28.32 + $10.08 | **fails** (tagged) |
+| Cute cropped hooded puffer jacket (9614472184040) | 3256809381486177 | $34.36 + $2.73 | **fails** (tagged) |
+| Bold embroidered varsity bomber jacket (9614472216808) | 1005008625664868 | $42.46 free | **fails** (tagged) |
+
+Read-back: 3/3 `DRAFT`, `totalInventory: 0`, media `READY`. Notes: parka
+lead image is a two-frame collage (swap at activation); cropped puffer's
+hood-trim material (fur vs faux) must be supplier-confirmed before
+activation — US fur-labeling rules apply; varsity embroidery is the
+supplier's original graphic, no third-party marks visible.
+
+**Batch running total: 22 of 50 created; 38 eyeballed; 16 rejected
+(42% rejection rate).**
+
 ## Standing prohibitions (unchanged)
 
 No fake products/inventory/reviews; no invented specs (CLASS A/B only —
