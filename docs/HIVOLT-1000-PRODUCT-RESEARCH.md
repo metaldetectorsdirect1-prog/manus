@@ -214,6 +214,44 @@ the counts are real or zero them.
 Batch pace: 14 of this week's 50 created. The remaining ~36 continue
 through the same discover → eyeball → draft loop.
 
+### Tranche 2 — 2026-08-28 ~16:47 UTC (owner "go go go")
+
+11 more candidates (crew sweaters, turtlenecks, sweater dresses,
+teddy/sherpa; thumbnails in `qa/sourcing/batch1b/`). **6 rejected, 5
+created and read-back verified.** Also screened out pre-eyeball: kids'
+knits, men's items, a real-fur coat, a pet coat, a $58 "Luxury Designer"
+title, an unverifiable "Cashmere" fiber claim, and listings with $27–110
+shipping.
+
+Rejected at the eyeball gate:
+
+| Candidate | Reason |
+|---|---|
+| GIBSIE plus crew (1005006965674091) | Supplier watermark on image |
+| AOSSVIAO velvet-lined turtleneck (3256807484981390) | Overlaid flame graphic on image (GMC image-policy class) |
+| Anne Wan oversized mini sweater dress (1005001432377852) | Supplier watermark on image |
+| SINGREINY pencil knit dress (1005003015921293) | Supplier watermark on image |
+| Sherpa hooded fleece (1005011562153384) | Lead image appears AI-composited (synthetic fireplace scene) — misrepresentation class |
+| Nerazzurri teddy coat (1005001297348518) | Supplier watermark on image |
+
+Created (same discipline as tranche 1 — DRAFT, HIVOLT, 0 inventory,
+honest tags, single eyeball-verified lead image READY):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Essential soft turtleneck knit sweater (9614465925352) | 3256809364765157 | $10.15–10.53 free | clears (~$37) |
+| Sleek ribbed turtleneck knit jumper (9614466023656) | 32947177916 | $7.40–8.15 + $1.99 | clears (~$33) |
+| Chic zip neck knit pullover sweater (9614466056424) | 1005010141542131 | $8.87–9.31 + $1.99 | clears (~$39) |
+| Elegant cable knit turtleneck sweater dress (9614466089192) | 3256807098504897 | $32.16–33.75 + $1.03 | **fails** (tagged) |
+| Playful off shoulder knit mini dress (9614466154728) | 1005007600021002 | $29.70 + $6.52 | **fails** (tagged) |
+
+Read-back: 5/5 `DRAFT`, `totalInventory: 0`, media `READY`. Notes:
+zip-neck sweater's lead photo has decorative prop cards with text in
+scene (noted in its description; swap candidate at activation review).
+
+**Batch running total: 19 of 50 created; 30 eyeballed; 11 rejected
+(37% rejection rate — the gate is doing real work).**
+
 ## Standing prohibitions (unchanged)
 
 No fake products/inventory/reviews; no invented specs (CLASS A/B only —
