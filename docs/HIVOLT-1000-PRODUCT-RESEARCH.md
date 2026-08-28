@@ -151,6 +151,69 @@ import. Products can be **researched and created as DRAFTS at full speed**
 — activation follows the pacing. This is what protects the GMC, which is
 the business.
 
+## Batch 1 ledger — 2026-08-28 (run on owner "go")
+
+**19 candidates discovered (AutoDS, `site_name=aliexpress` filter), every lead
+image reviewed with real vision via the sandbox pipeline
+(`qa/sourcing/batch1/*.png`). 5 rejected, 14 created as DRAFTs, all
+read-back verified.**
+
+Rejected at the eyeball gate (nothing rejected was created):
+
+| Candidate | Reason |
+|---|---|
+| BRANDY&MANDY preppy V-neck knit (1005003761207123) | Supplier brand watermark printed on image; brand-mimicry name risk |
+| YE94 fleece crew (S2) | 27-swatch catalog collage — raw-AliExpress image class |
+| HH burgundy coat (1005008147286241) | Right collage frame is a street-style editorial photo of a real person — image-rights / GMC misrepresentation risk |
+| JoeAmple Korean knit set (1005003380322165) | Supplier watermark + printed slogan garment |
+| Keramo Y2K jeans (1005005111312860) | Supplier brand watermark on image |
+
+Created (all: `status DRAFT`, vendor HIVOLT, `totalInventory 0`, tags
+`hivolt-sourcing-candidate` + `unpriced-needs-owner-review` +
+`unverified-specs` + `batch-2026-08-28` + category; media = the one
+eyeball-verified lead image, `READY` on Shopify CDN; supplier's words
+quoted as supplier's in every description):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Effortless striped longline knit cardigan (9614445674728) | 3256806102969301 | $17.44 + $18.48 | **fails** (tagged) |
+| Polished longline pocket knit cardigan (9614445707496) | 2255799988657297 | $23.78 + $2.63 | **fails** (tagged) |
+| Dreamy plush oversized long cardigan coat (9614445740264) | 3256806579898504 | $8.40 + $13.39 | clears (~$79) |
+| Cozy chunky cable knit button cardigan (9614445773032) | 1005009801759123 | $13.06 free | clears (~$49) |
+| Airy pointelle knit relaxed cardigan (9614445805800) | 1005009819353627 | $7.58 free | clears (~$29+) |
+| Breezy open crochet knit cardigan (9614445969640) | 1005002944796559 | $19.38 + $7.17 | **fails** (tagged) |
+| Timeless tailored wool blend lapel coat (9614446002408) | 1005007643694490 | $31–34 free | clears (~$119) |
+| Sharp double breasted wool blend coat (9614446035176) | 1005009067062910 | $28–35 free | clears (~$109) |
+| Snug snowflake knit two piece set (9614446067944) | 3256810525415695 | $25.68 + $17.66 (US wh) | **fails** (tagged) |
+| Relaxed oversized hoodie jogger lounge set (9614446100712) | 1005010211771318 | $15–23 free | clears (~$67) |
+| Laid back high waist wide leg jeans (9614446461160) | 1005008925977853 | $24.25 free, ~11d | **fails** (tagged) |
+| Edgy black baggy straight leg jeans (9614446526696) | 3256807723572588 | $31.12 free | **fails** (tagged) |
+| Classic dark wash wide leg jeans (9614446559464) | 3256807347439289 | $25.86 + $9.39 | **fails** (tagged) |
+| Vintage washed baggy wide leg jeans (9614446592232) | 3256807333585130 | $20.43 free | clears (~$71) |
+
+Read-back (fresh query, post-mutation): 14/14 `DRAFT`, vendor `HIVOLT`,
+`totalInventory: 0`, `mediaCount: 1`, every `MediaImage` `READY`
+(651–1600 px), `updatedAt` 16:06–16:07 UTC. Floor verdicts are candidate
+flags at plausible retail — pricing is the owner's call at the gate.
+
+Honest notes: (1) each draft carries only its pixel-reviewed lead image;
+remaining supplier images get the same eyeball gate before activation.
+(2) "Sharp double breasted" coat: unreadable garment label inside the
+collar (800px source) — confirm white-label with supplier. (3) "Laid back"
+jeans lead image has faint partial in-scene background signage (not a
+watermark) — swappable at activation review.
+
+**Catalog-state finding (not this session's write):** the 4 documented
+polo-era drafts are gone; the store instead holds 4 knitwear drafts
+created outside this session (Ivy/cable-cardigan/Nora/Elena,
+9613182370024/402792/435560/468328) with **non-zero inventory
+(10/10/10/680)**. Artificial inventory is prohibited for this session's
+writes; these are owner-side records — flagged for the owner to confirm
+the counts are real or zero them.
+
+Batch pace: 14 of this week's 50 created. The remaining ~36 continue
+through the same discover → eyeball → draft loop.
+
 ## Standing prohibitions (unchanged)
 
 No fake products/inventory/reviews; no invented specs (CLASS A/B only —
