@@ -352,6 +352,52 @@ sweaters (clean suppliers needed), fleece-lined leggings (clean suppliers
 needed), hoodies/sweatshirts (query refinement needed), knit co-ord sets,
 wool coats, shackets, boots, bags.
 
+### W35 gap-fill tranche — 2026-08-28 ~18:39 UTC
+
+Ledger for the seven products created under the strengthened gate. Full
+funnel stats, rejection breakdown and the inventory adjudication are in
+`docs/GENERAL-STORE-CATALOG-SCORECARD.md`; the ranking is in
+`docs/CATALOG-TOP20-LAUNCH-SHORTLIST.md`.
+
+**Sourcing target was deliberately spent on zero-coverage categories.**
+28 listings evaluated (22 unique), 8 pixel-inspected, 7 created, 21
+rejected (75%).
+
+| Product | Source | Supplier item | Cat | Cost | Ship | Landed | Retail | GM$ | Mult. | Image | Claim risk | Decision |
+|---|---|---|---|---:|---:|---:|---:|---:|---:|---|---|---|
+| Double Breasted Tailored Blazer | AutoDS/AliExpress | 1005008240019052 | Blazers | 20.90 | 0 (US wh) | 20.90 | 79 | 58.10 | 3.78× | pass | fibre unstated | **CREATE** |
+| Relaxed Satin Button-Up Shirt | AutoDS/AliExpress | 1005004066965871 | Tops | 8.08 | 1.99 (US wh) | 10.07 | 39 | 28.93 | 3.87× | pass | "silk" stripped | **CREATE** |
+| Square Neck Bodysuit | AutoDS/AliExpress | 1005006635913453 | Basics | 4.44 | 1.99 (US wh) | 6.43 | 29 | 22.57 | 4.51× | pass | none | **CREATE** |
+| Structured Shoulder Tote | AutoDS/AliExpress | 1005008228307352 | Bags | 24.46 | 0 | 24.46 | 79 | 54.54 | 3.23× | pass | PU stated as synthetic | **CREATE** |
+| Cable Detail Knit Midi Skirt | AutoDS/AliExpress | 1005008230273083 | Skirts | 16.36 | 4.82 | 21.18 | 59 | 37.82 | 2.79× | pass | yarn unstated | **CREATE** (floor documented) |
+| Full Pleated Midi Skirt | AutoDS/AliExpress | 1005004894494365 | Skirts | 21.13 | 9.30 | 30.43 | 79 | 48.57 | 2.60× | pass | fabric unstated | **CREATE** (floor documented) |
+| Fitted Denim Blazer Jacket | AutoDS/AliExpress | 1005003923504038 | Denim jkts | 30.89 | 4.39 | 35.28 | 89 | 53.72 | 2.52× | pass | weight unstated | **CREATE** (floor documented) |
+| INSTYLISH satin shirt | AutoDS | 1005010757379001 | Tops | 8.84 | 1.99 | 10.83 | — | — | — | **FAIL** watermark | — | REJECT |
+| ZAROY giraffe blouse | AutoDS | 3256808321180416 | Tops | 20.83 | 7.73 | 28.56 | 59 | — | 2.07× | not reached | "Luxury" | REJECT (economics) |
+| Black satin blouse | AutoDS | 3256809841299949 | Tops | 21.39 | 0 | 21.39 | 49 | — | 2.29× | not reached | — | REJECT (economics) |
+| Yogodlns tote | AutoDS | 3256807298105020 | Bags | 11.38 | 0 | 11.38 | — | — | — | **FAIL** watermark + monogram | designer lookalike | REJECT (image + trademark) |
+| Oil PU tote | AutoDS | 3256809657641222 | Bags | 5.01 | 3.61–59.11 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| NEEDARNA knit + skirt set | AutoDS | 3256809319486456 | Sets | 24.99 | 0 | 24.99 | — | — | — | **FAIL** watermark + text | — | REJECT (image) |
+| Miracle pleated knit set | AutoDS | 1005008504231631 | Sets | 40.21 | 0–22.31 | 40.21 | — | — | — | **FAIL** watermark + chest emblem + hangtag | brand copy | REJECT (image + trademark) |
+| Doyerl co-ord set | AutoDS | 1005003283748310 | Sets | 19.19 | 6.96–35.33 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| Cryptographic Y2K set | AutoDS | 1005005997014422 | Sets | 18.89 | 4.02–54.35 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| FUNN corduroy skirt | AutoDS | 3256806084342972 | Skirts | 22.81 | 6.39–53.14 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| APRIL MODA floral skirt | AutoDS | 32994708453 | Skirts | 16.88 | 15.76 | 32.64 | 69 | — | 2.11× | not reached | — | REJECT (economics) |
+| Velvet blazer | AutoDS | 1005001863986605 | Blazers | 66.12 | 0 | 66.12 | 159 | — | 2.40× | not reached | — | REJECT (economics) |
+| WIWT-MISS woolen blazer | AutoDS | 1005006408168662 | Blazers | 38.89 | 18.79–75.07 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| Kids 3pc hat/scarf/glove | AutoDS | 1005007871325957 | Accessories | 12.04 | 0 | 12.04 | — | — | — | not reached | children's product | REJECT (off-category) |
+| URGENTMAN beanie | AutoDS | 1005006997301834 | Accessories | 3.00 | 1.99 | 4.99 | 19 | 14.01 | 3.81× | not reached | supplier brand name | REJECT (brand risk + WEAK ads) |
+| Bodysuit duplicate listings ×3 | AutoDS | 1005002057933553 / 3256801871618801 / 3256806449598701 | Basics | — | — | — | — | — | — | — | — | REJECT (duplicate) |
+| Beanie duplicate listings ×2 | AutoDS | 3256806810987082 / 1005005848029615 | Accessories | — | — | — | — | — | — | — | — | REJECT (duplicate) |
+| PU crossbody duplicate | AutoDS | 3256807985752374 | Bags | — | — | — | — | — | — | — | designer lookalike title | REJECT (duplicate) |
+
+Read-back on all 7: `DRAFT`, vendor HIVOLT, `totalInventory: 0`,
+`tracked: false`, `mediaCount: 1`, every `MediaImage` `READY` (800–1785
+px), proposed price stored, `compareAtPrice: null` on every variant.
+
+**Programme total: 35 sourced drafts of a 50 ceiling. Stopped at 35 by
+the quality gate, not by exhausting the target.**
+
 ## Standing prohibitions (unchanged)
 
 No fake products/inventory/reviews; no invented specs (CLASS A/B only —
