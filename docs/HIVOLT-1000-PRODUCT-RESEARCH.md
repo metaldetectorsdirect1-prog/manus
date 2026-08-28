@@ -323,6 +323,35 @@ activation).
 **Batch running total: 26 of 50 created; 44 eyeballed; 18 rejected
 (41% rejection rate).**
 
+### Tranche 5 — 2026-08-28 ~16:55 UTC
+
+**Category finding:** the hoodie/sweatshirt search returned only wearable
+blankets and men's items — zero usable women's basics; the quota stays
+open for a cleaner query next pass. Summer-weight ice-silk/chiffon pants
+were screened out per the seasonal-timing rule.
+
+2 wide-leg pants candidates eyeballed (`qa/sourcing/batch1e/`), both
+passed, both created:
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Sporty piped wide leg track pants (9614480802024) | 1005011607621650 | $27.33–30.78 free | **fails** (tagged) |
+| Comfy high waist flare leggings pants (9614480867560) | 4001291836861 | $16.09 + $5.11 | clears (~$74) |
+
+Read-back: 2/2 `DRAFT`, `totalInventory: 0`, media `READY`.
+
+## Batch 1 sprint summary (2026-08-28, five tranches)
+
+**28 of 50 weekly drafts created — 46 candidates eyeballed, 18 rejected
+(39%).** Store total: 32 products (4 owner-side knitwear drafts + 28
+batch drafts), all DRAFT, all zero-inventory on this session's writes.
+Every rejection reason is logged above; every creation was independently
+read-back verified (status, vendor, inventory, tags, media READY).
+Remaining 22 continue via the same loop — open quotas: chunky crew
+sweaters (clean suppliers needed), fleece-lined leggings (clean suppliers
+needed), hoodies/sweatshirts (query refinement needed), knit co-ord sets,
+wool coats, shackets, boots, bags.
+
 ## Standing prohibitions (unchanged)
 
 No fake products/inventory/reviews; no invented specs (CLASS A/B only —
