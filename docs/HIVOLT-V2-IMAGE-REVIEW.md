@@ -1,5 +1,11 @@
 # HIVOLT-V2-IMAGE-REVIEW.md — owner review index
 
+> **SUPERSEDED 2026-08-28.** The owner's pixel inspection rejected the V2
+> program (rendered text artifacts: "VOGUE", "MOGUY", "LANEKIOTES"). Every
+> asset below is demoted to **NOT ACTIVE** — no theme section references
+> them. The active program is `HIVOLT-V3-IMAGE-REVIEW.md`. This file remains
+> as the historical record of the V2 set.
+
 Verified against fresh Shopify read-backs 2026-08-28 (theme files, Files API).
 Scope: dev theme `158753849576` (UNPUBLISHED) only. Live theme untouched.
 

@@ -98,3 +98,32 @@ a0faa3a4, 4567a1c1) · hivolt-cat-knitwear/cardigans/sweaters/new-in
 (2c871dbf, e445022e, 4b3b3671, bdf5efa9) · hivolt-collage-anchor/01–04
 (70d8f468, e8a1dca5, bffb2954, 7fa93f7b, b8971ba8) · hivolt-featured-evening
 (fd0df807) · hivolt-brand-moment (6c7cf058).
+
+
+## V3 regeneration — 2026-08-28 (owner pixel rejection of V2)
+
+The owner inspected the rendered V2 storefront and rejected it: generated
+text and fake branding were visible in the pixels ("VOGUE", "MOGUY",
+"LANEKIOTES"). Lesson recorded as policy: **a prompt's negative list proves
+nothing about pixels; no image may be classified approved by prompt audit.**
+`soul_2` produced rendered text artifacts across two consecutive programs
+(V1 and V2), so it was dropped as the primary model.
+
+**Every V2 active is demoted to NOT ACTIVE** (files remain in Files as
+history; no section references them). The V3 program: 31 images requested on
+`nano_banana_2` (Google, 2k — strongest instruction-following of the
+available photoreal models; OpenAI models remain excluded per the owner's
+prohibition); **the platform served all 31 on `nano_banana_flash`**
+(recorded truthfully). 31/31 completed, 0 failures.
+
+Prompt philosophy changed with the model: raw-photograph-only framing (no
+"editorial"/"magazine" vocabulary anywhere), writing-free environments
+(studio cycloramas, bare architecture, plain facades), explicitly unbranded
+garments/footwear/props, and the cleanliness requirement stated structurally
+in the scene description, not only as a negative list. Three candidates were
+generated for every major slot (hero desktop, hero mobile, campaigns A/B/C).
+
+Full per-slot index — filenames, job ids, gallery frame numbers, MediaImage
+ids, alternates and swap commands — lives in `HIVOLT-V3-IMAGE-REVIEW.md`.
+All 31 are **PREVIEW ACTIVE — OWNER APPROVAL PENDING**; approved: 0.
+Correction tool on standby: `nano_banana_2` mask inpaint.

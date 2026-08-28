@@ -1,5 +1,5 @@
 {%- comment -%}
-  HIVOLT fashion hero — dedicated desktop + mobile campaign images,
+  HIVOLT fashion hero v3 — dedicated desktop + mobile campaign images,
   responsive srcset via Shopify CDN, LCP-safe (eager + fetchpriority high
   when marked first), HTML text overlay (no text baked into imagery).
 {%- endcomment -%}
@@ -48,7 +48,7 @@
       <p class="fashion-hero__preheading">{{ section.settings.preheading | escape }}</p>
     {%- endif -%}
     {%- if section.settings.heading != blank -%}
-      <h2 class="fashion-hero__heading h1">{{ section.settings.heading | escape }}</h2>
+      <h2 class="fashion-hero__heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
     {%- if section.settings.subtext != blank -%}
       <p class="fashion-hero__subtext">{{ section.settings.subtext | escape }}</p>
@@ -69,7 +69,7 @@
     position: relative;
     display: block;
     overflow: hidden;
-    background: #f6f2eb;
+    background: #F7F7F5;
   }
   #FashionHero-{{ section.id }} .fashion-hero__media,
   #FashionHero-{{ section.id }} .fashion-hero__media img {
@@ -96,7 +96,7 @@
   }
   #FashionHero-{{ section.id }} .fashion-hero__media--placeholder {
     min-height: 55vh;
-    background: #f6f2eb;
+    background: #F7F7F5;
   }
   #FashionHero-{{ section.id }} .fashion-hero__overlay {
     position: absolute;
@@ -108,27 +108,31 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 8%;
+    bottom: 7%;
     color: #ffffff;
   }
   .fashion-hero--text-left .fashion-hero__content { text-align: left; }
   .fashion-hero--text-center .fashion-hero__content { text-align: center; }
   #FashionHero-{{ section.id }} .fashion-hero__preheading {
-    margin: 0 0 6px;
-    font-size: 12px;
-    letter-spacing: 0.18em;
+    margin: 0 0 8px;
+    font-size: 13px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
   }
   #FashionHero-{{ section.id }} .fashion-hero__heading {
     margin: 0 0 10px;
     color: #ffffff;
-    max-width: 14em;
+    font-size: clamp(36px, 4.6vw, 62px);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    max-width: 13em;
   }
   .fashion-hero--text-center .fashion-hero__heading { margin-left: auto; margin-right: auto; }
   #FashionHero-{{ section.id }} .fashion-hero__subtext {
     margin: 0 0 18px;
     max-width: 34em;
-    font-size: 15px;
+    font-size: 16px;
   }
   .fashion-hero--text-center .fashion-hero__subtext { margin-left: auto; margin-right: auto; }
   #FashionHero-{{ section.id }} .fashion-hero__actions {
@@ -138,18 +142,14 @@
   }
   .fashion-hero--text-center .fashion-hero__actions { justify-content: center; }
   #FashionHero-{{ section.id }} .fashion-hero__cta {
-    min-height: 44px;
-    min-width: 150px;
+    min-height: 46px;
+    min-width: 160px;
   }
   @media (max-width: 767px) {
     #FashionHero-{{ section.id }} .fashion-hero__content { bottom: 6%; }
     #FashionHero-{{ section.id }} .fashion-hero__heading { font-size: 34px; }
+    #FashionHero-{{ section.id }} .fashion-hero__preheading { font-size: 12px; }
     #FashionHero-{{ section.id }} .fashion-hero__subtext { font-size: 14px; }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    #FashionHero-{{ section.id }} .fashion-hero__media img {
-      transition: transform 6s ease-out;
-    }
   }
 {% endstyle %}
 
