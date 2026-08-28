@@ -53,9 +53,14 @@
         "show_copyright": true,
         "copyright_text": "Dn Global Trading LLC (trading as HIVOLT)"
       }
+    },
+    "structured-data": {
+      "type": "hivolt-structured-data",
+      "settings": {}
     }
   },
   "order": [
-    "footer"
+    "footer",
+    "structured-data"
   ]
 }

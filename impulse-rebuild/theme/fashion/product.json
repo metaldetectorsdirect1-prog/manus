@@ -29,22 +29,13 @@
           "settings": {
             "is_tab": false
           }
-        },
-        "tab-shipping": {
-          "type": "tab",
-          "settings": {
-            "title": "Shipping & returns",
-            "content": "<p>Free tracked shipping on every US order. Typical delivery is 2\u20136 business days for items stocked in US warehouses and 10\u201315 business days for internationally stocked items. Every order has 60 days from delivery to return, with a free return label and no restocking fee.</p>",
-            "page": ""
-          }
         }
       },
       "block_order": [
         "price",
         "variant_picker",
         "buy_buttons",
-        "description",
-        "tab-shipping"
+        "description"
       ],
       "settings": {
         "sku_enable": false,
@@ -58,6 +49,10 @@
         "enable_video_looping": false,
         "product_video_style": "muted"
       }
+    },
+    "pdp-info": {
+      "type": "fashion-pdp-info",
+      "settings": {}
     },
     "product-recommendations": {
       "type": "product-recommendations",
@@ -76,6 +71,7 @@
   },
   "order": [
     "main",
+    "pdp-info",
     "product-recommendations",
     "recently-viewed"
   ]
