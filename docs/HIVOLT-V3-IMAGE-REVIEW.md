@@ -24,9 +24,24 @@ local harness (`qa/home-harness-v3.html`) with the real pixels.
 **Outcome: 27 of 31 pass technical QA; 4 rejected; 1 replacement generated,
 QA'd and uploaded (verified pixel-identical, RMSE 0).**
 
-**Owner approval remains a separate, unpassed gate: approved 0 of 28.**
-Every surviving image is at most RECOMMENDED FOR OWNER APPROVAL or
-TECHNICALLY APPROVED — never OWNER APPROVED until the owner says so.
+**2026-08-28 ~15:50 UTC — OWNER APPROVAL EVENT.** The owner selected
+"Approve shortlist, fix, then I publish" — this **owner-approves the
+12-image primary set** (shortlist numbers 1–12: files hero-desktop,
+portrait-01, trend-01..04, campaign-a, portrait-02, campaign-b,
+portrait-03, campaign-c-alt-b, cat-04-b). The 11 supporting assets remain
+TECHNICALLY APPROVED and are publish-cleared by the owner's publish
+instruction; backups stay unapproved candidates; the 4 pixel-QA rejects
+stay rejected.
+
+**Publication state:** the owner self-published the MASTER CANDIDATE
+(`158753849576`) from admin at 15:41 UTC — **it is now MAIN** — before the
+approved swaps (14→24, 17→A9) could land, so the live homepage briefly
+carries rejected image 14. Live-theme writes are connector-blocked (not
+worked around). Remediation done per the established deploy route: live
+theme duplicated to **`GENERAL STORE — MASTER r2 (approved image swaps)`
+(`158874960104`, UNPUBLISHED)**, swaps applied and checksum-verified
+(`templates/index.json` = 1ec45ae6…). **Owner action: publish MASTER r2**
+to take the defective tile off the live storefront.
 
 **The owner now reviews only 12 images**, in
 `docs/review/GENERAL-STORE-FINAL-SHORTLIST.html` (primary set + 5 backups,

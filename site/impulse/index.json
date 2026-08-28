@@ -152,7 +152,7 @@
         "c4": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/hivolt-v3-cat-04.png",
+            "image": "shopify://shop_images/hivolt-v3-cat-04-b.png",
             "label": "New in",
             "link": ""
           }
@@ -189,11 +189,11 @@
     "campaign-c": {
       "type": "fashion-hero",
       "settings": {
-        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-c.png",
+        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-c-alt-b.png",
         "image_mobile": "",
         "is_first": false,
-        "preheading": "In motion",
-        "heading": "Made to move",
+        "preheading": "Feel the knit",
+        "heading": "Built for the cold months",
         "subtext": "",
         "cta1_label": "",
         "cta1_link": "",
