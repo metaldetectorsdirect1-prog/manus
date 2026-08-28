@@ -145,3 +145,20 @@ HIVOLT logo (branding is theme-applied only). Plan:
 `HIVOLT-GOLF-IMAGE-REVIEW.md`. 24 wired + 9 alternates. **Approved: 0 —
 OWNER VISUAL APPROVAL REQUIRED on every asset; prompts prove nothing about
 pixels.**
+
+
+## V6 general-store direction — 2026-08-28 (same day, direction restored)
+
+The owner pivoted again: elite GENERAL dropshipping store built to the
+Fashion Nova merchandising reference. Because the store's only real
+inventory is the 4 DRAFT women's-fashion products, the V3 program (which
+was generated FOR the Fashion Nova rhythm and matches the real catalog) is
+**REACTIVATED as the active set** — restored to the homepage bit-exact
+(index checksum 9356a1f2, re-verified on the theme). The V5 golf program is
+**demoted to DORMANT** (all 33 files remain in Shopify Files; zero section
+references; the golf homepage lives in git history at commit 54f24db for
+instant restoration if the direction returns). Approval state unchanged and
+honest: **0 approved anywhere — every active V3 asset remains OWNER VISUAL
+APPROVAL REQUIRED** (index: HIVOLT-V3-IMAGE-REVIEW.md, un-superseded by
+this note for the active set; HIVOLT-GOLF-IMAGE-REVIEW.md now describes a
+dormant program).
