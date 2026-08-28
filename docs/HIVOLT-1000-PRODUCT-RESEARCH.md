@@ -290,6 +290,39 @@ supplier's original graphic, no third-party marks visible.
 **Batch running total: 22 of 50 created; 38 eyeballed; 16 rejected
 (42% rejection rate).**
 
+### Tranche 4 — 2026-08-28 ~16:53 UTC
+
+6 candidates (satin maxi/slip dresses per the Meshki/Ninepine scaling
+evidence; trench coats; thumbnails in `qa/sourcing/batch1d/`).
+**2 rejected, 4 created and read-back verified.** Pre-eyeball screening
+removed an abaya (off-category), a $9 coat with $19.49 shipping from a
+supplier with erratic shipping quotes, and two duplicate listings.
+
+Rejected at the eyeball gate:
+
+| Candidate | Reason |
+|---|---|
+| HBLL sequin maxi (4000779975720) | Lead image is a real red-carpet event photo with third-party sponsor logos — image-rights + GMC risk |
+| Lautaro oversized trench (3256806725078045) | Supplier watermark on image |
+
+Created (same discipline):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Luxe satin v neck slip maxi dress (9614477525224) | 32923631399 | $21.15–21.94 free | clears (~$76) |
+| Graceful cowl back satin midi dress (9614477623528) | 1005008861344607 | $35.44 + $1.20 | borderline (~$129 occasion pricing; noted in description) |
+| Silky draped satin slip midi dress (9614477689064) | 3256807093763753 | $20.87–26.17 free | clears (~$82) |
+| Crisp cropped double breasted trench jacket (9614477754600) | 3256808644332983 | $32.63–36.37 free | **fails** (tagged) |
+
+Read-back: 4/4 `DRAFT`, `totalInventory: 0`, media `READY`. Notes: the
+two satin model shots (M1/M2) are supplier-boutique-grade photos whose
+provenance cannot be verified from here — flagged like all supplier
+imagery for the activation review; trench lead is a collage (swap at
+activation).
+
+**Batch running total: 26 of 50 created; 44 eyeballed; 18 rejected
+(41% rejection rate).**
+
 ## Standing prohibitions (unchanged)
 
 No fake products/inventory/reviews; no invented specs (CLASS A/B only —
