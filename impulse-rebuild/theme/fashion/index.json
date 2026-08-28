@@ -113,7 +113,8 @@
         "mobile_scrollable": false,
         "view_all": true,
         "divider": false
-      }
+      },
+      "disabled": true
     },
     "editorial": {
       "type": "text-and-image",
