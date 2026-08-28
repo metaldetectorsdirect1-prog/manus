@@ -1,0 +1,376 @@
+{
+  "stickyAtc": [
+    {
+      "name": "320px hidden initially",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px appears after ATC above viewport",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px no layout shift (fixed bar)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px single form on page",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px bar price mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px bar compare mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px bar button >=44px target",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px price syncs on variant change",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px compare hides when none",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px sold-out disables bar button",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px sold-out label syncs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px disabled bar click does not submit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px bar submits main form exactly once",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px hides when ATC back in view",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "320px no JS errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px hidden initially",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px appears after ATC above viewport",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px no layout shift (fixed bar)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px single form on page",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px bar price mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px bar compare mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px bar button >=44px target",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px price syncs on variant change",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px compare hides when none",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px sold-out disables bar button",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px sold-out label syncs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px disabled bar click does not submit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px bar submits main form exactly once",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px hides when ATC back in view",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "375px no JS errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px hidden initially",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px appears after ATC above viewport",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px no layout shift (fixed bar)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px single form on page",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px bar price mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px bar compare mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px bar button >=44px target",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px price syncs on variant change",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px compare hides when none",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px sold-out disables bar button",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px sold-out label syncs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px disabled bar click does not submit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px bar submits main form exactly once",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px hides when ATC back in view",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "390px no JS errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px hidden initially",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px appears after ATC above viewport",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px no layout shift (fixed bar)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px single form on page",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px bar price mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px bar compare mirrors PDP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px bar button >=44px target",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px price syncs on variant change",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px compare hides when none",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px sold-out disables bar button",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px sold-out label syncs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px disabled bar click does not submit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px bar submits main form exactly once",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px hides when ATC back in view",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "430px no JS errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "1440px bar display:none",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "1440px meta column sticky",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "axe pdp-harness@390 no critical/serious",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "axe pdp-harness@1440 no critical/serious",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "axe home-harness-v4@390 no critical/serious",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "axe home-harness-v4@1440 no critical/serious",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "axe grid-harness-100@390 no critical/serious",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "axe grid-harness-100@1440 no critical/serious",
+      "ok": true,
+      "detail": "[]"
+    }
+  ],
+  "axe": [
+    {
+      "page": "pdp-harness",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "page": "pdp-harness",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "page": "home-harness-v4",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "page": "home-harness-v4",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "page": "grid-harness-100",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "page": "grid-harness-100",
+      "width": 1440,
+      "violations": []
+    }
+  ]
+}

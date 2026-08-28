@@ -2,7 +2,7 @@
 
 **Operational source of truth for future sessions. Not a history.**
 
-Queried: **2026-08-22T12:31Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+Queried: **2026-08-28T16:20Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
 
 > ## This file is a convenience, not an authority.
 >
@@ -17,14 +17,13 @@ Queried: **2026-08-22T12:31Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.co
 
 | Theme ID | Role now | Name (descriptive only) |
 |---|---|---|
-| `158482727144` | **`MAIN`** | "HIVOLT v35 — Returns Copy Correction" |
-| `158653808872` | `UNPUBLISHED` | "HIVOLT v7 — Production Baseline — PDP Data Layer" |
-| `158570021096` | `UNPUBLISHED` | "HIVOLT v6 — PUBLISH ME: logo in header" |
-| `158563467496` | `UNPUBLISHED` | "HIVOLT v37 — PUBLISH: 15% two-item upsell" |
-| `158568906984` | `UNPUBLISHED` | "HIVOLT v5 — PUBLISH ME: favicon + full footer" |
-| `158347559144` | `UNPUBLISHED` | "HIVOLT v30 — product schema. PUBLISH ME" |
-| `158001037544` | `UNPUBLISHED` | "Impulse" |
-| `158568546536` | `UNPUBLISHED` | "Copy of Impulse" |
+| `158753849576` | **`MAIN`** | "GENERAL STORE — IMPULSE MASTER CANDIDATE" — owner self-published 2026-08-28 15:41 UTC |
+| `158874960104` | `UNPUBLISHED` | "GENERAL STORE — MASTER r2 (approved image swaps)" — the working candidate; carries image swaps, JSON-LD system, nav, favicon, hardened sticky ATC, honest page templates. Owner publishes r2 to ship. |
+| `158743363816` | `UNPUBLISHED` | "Impulse" (stock) |
+| `158753652968` | `UNPUBLISHED` | "IMPULSE-REBUILD-2026-08-24" |
+
+The v3x/v7 HIVOLT theme line listed in earlier versions of this file no
+longer exists on the store.
 
 **The IDs and names in this table are informational only. Re-query roles before
 writes.** A name records what a theme *is for*; only Shopify's `role` field
