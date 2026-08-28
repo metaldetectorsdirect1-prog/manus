@@ -1,0 +1,289 @@
+{
+  "sections": {
+    "hero": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/campaign-hero-desktop.png",
+        "image_mobile": "shopify://shop_images/campaign-hero-mobile.png",
+        "is_first": true,
+        "preheading": "New season knitwear",
+        "heading": "Made for the cold months",
+        "subtext": "Sweaters and cardigans in merino, wool blends and heavyweight knits.",
+        "cta1_label": "Shop knitwear",
+        "cta1_link": "/collections/knitwear",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 78,
+        "desktop_focal": "center center"
+      }
+    },
+    "brand-statement": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "title": "HIVOLT \u2014 women's fashion, chosen with restraint",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "enlarge_text": true,
+            "text": "<p>A small, deliberate catalogue that grows every week. Fabric composition is stated on every piece where our supplier provides it \u2014 and left unsaid where it isn't.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "align_text": "left",
+        "narrow_column": true,
+        "divider": false
+      }
+    },
+    "gateway": {
+      "type": "promo-grid",
+      "blocks": {
+        "women": {
+          "type": "advanced",
+          "settings": {
+            "subheading": "Women",
+            "heading": "The knit edit",
+            "heading_size": "h2",
+            "textarea": "",
+            "cta_text1": "Shop now",
+            "cta_link1": "/collections/knitwear",
+            "cta_text2": "",
+            "cta_link2": "",
+            "image": "shopify://shop_images/campaign-dept-women.png",
+            "video_url": "",
+            "width": "50",
+            "height": 640,
+            "text_align": "vertical-bottom horizontal-left",
+            "color_accent": "rgba(0,0,0,0)",
+            "boxed": false,
+            "framed": false
+          }
+        },
+        "newin": {
+          "type": "advanced",
+          "settings": {
+            "subheading": "Just landed",
+            "heading": "New in",
+            "heading_size": "h2",
+            "textarea": "",
+            "cta_text1": "See the latest",
+            "cta_link1": "/collections/knitwear",
+            "cta_text2": "",
+            "cta_link2": "",
+            "image": "shopify://shop_images/tile-new-in.png",
+            "video_url": "",
+            "width": "50",
+            "height": 640,
+            "text_align": "vertical-bottom horizontal-left",
+            "color_accent": "rgba(0,0,0,0)",
+            "boxed": false,
+            "framed": false
+          }
+        }
+      },
+      "block_order": [
+        "women",
+        "newin"
+      ],
+      "settings": {
+        "full_width": true,
+        "gutter_size": 0,
+        "space_above": false,
+        "space_below": false
+      }
+    },
+    "latest": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Shop the latest",
+        "heading_size": "h2",
+        "home_featured_products": "knitwear",
+        "per_row": 4,
+        "rows": 1,
+        "mobile_scrollable": false,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "editorial": {
+      "type": "text-and-image",
+      "settings": {
+        "image": "shopify://shop_images/campaign-editorial-desktop.png",
+        "image_mask": "none",
+        "image2": "",
+        "image2_mask": "none",
+        "subtitle": "Knitwear",
+        "title": "",
+        "heading_size": "h2",
+        "text": "<h2>Layers that last past the season</h2><p>Knitwear is judged in the hand \u2014 the weight of the yarn, how the collar sits, whether the structure survives a winter of wear. We pick pieces for exactly that, and our care guide covers how to keep them.</p>",
+        "button_label": "Read the care guide",
+        "button_link": "/pages/care-guide",
+        "button_style": "secondary",
+        "align_text": "left",
+        "image_width": "50",
+        "layout": "right",
+        "divider": false,
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title": "First look",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>One email when new pieces land. Unsubscribe in one click, any time \u2014 see our <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>"
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "text",
+        "form"
+      ],
+      "settings": {
+        "align_text": "left",
+        "image": "shopify://shop_images/hivolt-brand-editorial.png",
+        "image_width": "50",
+        "image_mask": "none",
+        "image_position": "right",
+        "color_background": "#F6F2EB",
+        "color_text": "#0A0A0B",
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    },
+    "master-hero-disabled": {
+      "type": "fashion-hero",
+      "disabled": true,
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-master-hero-desktop.png",
+        "image_mobile": "shopify://shop_images/hivolt-master-hero-mobile.png",
+        "is_first": false,
+        "preheading": "HIVOLT",
+        "heading": "Women and men, one standard",
+        "subtext": "",
+        "cta1_label": "Shop women",
+        "cta1_link": "/collections/knitwear",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 80,
+        "desktop_focal": "center center"
+      }
+    },
+    "men-hero-disabled": {
+      "type": "fashion-hero",
+      "disabled": true,
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-men-editorial-desktop.png",
+        "image_mobile": "shopify://shop_images/hivolt-men-editorial-mobile.png",
+        "is_first": false,
+        "preheading": "Men",
+        "heading": "The men's edit",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 70,
+        "desktop_focal": "center center"
+      }
+    },
+    "men-trends-disabled": {
+      "type": "image-grid",
+      "disabled": true,
+      "blocks": {
+        "m1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-new-season.png",
+            "link": "",
+            "heading": "New season"
+          }
+        },
+        "m2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-smart-casual.png",
+            "link": "",
+            "heading": "Smart casual"
+          }
+        },
+        "m3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-street-style.png",
+            "link": "",
+            "heading": "Street style"
+          }
+        },
+        "m4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-denim.png",
+            "link": "",
+            "heading": "Denim"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ],
+      "settings": {
+        "heading": "For him",
+        "heading_size": "h2",
+        "text_alignment": "left",
+        "images_per_row": 4,
+        "image_shape": "portrait",
+        "grid_spacing": 20,
+        "full_width": false,
+        "space_above": false,
+        "space_below": false,
+        "divider": false,
+        "overlay_text_color": "#ffffff",
+        "overlay_color": "#0A0A0B",
+        "overlay_opacity": 20
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "brand-statement",
+    "gateway",
+    "latest",
+    "editorial",
+    "newsletter",
+    "master-hero-disabled",
+    "men-hero-disabled",
+    "men-trends-disabled"
+  ]
+}

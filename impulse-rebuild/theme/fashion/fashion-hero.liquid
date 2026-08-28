@@ -1,0 +1,181 @@
+{%- comment -%}
+  HIVOLT fashion hero — dedicated desktop + mobile campaign images,
+  responsive srcset via Shopify CDN, LCP-safe (eager + fetchpriority high
+  when marked first), HTML text overlay (no text baked into imagery).
+{%- endcomment -%}
+
+{%- liquid
+  assign d_img = section.settings.image_desktop
+  assign m_img = section.settings.image_mobile
+  if m_img == blank
+    assign m_img = d_img
+  endif
+  assign loading_mode = 'lazy'
+  assign priority = 'auto'
+  if section.settings.is_first
+    assign loading_mode = 'eager'
+    assign priority = 'high'
+  endif
+-%}
+
+<div id="FashionHero-{{ section.id }}" class="fashion-hero fashion-hero--text-{{ section.settings.text_position }}">
+  {%- if d_img != blank -%}
+    <picture class="fashion-hero__media">
+      <source
+        media="(max-width: 767px)"
+        srcset="{{ m_img | image_url: width: 375 }} 375w, {{ m_img | image_url: width: 550 }} 550w, {{ m_img | image_url: width: 750 }} 750w, {{ m_img | image_url: width: 900 }} 900w, {{ m_img | image_url: width: 1100 }} 1100w"
+        sizes="100vw"
+        width="{{ m_img.width }}"
+        height="{{ m_img.height }}">
+      <img
+        src="{{ d_img | image_url: width: 1440 }}"
+        srcset="{{ d_img | image_url: width: 750 }} 750w, {{ d_img | image_url: width: 1100 }} 1100w, {{ d_img | image_url: width: 1440 }} 1440w, {{ d_img | image_url: width: 1680 }} 1680w, {{ d_img | image_url: width: 1920 }} 1920w, {{ d_img | image_url: width: 2400 }} 2400w"
+        sizes="100vw"
+        width="{{ d_img.width }}"
+        height="{{ d_img.height }}"
+        alt="{{ d_img.alt | default: section.settings.heading | escape }}"
+        loading="{{ loading_mode }}"
+        fetchpriority="{{ priority }}">
+    </picture>
+  {%- else -%}
+    <div class="fashion-hero__media fashion-hero__media--placeholder"></div>
+  {%- endif -%}
+
+  <div class="fashion-hero__overlay" aria-hidden="true"></div>
+
+  <div class="fashion-hero__content page-width">
+    {%- if section.settings.preheading != blank -%}
+      <p class="fashion-hero__preheading">{{ section.settings.preheading | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="fashion-hero__heading h1">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtext != blank -%}
+      <p class="fashion-hero__subtext">{{ section.settings.subtext | escape }}</p>
+    {%- endif -%}
+    <div class="fashion-hero__actions">
+      {%- if section.settings.cta1_label != blank and section.settings.cta1_link != blank -%}
+        <a href="{{ section.settings.cta1_link }}" class="btn fashion-hero__cta">{{ section.settings.cta1_label | escape }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_label != blank and section.settings.cta2_link != blank -%}
+        <a href="{{ section.settings.cta2_link }}" class="btn btn--secondary fashion-hero__cta">{{ section.settings.cta2_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% style %}
+  #FashionHero-{{ section.id }} {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: #f6f2eb;
+  }
+  #FashionHero-{{ section.id }} .fashion-hero__media,
+  #FashionHero-{{ section.id }} .fashion-hero__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (min-width: 768px) {
+    #FashionHero-{{ section.id }} .fashion-hero__media img {
+      width: 100%;
+      height: {{ section.settings.desktop_height }}vh;
+      min-height: 420px;
+      object-fit: cover;
+      object-position: {{ section.settings.desktop_focal }};
+    }
+  }
+  @media (max-width: 767px) {
+    #FashionHero-{{ section.id }} .fashion-hero__media img {
+      height: auto;
+      max-height: 88vh;
+      object-fit: cover;
+      object-position: center top;
+    }
+  }
+  #FashionHero-{{ section.id }} .fashion-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,11,{{ section.settings.overlay_opacity | divided_by: 100.0 }}) 0%, rgba(10,10,11,0) 55%);
+    pointer-events: none;
+  }
+  #FashionHero-{{ section.id }} .fashion-hero__content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8%;
+    color: #ffffff;
+  }
+  .fashion-hero--text-left .fashion-hero__content { text-align: left; }
+  .fashion-hero--text-center .fashion-hero__content { text-align: center; }
+  #FashionHero-{{ section.id }} .fashion-hero__preheading {
+    margin: 0 0 6px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  #FashionHero-{{ section.id }} .fashion-hero__heading {
+    margin: 0 0 10px;
+    color: #ffffff;
+    max-width: 14em;
+  }
+  .fashion-hero--text-center .fashion-hero__heading { margin-left: auto; margin-right: auto; }
+  #FashionHero-{{ section.id }} .fashion-hero__subtext {
+    margin: 0 0 18px;
+    max-width: 34em;
+    font-size: 15px;
+  }
+  .fashion-hero--text-center .fashion-hero__subtext { margin-left: auto; margin-right: auto; }
+  #FashionHero-{{ section.id }} .fashion-hero__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .fashion-hero--text-center .fashion-hero__actions { justify-content: center; }
+  #FashionHero-{{ section.id }} .fashion-hero__cta {
+    min-height: 44px;
+    min-width: 150px;
+  }
+  @media (max-width: 767px) {
+    #FashionHero-{{ section.id }} .fashion-hero__content { bottom: 6%; }
+    #FashionHero-{{ section.id }} .fashion-hero__heading { font-size: 34px; }
+    #FashionHero-{{ section.id }} .fashion-hero__subtext { font-size: 14px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    #FashionHero-{{ section.id }} .fashion-hero__media img {
+      transition: transform 6s ease-out;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Fashion hero",
+  "class": "index-section--flush",
+  "settings": [
+    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image (portrait)" },
+    { "type": "checkbox", "id": "is_first", "label": "First section on page (load eagerly as LCP)", "default": false },
+    { "type": "text", "id": "preheading", "label": "Preheading" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "text", "id": "subtext", "label": "Text" },
+    { "type": "text", "id": "cta1_label", "label": "Primary CTA label" },
+    { "type": "url", "id": "cta1_link", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary CTA label" },
+    { "type": "url", "id": "cta2_link", "label": "Secondary CTA link" },
+    { "type": "select", "id": "text_position", "label": "Text alignment", "default": "left", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" }
+    ] },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay strength", "min": 0, "max": 80, "step": 5, "default": 35 },
+    { "type": "range", "id": "desktop_height", "label": "Desktop height (vh)", "min": 50, "max": 92, "step": 2, "default": 78 },
+    { "type": "select", "id": "desktop_focal", "label": "Desktop focal point", "default": "center center", "options": [
+      { "value": "center top", "label": "Top" },
+      { "value": "center center", "label": "Center" },
+      { "value": "center bottom", "label": "Bottom" }
+    ] }
+  ],
+  "presets": [ { "name": "Fashion hero" } ]
+}
+{% endschema %}
