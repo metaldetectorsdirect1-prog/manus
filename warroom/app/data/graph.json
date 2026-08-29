@@ -1,18 +1,18 @@
 {
- "generated": "2026-08-29T17:49:29+00:00",
+ "generated": "2026-08-29T19:52:42+00:00",
  "includesTooling": false,
  "stats": {
-  "docs": 154,
-  "edges": 158,
+  "docs": 155,
+  "edges": 159,
   "clusters": 6,
-  "orphans": 48,
-  "words": 166603,
+  "orphans": 47,
+  "words": 169213,
   "unresolvedRefs": 5
  },
  "clusters": [
   {
    "id": "docs",
-   "count": 80
+   "count": 81
   },
   {
    "id": "audit",
@@ -69,7 +69,6 @@
   "audit/SHOPPING-PREFLIGHT-2026-08-12.md",
   "audit/TIKTOK-PIPELINE-2026-08-09.md",
   "audit/TREND-RESEARCH-2026-08-17.md",
-  "docs/CATALOG-TAXONOMY-AND-NAV.md",
   "docs/FASHION-STORE-BUILD-REPORT.md",
   "docs/FASHION-STORE-REBUILD-V2.md",
   "docs/FASHION-VISUAL-QA-V2.md",
@@ -2528,8 +2527,8 @@
    "tags": [
     "CATALOG"
    ],
-   "bytes": 3802,
-   "words": 640,
+   "bytes": 11198,
+   "words": 1766,
    "headings": [
     {
      "level": 1,
@@ -2550,11 +2549,59 @@
     {
      "level": 2,
      "text": "Known quality problems in the catalogue (not fixed here)"
+    },
+    {
+     "level": 1,
+     "text": "Update \u2014 2026-08-29, second pass"
+    },
+    {
+     "level": 2,
+     "text": "The r2 publish was abandoned, deliberately"
+    },
+    {
+     "level": 2,
+     "text": "The real defect found instead"
+    },
+    {
+     "level": 2,
+     "text": "Curation performed"
+    },
+    {
+     "level": 2,
+     "text": "Still outstanding"
+    },
+    {
+     "level": 1,
+     "text": "Third pass \u2014 2026-08-29: fabricated colour claims removed"
+    },
+    {
+     "level": 2,
+     "text": "The defect"
+    },
+    {
+     "level": 2,
+     "text": "What was done"
+    },
+    {
+     "level": 2,
+     "text": "Verification"
+    },
+    {
+     "level": 2,
+     "text": "What this fix does not do"
+    },
+    {
+     "level": 2,
+     "text": "Concurrent-process warning"
+    },
+    {
+     "level": 2,
+     "text": "Method note \u2014 bulk mutation is blocked"
     }
    ],
    "excerpt": "Store state at time of work: 2,279 products, 2,031 ACTIVE, 0 orders all time. The catalogue was being written by a second automated process throughout this session (439 \u2192 939 \u2192 879 \u2192 2,279 products observed in one sitting), so everything below is rule-based ra",
-   "updated": "2026-08-29T17:36:49+00:00",
-   "inDeg": 0,
+   "updated": "2026-08-29T18:32:04+00:00",
+   "inDeg": 1,
    "outDeg": 0
   },
   {
@@ -5422,6 +5469,84 @@
    "excerpt": "Generated 2026-08-28 after the owner's pixel rejection of V2 (rendered text artifacts). Every V2 active asset is demoted to NOT ACTIVE. Supersedes HIVOLT-V2-IMAGE-REVIEW.md. Program: 31 images, Higgsfield, model requested nano_banana_2 (2k) \u2014 platform served a",
    "updated": "2026-08-28T15:49:53+00:00",
    "inDeg": 4,
+   "outDeg": 1
+  },
+  {
+   "id": "docs/LANDING-SEPTEMBER-EDIT.md",
+   "title": "Landing page \u2014 The September Edit (2026-08-29)",
+   "cluster": "docs",
+   "tags": [],
+   "bytes": 9157,
+   "words": 1484,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Landing page \u2014 The September Edit (2026-08-29)"
+    },
+    {
+     "level": 2,
+     "text": "1. How the products were chosen"
+    },
+    {
+     "level": 3,
+     "text": "The background test was measured, not guessed"
+    },
+    {
+     "level": 3,
+     "text": "Then every finalist was looked at"
+    },
+    {
+     "level": 2,
+     "text": "2. What the inspection found"
+    },
+    {
+     "level": 3,
+     "text": "One counterfeit, pulled"
+    },
+    {
+     "level": 3,
+     "text": "Colour claims are wrong outside the tagged cohort too"
+    },
+    {
+     "level": 3,
+     "text": "Title/image mismatches (all excluded)"
+    },
+    {
+     "level": 3,
+     "text": "Duplicate listings confirmed by pixel hash"
+    },
+    {
+     "level": 2,
+     "text": "3. The 10 products in the edit"
+    },
+    {
+     "level": 2,
+     "text": "4. The design"
+    },
+    {
+     "level": 3,
+     "text": "Changes"
+    },
+    {
+     "level": 2,
+     "text": "5. Verification"
+    },
+    {
+     "level": 3,
+     "text": "One script fix"
+    },
+    {
+     "level": 2,
+     "text": "6. How to go live"
+    },
+    {
+     "level": 2,
+     "text": "7. What this does not fix"
+    }
+   ],
+   "excerpt": "Brief: \"in front of landing page we need to display clothes that people buy in September and October and also we need to use products with white background in landing page and we need to use better design.\" Status: built on an unpublished theme. Not live. Publ",
+   "updated": "2026-08-29T19:31:31+00:00",
+   "inDeg": 0,
    "outDeg": 1
   },
   {
@@ -8297,6 +8422,12 @@
    "s": "docs/HIVOLT-V3-IMAGE-REVIEW.md",
    "t": "docs/HIVOLT-V2-IMAGE-REVIEW.md",
    "n": 2,
+   "kind": "code"
+  },
+  {
+   "s": "docs/LANDING-SEPTEMBER-EDIT.md",
+   "t": "docs/CATALOG-TAXONOMY-AND-NAV.md",
+   "n": 1,
    "kind": "code"
   },
   {
