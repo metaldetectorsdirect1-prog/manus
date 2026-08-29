@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-29T08:17:52+00:00",
+ "generated": "2026-08-29T13:44:18+00:00",
  "warning": "Every panel below is parsed from a markdown document written by a past session. CLAUDE.md is explicit that these files are a convenience, not an authority. Re-query Shopify before any write.",
  "panels": {
   "blockers": {
@@ -162,7 +162,7 @@
    "source": {
     "doc": "docs/HIVOLT-CURRENT-STATE.md",
     "updated": "2026-08-27T09:25:44+00:00",
-    "ageDays": 1
+    "ageDays": 2
    },
    "authoritative": false,
    "note": "Theme role must never be inferred from this table. IDs survive role changes and names go stale; only Shopify's live `role` field is authoritative.",
@@ -221,7 +221,7 @@
    "source": {
     "doc": "docs/HIVOLT-CURRENT-STATE.md",
     "updated": "2026-08-27T09:25:44+00:00",
-    "ageDays": 1
+    "ageDays": 2
    },
    "items": [
     {
@@ -246,7 +246,7 @@
    "source": {
     "doc": "docs/HIVOLT-CURRENT-STATE.md",
     "updated": "2026-08-27T09:25:44+00:00",
-    "ageDays": 1
+    "ageDays": 2
    },
    "items": [
     {
@@ -285,7 +285,7 @@
    "source": {
     "doc": "docs/HIVOLT-MASTER-TASKS.md",
     "updated": "2026-08-27T09:25:44+00:00",
-    "ageDays": 1
+    "ageDays": 2
    },
    "items": [
     {
@@ -342,7 +342,7 @@
    "source": {
     "doc": "docs/HIVOLT-MASTER-TASKS.md",
     "updated": "2026-08-27T09:25:44+00:00",
-    "ageDays": 1
+    "ageDays": 2
    },
    "items": [
     {
@@ -459,7 +459,7 @@
    "source": {
     "doc": "docs/HIVOLT-MASTER-TASKS.md",
     "updated": "2026-08-27T09:25:44+00:00",
-    "ageDays": 1
+    "ageDays": 2
    },
    "items": [
     {
@@ -504,7 +504,7 @@
    "source": {
     "doc": "CLAUDE.md",
     "updated": "2026-08-27T09:25:44+00:00",
-    "ageDays": 1
+    "ageDays": 2
    },
    "steps": [
     {

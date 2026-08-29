@@ -1,18 +1,18 @@
 {
- "generated": "2026-08-29T08:17:52+00:00",
+ "generated": "2026-08-29T13:44:18+00:00",
  "includesTooling": false,
  "stats": {
-  "docs": 152,
+  "docs": 153,
   "edges": 158,
   "clusters": 6,
-  "orphans": 46,
-  "words": 164875,
+  "orphans": 47,
+  "words": 165963,
   "unresolvedRefs": 5
  },
  "clusters": [
   {
    "id": "docs",
-   "count": 78
+   "count": 79
   },
   {
    "id": "audit",
@@ -89,6 +89,7 @@
   "docs/HIVOLT-REVIEW-LAUNCH-PLAN.md",
   "docs/HIVOLT-TRUST-SYSTEM.md",
   "docs/OWNER-VISUAL-QA.md",
+  "docs/REVENUE-PLAN-500K.md",
   "docs/TEMPLATE-AUDIT.md",
   "docs/V3-REFERENCE-COMPARISON.md",
   "impulse-rebuild/GOOGLE-ADS.md",
@@ -5521,6 +5522,52 @@
    ],
    "excerpt": "Preview URL: https://f36zps-yd.myshopify.com/?preview_theme_id=158753849576 (also: Shopify admin \u2192 Online Store \u2192 Themes \u2192 Copy of Impulse \u2192 Preview) Send screenshots at 390px, 430px, 1440px (browser devtools device mode). Nothing else needed. 1. Hero: portrai",
    "updated": "2026-08-28T03:47:48+00:00",
+   "inDeg": 0,
+   "outDeg": 0
+  },
+  {
+   "id": "docs/REVENUE-PLAN-500K.md",
+   "title": "REVENUE-PLAN-500K.md",
+   "cluster": "docs",
+   "tags": [],
+   "bytes": 6379,
+   "words": 1088,
+   "headings": [
+    {
+     "level": 1,
+     "text": "REVENUE-PLAN-500K.md \u2014 2026-08-28"
+    },
+    {
+     "level": 2,
+     "text": "1. Where the store actually stands"
+    },
+    {
+     "level": 2,
+     "text": "2. What $500k actually requires"
+    },
+    {
+     "level": 3,
+     "text": "The measured reality (sample of 200 live-candidate products)"
+    },
+    {
+     "level": 2,
+     "text": "3. THE BLOCKER: the cost data is corrupted"
+    },
+    {
+     "level": 2,
+     "text": "4. The sequence that actually gets to $500k"
+    },
+    {
+     "level": 3,
+     "text": "What $500k looks like when the economics are fixed"
+    },
+    {
+     "level": 2,
+     "text": "5. Honest expectations"
+    }
+   ],
+   "excerpt": "Target: $500,000 in sales. This is the honest path, the arithmetic behind it, and what is currently blocking it. Every number comes from live Shopify data pulled this session, not estimates. The store can take money. Nothing is sending anyone to it. $500k is n",
+   "updated": "2026-08-29T12:48:23+00:00",
    "inDeg": 0,
    "outDeg": 0
   },
