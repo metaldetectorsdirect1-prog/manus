@@ -75,3 +75,77 @@ units of tracked inventory that nobody owns.**
 
 These are the blockers on a premium storefront, and none of them is a
 design problem.
+
+---
+
+# Update — 2026-08-29, second pass
+
+## The r2 publish was abandoned, deliberately
+
+Plan going in was "publish MASTER r2 to fix the defective homepage image."
+A fresh role query killed that plan:
+
+| Theme | Role |
+|---|---|
+| **HIVOLT — Nova Rebuild (Claude)** (`158888526056`) | **MAIN** — published 11:07 today |
+| GENERAL STORE — IMPULSE MASTER CANDIDATE (`158753849576`) | UNPUBLISHED |
+| GENERAL STORE — MASTER r2 (`158874960104`) | UNPUBLISHED, checksum still `1ec45ae6…` |
+| Horizon (`158882693352`) | UNPUBLISHED |
+
+r2 was built as a corrected twin of the old MASTER CANDIDATE. That base is
+no longer live. **Publishing r2 would have replaced a newer, better theme
+with 14-hour-old work and destroyed the Nova build.** r2 is now obsolete;
+the defective category tile it was created to fix does not exist in the
+Nova homepage at all.
+
+Nova's homepage is a genuine editorial build: hero "The Winter Edit",
+category edit, New This Week, dress editorial, knitwear edit, brand
+story, explore grid, service icons, newsletter — plus a `hivolt-schema`
+section in the header group, so structured data survived the cutover.
+
+## The real defect found instead
+
+Nova's header uses menu **`nova-main`**, not the `fashion-main` rebuilt
+in the previous pass. `nova-main` was:
+
+```
+New In · Dresses · Matching Sets · Denim · Knitwear · Coats & Jackets · Formal · Help
+```
+
+**No Men's entry anywhere** — while the store carries 1,173 men's
+products. Rebuilt as:
+
+```
+New In · Women ▾(9) · Men ▾(10) · Accessories ▾(3) · The Edit ▾(3) · Journal · Help ▾(7)
+```
+
+`Men's Activewear` was also unpublished and would have 404'd; published.
+
+## Curation performed
+
+| Action | Count | Reason |
+|---|---:|---|
+| Set to DRAFT | **8** | All eight share Amazon ASIN `B081YTSN4N` at a $2.99 cost while priced $79.95–$109.95. A military wool coat, a faux-leather trench, an anorak and a parka cannot be one $2.99 item — the supplier mapping is fabricated, so neither the cost nor the fulfilment source is real. |
+| Set to DRAFT | **42** | `image-collage` — lead image is a collage, which fails the image standard for a premium storefront. |
+
+Live products: 1,967 → **1,884**. Fabricated-ASIN products live: **0**.
+
+## Still outstanding
+
+**892 active products carry `color-unverified`** — the colour named in
+the title ("…in Camel", "…in Slate Blue") was never confirmed against the
+image. That is roughly **47% of the live catalogue** making a specific
+colour claim that may be wrong. It is the largest remaining
+misrepresentation exposure and the most likely driver of returns.
+
+Two ways to clear it, both bulk operations on ~892 products:
+1. Strip the colour phrase from the titles — keeps them sellable, removes
+   the unverified claim.
+2. Verify colour against the lead image and keep only what matches.
+
+Neither was done unilaterally: it rewrites nearly half the live catalogue,
+and the generating process is still actively writing products (8 new
+`image-collage` items appeared during this pass alone).
+
+Also unchanged: 1,884 active products still carry 1,000 units of tracked
+inventory each.
