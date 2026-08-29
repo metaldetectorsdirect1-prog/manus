@@ -59,3 +59,6 @@ site/sm-shot-*.jpg
 __pycache__/
 *.pyc
 qa/node_modules/
+
+# Generated bundle — reproducible with: python3 warroom/bundle.py
+warroom/dist/

@@ -254,10 +254,17 @@
 
   /* ---------- boot ---------- */
 
-  Promise.all([
-    fetch('data/graph.json').then(function (r) { return r.json(); }),
-    fetch('data/state.json').then(function (r) { return r.json(); })
-  ]).then(function (res) {
+  // The bundled single-file build inlines both payloads; the served build
+  // fetches them. One codebase, so the two can never drift apart.
+  var inlined = window.__GRAPH__ && window.__STATE__;
+  var load = inlined
+    ? Promise.resolve([window.__GRAPH__, window.__STATE__])
+    : Promise.all([
+        fetch('data/graph.json').then(function (r) { return r.json(); }),
+        fetch('data/state.json').then(function (r) { return r.json(); })
+      ]);
+
+  load.then(function (res) {
     G = res[0]; S = res[1];
 
     $('#railStamp').textContent = G.generated.replace('T', ' ').replace('+00:00', 'Z');
