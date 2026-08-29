@@ -1,0 +1,565 @@
+{
+ "generated": "2026-08-29T08:17:52+00:00",
+ "warning": "Every panel below is parsed from a markdown document written by a past session. CLAUDE.md is explicit that these files are a convenience, not an authority. Re-query Shopify before any write.",
+ "panels": {
+  "blockers": {
+   "source": {
+    "doc": "docs/HIVOLT-OPERATIONS-BLOCKERS.md",
+    "updated": "2026-08-28T07:11:57+00:00",
+    "ageDays": 1
+   },
+   "total": 20,
+   "byClass": {
+    "OWNER DECISION": 9,
+    "LEGAL REVIEW": 1,
+    "CONTENT": 4,
+    "OPERATIONAL": 6
+   },
+   "items": [
+    {
+     "id": "1",
+     "title": "Policy paste",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION (5 min)",
+     "detail": "4 corrected bodies in `impulse-rebuild/policies/` \u2192 Settings \u2192 Policies; then mirror into GMC"
+    },
+    {
+     "id": "2",
+     "title": "Product publication authorization",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION",
+     "detail": "4 DRAFT products; nothing publishes without explicit approval"
+    },
+    {
+     "id": "3",
+     "title": "V3 visual approval",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION",
+     "detail": "390px/1440px screenshots + 31-image gallery verdict"
+    },
+    {
+     "id": "4",
+     "title": "Supplier spec data",
+     "class": "CONTENT",
+     "classRaw": "CONTENT",
+     "detail": "composition/care/fit/measurements/origin per SKU from AutoDS listings; never invented"
+    },
+    {
+     "id": "5",
+     "title": "Size charts",
+     "class": "CONTENT",
+     "classRaw": "CONTENT",
+     "detail": "author `hivolt_size_chart` metaobjects from supplier tables"
+    },
+    {
+     "id": "6",
+     "title": "Real weights",
+     "class": "CONTENT",
+     "classRaw": "CONTENT",
+     "detail": "3/4 products at 0 weight"
+    },
+    {
+     "id": "7",
+     "title": "HS codes + origin",
+     "class": "OPERATIONAL",
+     "classRaw": "OPERATIONAL",
+     "detail": "required for any non-US market; supplier documentation"
+    },
+    {
+     "id": "8",
+     "title": "Review acquisition",
+     "class": "OPERATIONAL",
+     "classRaw": "OPERATIONAL",
+     "detail": "Judge.me installed, 0 reviews; needs orders + post-purchase flow"
+    },
+    {
+     "id": "9",
+     "title": "GA4 / pixel layer",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION + OPERATIONAL",
+     "detail": "property creation + app install (global)"
+    },
+    {
+     "id": "10",
+     "title": "Email/SMS provider flows",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION",
+     "detail": "no provider verified; welcome/abandon/post-purchase flows unbuilt"
+    },
+    {
+     "id": "11",
+     "title": "Wishlist / back-in-stock provider",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION",
+     "detail": "none installed; do not fake"
+    },
+    {
+     "id": "12",
+     "title": "Empty-collection cleanup",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER (connector-blocked)",
+     "detail": "unpublish 14 spec-first collections"
+    },
+    {
+     "id": "13",
+     "title": "About/FAQ/blog copy refresh",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION",
+     "detail": "live-store shared content still spec-first (\"Training Journal\", \"Our Mission\" activewear copy)"
+    },
+    {
+     "id": "14",
+     "title": "Fulfillment SLA verification",
+     "class": "OPERATIONAL",
+     "classRaw": "OPERATIONAL",
+     "detail": "AutoDS auto-ordering flow untested end-to-end (zero orders ever)"
+    },
+    {
+     "id": "15",
+     "title": "Customer-service capacity",
+     "class": "OPERATIONAL",
+     "classRaw": "OPERATIONAL",
+     "detail": "inbox staffed? response SLA honest (no claim made)"
+    },
+    {
+     "id": "16",
+     "title": "AutoDS subscription",
+     "class": "OPERATIONAL",
+     "classRaw": "OPERATIONAL",
+     "detail": "next payment 2026-08-30 \u2014 lapse breaks fulfillment automation"
+    },
+    {
+     "id": "17",
+     "title": "Legal/consent review",
+     "class": "LEGAL REVIEW",
+     "classRaw": "LEGAL REVIEW",
+     "detail": "privacy/consent posture beyond the banner; not a code claim"
+    },
+    {
+     "id": "18",
+     "title": "Wordmark asset",
+     "class": "CONTENT",
+     "classRaw": "CONTENT",
+     "detail": "real vector logo (AI-generated typography is prohibited)"
+    },
+    {
+     "id": "19",
+     "title": "5th product import",
+     "class": "OPERATIONAL",
+     "classRaw": "OPERATIONAL",
+     "detail": "private-supplier item 10282354278688 \u2014 owner-manual in AutoDS UI"
+    },
+    {
+     "id": "20",
+     "title": "GemPages decision",
+     "class": "OWNER DECISION",
+     "classRaw": "OWNER DECISION",
+     "detail": "app residue in theme (~85KB CSS + layouts); remove or keep"
+    }
+   ]
+  },
+  "themes": {
+   "source": {
+    "doc": "docs/HIVOLT-CURRENT-STATE.md",
+    "updated": "2026-08-27T09:25:44+00:00",
+    "ageDays": 1
+   },
+   "authoritative": false,
+   "note": "Theme role must never be inferred from this table. IDs survive role changes and names go stale; only Shopify's live `role` field is authoritative.",
+   "items": [
+    {
+     "id": "158482727144",
+     "role": "MAIN",
+     "name": "\"HIVOLT v35 \u2014 Returns Copy Correction\"",
+     "isMain": true
+    },
+    {
+     "id": "158653808872",
+     "role": "UNPUBLISHED",
+     "name": "\"HIVOLT v7 \u2014 Production Baseline \u2014 PDP Data Layer\"",
+     "isMain": false
+    },
+    {
+     "id": "158570021096",
+     "role": "UNPUBLISHED",
+     "name": "\"HIVOLT v6 \u2014 PUBLISH ME: logo in header\"",
+     "isMain": false
+    },
+    {
+     "id": "158563467496",
+     "role": "UNPUBLISHED",
+     "name": "\"HIVOLT v37 \u2014 PUBLISH: 15% two-item upsell\"",
+     "isMain": false
+    },
+    {
+     "id": "158568906984",
+     "role": "UNPUBLISHED",
+     "name": "\"HIVOLT v5 \u2014 PUBLISH ME: favicon + full footer\"",
+     "isMain": false
+    },
+    {
+     "id": "158347559144",
+     "role": "UNPUBLISHED",
+     "name": "\"HIVOLT v30 \u2014 product schema. PUBLISH ME\"",
+     "isMain": false
+    },
+    {
+     "id": "158001037544",
+     "role": "UNPUBLISHED",
+     "name": "\"Impulse\"",
+     "isMain": false
+    },
+    {
+     "id": "158568546536",
+     "role": "UNPUBLISHED",
+     "name": "\"Copy of Impulse\"",
+     "isMain": false
+    }
+   ]
+  },
+  "catalog": {
+   "source": {
+    "doc": "docs/HIVOLT-CURRENT-STATE.md",
+    "updated": "2026-08-27T09:25:44+00:00",
+    "ageDays": 1
+   },
+   "items": [
+    {
+     "k": "Active products",
+     "v": "20 (curated 2026-08-16; 114 archived, reversible)"
+    },
+    {
+     "k": "HIVOLT polo drafts",
+     "v": "3, all `DRAFT`, none published to any channel"
+    },
+    {
+     "k": "Orders, all time",
+     "v": "**0**"
+    },
+    {
+     "k": "Target product **H01**",
+     "v": "`gid://shopify/Product/9603121774824` \u2014 `DRAFT`"
+    }
+   ]
+  },
+  "issues": {
+   "source": {
+    "doc": "docs/HIVOLT-CURRENT-STATE.md",
+    "updated": "2026-08-27T09:25:44+00:00",
+    "ageDays": 1
+   },
+   "items": [
+    {
+     "id": "1",
+     "issue": "**H01 Size option order is wrong** \u2014 `S \u2192 M \u2192 XL \u2192 XXL \u2192 L`",
+     "state": "`productOptionsReorder` returns `userErrors: []` and writes nothing. **Do not retry it.** Needs a manual drag in the Shopify admin"
+    },
+    {
+     "id": "2",
+     "issue": "**No garment measurements exist**",
+     "state": "Supplier gives recommended body weight only. No size chart can be built. Request drafted: `docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md`"
+    },
+    {
+     "id": "3",
+     "issue": "**`100% Cotton` is unverified**",
+     "state": "Supplier dropdown value, not a label reading. Fibre content is regulated (16 CFR Part 303). **Blocks publication** \u2014 see `docs/HIVOLT-H01-PUBLISH-GATE.md`"
+    },
+    {
+     "id": "4",
+     "issue": "**Two detail images unreadable**",
+     "state": "`hv-h01-detail-1.webp`, `hv-h01-detail-2.webp`. Every retrieval path denied by network policy; 7 attempts recorded"
+    },
+    {
+     "id": "5",
+     "issue": "**Live policy contradictions unresolved**",
+     "state": "7 items awaiting owner decisions \u2014 `docs/HIVOLT-POLICY-CORRECTIONS.md`"
+    },
+    {
+     "id": "6",
+     "issue": "**`/pages/fabric-weight-index` still live** with ~109 dead product links",
+     "state": "Independent production incident, unrelated to the PDP work. Untouched"
+    }
+   ]
+  },
+  "ownerBlocked": {
+   "source": {
+    "doc": "docs/HIVOLT-MASTER-TASKS.md",
+    "updated": "2026-08-27T09:25:44+00:00",
+    "ageDays": 1
+   },
+   "items": [
+    {
+     "id": "O1",
+     "item": "**Sourcing path A/B/C/D/E**",
+     "why": "All product work",
+     "action": "`HIVOLT-SOURCING-PROPOSAL.md` \u00a74"
+    },
+    {
+     "id": "O2",
+     "item": "**Fulfilment: origin, carrier, cost, transit (US/CA/UK/EU)**",
+     "why": "International markets, shipping, delivery promises",
+     "action": "`HIVOLT-INTERNATIONALIZATION.md`"
+    },
+    {
+     "id": "O3",
+     "item": "Retail pricing + margin floor",
+     "why": "Pricing model, bundle design",
+     "action": "`HIVOLT-SOURCING-PROPOSAL.md` \u00a73"
+    },
+    {
+     "id": "O4",
+     "item": "Payments active?",
+     "why": "Any revenue at all",
+     "action": "`HIVOLT-GROWTH-AUDIT.md` P0"
+    },
+    {
+     "id": "O5",
+     "item": "Keep or delete 3 draft polos",
+     "why": "Housekeeping",
+     "action": "`HIVOLT-SOURCING-PROPOSAL.md` \u00a71"
+    },
+    {
+     "id": "O6",
+     "item": "Authoritative logo asset",
+     "why": "Design system finalisation",
+     "action": "Owner supplying"
+    },
+    {
+     "id": "O7",
+     "item": "E-commerce reference file",
+     "why": "\u00a76 classification",
+     "action": "Owner supplying \u2192 `docs/research/`"
+    },
+    {
+     "id": "O8",
+     "item": "Duties model (DDP/DAP), VAT status, EU/UK returns policy",
+     "why": "Legal/compliance config",
+     "action": "LEGAL review"
+    }
+   ]
+  },
+  "techQueue": {
+   "source": {
+    "doc": "docs/HIVOLT-MASTER-TASKS.md",
+    "updated": "2026-08-27T09:25:44+00:00",
+    "ageDays": 1
+   },
+   "items": [
+    {
+     "id": "~~T1~~",
+     "item": "~~Metafield schema for polo attributes~~",
+     "why": "**DONE**",
+     "action": "\u2014"
+    },
+    {
+     "id": "~~T2~~",
+     "item": "~~Size-guide modal \u2014 dual unit (in/cm), per-product table from metafields~~",
+     "why": "**DONE**",
+     "action": "\u2014"
+    },
+    {
+     "id": "~~T3~~",
+     "item": "~~Colour swatch selector + variant image switching~~",
+     "why": "**DONE**",
+     "action": "\u2014"
+    },
+    {
+     "id": "T4",
+     "item": "PDP template to directive \u00a79 hierarchy",
+     "why": "P1",
+     "action": "T1\u2013T3"
+    },
+    {
+     "id": "T5",
+     "item": "Sticky mobile ATC (suppressed until variants chosen)",
+     "why": "P1",
+     "action": "T4"
+    },
+    {
+     "id": "T6",
+     "item": "Product benefit / details accordion architecture",
+     "why": "P1",
+     "action": "T1"
+    },
+    {
+     "id": "T7",
+     "item": "Delivery + returns components (data-driven, no invented times)",
+     "why": "P1",
+     "action": "O2 for content"
+    },
+    {
+     "id": "T8",
+     "item": "Bundle UI architecture (pricing platform-side only)",
+     "why": "P1",
+     "action": "O3 for values"
+    },
+    {
+     "id": "T9",
+     "item": "Cart drawer + free-shipping progress (threshold configurable)",
+     "why": "P1",
+     "action": "\u2014"
+    },
+    {
+     "id": "T10",
+     "item": "Cross-sell architecture",
+     "why": "P2",
+     "action": "catalogue"
+    },
+    {
+     "id": "T11",
+     "item": "Email capture (delayed / exit-intent, frequency-capped)",
+     "why": "P1",
+     "action": "\u2014"
+    },
+    {
+     "id": "T12",
+     "item": "Analytics event layer per `HIVOLT-ANALYTICS-SCHEMA.md`",
+     "why": "P1",
+     "action": "T4"
+    },
+    {
+     "id": "T13",
+     "item": "UTM preservation through navigation \u2192 checkout",
+     "why": "P1",
+     "action": "\u2014"
+    },
+    {
+     "id": "T14",
+     "item": "Country/currency selector UX (inert until markets enabled)",
+     "why": "P2",
+     "action": "O2"
+    },
+    {
+     "id": "T15",
+     "item": "Cookie consent scaffold",
+     "why": "P2",
+     "action": "LEGAL"
+    },
+    {
+     "id": "T16",
+     "item": "Accessibility pass \u2014 contrast on volt-yellow, focus states, modal a11y",
+     "why": "P1",
+     "action": "design system"
+    },
+    {
+     "id": "T17",
+     "item": "Performance: image sizing, font loading, script audit",
+     "why": "P1",
+     "action": "\u2014"
+    },
+    {
+     "id": "T18",
+     "item": "SEO architecture: schema, canonical, OG, breadcrumbs",
+     "why": "P2",
+     "action": "catalogue"
+    }
+   ]
+  },
+  "carried": {
+   "source": {
+    "doc": "docs/HIVOLT-MASTER-TASKS.md",
+    "updated": "2026-08-27T09:25:44+00:00",
+    "ageDays": 1
+   },
+   "items": [
+    {
+     "id": "**P1**",
+     "item": "Read the garment care label and verify `100% Cotton`",
+     "why": "Fibre content is a regulated claim (16 CFR Part 303); the current value is a supplier dropdown selection, not a label",
+     "action": "**Folded into the same message as P2** \u2014 it asks for label photographs, not a yes/no answer. One send covers both blockers"
+    },
+    {
+     "id": "**P2**",
+     "item": "Obtain flat garment measurements per size",
+     "why": "No `hivolt_size_chart` can exist without them; the supplier gives body weight only",
+     "action": "**Request written and ready to send \u2014 `docs/HIVOLT-SUPPLIER-EVIDENCE-REQUEST.md`.** Owner sends it through the supplier chat for item `1005002281827487`; automation has no messaging surface (AliExpress 403 at CONNECT, AutoDS has no contact tool)"
+    },
+    {
+     "id": "**P3**",
+     "item": "Obtain country of manufacture",
+     "why": "`spec.origin` is required for EU/UK listings and is currently blank",
+     "action": "Read it off the label"
+    },
+    {
+     "id": "**P4**",
+     "item": "**Fix the Size option display order by hand**",
+     "why": "Still `S \u2192 M \u2192 XL \u2192 XXL \u2192 L` in the catalogue. `productOptionsReorder` reports success and writes nothing \u2014 **do not retry it**",
+     "action": "Drag the values in Shopify admin, then verify all 20 variant GIDs, SKUs, prices and inventory are unchanged"
+    },
+    {
+     "id": "**P5**",
+     "item": "Repeat this pass for the other two draft polos",
+     "why": "Both still have zero `spec.*`",
+     "action": "\u2014"
+    },
+    {
+     "id": "**P6**",
+     "item": "`/pages/fabric-weight-index` still live with dead product links",
+     "why": "Independent production incident, unrelated to this work",
+     "action": "Decide: unpublish, or repoint the links"
+    }
+   ]
+  },
+  "safety": {
+   "source": {
+    "doc": "CLAUDE.md",
+    "updated": "2026-08-27T09:25:44+00:00",
+    "ageDays": 1
+   },
+   "steps": [
+    {
+     "n": 1,
+     "text": "Authoritative current-state read \u2014 from Shopify, this session, not from a prompt, a prior report, or a document in this repo."
+    },
+    {
+     "n": 2,
+     "text": "Target identity verification \u2014 the GID you are about to write to is the GID you read back, checked field by field, not matched by name or by position."
+    },
+    {
+     "n": 3,
+     "text": "Role / status verification \u2014 theme `role`, product `status`."
+    },
+    {
+     "n": 4,
+     "text": "Concurrency snapshot \u2014 capture the fields the write must not disturb, so collateral damage is detectable afterwards."
+    },
+    {
+     "n": 5,
+     "text": "Smallest mutation that achieves the goal."
+    },
+    {
+     "n": 6,
+     "text": "Independent fresh read, issued after the mutation returned."
+    },
+    {
+     "n": 7,
+     "text": "Exact comparison on the intended field."
+    },
+    {
+     "n": 8,
+     "text": "Comparison on unrelated state that must not have moved."
+    },
+    {
+     "n": 9,
+     "text": "`updatedAt` check wherever the resource carries one."
+    },
+    {
+     "n": 10,
+     "text": "Only then classify the mutation as successful."
+    },
+    {
+     "n": 11,
+     "text": "Re-verify the target theme's `role` immediately before the write. Role can change between your first read and your write \u2014 that is exactly what happened on 2026-08-21."
+    },
+    {
+     "n": 12,
+     "text": "Re-verify the product's `status` immediately before the write."
+    }
+   ],
+   "phases": [
+    "Before",
+    "After"
+   ]
+  }
+ }
+}
