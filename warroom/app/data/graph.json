@@ -1,18 +1,18 @@
 {
- "generated": "2026-08-29T13:44:18+00:00",
+ "generated": "2026-08-29T17:49:29+00:00",
  "includesTooling": false,
  "stats": {
-  "docs": 153,
+  "docs": 154,
   "edges": 158,
   "clusters": 6,
-  "orphans": 47,
-  "words": 165963,
+  "orphans": 48,
+  "words": 166603,
   "unresolvedRefs": 5
  },
  "clusters": [
   {
    "id": "docs",
-   "count": 79
+   "count": 80
   },
   {
    "id": "audit",
@@ -69,6 +69,7 @@
   "audit/SHOPPING-PREFLIGHT-2026-08-12.md",
   "audit/TIKTOK-PIPELINE-2026-08-09.md",
   "audit/TREND-RESEARCH-2026-08-17.md",
+  "docs/CATALOG-TAXONOMY-AND-NAV.md",
   "docs/FASHION-STORE-BUILD-REPORT.md",
   "docs/FASHION-STORE-REBUILD-V2.md",
   "docs/FASHION-VISUAL-QA-V2.md",
@@ -2519,6 +2520,42 @@
    "updated": "2026-08-28T11:48:50+00:00",
    "inDeg": 2,
    "outDeg": 4
+  },
+  {
+   "id": "docs/CATALOG-TAXONOMY-AND-NAV.md",
+   "title": "CATALOG-TAXONOMY-AND-NAV.md",
+   "cluster": "docs",
+   "tags": [
+    "CATALOG"
+   ],
+   "bytes": 3802,
+   "words": 640,
+   "headings": [
+    {
+     "level": 1,
+     "text": "CATALOG-TAXONOMY-AND-NAV.md \u2014 2026-08-29"
+    },
+    {
+     "level": 2,
+     "text": "Category architecture (verified live)"
+    },
+    {
+     "level": 2,
+     "text": "Changes made this pass"
+    },
+    {
+     "level": 2,
+     "text": "Navigation now live"
+    },
+    {
+     "level": 2,
+     "text": "Known quality problems in the catalogue (not fixed here)"
+    }
+   ],
+   "excerpt": "Store state at time of work: 2,279 products, 2,031 ACTIVE, 0 orders all time. The catalogue was being written by a second automated process throughout this session (439 \u2192 939 \u2192 879 \u2192 2,279 products observed in one sitting), so everything below is rule-based ra",
+   "updated": "2026-08-29T17:36:49+00:00",
+   "inDeg": 0,
+   "outDeg": 0
   },
   {
    "id": "docs/CATALOG-TOP20-LAUNCH-SHORTLIST.md",
