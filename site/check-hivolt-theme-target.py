@@ -66,6 +66,8 @@ def extract_themes(payload):
         node = node["themes"]
     if isinstance(node, dict) and "edges" in node:
         node = [e.get("node", e) for e in node["edges"]]
+    if isinstance(node, dict) and "nodes" in node:
+        node = node["nodes"]
     if not isinstance(node, list):
         raise ValueError("could not find a list of themes in the input")
 

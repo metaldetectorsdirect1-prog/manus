@@ -1,0 +1,592 @@
+[
+ {
+  "id": "gid://shopify/Product/9615478784232",
+  "old": "Essential Men's Longline Parka with Hood in Taupe",
+  "new": "Essential Men's Longline Parka with Hood"
+ },
+ {
+  "id": "gid://shopify/Product/9615478849768",
+  "old": "Premium Men's Harrington Jacket in Forest Green",
+  "new": "Premium Men's Harrington Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615478915304",
+  "old": "Relaxed Men's Sherpa-Lined Trucker Jacket in Stone",
+  "new": "Relaxed Men's Sherpa-Lined Trucker Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615479177448",
+  "old": "Rugged Men's Zip Fleece Jacket in Charcoal",
+  "new": "Rugged Men's Zip Fleece Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615479242984",
+  "old": "Polished Men's Padded Gilet in Khaki",
+  "new": "Polished Men's Padded Gilet"
+ },
+ {
+  "id": "gid://shopify/Product/9615479472360",
+  "old": "Modern Men's Bonded Funnel Neck Jacket in Olive",
+  "new": "Modern Men's Bonded Funnel Neck Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615479505128",
+  "old": "Refined Men's Corduroy Collar Quilted Jacket in Cream",
+  "new": "Refined Men's Corduroy Collar Quilted Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615480914152",
+  "old": "Elevated Men's Hybrid Knit Sleeve Jacket in Navy",
+  "new": "Elevated Men's Hybrid Knit Sleeve Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615481045224",
+  "old": "Classic Men's Ski Snow Jacket in Slate Blue",
+  "new": "Classic Men's Ski Snow Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615481536744",
+  "old": "Timeless Men's Sherpa-Lined Trucker Jacket in Cream",
+  "new": "Timeless Men's Sherpa-Lined Trucker Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615481667816",
+  "old": "Effortless Men's Padded Gilet in Chocolate",
+  "new": "Effortless Men's Padded Gilet"
+ },
+ {
+  "id": "gid://shopify/Product/9615482290408",
+  "old": "Polished Men's Suede Chukka Desert Boots in Camel",
+  "new": "Polished Men's Suede Chukka Desert Boots"
+ },
+ {
+  "id": "gid://shopify/Product/9615482421480",
+  "old": "Cozy Men's Retro Suede Terrace Trainers in Dark Brown",
+  "new": "Cozy Men's Retro Suede Terrace Trainers"
+ },
+ {
+  "id": "gid://shopify/Product/9615482585320",
+  "old": "Refined Men's Penny Loafers in Black",
+  "new": "Refined Men's Penny Loafers"
+ },
+ {
+  "id": "gid://shopify/Product/9615482814696",
+  "old": "Essential Men's Bonded Funnel Neck Jacket in Khaki",
+  "new": "Essential Men's Bonded Funnel Neck Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615482847464",
+  "old": "Premium Men's Corduroy Collar Quilted Jacket in Tan",
+  "new": "Premium Men's Corduroy Collar Quilted Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615483175144",
+  "old": "Cozy Men's Puffer Vest with Stand Collar in Tan",
+  "new": "Cozy Men's Puffer Vest with Stand Collar"
+ },
+ {
+  "id": "gid://shopify/Product/9615483273448",
+  "old": "Refined Men's Ski Snow Jacket in Black",
+  "new": "Refined Men's Ski Snow Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615483764968",
+  "old": "Soft Men's Running Style Cushioned Sneakers in Stone",
+  "new": "Soft Men's Running Style Cushioned Sneakers"
+ },
+ {
+  "id": "gid://shopify/Product/9615483830504",
+  "old": "Elevated Men's Suede Chukka Desert Boots in Olive",
+  "new": "Elevated Men's Suede Chukka Desert Boots"
+ },
+ {
+  "id": "gid://shopify/Product/9615483961576",
+  "old": "Refined Men's Retro Suede Terrace Trainers in Forest Green",
+  "new": "Refined Men's Retro Suede Terrace Trainers"
+ },
+ {
+  "id": "gid://shopify/Product/9615484387560",
+  "old": "Rugged Men's Harrington Jacket in Stone",
+  "new": "Rugged Men's Harrington Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615484420328",
+  "old": "Polished Men's Sherpa-Lined Trucker Jacket in Tan",
+  "new": "Polished Men's Sherpa-Lined Trucker Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615484551400",
+  "old": "Cozy Men's Padded Gilet in Rust",
+  "new": "Cozy Men's Padded Gilet"
+ },
+ {
+  "id": "gid://shopify/Product/9615484748008",
+  "old": "Relaxed Men's Bonded Funnel Neck Jacket in Chocolate",
+  "new": "Relaxed Men's Bonded Funnel Neck Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615485239528",
+  "old": "Cozy Men's Running Style Cushioned Sneakers in Cream",
+  "new": "Cozy Men's Running Style Cushioned Sneakers"
+ },
+ {
+  "id": "gid://shopify/Product/9615485305064",
+  "old": "Modern Men's Suede Chukka Desert Boots in Khaki",
+  "new": "Modern Men's Suede Chukka Desert Boots"
+ },
+ {
+  "id": "gid://shopify/Product/9615485436136",
+  "old": "Relaxed Men's Retro Suede Terrace Trainers in Burgundy",
+  "new": "Relaxed Men's Retro Suede Terrace Trainers"
+ },
+ {
+  "id": "gid://shopify/Product/9615486124264",
+  "old": "Refined Men's Hybrid Knit Sleeve Jacket in Dark Brown",
+  "new": "Refined Men's Hybrid Knit Sleeve Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615486189800",
+  "old": "Premium Men's Ski Snow Jacket in Navy",
+  "new": "Premium Men's Ski Snow Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615486451944",
+  "old": "Effortless Men's Sherpa-Lined Trucker Jacket in Grey Marl",
+  "new": "Effortless Men's Sherpa-Lined Trucker Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615486583016",
+  "old": "Modern Men's Padded Gilet in Sage",
+  "new": "Modern Men's Padded Gilet"
+ },
+ {
+  "id": "gid://shopify/Product/9615486746856",
+  "old": "Refined Men's Running Style Cushioned Sneakers in Tan",
+  "new": "Refined Men's Running Style Cushioned Sneakers"
+ },
+ {
+  "id": "gid://shopify/Product/9615486812392",
+  "old": "Premium Men's Suede Chukka Desert Boots in Chocolate",
+  "new": "Premium Men's Suede Chukka Desert Boots"
+ },
+ {
+  "id": "gid://shopify/Product/9615486943464",
+  "old": "Rugged Men's Retro Suede Terrace Trainers in Stone",
+  "new": "Rugged Men's Retro Suede Terrace Trainers"
+ },
+ {
+  "id": "gid://shopify/Product/9615487303912",
+  "old": "Relaxed Men's Running Style Cushioned Sneakers in Grey Marl",
+  "new": "Relaxed Men's Running Style Cushioned Sneakers"
+ },
+ {
+  "id": "gid://shopify/Product/9615487369448",
+  "old": "Timeless Men's Suede Chukka Desert Boots in Rust",
+  "new": "Timeless Men's Suede Chukka Desert Boots"
+ },
+ {
+  "id": "gid://shopify/Product/9615487566056",
+  "old": "Timeless Men's Bonded Funnel Neck Jacket in Rust",
+  "new": "Timeless Men's Bonded Funnel Neck Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615487598824",
+  "old": "Rugged Men's Corduroy Collar Quilted Jacket in Camel",
+  "new": "Rugged Men's Corduroy Collar Quilted Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615487893736",
+  "old": "Essential Men's Puffer Vest with Stand Collar in Camel",
+  "new": "Essential Men's Puffer Vest with Stand Collar"
+ },
+ {
+  "id": "gid://shopify/Product/9615487992040",
+  "old": "Sleek Men's Ski Snow Jacket in Charcoal",
+  "new": "Sleek Men's Ski Snow Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615488155880",
+  "old": "Effortless Men's Retro Suede Terrace Trainers in Cream",
+  "new": "Effortless Men's Retro Suede Terrace Trainers"
+ },
+ {
+  "id": "gid://shopify/Product/9615488254184",
+  "old": "Classic Men's Penny Loafers in Forest Green",
+  "new": "Classic Men's Penny Loafers"
+ },
+ {
+  "id": "gid://shopify/Product/9615488516328",
+  "old": "Rugged Men's Running Style Cushioned Sneakers in Camel",
+  "new": "Rugged Men's Running Style Cushioned Sneakers"
+ },
+ {
+  "id": "gid://shopify/Product/9615488581864",
+  "old": "Soft Men's Suede Chukka Desert Boots in Sage",
+  "new": "Soft Men's Suede Chukka Desert Boots"
+ },
+ {
+  "id": "gid://shopify/Product/9615489040616",
+  "old": "Elevated Men's Harrington Jacket in Tan",
+  "new": "Elevated Men's Harrington Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615489073384",
+  "old": "Cozy Men's Sherpa-Lined Trucker Jacket in Camel",
+  "new": "Cozy Men's Sherpa-Lined Trucker Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615489204456",
+  "old": "Essential Men's Padded Gilet in Mustard",
+  "new": "Essential Men's Padded Gilet"
+ },
+ {
+  "id": "gid://shopify/Product/9615489401064",
+  "old": "Polished Men's Bonded Funnel Neck Jacket in Sage",
+  "new": "Polished Men's Bonded Funnel Neck Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615489794280",
+  "old": "Classic Men's Retro Suede Terrace Trainers in Tan",
+  "new": "Classic Men's Retro Suede Terrace Trainers"
+ },
+ {
+  "id": "gid://shopify/Product/9615490875624",
+  "old": "Rugged Men's Ski Snow Jacket in Dark Brown",
+  "new": "Rugged Men's Ski Snow Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615491072232",
+  "old": "Classic Men's Harrington Jacket in Grey Marl",
+  "new": "Classic Men's Harrington Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615491105000",
+  "old": "Modern Men's Sherpa-Lined Trucker Jacket in Olive",
+  "new": "Modern Men's Sherpa-Lined Trucker Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615491203304",
+  "old": "Premium Men's Zip Fleece Jacket in Cream",
+  "new": "Premium Men's Zip Fleece Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615491236072",
+  "old": "Relaxed Men's Padded Gilet in Ecru",
+  "new": "Relaxed Men's Padded Gilet"
+ },
+ {
+  "id": "gid://shopify/Product/9615492972776",
+  "old": "Effortless Men's Bonded Funnel Neck Jacket in Mustard",
+  "new": "Effortless Men's Bonded Funnel Neck Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615493038312",
+  "old": "Elevated Men's Corduroy Collar Quilted Jacket in Khaki",
+  "new": "Elevated Men's Corduroy Collar Quilted Jacket"
+ },
+ {
+  "id": "gid://shopify/Product/9615493333224",
+  "old": "Premium Men's Quarter Zip Knit Pullover in Ecru",
+  "new": "Premium Men's Quarter Zip Knit Pullover"
+ },
+ {
+  "id": "gid://shopify/Product/9615493693672",
+  "old": "Soft Men's V-Neck Cotton Sweater in Mustard",
+  "new": "Soft Men's V-Neck Cotton Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615496970472",
+  "old": "Modern Men's Fair Isle Pattern Jumper in Ecru",
+  "new": "Modern Men's Fair Isle Pattern Jumper"
+ },
+ {
+  "id": "gid://shopify/Product/9615497068776",
+  "old": "Essential Men's Brushed Raglan Sweater in Slate Blue",
+  "new": "Essential Men's Brushed Raglan Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615497461992",
+  "old": "Soft Men's Quarter Zip Knit Pullover in Taupe",
+  "new": "Soft Men's Quarter Zip Knit Pullover"
+ },
+ {
+  "id": "gid://shopify/Product/9615497756904",
+  "old": "Refined Men's V-Neck Cotton Sweater in Ecru",
+  "new": "Refined Men's V-Neck Cotton Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615500411112",
+  "old": "Timeless Men's Fair Isle Pattern Jumper in Taupe",
+  "new": "Timeless Men's Fair Isle Pattern Jumper"
+ },
+ {
+  "id": "gid://shopify/Product/9615500476648",
+  "old": "Polished Men's Brushed Raglan Sweater in Black",
+  "new": "Polished Men's Brushed Raglan Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615500902632",
+  "old": "Rugged Men's V-Neck Cotton Sweater in Taupe",
+  "new": "Rugged Men's V-Neck Cotton Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615501557992",
+  "old": "Classic Men's Aviator Sunglasses in Navy",
+  "new": "Classic Men's Aviator Sunglasses"
+ },
+ {
+  "id": "gid://shopify/Product/9615501721832",
+  "old": "Cozy Men's Fair Isle Pattern Jumper in Slate Blue",
+  "new": "Cozy Men's Fair Isle Pattern Jumper"
+ },
+ {
+  "id": "gid://shopify/Product/9615501787368",
+  "old": "Modern Men's Brushed Raglan Sweater in Navy",
+  "new": "Modern Men's Brushed Raglan Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615502213352",
+  "old": "Classic Men's V-Neck Cotton Sweater in Slate Blue",
+  "new": "Classic Men's V-Neck Cotton Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615503458536",
+  "old": "Sleek Men's Aviator Sunglasses in Charcoal",
+  "new": "Sleek Men's Aviator Sunglasses"
+ },
+ {
+  "id": "gid://shopify/Product/9615503720680",
+  "old": "Relaxed Men's Fair Isle Pattern Jumper in Black",
+  "new": "Relaxed Men's Fair Isle Pattern Jumper"
+ },
+ {
+  "id": "gid://shopify/Product/9615504933096",
+  "old": "Elevated Men's Aviator Sunglasses in Dark Brown",
+  "new": "Elevated Men's Aviator Sunglasses"
+ },
+ {
+  "id": "gid://shopify/Product/9615505129704",
+  "old": "Effortless Men's Fair Isle Pattern Jumper in Navy",
+  "new": "Effortless Men's Fair Isle Pattern Jumper"
+ },
+ {
+  "id": "gid://shopify/Product/9615505653992",
+  "old": "Elevated Men's V-Neck Cotton Sweater in Navy",
+  "new": "Elevated Men's V-Neck Cotton Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615506309352",
+  "old": "Premium Men's Aviator Sunglasses in Forest Green",
+  "new": "Premium Men's Aviator Sunglasses"
+ },
+ {
+  "id": "gid://shopify/Product/9615506800872",
+  "old": "Essential Men's Fair Isle Pattern Jumper in Charcoal",
+  "new": "Essential Men's Fair Isle Pattern Jumper"
+ },
+ {
+  "id": "gid://shopify/Product/9615507292392",
+  "old": "Premium Men's V-Neck Cotton Sweater in Charcoal",
+  "new": "Premium Men's V-Neck Cotton Sweater"
+ },
+ {
+  "id": "gid://shopify/Product/9615507685608",
+  "old": "Refined Men's Textured Knit Blazer in Rust",
+  "new": "Refined Men's Textured Knit Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615507783912",
+  "old": "Relaxed Men's Herringbone Tweed Blazer in Rust",
+  "new": "Relaxed Men's Herringbone Tweed Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615507947752",
+  "old": "Soft Men's Knitted Polo and Trouser Co-ord in Olive",
+  "new": "Soft Men's Knitted Polo and Trouser Co-ord"
+ },
+ {
+  "id": "gid://shopify/Product/9615508078824",
+  "old": "Sleek Men's Brushed Flannel Check Shirt in Forest Green",
+  "new": "Sleek Men's Brushed Flannel Check Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615508373736",
+  "old": "Modern Men's Brushed Herringbone Shirt in Navy",
+  "new": "Modern Men's Brushed Herringbone Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615508734184",
+  "old": "Classic Men's Textured Knit Blazer in Sage",
+  "new": "Classic Men's Textured Knit Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615508898024",
+  "old": "Essential Men's Herringbone Tweed Blazer in Sage",
+  "new": "Essential Men's Herringbone Tweed Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615509061864",
+  "old": "Rugged Men's Knitted Polo and Trouser Co-ord in Khaki",
+  "new": "Rugged Men's Knitted Polo and Trouser Co-ord"
+ },
+ {
+  "id": "gid://shopify/Product/9615509192936",
+  "old": "Elevated Men's Textured Knit Blazer in Mustard",
+  "new": "Elevated Men's Textured Knit Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615509291240",
+  "old": "Modern Men's Herringbone Tweed Blazer in Mustard",
+  "new": "Modern Men's Herringbone Tweed Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615509815528",
+  "old": "Sleek Men's Brushed Herringbone Shirt in Charcoal",
+  "new": "Sleek Men's Brushed Herringbone Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615510175976",
+  "old": "Sleek Men's Knitted Polo and Trouser Co-ord in Chocolate",
+  "new": "Sleek Men's Knitted Polo and Trouser Co-ord"
+ },
+ {
+  "id": "gid://shopify/Product/9615510438120",
+  "old": "Soft Men's Textured Knit Blazer in Ecru",
+  "new": "Soft Men's Textured Knit Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615510536424",
+  "old": "Cozy Men's Herringbone Tweed Blazer in Ecru",
+  "new": "Cozy Men's Herringbone Tweed Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615510700264",
+  "old": "Premium Men's Knitted Polo and Trouser Co-ord in Rust",
+  "new": "Premium Men's Knitted Polo and Trouser Co-ord"
+ },
+ {
+  "id": "gid://shopify/Product/9615510831336",
+  "old": "Rugged Men's Textured Knit Blazer in Taupe",
+  "new": "Rugged Men's Textured Knit Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615511191784",
+  "old": "Effortless Men's Brushed Herringbone Shirt in Dark Brown",
+  "new": "Effortless Men's Brushed Herringbone Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615511453928",
+  "old": "Effortless Men's Herringbone Tweed Blazer in Taupe",
+  "new": "Effortless Men's Herringbone Tweed Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615511748840",
+  "old": "Refined Men's Knitted Polo and Trouser Co-ord in Sage",
+  "new": "Refined Men's Knitted Polo and Trouser Co-ord"
+ },
+ {
+  "id": "gid://shopify/Product/9615511945448",
+  "old": "Sleek Men's Textured Knit Blazer in Slate Blue",
+  "new": "Sleek Men's Textured Knit Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615512043752",
+  "old": "Polished Men's Herringbone Tweed Blazer in Slate Blue",
+  "new": "Polished Men's Herringbone Tweed Blazer"
+ },
+ {
+  "id": "gid://shopify/Product/9615512207592",
+  "old": "Classic Men's Knitted Polo and Trouser Co-ord in Mustard",
+  "new": "Classic Men's Knitted Polo and Trouser Co-ord"
+ },
+ {
+  "id": "gid://shopify/Product/9615512469736",
+  "old": "Refined Men's Brushed Herringbone Shirt in Forest Green",
+  "new": "Refined Men's Brushed Herringbone Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615512535272",
+  "old": "Premium Men's Short Sleeve Waffle Shirt in Slate Blue",
+  "new": "Premium Men's Short Sleeve Waffle Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615514206440",
+  "old": "Timeless Men's Brushed Herringbone Shirt in Burgundy",
+  "new": "Timeless Men's Brushed Herringbone Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615514271976",
+  "old": "Polished Men's Short Sleeve Waffle Shirt in Black",
+  "new": "Polished Men's Short Sleeve Waffle Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615514337512",
+  "old": "Effortless Men's Double Pocket Utility Shirt in Tan",
+  "new": "Effortless Men's Double Pocket Utility Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615514435816",
+  "old": "Classic Men's Panel Colour Block Shirt in Khaki",
+  "new": "Classic Men's Panel Colour Block Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615514534120",
+  "old": "Essential Men's Brushed Flannel Check Shirt in Grey Marl",
+  "new": "Essential Men's Brushed Flannel Check Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615515615464",
+  "old": "Elevated Men's Brushed Herringbone Shirt in Stone",
+  "new": "Elevated Men's Brushed Herringbone Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615515681000",
+  "old": "Classic Men's Short Sleeve Waffle Shirt in Navy",
+  "new": "Classic Men's Short Sleeve Waffle Shirt"
+ },
+ {
+  "id": "gid://shopify/Product/9615532916968",
+  "old": "Soft Women's Cropped Cami with Lace Trim in Tan",
+  "new": "Soft Women's Cropped Cami with Lace Trim"
+ },
+ {
+  "id": "gid://shopify/Product/9615533146344",
+  "old": "Essential Women's Cropped Cami with Lace Trim in Grey Marl",
+  "new": "Essential Women's Cropped Cami with Lace Trim"
+ },
+ {
+  "id": "gid://shopify/Product/9615534129384",
+  "old": "Soft Women's Cropped Cami with Lace Trim in Camel",
+  "new": "Soft Women's Cropped Cami with Lace Trim"
+ },
+ {
+  "id": "gid://shopify/Product/9615534358760",
+  "old": "Essential Women's Cropped Cami with Lace Trim in Olive",
+  "new": "Essential Women's Cropped Cami with Lace Trim"
+ },
+ {
+  "id": "gid://shopify/Product/9615534457064",
+  "old": "Sleek Women's Sculpt Seamless Leggings in Slate Blue",
+  "new": "Sleek Women's Sculpt Seamless Leggings"
+ },
+ {
+  "id": "gid://shopify/Product/9615534686440",
+  "old": "Elevated Women's Sculpt Seamless Leggings in Black",
+  "new": "Elevated Women's Sculpt Seamless Leggings"
+ },
+ {
+  "id": "gid://shopify/Product/9615535669480",
+  "old": "Premium Women's Sculpt Seamless Leggings in Navy",
+  "new": "Premium Women's Sculpt Seamless Leggings"
+ },
+ {
+  "id": "gid://shopify/Product/9615535866088",
+  "old": "Soft Women's Sculpt Seamless Leggings in Charcoal",
+  "new": "Soft Women's Sculpt Seamless Leggings"
+ },
+ {
+  "id": "gid://shopify/Product/9615536062696",
+  "old": "Refined Women's Sculpt Seamless Leggings in Dark Brown",
+  "new": "Refined Women's Sculpt Seamless Leggings"
+ }
+]
