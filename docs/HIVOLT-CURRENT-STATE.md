@@ -2,28 +2,34 @@
 
 **Operational source of truth for future sessions. Not a history.**
 
-Queried: **2026-08-28T21:15Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+Queried: **2026-08-29T08:13Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
 
-**Cutover status:** MASTER r2 is certified READY and owner-authorized, but
-`themePublish` is categorically blocked by the MCP connector ("must be done
-manually in Shopify admin") — verified by an actual refused attempt at
-21:15Z with roles re-verified unchanged afterwards. **The owner publishes
-r2 manually**, then follows `docs/PRODUCTION-CUTOVER-PLAN.md`.
+**Cutover status: superseded by the owner's own path.** At
+**2026-08-29T07:02Z** the theme **"HIVOLT — Nova Rebuild (Claude)"
+(`158888526056`) was published as MAIN**, replacing the stock Impulse demo
+that had been live since 21:36:35Z. Nova Rebuild was created ~05:03Z and
+actively built through ~07:02Z by a parallel Claude session working for the
+owner — not by this session. The certified **MASTER r2 remains UNPUBLISHED
+and byte-intact** (`updatedAt` unmoved at 2026-08-28T21:33:42Z since the
+last verified session write); the r2 cutover authorization was never
+executed (`themePublish` is categorically blocked by the MCP connector —
+verified by an actual refused attempt at 21:15Z on 08-28) and the owner
+appears to have chosen the Nova Rebuild instead. If the owner still wants
+r2 live: **Themes → "GENERAL STORE — MASTER r2 (approved image swaps)" →
+Publish**, then `docs/PRODUCTION-CUTOVER-PLAN.md`.
 
-**Theme-admin activity 21:33–21:52Z (observed via role/updatedAt reads):**
-the old MAIN was unpublished ~21:33:01, r2 was touched ~21:33:42 (briefly
-published, most likely), IMPULSE-REBUILD ~21:35:58, and at **21:36:35 the
-STOCK "Impulse" demo theme (`158743363816`) became MAIN — the live
-storefront is running an uncustomized demo theme**. A fifth theme,
-"Horizon" (`158882693352`), was added ~21:52 — the owner appears to be
-actively exploring themes. r2 re-verified checksum-intact at 21:45Z (all 8
-certified files identical); owner push-notified at 21:45Z naming the exact
-theme to publish. The certified storefront remains one click away:
-**Themes → "GENERAL STORE — MASTER r2 (approved image swaps)" → Publish.**
-**Catalog at 21:15Z:** 819 products (344 ACTIVE, rest DRAFT), **0 published
-to the Online Store channel** — the storefront still shows zero products.
-Theme publication ≠ commerce launch: analytics NOT CONFIGURED, do not send
-paid traffic.
+**Theme-admin timeline (observed via role/updatedAt reads):** 08-28
+~21:33:01 old MAIN unpublished; ~21:33:42 r2 touched (briefly published,
+most likely); 21:36:35 STOCK "Impulse" demo (`158743363816`) became MAIN;
+~21:52 "Horizon" added. 08-29: ~04:07 owner edited the live stock theme;
+~05:03 "HIVOLT — Nova Rebuild (Claude)" created (parallel Claude session);
+06:12–06:13 Nova Rebuild + IMPULSE-REBUILD edited; **07:02:30/07:02:37
+matching timestamps — publish signature: stock Impulse → UNPUBLISHED, Nova
+Rebuild → MAIN.**
+**Catalog at 21:15Z 08-28:** 819 products (344 ACTIVE, rest DRAFT), **0
+published to the Online Store channel** — the storefront still shows zero
+products. Theme publication ≠ commerce launch: analytics NOT CONFIGURED, do
+not send paid traffic.
 
 > ## This file is a convenience, not an authority.
 >
@@ -34,14 +40,16 @@ paid traffic.
 
 ---
 
-## Shopify themes
+## Shopify themes (roles as read 2026-08-29T08:13Z)
 
 | Theme ID | Role now | Name (descriptive only) |
 |---|---|---|
-| `158753849576` | **`MAIN`** | "GENERAL STORE — IMPULSE MASTER CANDIDATE" — owner self-published 2026-08-28 15:41 UTC |
-| `158874960104` | `UNPUBLISHED` | "GENERAL STORE — MASTER r2 (approved image swaps)" — the working candidate; carries image swaps, JSON-LD system, nav, favicon, hardened sticky ATC, honest page templates. Owner publishes r2 to ship. |
-| `158743363816` | `UNPUBLISHED` | "Impulse" (stock) |
+| `158888526056` | **`MAIN`** | "HIVOLT — Nova Rebuild (Claude)" — built by a parallel Claude session 05:03–07:02Z 08-29, published 07:02Z |
+| `158874960104` | `UNPUBLISHED` | "GENERAL STORE — MASTER r2 (approved image swaps)" — certified READY candidate; carries image swaps, JSON-LD system, nav, favicon, hardened sticky ATC, honest page templates. Intact, `updatedAt` unmoved since 2026-08-28T21:33:42Z |
+| `158753849576` | `UNPUBLISHED` | "GENERAL STORE — IMPULSE MASTER CANDIDATE" — previous MAIN (08-28 15:41–21:33), recorded rollback artifact of the r2 plan |
+| `158743363816` | `UNPUBLISHED` | "Impulse" (stock) — was MAIN 08-28 21:36 → 08-29 07:02 |
 | `158753652968` | `UNPUBLISHED` | "IMPULSE-REBUILD-2026-08-24" |
+| `158882693352` | `UNPUBLISHED` | "Horizon" (added 08-28 ~21:52) |
 
 The v3x/v7 HIVOLT theme line listed in earlier versions of this file no
 longer exists on the store.
