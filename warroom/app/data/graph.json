@@ -1,18 +1,18 @@
 {
- "generated": "2026-08-30T11:09:24+00:00",
+ "generated": "2026-08-30T16:44:47+00:00",
  "includesTooling": false,
  "stats": {
-  "docs": 165,
-  "edges": 168,
+  "docs": 166,
+  "edges": 170,
   "clusters": 6,
-  "orphans": 48,
-  "words": 181112,
+  "orphans": 47,
+  "words": 181764,
   "unresolvedRefs": 5
  },
  "clusters": [
   {
    "id": "docs",
-   "count": 90
+   "count": 91
   },
   {
    "id": "audit",
@@ -68,7 +68,6 @@
   "audit/SHOPPING-PREFLIGHT-2026-08-12.md",
   "audit/TIKTOK-PIPELINE-2026-08-09.md",
   "audit/TREND-RESEARCH-2026-08-17.md",
-  "docs/CATALOG-SCALE-PIPELINE.md",
   "docs/FASHION-STORE-BUILD-REPORT.md",
   "docs/FASHION-STORE-REBUILD-V2.md",
   "docs/FASHION-VISUAL-QA-V2.md",
@@ -2623,7 +2622,7 @@
    ],
    "excerpt": "Brief: \"use trendtrack to find top best selling 30 000 products to add into shopify and create the right category on them and make them all in stock 1000 units and dresses for women we must find 10 000 units and on landing page we need to have 200 images.\" Thi",
    "updated": "2026-08-30T03:24:33+00:00",
-   "inDeg": 0,
+   "inDeg": 1,
    "outDeg": 0
   },
   {
@@ -2768,6 +2767,48 @@
    "outDeg": 0
   },
   {
+   "id": "docs/CATEGORY-SORT.md",
+   "title": "Category sort",
+   "cluster": "docs",
+   "tags": [],
+   "bytes": 3772,
+   "words": 652,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Category sort \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "Two corrections to earlier work in this repo"
+    },
+    {
+     "level": 2,
+     "text": "Search syntax that actually works"
+    },
+    {
+     "level": 2,
+     "text": "Mismatch scan"
+    },
+    {
+     "level": 2,
+     "text": "Applied \u2014 33 reassignments"
+    },
+    {
+     "level": 3,
+     "text": "Verified"
+    },
+    {
+     "level": 2,
+     "text": "The finding that matters more than any of this"
+    }
+   ],
+   "excerpt": "1. Collections are driven by productType, not by tags. docs/CATALOG-SCALE-PIPELINE.md records that \"not one of the 44 collections uses productType \u2014 all rules are TAG or TITLE based\". Reading the live rulesets, the opposite is true: 22 of 37 collections key on",
+   "updated": "2026-08-30T14:19:56+00:00",
+   "inDeg": 0,
+   "outDeg": 2
+  },
+  {
    "id": "docs/CLONE-CONSOLIDATION.md",
    "title": "Clone-listing consolidation",
    "cluster": "docs",
@@ -2806,7 +2847,7 @@
    ],
    "excerpt": "57 title-groups held 152 active listings that differed only by a leading adjective (\"Premium\", \"Cozy\", \"Refined\"\u2026) and, in some groups, a colour word. Each group therefore sold one garment 2\u20136 times. They survived the earlier image dedup (docs/CATALOG-IMAGE-DE",
    "updated": "2026-08-30T04:59:51+00:00",
-   "inDeg": 1,
+   "inDeg": 2,
    "outDeg": 1
   },
   {
@@ -8576,6 +8617,18 @@
    "t": "CLAUDE.md",
    "n": 1,
    "kind": "bare"
+  },
+  {
+   "s": "docs/CATEGORY-SORT.md",
+   "t": "docs/CATALOG-SCALE-PIPELINE.md",
+   "n": 1,
+   "kind": "code"
+  },
+  {
+   "s": "docs/CATEGORY-SORT.md",
+   "t": "docs/CLONE-CONSOLIDATION.md",
+   "n": 1,
+   "kind": "code"
   },
   {
    "s": "docs/CLONE-CONSOLIDATION.md",
