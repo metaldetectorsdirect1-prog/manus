@@ -388,3 +388,37 @@ not this session's to decide.
   September Edit work, 8 had title/image mismatches and 1 was counterfeit.
 - **It does not price the gap.** Fashion Nova runs 362 live Google ads and 2,024
   TikTok ads. Design parity does not produce traffic parity.
+
+---
+
+## Appendix — fixes applied in this session, 2026-08-30
+
+Two items from §7.5 were live false claims and were corrected immediately.
+Verified by independent re-read, not by the mutation payload.
+
+| Collection | Was | Now | `updatedAt` |
+|---|---|---|---|
+| `sale` (0 products) | *"Up to 80% off — shop HIVOLT markdowns before they're gone."* | *"HIVOLT markdowns. There is nothing in this edit at the moment — new reductions appear here when they are made."* | `02:49:14Z` |
+| `best-sellers` (0 orders) | *"…our most-loved styles across menswear and womenswear, chosen by customers again and again."* | *"The complete HIVOLT range for women and men — dresses, coats, knitwear, denim, footwear and accessories. Free US shipping on every order and 60 days to return."* | `02:49:14Z` |
+
+The `best-sellers` SEO title also read "Best Sellers" while the collection is
+titled "Shop All" and contains the entire catalogue; it now matches.
+
+**29 collections carried a malformed meta description** — the string ` - HIVOLT`
+appended to the description body, not only the title, producing SERP snippets
+that end *"…from October to spring. - HIVOLT"* under a title already reading
+"Knitwear & Sweaters - HIVOLT". All 29 stripped; re-read confirms
+`updatedAt 2026-08-30T02:50:05Z` on each and **zero** remaining occurrences
+across all 44 collections.
+
+`new-arrivals` also had the placeholder description *"Shop the latest drops at
+HIVOLT."* on a 2,251-product collection; rewritten.
+
+### These fixes may not hold
+
+Collection `updatedAt` timestamps immediately before this work were spread
+across `02:20`–`02:34` on the same day — the concurrent import process is
+rewriting collection metadata continuously. If it regenerates descriptions from
+a template, the ` - HIVOLT` suffix and the fabricated best-seller claim will
+come back. **Re-read before assuming the store is clean, and fix the template
+rather than the output.**

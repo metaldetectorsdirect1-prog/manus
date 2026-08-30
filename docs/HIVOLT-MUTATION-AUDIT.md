@@ -51,3 +51,34 @@ Verified: all DRAFT; `resourcePublicationsV2` empty on all 4 (no channel,
 not customer-visible); inventory unchanged (680/10/10/10); prices unchanged
 (44.95/59.95/54.95/79.95); descriptions are the supplier-grounded texts
 from the authorized SOP pass — nothing fabricated.
+
+---
+
+## `collectionUpdate` echoes a stale `updatedAt` — 2026-08-30
+
+A third instance of "the mutation payload can echo stale state", and the first
+one that fails in the *safe* direction — which makes it dangerous in a different
+way, because it invites you to report a successful write as a failure.
+
+Two `collectionUpdate` calls were issued against `sale` (`450558656744`) and
+`best-sellers` (`450583101672`). The payload returned:
+
+| | in the mutation payload | on an independent re-read |
+|---|---|---|
+| `sale.updatedAt` | `2026-08-29T06:42:41Z` — **unchanged** | `2026-08-30T02:49:14Z` |
+| `best-sellers.updatedAt` | `2026-08-30T02:34:11Z` — **unchanged** | `2026-08-30T02:49:14Z` |
+
+The `seo` fields in the payload showed the new values, `userErrors` was empty,
+and `updatedAt` showed the pre-write timestamp. By the rule as written — *"A
+write bumps that timestamp; if it has not moved, nothing happened"* — this
+would have been classified as a no-op. It was not: both writes landed.
+
+**The rule survives; the source of the timestamp does not.** `updatedAt` is
+only evidence when it comes from a read issued *after* the mutation returned.
+A timestamp inside the mutation's own payload is part of the echoed object and
+carries the same staleness as every other field in it.
+
+Corollary already in this file, now with a third confirmation: **the only
+evidence that a Shopify mutation applied is a separate query.** Not the payload,
+not `userErrors`, and not a transport error either — a 90-alias batch returning
+`upstream_error` on 2026-08-30 had fully applied.
