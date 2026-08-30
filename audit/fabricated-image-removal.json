@@ -1,0 +1,587 @@
+{
+ "generated": "2026-08-06",
+ "store": "f36zps-yd.myshopify.com",
+ "mutation": "productDeleteMedia(productId: $productId, mediaIds: $mediaIds)",
+ "productCount": 38,
+ "mediaCount": 80,
+ "operations": [
+  {
+   "product": "Cropped Zip-Through Hoodie",
+   "handle": "cropped-zip-through-hoodie",
+   "productId": "gid://shopify/Product/9571272163560",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182759096552"
+   ],
+   "files": [
+    "hf_20260801_154647_845ff904-ba36-4861-ab83-64a9d4897087.png"
+   ]
+  },
+  {
+   "product": "Men's Drawstring Training Shorts",
+   "handle": "mens-drawstring-shorts",
+   "productId": "gid://shopify/Product/9571203285224",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447800552"
+   ],
+   "files": [
+    "hf_20260801_143820_8d32d106-fead-4d31-ac2c-b140d8b6876d.png"
+   ]
+  },
+  {
+   "product": "Men's High-Stretch Lightweight Gym T-Shirt",
+   "handle": "men-s-lightweight-performance-t-shirt",
+   "productId": "gid://shopify/Product/9572602642664",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432465128"
+   ],
+   "files": [
+    "hf_20260801_141226_87ba992e-581b-42bf-9145-5ca82d7e11c8.png"
+   ]
+  },
+  {
+   "product": "Men's Jacquard Performance Tank Top",
+   "handle": "men-s-jacquard-performance-tank-top",
+   "productId": "gid://shopify/Product/9571272458472",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447571176"
+   ],
+   "files": [
+    "hf_20260801_143803_579716b1-e69e-4daf-822e-3b6800f9e3d6.png"
+   ]
+  },
+  {
+   "product": "Men's Jacquard Slim Mesh Training T-Shirt",
+   "handle": "men-s-jacquard-slim-mesh-t-shirt",
+   "productId": "gid://shopify/Product/9571193192680",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447603944"
+   ],
+   "files": [
+    "hf_20260801_143805_52495454-5cbd-40ab-a670-0642620756fb.png"
+   ]
+  },
+  {
+   "product": "Men's Lightweight Sport Jersey",
+   "handle": "men-s-lightweight-sport-jersey",
+   "productId": "gid://shopify/Product/9571243098344",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447636712"
+   ],
+   "files": [
+    "hf_20260801_143811_863dba3a-d978-415e-9c39-9016e4a6cc34.png"
+   ]
+  },
+  {
+   "product": "Men's Quarter-Zip Performance Long Sleeve T-Shirt",
+   "handle": "men-s-quarter-zip-performance-long-sleeve-t-shirt",
+   "productId": "gid://shopify/Product/9571307946216",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40160661242088",
+    "gid://shopify/MediaImage/40160661340392",
+    "gid://shopify/MediaImage/40160661274856",
+    "gid://shopify/MediaImage/40160661307624",
+    "gid://shopify/MediaImage/40160661373160"
+   ],
+   "files": [
+    "q4-qzls-studio.png",
+    "q4-qzls-life.png",
+    "q4-qzls-back.png",
+    "q4-qzls-detail.png",
+    "q4-qzls-candid.png"
+   ]
+  },
+  {
+   "product": "Men's Quarter-Zip Performance Polo Shirt",
+   "handle": "men-s-quarter-zip-performance-polo-shirt",
+   "productId": "gid://shopify/Product/9571277701352",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447669480"
+   ],
+   "files": [
+    "hf_20260801_143812_b24d8602-5777-4a5a-a162-be3267e84e09.png"
+   ]
+  },
+  {
+   "product": "Men's Quarter-Zip Raglan Training T-Shirt",
+   "handle": "men-s-quarter-zip-raglan-training-t-shirt",
+   "productId": "gid://shopify/Product/9571234054376",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447702248"
+   ],
+   "files": [
+    "hf_20260801_143815_e7d15aa6-2477-47ec-a025-a5daece0b251.png"
+   ]
+  },
+  {
+   "product": "Men's Raglan Reflective T-Shirt",
+   "handle": "men-s-raglan-reflective-t-shirt",
+   "productId": "gid://shopify/Product/9572296130792",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432694504"
+   ],
+   "files": [
+    "hf_20260801_141236_ac32a807-a8be-450b-9c5b-c9fab907aeb3.png"
+   ]
+  },
+  {
+   "product": "Men's Slim-Fit Topstitch Tank Top",
+   "handle": "men-s-slim-fit-topstitch-tank-top",
+   "productId": "gid://shopify/Product/9571276423400",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447735016"
+   ],
+   "files": [
+    "hf_20260801_143818_f0ec937a-0d54-4290-a92e-7a6f38b69884.png"
+   ]
+  },
+  {
+   "product": "Men's Stripe Trim Basketball Shorts",
+   "handle": "classic-stripe-trim-basketball-shorts",
+   "productId": "gid://shopify/Product/9571237888232",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432727272"
+   ],
+   "files": [
+    "hf_20260801_141239_08a31b62-4cb6-4e5c-b687-2d983bf915f3.png"
+   ]
+  },
+  {
+   "product": "Men's Tapered Leg Drawstring Joggers",
+   "handle": "men-s-tapered-leg-drawstring-joggers",
+   "productId": "gid://shopify/Product/9571296149736",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182758277352",
+    "gid://shopify/MediaImage/40160661078248",
+    "gid://shopify/MediaImage/40160661176552",
+    "gid://shopify/MediaImage/40160661111016",
+    "gid://shopify/MediaImage/40160661143784",
+    "gid://shopify/MediaImage/40160661209320"
+   ],
+   "files": [
+    "hf_20260801_154634_2051a9e2-64ee-47f2-90a5-f8e184b457f0.png",
+    "q4-joggers-studio.png",
+    "q4-joggers-life.png",
+    "q4-joggers-back.png",
+    "q4-joggers-detail.png",
+    "q4-joggers-candid.png"
+   ]
+  },
+  {
+   "product": "Men's Tight Cycling Shorts",
+   "handle": "men-s-tight-cycling-shorts",
+   "productId": "gid://shopify/Product/9571678879976",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182758375656",
+    "gid://shopify/MediaImage/40160658489576",
+    "gid://shopify/MediaImage/40160658587880",
+    "gid://shopify/MediaImage/40160658522344",
+    "gid://shopify/MediaImage/40160658555112",
+    "gid://shopify/MediaImage/40160658620648"
+   ],
+   "files": [
+    "hf_20260801_154639_1c390855-752a-4afc-8cfa-48a13729d3a7.png",
+    "q5-cycling-studio.png",
+    "q5-cycling-life.png",
+    "q5-cycling-back.png",
+    "q5-cycling-detail.png",
+    "q5-cycling-candid.png"
+   ]
+  },
+  {
+   "product": "Men\u2019s Color Block Raglan T-Shirt",
+   "handle": "mens-color-block-raglan-t-shirt",
+   "productId": "gid://shopify/Product/9571273146600",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182447767784"
+   ],
+   "files": [
+    "hf_20260801_143819_30165636-b24a-4c5a-8cf4-30d50b429b4b.png"
+   ]
+  },
+  {
+   "product": "Men\u2019s Drawstring Basketball Shorts",
+   "handle": "mens-drawstring-basketball-shorts",
+   "productId": "gid://shopify/Product/9571679600872",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432792808"
+   ],
+   "files": [
+    "hf_20260801_141244_e9e1ab39-6d42-423b-9d52-a34f0baf9ac4.png"
+   ]
+  },
+  {
+   "product": "Men\u2019s Drawstring Joggers",
+   "handle": "mens-drawstring-joggers",
+   "productId": "gid://shopify/Product/9571669999848",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182759031016",
+    "gid://shopify/MediaImage/40160763805928"
+   ],
+   "files": [
+    "hf_20260801_154642_70a52ca8-9d95-4358-a0ca-1b9a73d585d3.png",
+    "mens-joggers-onmodel.png"
+   ]
+  },
+  {
+   "product": "Men\u2019s Lightweight Performance T-Shirt",
+   "handle": "mens-lightweight-performance-t-shirt",
+   "productId": "gid://shopify/Product/9571286319336",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40160763838696"
+   ],
+   "files": [
+    "b6-m-lw-tee-onmodel.png"
+   ]
+  },
+  {
+   "product": "Men\u2019s Piping Straight Leg Sweatpants",
+   "handle": "mens-piping-straight-leg-sweatpants",
+   "productId": "gid://shopify/Product/9571280388328",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182758310120",
+    "gid://shopify/MediaImage/40153661866216",
+    "gid://shopify/MediaImage/40153661964520",
+    "gid://shopify/MediaImage/40153661898984",
+    "gid://shopify/MediaImage/40153661931752",
+    "gid://shopify/MediaImage/40153661997288"
+   ],
+   "files": [
+    "hf_20260801_154637_db1d13c8-6cd3-42dd-a8e1-faed61307299.png",
+    "q7-sweatpants-studio.png",
+    "q7-sweatpants-life.png",
+    "q7-sweatpants-back.png",
+    "q7-sweatpants-detail.png",
+    "q7-sweatpants-candid.png"
+   ]
+  },
+  {
+   "product": "Men\u2019s Raglan Sleeve Performance T-Shirt",
+   "handle": "mens-raglan-sleeve-performance-t-shirt",
+   "productId": "gid://shopify/Product/9571286778088",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40160760299752",
+    "gid://shopify/MediaImage/40160760332520",
+    "gid://shopify/MediaImage/40160760365288"
+   ],
+   "files": [
+    "b7-m-raglan-front.png",
+    "b7-m-raglan-back.png",
+    "b7-m-raglan-detail.png"
+   ]
+  },
+  {
+   "product": "Men\u2019s Regular Fit Performance Shorts",
+   "handle": "mens-regular-fit-performance-shorts",
+   "productId": "gid://shopify/Product/9571676094696",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40153657344232",
+    "gid://shopify/MediaImage/40153657442536",
+    "gid://shopify/MediaImage/40153657377000",
+    "gid://shopify/MediaImage/40153657409768",
+    "gid://shopify/MediaImage/40153657475304"
+   ],
+   "files": [
+    "hf_20260730_023608_18294aab-813b-4532-8b47-a12db3fb71c7.png",
+    "hf_20260730_023614_3f875fc7-3d7e-4b64-b518-03535653472e.png",
+    "hf_20260730_023610_4a442717-1e8b-4b17-ba53-5ff7109f3915.png",
+    "hf_20260730_023612_80fa212b-9a83-4654-a478-c2b9fc10cf15.png",
+    "hf_20260730_023616_445d092d-af95-4f29-8b61-1c46b72076d3.png"
+   ]
+  },
+  {
+   "product": "Soft Hooded Sports Jacket",
+   "handle": "soft-hooded-sports-jacket",
+   "productId": "gid://shopify/Product/9571188277480",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182758211816"
+   ],
+   "files": [
+    "hf_20260801_154632_bf599b31-a431-48df-b92c-1e760dcf7f2c.png"
+   ]
+  },
+  {
+   "product": "Two Tone Raglan Sleeve Varsity Jacket",
+   "handle": "two-tone-raglan-sleeve-varsity-jacket",
+   "productId": "gid://shopify/Product/9572372545768",
+   "featuredImageIsFabricated": false,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40160763871464"
+   ],
+   "files": [
+    "b4-varsity-2tone-onmodel.png"
+   ]
+  },
+  {
+   "product": "Two-Tone Fleeced Varsity Jacket",
+   "handle": "two-tone-fleeced-varsity-jacket",
+   "productId": "gid://shopify/Product/9572358684904",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432760040",
+    "gid://shopify/MediaImage/40160763904232"
+   ],
+   "files": [
+    "hf_20260801_141242_8917d3da-470f-4b9f-906d-720b73b41493.png",
+    "b4-varsity-fleece-onmodel.png"
+   ]
+  },
+  {
+   "product": "Unisex Color Block Jacquard Soccer Jersey",
+   "handle": "unisex-color-block-jacquard-soccer-jersey",
+   "productId": "gid://shopify/Product/9572448272616",
+   "featuredImageIsFabricated": false,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40160764690664"
+   ],
+   "files": [
+    "b4-jacquard-jersey-onmodel.png"
+   ]
+  },
+  {
+   "product": "Unisex Color Block Polo Shirt",
+   "handle": "unisex-color-block-polo-shirt",
+   "productId": "gid://shopify/Product/9572387389672",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432563432",
+    "gid://shopify/MediaImage/40160764657896"
+   ],
+   "files": [
+    "hf_20260801_141234_aef4d6d2-252d-4fcf-a087-698adb7cb795.png",
+    "b4-polo-onmodel.png"
+   ]
+  },
+  {
+   "product": "Unisex Mesh Basketball Shorts",
+   "handle": "unisex-mesh-basketball-shorts",
+   "productId": "gid://shopify/Product/9572483203304",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432530664"
+   ],
+   "files": [
+    "hf_20260801_141231_89e7c3ed-8825-404b-aebd-3d367f20f43f.png"
+   ]
+  },
+  {
+   "product": "Unisex Panel Mesh Sleeveless Hoodie",
+   "handle": "unisex-panel-mesh-sleeveless-hoodie",
+   "productId": "gid://shopify/Product/9572488118504",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182432497896"
+   ],
+   "files": [
+    "hf_20260801_141229_2de80133-155d-4c1e-8a01-1d7ea5434f2e.png"
+   ]
+  },
+  {
+   "product": "Unisex Raglan Sleeve Mesh Boxy T-Shirt",
+   "handle": "unisex-raglan-sleeve-mesh-boxy-t-shirt",
+   "productId": "gid://shopify/Product/9572386111720",
+   "featuredImageIsFabricated": false,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40160764625128"
+   ],
+   "files": [
+    "b4-mesh-boxy-onmodel.png"
+   ]
+  },
+  {
+   "product": "Women's Cropped Half-Zip Hoodie",
+   "handle": "cropped-half-zip-hoodie",
+   "productId": "gid://shopify/Product/9571207282920",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    "gid://shopify/MediaImage/40182759063784"
+   ],
+   "files": [
+    "hf_20260801_154644_c56ec524-7839-4e2a-ad7a-9bfd104e69e0.png"
+   ]
+  },
+  {
+   "product": "Women's High Waisted Ankle Leggings",
+   "handle": "women-s-high-waisted-ankle-leggings",
+   "productId": "gid://shopify/Product/9572273684712",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null
+   ],
+   "files": [
+    "b4-w-hw-leggings-onmodel.png"
+   ]
+  },
+  {
+   "product": "Women's High-Stretch Cropped Sports Bra",
+   "handle": "women-s-cropped-sports-bra-1",
+   "productId": "gid://shopify/Product/9571321086184",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "files": [
+    "hf_20260730_184220_dca4900a-86d0-4fd3-977e-71dc42555437.png",
+    "hf_20260730_184226_32a1055e-2a9e-4e47-86b1-915c48228b5e.png",
+    "hf_20260730_184222_7d9c2077-c7b9-43f7-9577-4b2b5e845222.png",
+    "hf_20260730_184224_29fe3d03-119c-4189-b1d9-8c4704ee9db1.png",
+    "hf_20260730_184228_385c7703-df8b-4111-8c87-fe682f89532a.png"
+   ]
+  },
+  {
+   "product": "Women's High-Waisted Flare Leggings",
+   "handle": "women-s-high-waisted-flare-leggings",
+   "productId": "gid://shopify/Product/9572304683240",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null
+   ],
+   "files": [
+    "b4-w-flare-leggings-onmodel.png"
+   ]
+  },
+  {
+   "product": "Women's Pleated A-Line Tennis Skirt",
+   "handle": "women-s-pleated-a-line-tennis-skirt",
+   "productId": "gid://shopify/Product/9571294511336",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "files": [
+    "q5-skirt-studio.png",
+    "q5-skirt-life_e861431c-bba6-4f2b-89d2-2d28e82a0347.png",
+    "q5-skirt-back.png",
+    "q5-skirt-detail.png",
+    "q5-skirt-candid.png"
+   ]
+  },
+  {
+   "product": "Women's Raglan Training T-Shirt",
+   "handle": "women-s-raglan-training-t-shirt",
+   "productId": "gid://shopify/Product/9572281286888",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null,
+    null,
+    null
+   ],
+   "files": [
+    "b13-w-raglan-front.png",
+    "b13-w-raglan-back.png",
+    "b13-w-raglan-detail.png"
+   ]
+  },
+  {
+   "product": "Women's Slim Fit Full-Zip Yoga Jacket",
+   "handle": "women-s-slim-fit-full-zip-yoga-jacket",
+   "productId": "gid://shopify/Product/9571274621160",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null
+   ],
+   "files": [
+    "hf_20260801_154649_b554dca4-9af7-4bf3-bec0-97e1c0c8107c.png"
+   ]
+  },
+  {
+   "product": "Women's Smooth Color Block Yoga Shorts",
+   "handle": "women-s-high-rise-color-block-yoga-shorts",
+   "productId": "gid://shopify/Product/9571286515944",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null
+   ],
+   "files": [
+    "b6-w-cb-shorts-onmodel.png"
+   ]
+  },
+  {
+   "product": "Women's Twist Front V-Neck Sports Bra",
+   "handle": "women-s-twist-front-v-neck-sports-bra",
+   "productId": "gid://shopify/Product/9571285663976",
+   "featuredImageIsFabricated": true,
+   "realSupplierPhotosRemaining": 2,
+   "mediaIds": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "files": [
+    "q7-twistbra-studio.png",
+    "q7-twistbra-life.png",
+    "q7-twistbra-back.png",
+    "q7-twistbra-detail.png",
+    "q7-twistbra-candid.png"
+   ]
+  }
+ ]
+}

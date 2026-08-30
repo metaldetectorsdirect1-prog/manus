@@ -1,0 +1,196 @@
+{%- comment -%}
+  HIVOLT — search template
+  ────────────────────────
+  Drop-in replacement for templates/search.liquid.
+
+  Styles are shared with collection.liquid and live in site/theme/collection.css,
+  which site/build-theme.py folds into assets/hivolt.css.
+
+  Product hits use the same .grid/.item tiles as index.liquid and
+  collection.liquid — same classes, same image handling. Article and page hits
+  are a plain list; they are not products and are not dressed up as products.
+
+  The fabric-weight badge is rendered only when spec.gsm has a value.
+
+  paginate wraps the results only. search.results is nil until a search has
+  actually been performed, and paginating nil raises a Liquid error.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Search</li>
+  </ol>
+</nav>
+
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+  <section class="col wrap">
+
+    <!-- ── header ──────────────────────────────────────────── -->
+    <div class="sec__head">
+      <h1 class="sec__h">Search</h1>
+      <span class="mono">
+        {%- if search.performed -%}
+          {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %}
+          {%- if search.terms != blank %} for “{{ search.terms | escape }}”{% endif -%}
+        {%- else -%}
+          Styles, fabric weights, pages
+        {%- endif -%}
+      </span>
+    </div>
+
+    <!-- ── form ────────────────────────────────────────────── -->
+    <form class="srch" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="type" value="product,article,page">
+      <input type="hidden" name="options[prefix]" value="last">
+      <label class="visually-hidden" for="q">Search HIVOLT</label>
+      <input class="srch__in" type="search" name="q" id="q"
+             value="{{ search.terms | escape }}"
+             placeholder="Legging, 220, nylon, returns"
+             autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button class="btn srch__go" type="submit">Search</button>
+    </form>
+
+    {%- if search.performed and search.results_count > 0 -%}
+      {%- paginate search.results by 24 -%}
+
+        {%- comment -%} The result set is mixed: products go to the grid, everything else to a list. {%- endcomment -%}
+        {%- assign n = 0 -%}
+        {%- capture tiles -%}
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- assign n = n | plus: 1 -%}
+              {%- assign gsm = item.metafields.spec.gsm -%}
+              {%- assign comp = item.metafields.spec.composition -%}
+              {%- assign ref = n | plus: paginate.current_offset -%}
+              {%- if ref < 10 -%}{%- assign ref = ref | prepend: '0' -%}{%- endif -%}
+              <a class="item" href="{{ item.url }}">
+                <div class="item__fig">
+                  <span class="item__ref">REF {{ ref }}</span>
+                  {%- if gsm != blank -%}<span class="item__gsm">{{ gsm }}</span>{%- endif -%}
+                  {%- if item.featured_image -%}
+                    <img
+                      src="{{ item.featured_image | image_url: width: 800 }}"
+                      srcset="{{ item.featured_image | image_url: width: 400 }} 400w,
+                              {{ item.featured_image | image_url: width: 800 }} 800w,
+                              {{ item.featured_image | image_url: width: 1200 }} 1200w"
+                      sizes="(max-width:560px) 50vw, (max-width:1080px) 50vw, 25vw"
+                      alt="{{ item.featured_image.alt | default: item.title | escape }}"
+                      width="{{ item.featured_image.width }}"
+                      height="{{ item.featured_image.height }}"
+                      loading="{% if n <= 4 %}eager{% else %}lazy{% endif %}">
+                  {%- else -%}
+                    <div class="ph"><span>No image</span></div>
+                  {%- endif -%}
+                </div>
+                <div class="item__body">
+                  <h2 class="item__name">{{ item.title }}</h2>
+                  {%- if comp != blank -%}
+                    <p class="item__meta">{{ comp }}</p>
+                  {%- else -%}
+                    <p class="item__meta">{{ item.type }}</p>
+                  {%- endif -%}
+                  <div class="item__foot">
+                    <span class="item__price">
+                      {{ item.price | money }}{% if item.price_varies %} +{% endif %}
+                    </span>
+                    <span class="item__buy">{% if item.available %}View{% else %}Sold out{% endif %}</span>
+                  </div>
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+
+        {%- capture reading -%}
+          {%- for item in search.results -%}
+            {%- unless item.object_type == 'product' -%}
+              {%- assign blurb = item.content | strip_html | strip | truncatewords: 26 -%}
+              <li class="hits__i">
+                <a class="hits__a" href="{{ item.url }}">
+                  <span class="mono hits__k">{{ item.object_type }}</span>
+                  <span class="hits__t">{{ item.title }}</span>
+                  {%- if blurb != blank -%}<span class="hits__d">{{ blurb }}</span>{%- endif -%}
+                </a>
+              </li>
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+
+        {%- if tiles != blank -%}
+          <div class="grid">{{ tiles }}</div>
+        {%- endif -%}
+
+        {%- if reading != blank -%}
+          <div class="hits__head"><h2 class="mono">Pages and writing</h2></div>
+          <ul class="hits">{{ reading }}</ul>
+        {%- endif -%}
+
+        <!-- ── pager ─────────────────────────────────────────── -->
+        {%- if paginate.pages > 1 -%}
+          <nav class="pager" role="navigation" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a class="pager__a" href="{{ paginate.previous.url }}" rel="prev">Prev</a>
+            {%- else -%}
+              <span class="pager__a pager__a--off" aria-hidden="true">Prev</span>
+            {%- endif -%}
+
+            {%- for part in paginate.parts -%}
+              {%- assign part_num = part.title | plus: 0 -%}
+              {%- if part.is_link -%}
+                <a class="pager__a" href="{{ part.url }}" aria-label="Page {{ part.title }}">{{ part.title }}</a>
+              {%- elsif part_num > 0 -%}
+                <span class="pager__a pager__a--on" aria-current="page">{{ part.title }}</span>
+              {%- else -%}
+                <span class="pager__gap" aria-hidden="true">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+              <a class="pager__a" href="{{ paginate.next.url }}" rel="next">Next</a>
+            {%- else -%}
+              <span class="pager__a pager__a--off" aria-hidden="true">Next</span>
+            {%- endif -%}
+
+            <span class="pager__count">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          </nav>
+        {%- endif -%}
+
+      {%- endpaginate -%}
+
+    {%- elsif search.performed -%}
+      <!-- ── searched, nothing matched ───────────────────────── -->
+      <div class="empty">
+        <p class="empty__h">Nothing matches “{{ search.terms | escape }}”.</p>
+        <p class="empty__p">
+          Search reads product names, product types and page text. Styles are named
+          by fabric weight, so a number like <b>220</b> works as a query. The three
+          collections:
+        </p>
+        <ul class="empty__links">
+          <li><a href="/collections/womens-activewear">Women's</a></li>
+          <li><a href="/collections/mens-activewear">Men's</a></li>
+          <li><a href="/collections/training">Training</a></li>
+        </ul>
+      </div>
+
+    {%- else -%}
+      <!-- ── landed here without a query ─────────────────────── -->
+      <div class="empty">
+        <p class="empty__h">Type a query above.</p>
+        <p class="empty__p">
+          Styles are named by fabric weight, so <b>220</b> or <b>165</b> works as a
+          query, as does a fibre name. Or start from a collection:
+        </p>
+        <ul class="empty__links">
+          <li><a href="/collections/womens-activewear">Women's</a></li>
+          <li><a href="/collections/mens-activewear">Men's</a></li>
+          <li><a href="/collections/training">Training</a></li>
+        </ul>
+      </div>
+    {%- endif -%}
+
+  </section>

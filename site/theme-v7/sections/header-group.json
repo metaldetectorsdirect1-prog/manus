@@ -1,0 +1,68 @@
+{
+  "type": "header",
+  "name": "t:sections.header-group.name",
+  "sections": {
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "announcement-0": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free US shipping",
+            "link_text": "On every order, no minimum",
+            "link": ""
+          }
+        },
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "60-day returns",
+            "link_text": "Free prepaid label, no restocking fee",
+            "link": "shopify://pages/returns-refunds"
+          }
+        },
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Two or more — 15% off both",
+            "link_text": "Applied automatically at checkout",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "announcement-0",
+        "announcement-1",
+        "announcement-2"
+      ],
+      "settings": {
+        "announcement_compact": true,
+        "sticky_on_scroll": true,
+        "sticky_on_mobile": false
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo": "shopify://shop_images/hivolt-logo.png",
+        "desktop_logo_width": 190,
+        "mobile_logo_width": 130,
+        "main_menu_link_list": "hivolt-draft-main",
+        "hover_menu": true,
+        "main_menu_alignment": "center",
+        "header_style": "sticky",
+        "sticky_index": false,
+        "sticky_collection": false,
+        "toolbar_menu": "footer-about",
+        "toolbar_social": true,
+        "show_currency_selector": false,
+        "show_currency_flags": false,
+        "show_locale_selector": false
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

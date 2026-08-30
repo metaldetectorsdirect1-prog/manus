@@ -1,0 +1,458 @@
+best-leggings-for-squats	comp	women-s-high-rise-topstitching-leggings	'76% polyamide / 24% spandex' -> '78% polyamide, 22% elastane'
+best-leggings-for-running-what-to-look-for	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-running-what-to-look-for	comp	women-s-high-waisted-ankle-leggings	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+best-workout-shorts-for-casual-wear-the-no-regrets	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-workout-shorts-for-casual-wear-the-no-regrets	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+best-workout-shorts-for-casual-wear-the-no-regrets	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+best-workout-t-shirts-for-sweaty-workouts-how-to-choose	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+best-leggings-for-crossfit-features-that-actually-matter	link	women-s-high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-crossfit-features-that-actually-matter	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+best-leggings-for-crossfit-features-that-actually-matter	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+best-tennis-skirts-for-pickleball-a-complete-buying	gsm	womens-high-rise-a-line-skirt	'320 g/m²' -> '220 g/m²'
+best-gym-hoodies-for-winter-training-features-that-actually-matter	comp	cropped-zip-through-hoodie	'100% cotton' -> '28% cotton, 72% polyester'
+best-leggings-for-hiit-workouts-a-complete-buying	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-hiit-workouts-a-complete-buying	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+best-yoga-pants-for-yoga-beginners-the-no-regrets	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-yoga-pants-for-yoga-beginners-the-no-regrets	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-yoga-pants-for-yoga-beginners-the-no-regrets	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+best-yoga-pants-for-yoga-beginners-the-no-regrets	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+best-workout-t-shirts-for-running-features-that-actually-matter	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+best-workout-t-shirts-for-running-features-that-actually-matter	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+best-tennis-skirts-for-golf-how-to-choose	gsm	womens-high-rise-a-line-skirt	'320 g/m²' -> '220 g/m²'
+best-gym-hoodies-for-rest-days-the-no-regrets	gsm	cropped-zip-through-hoodie	'285 g/m²' -> '320 g/m²'
+best-workout-shorts-for-beach-runs-a-complete-buying	link	womens-high-waist-yoga-shorts	"Women's High-Waist Yoga Shorts" -> "Women's High Rise Yoga Shorts (womens-high-rise-yoga-shorts)"
+best-workout-shorts-for-beach-runs-a-complete-buying	gsm	womens-high-rise-yoga-shorts	'215 g/m²' -> '220 g/m²'
+best-yoga-pants-for-hot-yoga-what-to-look-for	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-yoga-pants-for-hot-yoga-what-to-look-for	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+best-leggings-for-hot-yoga-features-that-actually-matter	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-hot-yoga-features-that-actually-matter	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-hot-yoga-features-that-actually-matter	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+best-leggings-for-hot-yoga-features-that-actually-matter	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+best-leggings-for-hot-yoga-features-that-actually-matter	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+best-sports-bras-for-hot-weather-the-no-regrets	link	women-s-halter-color-block-yoga-sports-bra	"Women's Halter Color Block Yoga Sports Bra" -> "Women's Color Block Yoga Sports Bra (womens-color-block-yoga-sports-bra)"
+best-sports-bras-for-hot-weather-the-no-regrets	gsm	womens-color-block-yoga-sports-bra	'220 g/m²' -> '250 g/m²'
+best-leggings-for-pilates-the-no-regrets	link	women-s-high-waisted-ankle-length-yoga-leggings	"Women's High-Waisted Ankle Length Yoga Leggings" -> "Women's High Rise Ankle Length Yoga Leggings (womens-high-rise-ankle-length-yoga-leggings)"
+best-leggings-for-pilates-the-no-regrets	comp	women-s-high-rise-topstitching-leggings	'22% elastane' -> '78% polyamide, 22% elastane'
+best-leggings-for-pilates-the-no-regrets	gsm	womens-high-rise-ankle-length-yoga-leggings	'220 g/m²' -> '270 g/m²'
+best-leggings-for-pilates-the-no-regrets	comp	womens-high-rise-ankle-length-yoga-leggings	'80% nylon, 20% spandex' -> '80% polyester, 20% elastane'
+best-tank-tops-for-running-the-no-regrets	comp	mens-performance-tank-top	'13% spandex' -> '87% polyester, 13% spandex'
+best-yoga-pants-for-lounging-and-errands-how-to-choose	link	womens-high-waist-tapered-leggings	'High-Waist Tapered Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-yoga-pants-for-lounging-and-errands-how-to-choose	gsm	womens-high-rise-straight-leg-yoga-pants	'240 g/m²' -> '230 g/m²'
+best-yoga-pants-for-lounging-and-errands-how-to-choose	comp	women-s-high-waisted-ankle-leggings	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+best-joggers-for-gym-sessions-how-to-choose	gsm	mens-drawstring-joggers	'340 g/m²' -> '130 g/m²'
+best-joggers-for-gym-sessions-how-to-choose	gsm	mens-drawstring-joggers	'330 g/m²' -> '130 g/m²'
+best-joggers-for-gym-sessions-how-to-choose	gsm	mens-drawstring-joggers	'300 g/m²' -> '130 g/m²'
+best-joggers-for-gym-sessions-how-to-choose	comp	mens-drawstring-joggers	'92% polyester, 8% spandex' -> '95% polyester, 5% spandex'
+best-joggers-for-gym-sessions-how-to-choose	gsm	mens-piping-straight-leg-sweatpants	'130 g/m²' -> '285 g/m²'
+best-workout-t-shirts-for-everyday-wear-a-complete-buying	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+best-workout-t-shirts-for-everyday-wear-a-complete-buying	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+best-leggings-for-everyday-wear-what-to-look-for	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-everyday-wear-what-to-look-for	comp	women-s-high-waisted-ankle-leggings	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+best-yoga-pants-for-travel-days-features-that-actually-matter	comp	women-s-solid-high-rise-leggings	'25% spandex' -> '75% nylon, 25% spandex'
+best-sports-bras-for-small-busts-a-complete-buying	link	women-s-pleated-halter-sports-bra	"Women's Pleated Halter Sports Bra" -> "Women's Ruched Halter-Neck Sports Bra (womens-ruched-halter-neck-sports-bra)"
+best-sports-bras-for-small-busts-a-complete-buying	link	women-s-halter-cropped-sports-bra	"Women's Halter Cropped Sports Bra" -> "Women's Halter Yoga Sports Bra (womens-halter-yoga-sports-bra)"
+best-sports-bras-for-small-busts-a-complete-buying	gsm	womens-halter-yoga-sports-bra	'220 g/m²' -> '270 g/m²'
+best-sports-bras-for-small-busts-a-complete-buying	comp	womens-halter-yoga-sports-bra	'80% nylon, 20% spandex' -> '80% polyester, 20% elastane'
+best-workout-t-shirts-for-slim-fit-looks-how-to-choose	comp	mens-color-block-raglan-t-shirt	'12.5% spandex' -> '87.5% polyester, 12.5% spandex'
+best-leggings-for-summer-heat-a-complete-buying	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-summer-heat-a-complete-buying	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+best-long-sleeve-workout-shirts-for-layering-how-to-choose	gsm	performance-long-sleeve-t-shirt	'190 g/m²' -> '200 g/m²'
+best-long-sleeve-workout-shirts-for-layering-how-to-choose	gsm	men-s-quarter-zip-performance-long-sleeve-t-shirt	'240 g/m²' -> '190 g/m²'
+best-joggers-for-lounging-the-no-regrets	gsm	mens-piping-straight-leg-sweatpants	'330 g/m²' -> '285 g/m²'
+best-joggers-for-lounging-the-no-regrets	gsm	men-s-tapered-leg-drawstring-joggers	'130 g/m²' -> '330 g/m²'
+best-yoga-pants-for-pilates-the-no-regrets	link	women-s-high-rise-ankle-length-leggings	'High-Rise Ankle-Length Leggings' -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+best-yoga-pants-for-pilates-the-no-regrets	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+best-yoga-pants-for-pilates-the-no-regrets	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+best-sports-bras-for-spin-class-how-to-choose	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-sports-bras-for-spin-class-how-to-choose	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+best-sports-bras-for-spin-class-how-to-choose	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+best-workout-t-shirts-for-big-and-tall-guys-features-that-actually-mat	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+best-workout-t-shirts-for-big-and-tall-guys-features-that-actually-mat	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+best-workout-t-shirts-for-big-and-tall-guys-features-that-actually-mat	comp	mens-regular-fit-performance-t-shirt	'92% polyester with 8% spandex' -> '100% polyester'
+best-sports-jackets-for-pre-workout-warm-ups-features-that-actually-ma	gsm	women-s-slim-fit-full-zip-yoga-jacket	'320 g/m²' -> '230 g/m²'
+best-joggers-for-cold-weather-runs-what-to-look-for	gsm	men-s-tight-cycling-shorts	'330 g/m²' -> '180 g/m²'
+best-gym-shorts-for-summer-heat-a-complete-buying	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+best-gym-shorts-for-summer-heat-a-complete-buying	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+best-leggings-for-petite-women-features-that-actually-matter	comp	women-s-high-waisted-ankle-leggings	'20% spandex' -> '80% nylon, 20% spandex'
+best-leggings-with-pockets-for-running-a-complete-buying	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-with-pockets-for-running-a-complete-buying	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+best-leggings-with-pockets-for-running-a-complete-buying	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+best-workout-shorts-for-running-the-no-regrets	link	womens-high-rise-pocket-yoga-shorts-1	"Women's High Rise Pocket Yoga Shorts" -> "Women's High Rise Pocket Yoga Shorts (womens-high-rise-pocket-yoga-shorts)"
+best-workout-shorts-for-running-the-no-regrets	gsm	womens-drawstring-bermuda-shorts	'230 g/m²' -> '140 g/m²'
+best-workout-shorts-for-running-the-no-regrets	gsm	women-s-high-waisted-pocket-biker-shorts	'250 g/m²' -> '210 g/m²'
+best-workout-shorts-for-running-the-no-regrets	gsm	womens-high-rise-pocket-yoga-shorts	'220 g/m²' -> '230 g/m²'
+best-workout-shorts-for-running-the-no-regrets	comp	womens-high-rise-pocket-yoga-shorts	'75% nylon, 25% elastane' -> '78% polyamide, 22% elastane'
+best-yoga-pants-for-petite-women-a-complete-buying	link	women-s-high-waisted-ankle-length-yoga-leggings	'High-Waisted Ankle Length Yoga Leggings' -> "Women's High Rise Ankle Length Yoga Leggings (womens-high-rise-ankle-length-yoga-leggings)"
+best-yoga-pants-for-petite-women-a-complete-buying	link	womens-high-waist-tapered-leggings	'High-Waist Tapered Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-yoga-pants-for-petite-women-a-complete-buying	gsm	womens-high-rise-ankle-length-yoga-leggings	'220 g/m²' -> '270 g/m²'
+best-yoga-pants-for-petite-women-a-complete-buying	comp	womens-high-rise-ankle-length-yoga-leggings	'80% nylon, 20% spandex' -> '80% polyester, 20% elastane'
+best-yoga-pants-for-petite-women-a-complete-buying	comp	women-s-high-waisted-ankle-leggings	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+best-yoga-tank-tops-for-vinyasa-flow-features-that-actually-matter	comp	womens-ruched-halter-neck-yoga-tank-top	'75% nylon' -> '75% nylon, 25% elastane'
+best-yoga-tank-tops-for-vinyasa-flow-features-that-actually-matter	comp	womens-ruched-halter-neck-yoga-tank-top	'25% elastane' -> '75% nylon, 25% elastane'
+best-sports-jackets-for-studio-to-street-what-to-look-for	gsm	women-s-quarter-zip-yoga-pullover	'320 g/m²' -> '165 g/m²'
+best-sports-jackets-for-studio-to-street-what-to-look-for	comp	women-s-quarter-zip-yoga-pullover	'72% polyester' -> '91% polyester, 9% spandex'
+best-leggings-with-pockets-for-travel-how-to-choose	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-with-pockets-for-travel-how-to-choose	comp	women-s-high-waisted-ankle-leggings	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+best-workout-shorts-for-hiit-what-to-look-for	link	women-s-high-rise-color-block-yoga-shorts-1	"Women's High Rise Color Block Yoga Shorts" -> "Women's Smooth Color Block Yoga Shorts (women-s-high-rise-color-block-yoga-shorts)"
+best-workout-shorts-for-hiit-what-to-look-for	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-workout-shorts-for-hiit-what-to-look-for	gsm	women-s-high-rise-color-block-yoga-shorts	'250 g/m²' -> '220 g/m²'
+best-workout-shorts-for-hiit-what-to-look-for	comp	women-s-high-rise-color-block-yoga-shorts	'80% polyester, 20% elastane' -> '82% polyamide, 18% elastane'
+best-workout-shorts-for-hiit-what-to-look-for	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+best-workout-shorts-for-hiit-what-to-look-for	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+best-workout-shorts-for-hiit-what-to-look-for	comp	women-s-high-waisted-pocket-biker-shorts	'25% spandex' -> '80% polyester, 20% spandex'
+best-yoga-tank-tops-for-pilates-the-no-regrets	link	womens-hollow-out-yoga-tank-top	'Women’s Hollow-Out Yoga Tank Top' -> "Women's Yoga Tank Top (womens-yoga-tank-top)"
+best-yoga-tank-tops-for-pilates-the-no-regrets	link	womens-hollow-out-yoga-tank-top	'Hollow-Out Tank' -> "Women's Yoga Tank Top (womens-yoga-tank-top)"
+best-yoga-tank-tops-for-pilates-the-no-regrets	gsm	womens-yoga-tank-top	'260 g/m²' -> '220 g/m²'
+best-yoga-tank-tops-for-pilates-the-no-regrets	comp	womens-yoga-tank-top	'90% nylon' -> '80% nylon, 20% spandex'
+best-yoga-tank-tops-for-pilates-the-no-regrets	gsm	womens-yoga-tank-top	'260 g/m²' -> '220 g/m²'
+best-leggings-for-travel-what-to-look-for	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-travel-what-to-look-for	comp	women-s-high-waisted-ankle-leggings	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+best-leggings-for-travel-what-to-look-for	comp	women-s-high-waisted-ankle-leggings	'22% elastane' -> '80% nylon, 20% spandex'
+best-leggings-with-pockets-for-hiking-features-that-actually-matter	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-with-pockets-for-hiking-features-that-actually-matter	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+best-leggings-with-pockets-for-hiking-features-that-actually-matter	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+best-workout-shorts-for-hot-yoga-a-complete-buying	link	womens-high-waist-yoga-shorts	"Women's High-Waist Yoga Shorts" -> "Women's High Rise Yoga Shorts (womens-high-rise-yoga-shorts)"
+best-workout-shorts-for-hot-yoga-a-complete-buying	link	womens-high-rise-color-block-yoga-shorts	"Women's High Rise Color Block Yoga Shorts" -> "Women's Smooth Color Block Yoga Shorts (women-s-high-rise-color-block-yoga-shorts)"
+best-workout-shorts-for-hot-yoga-a-complete-buying	link	women-s-halter-color-block-yoga-sports-bra	"Women's Halter Color Block Yoga Sports Bra" -> "Women's Color Block Yoga Sports Bra (womens-color-block-yoga-sports-bra)"
+best-workout-shorts-for-hot-yoga-a-complete-buying	gsm	womens-high-rise-yoga-shorts	'215 g/m²' -> '220 g/m²'
+best-workout-shorts-for-hot-yoga-a-complete-buying	gsm	womens-color-block-yoga-sports-bra	'220 g/m²' -> '250 g/m²'
+best-workout-tops-for-yoga-how-to-choose	link	womens-hollow-out-yoga-tank-top	"Women's Hollow-Out Yoga Tank Top" -> "Women's Yoga Tank Top (womens-yoga-tank-top)"
+best-workout-tops-for-yoga-how-to-choose	gsm	womens-yoga-tank-top	'260 g/m²' -> '220 g/m²'
+best-workout-tops-for-yoga-how-to-choose	comp	womens-yoga-tank-top	'95% modal, 5% elastane' -> '80% nylon, 20% spandex'
+the-best-black-leggings-why-every-wardrobe-starts-here	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+the-best-black-leggings-why-every-wardrobe-starts-here	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+the-best-black-leggings-why-every-wardrobe-starts-here	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+the-best-black-leggings-why-every-wardrobe-starts-here	gsm	women-s-high-rise-topstitching-leggings	'270 g/m²' -> '220 g/m²'
+the-best-black-leggings-why-every-wardrobe-starts-here	comp	women-s-high-rise-topstitching-leggings	'25% spandex' -> '78% polyamide, 22% elastane'
+best-leggings-for-beginners-at-the-gym-a-complete-buying	link	women-s-high-waisted-ankle-length-yoga-leggings	"Women's High-Waisted Ankle Length Yoga Leggings" -> "Women's High Rise Ankle Length Yoga Leggings (womens-high-rise-ankle-length-yoga-leggings)"
+best-leggings-for-beginners-at-the-gym-a-complete-buying	comp	women-s-solid-high-rise-leggings	'25% spandex' -> '75% nylon, 25% spandex'
+best-leggings-for-beginners-at-the-gym-a-complete-buying	gsm	womens-high-rise-ankle-length-yoga-leggings	'220 g/m²' -> '270 g/m²'
+best-leggings-for-beginners-at-the-gym-a-complete-buying	comp	womens-high-rise-ankle-length-yoga-leggings	'80% nylon, 20% spandex' -> '80% polyester, 20% elastane'
+best-leggings-with-pockets-for-everyday-errands-the-no-regrets	link	womens-high-rise-pocket-yoga-shorts-1	"Women's High Rise Pocket Yoga Shorts" -> "Women's High Rise Pocket Yoga Shorts (womens-high-rise-pocket-yoga-shorts)"
+best-leggings-with-pockets-for-everyday-errands-the-no-regrets	gsm	womens-high-rise-pocket-yoga-shorts	'220 g/m²' -> '230 g/m²'
+best-leggings-with-pockets-for-everyday-errands-the-no-regrets	comp	womens-high-rise-pocket-yoga-shorts	'75% nylon, 25% elastane' -> '78% polyamide, 22% elastane'
+best-yoga-tank-tops-for-layering-over-sports-bras-a-complete-buying	link	womens-color-block-yoga-tank-top-1	'Women’s Color Block Yoga Tank Top' -> "Women's Color Block Yoga Tank Top (womens-color-block-yoga-tank-top)"
+best-yoga-tank-tops-for-layering-over-sports-bras-a-complete-buying	gsm	womens-color-block-yoga-tank-top	'220 g/m²' -> '225 g/m²'
+best-gym-shorts-for-travel-what-to-look-for	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+best-gym-shorts-for-travel-what-to-look-for	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+best-leggings-for-spin-class-how-to-choose	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-leggings-for-spin-class-how-to-choose	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-leggings-for-spin-class-how-to-choose	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+best-leggings-for-spin-class-how-to-choose	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+best-leggings-for-spin-class-how-to-choose	comp	women-s-high-waisted-ankle-leggings	'25% spandex' -> '80% nylon, 20% spandex'
+best-leggings-for-spin-class-how-to-choose	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+best-leggings-for-spin-class-how-to-choose	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+best-workout-shorts-for-squats-and-leg-day-features-that-actually-matt	link	womens-high-waist-color-block-yoga-shorts	"Women's High-Waist Color Block Yoga Shorts" -> "Women's Smooth Color Block Yoga Shorts (women-s-high-rise-color-block-yoga-shorts)"
+best-workout-shorts-for-squats-and-leg-day-features-that-actually-matt	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-workout-shorts-for-squats-and-leg-day-features-that-actually-matt	comp	women-s-high-rise-color-block-yoga-shorts	'75% nylon, 25% elastane' -> '82% polyamide, 18% elastane'
+best-workout-shorts-for-squats-and-leg-day-features-that-actually-matt	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+best-workout-shorts-for-squats-and-leg-day-features-that-actually-matt	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+best-halter-neck-sports-bras-and-tanks	gsm	womens-halter-v-neck-yoga-tank-top	'270 g/m²' -> '220 g/m²'
+quad-focused-leg-training-beyond-back-squats	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-gym-clothes-that-hide-sweat	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+best-gym-clothes-that-hide-sweat	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+gym-myth-cardio-kills-your-gains	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+gym-myth-cardio-kills-your-gains	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+interval-running-for-beginners-walk-run-to-speedwork	link	mens-lightweight-training-t-shirt	'Men’s Lightweight Training T-Shirt' -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+interval-running-for-beginners-walk-run-to-speedwork	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+how-to-start-running-week-one-to-month-three	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+how-to-start-running-week-one-to-month-three	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+how-to-start-running-week-one-to-month-three	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+how-to-start-running-week-one-to-month-three	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+best-activewear-gifts-under-50	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+best-activewear-gifts-under-50	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+can-you-run-in-yoga-pants-when-it-works-and-when-it-doesn-t	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+can-you-run-in-yoga-pants-when-it-works-and-when-it-doesn-t	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+can-you-run-in-yoga-pants-when-it-works-and-when-it-doesn-t	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+can-you-run-in-yoga-pants-when-it-works-and-when-it-doesn-t	comp	women-s-high-waisted-ankle-leggings	'75% nylon and 25% spandex' -> '80% nylon, 20% spandex'
+can-you-run-in-yoga-pants-when-it-works-and-when-it-doesn-t	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+can-you-run-in-yoga-pants-when-it-works-and-when-it-doesn-t	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+gym-myth-lifting-makes-women-bulky	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+gym-myth-lifting-makes-women-bulky	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+do-you-need-different-clothes-for-yoga-vs-the-gym	comp	womens-high-rise-yoga-pants	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+treadmill-vs-outdoor-running-differences-that-matter	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+treadmill-vs-outdoor-running-differences-that-matter	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+best-first-activewear-pieces-for-new-gym-goers	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+best-first-activewear-pieces-for-new-gym-goers	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+best-first-activewear-pieces-for-new-gym-goers	comp	mens-regular-fit-performance-t-shirt	'92% polyester and 8% spandex' -> '100% polyester'
+long-run-fueling-what-to-eat-before-60-minutes	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+long-run-fueling-what-to-eat-before-60-minutes	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+shin-splints-prevention-and-comeback-plan	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+shin-splints-prevention-and-comeback-plan	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+why-are-good-leggings-expensive-a-cost-breakdown	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+why-are-good-leggings-expensive-a-cost-breakdown	comp	women-s-solid-high-rise-leggings	'89% polyester and 11% spandex' -> '75% nylon, 25% spandex'
+why-are-good-leggings-expensive-a-cost-breakdown	comp	womens-high-rise-ankle-length-leggings	'25% spandex' -> '89% polyester, 11% spandex'
+why-are-good-leggings-expensive-a-cost-breakdown	gsm	women-s-high-waisted-ankle-leggings	'270 g/m²' -> '220 g/m²'
+best-bermuda-shorts-for-modest-coverage-workouts	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-bermuda-shorts-for-modest-coverage-workouts	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-bermuda-shorts-for-modest-coverage-workouts	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+best-bermuda-shorts-for-modest-coverage-workouts	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+best-activewear-for-spring-training-outdoors	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+best-activewear-for-spring-training-outdoors	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+do-compression-clothes-actually-improve-performance	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+best-white-training-tees-staying-crisp-and-non-sheer	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+best-white-training-tees-staying-crisp-and-non-sheer	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+best-white-training-tees-staying-crisp-and-non-sheer	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+best-white-training-tees-staying-crisp-and-non-sheer	comp	mens-regular-fit-performance-t-shirt	'92% polyester and 8% spandex' -> '100% polyester'
+best-white-training-tees-staying-crisp-and-non-sheer	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+why-does-activewear-fit-differently-across-brands	comp	women-s-solid-high-rise-leggings	'11% spandex' -> '75% nylon, 25% spandex'
+why-does-activewear-fit-differently-across-brands	gsm	men-s-tapered-leg-drawstring-joggers	'130 g/m²' -> '330 g/m²'
+pilates-core-work-beyond-crunches	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+pilates-core-work-beyond-crunches	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+can-you-hike-in-leggings-trail-suitability	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+can-you-hike-in-leggings-trail-suitability	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+can-you-hike-in-leggings-trail-suitability	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+can-you-hike-in-leggings-trail-suitability	comp	womens-high-rise-ankle-length-leggings	'80% nylon and 20% spandex' -> '89% polyester, 11% spandex'
+can-you-hike-in-leggings-trail-suitability	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+can-you-hike-in-leggings-trail-suitability	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+best-activewear-colors-for-your-skin-tone-a-practical	gsm	women-s-color-block-yoga-tank-top	'225 g/m²' -> '220 g/m²'
+how-to-wash-a-hoodie-without-shrinking-or-pilling	comp	cropped-half-zip-hoodie	'100% cotton' -> '28% cotton, 72% polyester'
+gym-outfits-that-photograph-well-for-your-progress-pics	gsm	mens-drawstring-shorts	'130 g/m²' -> '165 g/m²'
+coordinating-colors-in-activewear-a-simple-system	link	women-s-high-rise-ankle-length-leggings	"Women's High Rise Ankle Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+how-to-read-a-workout-program-sets-percentages-and-notation	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+how-to-read-a-workout-program-sets-percentages-and-notation	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+athleisure-for-european-travel-blending-in-while-comfortable	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+athleisure-for-european-travel-blending-in-while-comfortable	link	contrast-trim-raglan-varsity-jacket	'Contrast Trim Raglan Varsity Jacket' -> 'Two Tone Raglan Sleeve Varsity Jacket (two-tone-raglan-sleeve-varsity-jacket)'
+gym-myth-muscle-turns-to-fat-when-you-stop	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+lint-on-black-activewear-causes-and-fixes	comp	mens-drawstring-joggers	'95% polyester' -> '95% polyester, 5% spandex'
+rest-between-sets-how-long-by-goal	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+rest-between-sets-how-long-by-goal	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+static-cling-in-synthetic-fabrics-why-and-what-helps	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+layering-a-cropped-half-zip-fall-s-easiest-formula	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+layering-a-cropped-half-zip-fall-s-easiest-formula	link	contrast-trim-raglan-varsity-jacket	'Contrast Trim Raglan Varsity Jacket' -> 'Two Tone Raglan Sleeve Varsity Jacket (two-tone-raglan-sleeve-varsity-jacket)'
+men-s-t-shirt-sizing-chest-length-and-shoulder-fit	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+men-s-t-shirt-sizing-chest-length-and-shoulder-fit	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+men-s-t-shirt-sizing-chest-length-and-shoulder-fit	comp	mens-regular-fit-performance-t-shirt	'92% polyester and 8% spandex' -> '100% polyester'
+monochrome-black-vs-tonal-neutrals-picking-your-gym-palette	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+sports-bra-straps-digging-in-causes-and-fixes	link	women-s-halter-cropped-sports-bra	"Women's Halter Cropped Sports Bra" -> "Women's Halter Yoga Sports Bra (womens-halter-yoga-sports-bra)"
+gym-myth-fasted-cardio-burns-more-fat	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+leggings-falling-down-diagnose-and-fix-it	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+leggings-falling-down-diagnose-and-fix-it	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+leggings-falling-down-diagnose-and-fix-it	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+leggings-falling-down-diagnose-and-fix-it	comp	women-s-high-waisted-ankle-leggings	'22% elastane' -> '80% nylon, 20% spandex'
+weekend-uniform-building-your-off-duty-default	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+vacation-packing-a-one-bag-activewear-formula	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+gym-fits-on-a-5-piece-rotation-a-week-of-outfits	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+gym-fits-on-a-5-piece-rotation-a-week-of-outfits	link	womens-high-waist-yoga-shorts	"Women's High-Waist Yoga Shorts" -> "Women's High Rise Yoga Shorts (womens-high-rise-yoga-shorts)"
+gym-fits-on-a-5-piece-rotation-a-week-of-outfits	link	womens-hollow-out-yoga-tank-top	"Women's Hollow-Out Yoga Tank Top" -> "Women's Yoga Tank Top (womens-yoga-tank-top)"
+gym-fits-on-a-5-piece-rotation-a-week-of-outfits	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+gym-fits-on-a-5-piece-rotation-a-week-of-outfits	gsm	womens-high-rise-yoga-shorts	'215 g/m²' -> '220 g/m²'
+gym-fits-on-a-5-piece-rotation-a-week-of-outfits	gsm	womens-yoga-tank-top	'260 g/m²' -> '220 g/m²'
+gym-fits-on-a-5-piece-rotation-a-week-of-outfits	comp	womens-yoga-tank-top	'95% modal and 5% elastane' -> '80% nylon, 20% spandex'
+training-with-a-partner-making-it-help-not-hurt	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+understated-logos-why-quiet-branding-is-winning-in-activewear	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+understated-logos-why-quiet-branding-is-winning-in-activewear	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+group-fitness-classes-a-first-timer-s-field	gsm	men-s-lightweight-performance-t-shirt	'130 g/m²' -> '170 g/m²'
+how-to-spot-someone-on-bench-and-squat	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+what-to-wear-to-an-indoor-climbing-gym	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+what-to-wear-to-an-indoor-climbing-gym	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+glute-workout-guide-8-exercises-ranked-by-effectiveness	link	women-s-high-rise-ankle-length-leggings	"Women's High Rise Ankle Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+yoga-leggings-vs-gym-leggings-is-there-a-difference	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+yoga-leggings-vs-gym-leggings-is-there-a-difference	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+yoga-leggings-vs-gym-leggings-is-there-a-difference	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+core-finishers-10-minute-ab-circuits-to-end-any-session	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+core-finishers-10-minute-ab-circuits-to-end-any-session	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+cotton-vs-performance-blends-for-rest-day-wear	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+cotton-vs-performance-blends-for-rest-day-wear	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+stretch-recovery-why-some-leggings-bag-out-and-others-don-t	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+stretch-recovery-why-some-leggings-bag-out-and-others-don-t	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+stretch-recovery-why-some-leggings-bag-out-and-others-don-t	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+tight-vs-relaxed-fit-training-tees-for-men	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+tight-vs-relaxed-fit-training-tees-for-men	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+tight-vs-relaxed-fit-training-tees-for-men	comp	men-s-jacquard-slim-mesh-t-shirt	'8% spandex' -> '92% polyester, 8% spandex'
+tight-vs-relaxed-fit-training-tees-for-men	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+tight-vs-relaxed-fit-training-tees-for-men	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+tight-vs-relaxed-fit-training-tees-for-men	comp	mens-regular-fit-performance-t-shirt	'92% polyester, 8% spandex' -> '100% polyester'
+brushed-vs-slick-finish-leggings-feel-and-function	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+brushed-vs-slick-finish-leggings-feel-and-function	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+brushed-vs-slick-finish-leggings-feel-and-function	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+free-weights-vs-machines-for-beginners	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+free-weights-vs-machines-for-beginners	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+free-weights-vs-machines-for-beginners	comp	mens-regular-fit-performance-t-shirt	'92% polyester, 8% spandex' -> '100% polyester'
+golden-hour-runs-dressing-for-sunrise-and-sunset-sessions	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+golden-hour-runs-dressing-for-sunrise-and-sunset-sessions	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+golden-hour-runs-dressing-for-sunrise-and-sunset-sessions	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+reading-a-garment-care-label-every-symbol-explained	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+reading-a-garment-care-label-every-symbol-explained	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+reading-a-garment-care-label-every-symbol-explained	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+bike-shorts-vs-running-shorts-for-women-which-for-your-workout	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+bike-shorts-vs-running-shorts-for-women-which-for-your-workout	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+bike-shorts-vs-running-shorts-for-women-which-for-your-workout	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon and 25% spandex' -> '80% polyester, 20% spandex'
+hotel-room-workout-stay-on-track-while-traveling	link	women-s-high-rise-ankle-length-leggings	"Women's High Rise Ankle Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+running-vs-incline-walking-for-fat-loss	gsm	mens-raglan-sleeve-performance-t-shirt	'91 g/m²' -> '120 g/m²'
+12-bodyweight-exercises-that-scale-from-beginner-to-advanced	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+12-bodyweight-exercises-that-scale-from-beginner-to-advanced	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+valentine-s-day-gifts-for-fit-partners	gsm	mens-drawstring-joggers	'330 g/m²' -> '130 g/m²'
+valentine-s-day-gifts-for-fit-partners	comp	mens-drawstring-joggers	'92% polyester, 8% spandex' -> '95% polyester, 5% spandex'
+kettlebell-basics-6-moves-that-cover-your-whole-body	link	women-s-high-rise-ankle-length-leggings	"Women's High Rise Ankle Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+mother-s-day-activewear-gift	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+mother-s-day-activewear-gift	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+mother-s-day-activewear-gift	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+opacity-ratings-how-brands-test-squat-proof-claims	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+opacity-ratings-how-brands-test-squat-proof-claims	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+opacity-ratings-how-brands-test-squat-proof-claims	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+opacity-ratings-how-brands-test-squat-proof-claims	comp	women-s-high-waisted-ankle-leggings	'78% polyamide, 22% elastane' -> '80% nylon, 20% spandex'
+opacity-ratings-how-brands-test-squat-proof-claims	comp	women-s-high-waisted-flare-leggings	'20% elastane' -> '80% nylon, 20% spandex'
+upper-lower-split-how-to-program-4-days-a-week	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+upper-lower-split-how-to-program-4-days-a-week	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+upper-lower-split-how-to-program-4-days-a-week	comp	mens-regular-fit-performance-t-shirt	'92% polyester and 8% spandex' -> '100% polyester'
+seamless-vs-flatlock-seam-activewear-durability-and-comfort	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+black-friday-activewear-strategy-buy-smart-not-more	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+black-friday-activewear-strategy-buy-smart-not-more	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+black-friday-activewear-strategy-buy-smart-not-more	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+repairing-activewear-small-fixes-that-extend-garment-life	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+repairing-activewear-small-fixes-that-extend-garment-life	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+repairing-activewear-small-fixes-that-extend-garment-life	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+beginner-5k-training-plan-couch-to-finish-line-in-8-weeks	link	women-s-high-rise-ankle-length-leggings	"Women's High Rise Ankle Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+holiday-travel-workout-kit-train-anywhere-in-december	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+holiday-travel-workout-kit-train-anywhere-in-december	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+holiday-travel-workout-kit-train-anywhere-in-december	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+flared-leggings-vs-ankle-length-leggings-pros-and-cons	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+flared-leggings-vs-ankle-length-leggings-pros-and-cons	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+flared-leggings-vs-ankle-length-leggings-pros-and-cons	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+polyester-vs-cotton-workout-shirts-which-is-better	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+polyester-vs-cotton-workout-shirts-which-is-better	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+nylon-vs-polyester-leggings-the-real-difference	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+nylon-vs-polyester-leggings-the-real-difference	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+compression-vs-loose-workout-clothes-what-science-and-comfort-say	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+compression-vs-loose-workout-clothes-what-science-and-comfort-say	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+compression-vs-loose-workout-clothes-what-science-and-comfort-say	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+tank-top-vs-t-shirt-for-lifting-does-it-matter	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+tank-top-vs-t-shirt-for-lifting-does-it-matter	gsm	men-s-jacquard-performance-tank-top	'185 g/m²' -> '180 g/m²'
+tank-top-vs-t-shirt-for-lifting-does-it-matter	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+goblet-squats-the-best-squat-variation-for-beginners	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+goblet-squats-the-best-squat-variation-for-beginners	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+should-you-train-every-day-frequency-by-goal-and-level	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+should-you-train-every-day-frequency-by-goal-and-level	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+should-you-train-every-day-frequency-by-goal-and-level	comp	mens-regular-fit-performance-t-shirt	'92% polyester/8% spandex' -> '100% polyester'
+home-gym-essentials-under-500-what-to-buy-first	gsm	women-s-color-block-yoga-sports-bra	'250 g/m²' -> '220 g/m²'
+gym-anxiety-practical-ways-to-feel-at-home-training	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+gym-anxiety-practical-ways-to-feel-at-home-training	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+what-to-bring-to-the-gym-the-complete-checklist	gsm	mens-drawstring-joggers	'330 g/m²' -> '130 g/m²'
+training-in-summer-heat-how-to-do-it-safely	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+training-in-summer-heat-how-to-do-it-safely	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+pilates-vs-yoga-which-practice-fits-your-goals	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+pilates-vs-yoga-which-practice-fits-your-goals	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+should-you-put-gym-clothes-in-the-dryer	comp	soft-hooded-sports-jacket	'92% polyester' -> '100% polyester'
+should-you-put-gym-clothes-in-the-dryer	comp	women-s-cropped-sports-bra-1	'25% spandex' -> '75% nylon, 25% spandex'
+gym-etiquette-15-unwritten-rules-nobody-tells-beginners	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+gym-etiquette-15-unwritten-rules-nobody-tells-beginners	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+gym-etiquette-15-unwritten-rules-nobody-tells-beginners	comp	mens-regular-fit-performance-t-shirt	'92% polyester, 8% spandex' -> '100% polyester'
+emom-workouts-8-formats-from-10-to-30-minutes	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+emom-workouts-8-formats-from-10-to-30-minutes	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+post-workout-stretching-a-10-minute-full-body-routine	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+post-workout-stretching-a-10-minute-full-body-routine	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+how-to-dry-gym-clothes-fast-when-you-train-daily	gsm	mens-drawstring-joggers	'330 g/m²' -> '130 g/m²'
+workout-motivation-systems-that-work-when-willpower-doesn-t	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+workout-motivation-systems-that-work-when-willpower-doesn-t	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+workout-motivation-systems-that-work-when-willpower-doesn-t	comp	mens-regular-fit-performance-t-shirt	'92% polyester, 8% spandex' -> '100% polyester'
+jump-rope-workouts-from-first-skip-to-10-minute-rounds	gsm	women-s-cropped-sports-bra	'220 g/m²' -> '230 g/m²'
+jump-rope-workouts-from-first-skip-to-10-minute-rounds	comp	women-s-cropped-sports-bra	'75% nylon, 25% spandex' -> '89% polyester, 11% spandex'
+active-recovery-days-what-to-actually-do	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+active-recovery-days-what-to-actually-do	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+fitness-after-40-what-changes-and-what-doesn-t	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+fitness-after-40-what-changes-and-what-doesn-t	link	women-s-high-rise-flared-yoga-pants	"Women's High Rise Flared Yoga Pants" -> "Women's High-Rise Flared Yoga Pants (womens-high-rise-flared-yoga-pants)"
+fitness-after-40-what-changes-and-what-doesn-t	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+fitness-after-40-what-changes-and-what-doesn-t	comp	womens-high-rise-flared-yoga-pants	'80% nylon, 20% spandex' -> '78% polyamide, 22% elastane'
+workout-shirt-fit-guide-for-men-slim-vs-regular-vs-relaxed	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+how-to-keep-black-leggings-black-fade-prevention	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+how-to-keep-black-leggings-black-fade-prevention	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+how-to-keep-black-leggings-black-fade-prevention	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+activewear-size-charts-how-to-measure-yourself-correctly	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+activewear-size-charts-how-to-measure-yourself-correctly	gsm	women-s-cropped-sports-bra-1	'230 g/m²' -> '220 g/m²'
+activewear-size-charts-how-to-measure-yourself-correctly	comp	women-s-cropped-sports-bra-1	'89% polyester and 11% spandex' -> '75% nylon, 25% spandex'
+college-gym-outfits-affordable-and-practical	link	women-s-high-waisted-ankle-length-yoga-leggings	"Women's High-Waisted Ankle Length Yoga Leggings" -> "Women's High Rise Ankle Length Yoga Leggings (womens-high-rise-ankle-length-yoga-leggings)"
+college-gym-outfits-affordable-and-practical	gsm	womens-high-rise-ankle-length-yoga-leggings	'220 g/m²' -> '270 g/m²'
+gifts-for-gym-lovers-a-no-miss-guide-by-budget	link	women-s-high-rise-flared-yoga-pants	"Women's High Rise Flared Yoga Pants" -> "Women's High-Rise Flared Yoga Pants (womens-high-rise-flared-yoga-pants)"
+squat-proof-leggings-how-opacity-really-works	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+squat-proof-leggings-how-opacity-really-works	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+activewear-for-work-from-home-comfortable-but-presentable	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+activewear-for-work-from-home-comfortable-but-presentable	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'
+travel-laundry-washing-workout-gear-in-a-hotel-sink	gsm	unisex-boxy-v-neck-soccer-jersey	'200 g/m²' -> '220 g/m²'
+layering-activewear-for-fall-a-practical-system	link	contrast-trim-raglan-varsity-jacket	'Contrast Trim Raglan Varsity Jacket' -> 'Two Tone Raglan Sleeve Varsity Jacket (two-tone-raglan-sleeve-varsity-jacket)'
+high-impact-support-what-actually-holds-during-running	gsm	womens-halter-neck-yoga-sports-bra	'250 g/m²' -> '220 g/m²'
+what-to-wear-to-the-gym-a-simple-guide-for-men	link	men-s-performance-regular-fit-t-shirt	"Men's Performance Regular Fit T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+what-to-wear-to-the-gym-a-simple-guide-for-men	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+what-to-wear-to-the-gym-a-simple-guide-for-men	comp	mens-regular-fit-performance-t-shirt	'92% polyester and 8% spandex' -> '100% polyester'
+date-ready-after-the-gym-20-minute-turnarounds	link	women-s-halter-cropped-sports-bra	"Women's Halter Cropped Sports Bra" -> "Women's Halter Yoga Sports Bra (womens-halter-yoga-sports-bra)"
+date-ready-after-the-gym-20-minute-turnarounds	gsm	womens-halter-yoga-sports-bra	'220 g/m²' -> '270 g/m²'
+date-ready-after-the-gym-20-minute-turnarounds	comp	womens-halter-yoga-sports-bra	'80% nylon, 20% spandex' -> '80% polyester, 20% elastane'
+compression-fabric-what-it-does-for-performance-and-recovery	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+compression-fabric-what-it-does-for-performance-and-recovery	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+compression-fabric-what-it-does-for-performance-and-recovery	comp	women-s-high-waisted-pocket-biker-shorts	'25% elastane' -> '80% polyester, 20% spandex'
+how-long-do-leggings-last-lifespan-and-replacement-signs	link	women-s-high-rise-flared-yoga-pants	"Women's High Rise Flared Yoga Pants" -> "Women's High-Rise Flared Yoga Pants (womens-high-rise-flared-yoga-pants)"
+how-long-do-leggings-last-lifespan-and-replacement-signs	comp	womens-high-rise-flared-yoga-pants	'80% nylon, 20% spandex' -> '78% polyamide, 22% elastane'
+the-squat-test-how-to-check-leggings-before-you-buy	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+waistband-rolling-causes-and-fixes	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+waistband-rolling-causes-and-fixes	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+men-s-athleisure-building-a-weekend-uniform	link	contrast-trim-raglan-varsity-jacket	'Contrast Trim Raglan Varsity Jacket' -> 'Two Tone Raglan Sleeve Varsity Jacket (two-tone-raglan-sleeve-varsity-jacket)'
+what-to-wear-to-yoga-class-comfort-coverage-confidence	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+what-to-wear-to-yoga-class-comfort-coverage-confidence	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+summer-gym-outfits-staying-cool-when-it-s-brutal-outside	gsm	womens-drawstring-bermuda-shorts	'220 g/m²' -> '140 g/m²'
+what-to-wear-to-pilates-studio-tested-outfit-advice	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+what-to-wear-to-pilates-studio-tested-outfit-advice	link	women-s-high-waisted-ankle-length-yoga-leggings	"Women's High-Waisted Ankle Length Yoga Leggings" -> "Women's High Rise Ankle Length Yoga Leggings (womens-high-rise-ankle-length-yoga-leggings)"
+what-to-wear-to-pilates-studio-tested-outfit-advice	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+what-to-wear-to-pilates-studio-tested-outfit-advice	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+how-many-workout-outfits-do-you-actually-need	gsm	women-s-cropped-sports-bra-1	'230 g/m²' -> '220 g/m²'
+how-many-workout-outfits-do-you-actually-need	comp	women-s-cropped-sports-bra-1	'89% polyester, 11% spandex' -> '75% nylon, 25% spandex'
+flatlock-seams-the-detail-that-prevents-chafing	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+flatlock-seams-the-detail-that-prevents-chafing	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+flatlock-seams-the-detail-that-prevents-chafing	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+quiet-luxury-activewear-the-understated-gym-look	link	men-s-regular-fit-training-t-shirt	"Men's Regular Fit Training T-Shirt" -> "Men's Regular Fit Performance T-Shirt (mens-regular-fit-performance-t-shirt)"
+quiet-luxury-activewear-the-understated-gym-look	gsm	mens-regular-fit-performance-t-shirt	'180 g/m²' -> '130 g/m²'
+gsm-in-clothing-what-fabric-weight-numbers-mean	gsm	mens-lightweight-performance-t-shirt	'200 g/m²' -> '170 g/m²'
+gsm-in-clothing-what-fabric-weight-numbers-mean	gsm	women-s-cropped-sports-bra	'330 g/m²' -> '230 g/m²'
+what-to-wear-to-spin-class-sweat-ready-outfits	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+what-to-wear-to-spin-class-sweat-ready-outfits	link	women-s-halter-cropped-sports-bra	"Women's Halter Cropped Sports Bra" -> "Women's Halter Yoga Sports Bra (womens-halter-yoga-sports-bra)"
+what-to-wear-to-spin-class-sweat-ready-outfits	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+what-to-wear-to-spin-class-sweat-ready-outfits	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+retro-gym-style-90s-fitness-fashion-comeback	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+retro-gym-style-90s-fitness-fashion-comeback	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+retro-gym-style-90s-fitness-fashion-comeback	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon, 25% spandex' -> '80% polyester, 20% spandex'
+tall-women-s-activewear-solving-the-length-problem	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+tall-women-s-activewear-solving-the-length-problem	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+nylon-polyamide-in-activewear-why-premium-brands-use-it	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+nylon-polyamide-in-activewear-why-premium-brands-use-it	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+nylon-polyamide-in-activewear-why-premium-brands-use-it	comp	women-s-high-waisted-ankle-leggings	'75% nylon, 25% spandex' -> '80% nylon, 20% spandex'
+athleisure-outfit-ideas-12-looks-that-work-beyond-the-gym	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+what-to-wear-hiking-in-activewear-trail-ready-layers	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+what-to-wear-hiking-in-activewear-trail-ready-layers	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+what-to-wear-hiking-in-activewear-trail-ready-layers	comp	women-s-high-waisted-ankle-leggings	'75% nylon and 25% spandex' -> '80% nylon, 20% spandex'
+how-should-leggings-fit-waist-length-and-compression	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+how-should-leggings-fit-waist-length-and-compression	comp	women-s-high-waisted-flare-leggings	'20% elastane' -> '80% nylon, 20% spandex'
+how-should-leggings-fit-waist-length-and-compression	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+neutral-activewear-capsule-10-pieces-20-outfits	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+the-all-black-gym-outfit-why-it-works-and-how-to-style-it	gsm	cropped-half-zip-hoodie	'220 g/m²' -> '320 g/m²'
+four-way-stretch-explained-why-it-matters-in-leggings	link	women-s-high-rise-flared-yoga-pants	"Women's High Rise Flared Yoga Pants" -> "Women's High-Rise Flared Yoga Pants (womens-high-rise-flared-yoga-pants)"
+four-way-stretch-explained-why-it-matters-in-leggings	comp	womens-high-rise-flared-yoga-pants	'80% nylon, 20% spandex' -> '78% polyamide, 22% elastane'
+four-way-stretch-explained-why-it-matters-in-leggings	comp	womens-high-rise-flared-yoga-pants	'20% spandex' -> '78% polyamide, 22% elastane'
+legging-length-guide-7-8-vs-full-vs-capri-vs-flared	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+legging-length-guide-7-8-vs-full-vs-capri-vs-flared	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+legging-length-guide-7-8-vs-full-vs-capri-vs-flared	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+hot-yoga-outfits-what-survives-105-degrees	link	womens-hollow-out-yoga-tank-top	"Women's Hollow-Out Yoga Tank Top" -> "Women's Yoga Tank Top (womens-yoga-tank-top)"
+hot-yoga-outfits-what-survives-105-degrees	gsm	womens-yoga-tank-top	'260 g/m²' -> '220 g/m²'
+hot-yoga-outfits-what-survives-105-degrees	comp	womens-yoga-tank-top	'95% modal and 5% elastane' -> '80% nylon, 20% spandex'
+hot-yoga-outfits-what-survives-105-degrees	comp	womens-yoga-tank-top	'90% nylon, 10% elastane' -> '80% nylon, 20% spandex'
+the-activewear-capsule-wardrobe-a-buy-once-framework	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+the-activewear-capsule-wardrobe-a-buy-once-framework	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+errand-run-uniforms-athleisure-formulas-that-always-work	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+airport-athleisure-comfortable-travel-outfits-that-look-put-together	link	womens-high-waist-tapered-leggings	"Women's High-Waist Tapered Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+airport-athleisure-comfortable-travel-outfits-that-look-put-together	link	women-s-high-rise-ankle-length-leggings	"Women's High-Rise Ankle-Length Leggings" -> "Women's High Rise Ankle Length Leggings (womens-high-rise-ankle-length-leggings)"
+airport-athleisure-comfortable-travel-outfits-that-look-put-together	link	contrast-trim-raglan-varsity-jacket	'Contrast Trim Raglan Varsity Jacket' -> 'Two Tone Raglan Sleeve Varsity Jacket (two-tone-raglan-sleeve-varsity-jacket)'
+airport-athleisure-comfortable-travel-outfits-that-look-put-together	comp	women-s-high-waisted-ankle-leggings	'78% polyamide and 22% elastane' -> '80% nylon, 20% spandex'
+airport-athleisure-comfortable-travel-outfits-that-look-put-together	gsm	womens-high-rise-ankle-length-leggings	'220 g/m²' -> '230 g/m²'
+airport-athleisure-comfortable-travel-outfits-that-look-put-together	comp	womens-high-rise-ankle-length-leggings	'80% nylon, 20% spandex' -> '89% polyester, 11% spandex'
+what-to-wear-to-a-hiit-class-function-first-outfits	link	high-waisted-blend-biker-shorts	'High-Waisted Blend Biker Shorts' -> "Women's High-Waisted Pocket Biker Shorts (women-s-high-waisted-pocket-biker-shorts)"
+what-to-wear-to-a-hiit-class-function-first-outfits	gsm	women-s-high-waisted-pocket-biker-shorts	'220 g/m²' -> '210 g/m²'
+what-to-wear-to-a-hiit-class-function-first-outfits	comp	women-s-high-waisted-pocket-biker-shorts	'75% nylon and 25% spandex' -> '80% polyester, 20% spandex'
+first-gym-session-outfit-dressing-to-feel-confident	link	high-waisted-yoga-leggings	'High-Waisted Yoga Leggings' -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+first-gym-session-outfit-dressing-to-feel-confident	gsm	women-s-high-waisted-ankle-leggings	'210 g/m²' -> '220 g/m²'
+how-to-style-flared-leggings-8-outfits-from-studio-to-street	gsm	womens-cropped-yoga-tank-top	'220 g/m²' -> '240 g/m²'
+how-to-style-flared-leggings-8-outfits-from-studio-to-street	comp	womens-cropped-yoga-tank-top	'80% nylon and 20% spandex' -> '79% nylon, 21% spandex'
+how-to-style-a-cropped-hoodie-proportions-that-work	link	women-s-high-waisted-yoga-leggings	"Women's High-Waisted Yoga Leggings" -> "Women's High Waisted Ankle Leggings (women-s-high-waisted-ankle-leggings)"
+how-to-style-a-cropped-hoodie-proportions-that-work	gsm	women-s-high-waisted-ankle-leggings	'230 g/m²' -> '220 g/m²'
+how-to-style-a-cropped-hoodie-proportions-that-work	comp	women-s-high-waisted-ankle-leggings	'75% nylon and 25% spandex' -> '80% nylon, 20% spandex'
+maternity-friendly-activewear-from-a-regular-line-what-works	link	women-s-high-rise-flared-yoga-pants	"Women's High Rise Flared Yoga Pants" -> "Women's High-Rise Flared Yoga Pants (womens-high-rise-flared-yoga-pants)"
+maternity-friendly-activewear-from-a-regular-line-what-works	comp	womens-high-rise-flared-yoga-pants	'80% nylon and 20% spandex' -> '78% polyamide, 22% elastane'
+how-to-style-joggers-for-men-beyond-the-couch	link	mens-lightweight-training-t-shirt	"Men's Lightweight Training T-Shirt" -> "Men's Lightweight Performance T-Shirt (mens-lightweight-performance-t-shirt)"
+how-to-style-joggers-for-men-beyond-the-couch	gsm	mens-lightweight-performance-t-shirt	'135 g/m²' -> '170 g/m²'

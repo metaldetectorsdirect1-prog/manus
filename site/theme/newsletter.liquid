@@ -1,0 +1,99 @@
+{%- comment -%}
+  HIVOLT — snippets/newsletter.liquid
+  ───────────────────────────────────
+  The footer signup. Rendered by layout/theme.liquid, so it is on every page
+  that uses the shared shell.
+
+  Why it exists: /pages/membership already carries a full signup, and almost
+  nobody navigates to it. Every other page in the store offered a visitor no
+  way to leave an address at all, so a visitor who was not ready to buy left
+  and could not be reached again.
+
+  Shopify's native customer form — no app, no third-party script:
+
+      form 'customer'      → creates a customer and sets accepts_marketing
+                             true, which is what puts the address in front of
+                             Shopify Email
+      contact[email]       → the address, validated server-side by Shopify
+      contact[tags]        → "newsletter, circuit" — the same pair the
+                             membership page applies, so both entry points
+                             land in one segment rather than two
+
+  form.posted_successfully? is scoped to the form TYPE, not to this element.
+  templates/page.membership.liquid renders its own form 'customer', so on that
+  page BOTH would light up after a submit and print the confirmation twice.
+  layout/theme.liquid guards the render on the page handle; this file assumes
+  that guard rather than repeating it.
+
+  id: 'circuit' makes the form action /contact#circuit, so the redirect after a
+  submit lands on the block instead of the top of the page. The confirmation
+  takes tabindex="-1" and role="status" so it is announced, not just coloured.
+{%- endcomment -%}
+
+<section class="sub" aria-labelledby="sub-h">
+  <div class="sub__grid">
+
+    <div class="sub__say">
+      <p class="mono sub__eyebrow">The Circuit</p>
+      <h2 class="sub__h" id="sub-h">Told first. Nothing else sent.</h2>
+      <p class="sub__p">
+        One email when a drop is coming, one when it goes live. No weekly
+        newsletter, because there isn't one.
+      </p>
+    </div>
+
+    <div class="sub__do">
+      {%- form 'customer', id: 'circuit' -%}
+
+        {%- if form.posted_successfully? -%}
+          <div class="sub__ok" tabindex="-1" role="status">
+            <p class="mono sub__ok-h">You're on the list</p>
+            <p class="sub__ok-b">
+              Nothing else to do. The next message you get from us will be a
+              drop going live — every email carries an unsubscribe link.
+            </p>
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="sub__err" tabindex="-1" role="alert">
+            <p class="mono sub__err-h">That didn't go through</p>
+            <ul class="sub__err-l">
+              {%- for field in form.errors -%}
+                <li>
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    {{ form.errors.translated_fields[field] }} — {{ form.errors.messages[field] }}
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <input type="hidden" name="contact[tags]" value="newsletter, circuit">
+
+        <div class="sub__row">
+          <div class="sub__f">
+            <label class="mono sub__l" for="circuit-email">Email address</label>
+            <input class="sub__in" type="email" id="circuit-email"
+                   name="contact[email]" autocomplete="email"
+                   autocorrect="off" autocapitalize="off" required
+                   value="{{ form.email }}"
+                   placeholder="you@example.com">
+          </div>
+          <button class="sub__go" type="submit">Join</button>
+        </div>
+
+        <p class="sub__note">
+          Unsubscribe from any email. The address is used for drop notices and
+          nothing else — it is not sold and it is not passed to an advertiser.
+          <a href="/pages/membership">What the list is</a>
+        </p>
+
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>

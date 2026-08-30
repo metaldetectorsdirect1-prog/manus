@@ -1,0 +1,135 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "is_tab": false
+          }
+        },
+        "hv-specs": {
+          "type": "custom",
+          "settings": {
+            "code": "{% render 'hivolt-spec-table', product: product %}"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "variant_labels": true,
+            "picker_type": "button",
+            "product_dynamic_variants_enable": true,
+            "color_swatches": true
+          }
+        },
+        "hv-size-guide": {
+          "type": "custom",
+          "settings": {
+            "code": "{% render 'hivolt-size-guide', product: product, part: 'trigger' %}{% render 'hivolt-size-guide', product: product, part: 'dialog' %}"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "surface_pickup_enable": false,
+            "show_gift_card_recipient": false
+          }
+        },
+        "tab-shipping": {
+          "type": "tab",
+          "settings": {
+            "title": "Shipping & Returns",
+            "content": "<p>Free US shipping on every order — tracked door to door, 8–14 business days. Returns are free for 60 days from delivery: unworn with tags, prepaid label, no restocking fee.</p>",
+            "page": ""
+          }
+        },
+        "sales_point-1": {
+          "type": "sales_point",
+          "settings": {
+            "icon": "truck",
+            "text": "Free US shipping, no minimum"
+          }
+        },
+        "sales_point-2": {
+          "type": "sales_point",
+          "settings": {
+            "icon": "package",
+            "text": "60-day free returns"
+          }
+        }
+      },
+      "block_order": [
+        "price",
+        "description",
+        "hv-specs",
+        "variant_picker",
+        "hv-size-guide",
+        "buy_buttons",
+        "tab-shipping",
+        "sales_point-1",
+        "sales_point-2"
+      ],
+      "settings": {
+        "sku_enable": false,
+        "image_position": "left",
+        "image_size": "medium",
+        "product_zoom_enable": true,
+        "thumbnail_position": "beside",
+        "thumbnail_height": "flexible",
+        "thumbnail_arrows": true,
+        "mobile_layout": "full",
+        "enable_video_looping": true,
+        "product_video_style": "muted"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "product_recommendations_heading": "You may also like",
+        "related_count": 5,
+        "products_per_row": 5
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "recent_count": 5
+      }
+    },
+    "collection-return": {
+      "type": "collection-return",
+      "disabled": true,
+      "settings": {}
+    },
+    "sub": {
+      "type": "product-full-width",
+      "disabled": true,
+      "settings": {
+        "max_width": true
+      }
+    },
+    "apps": {
+      "type": "apps",
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product-recommendations",
+    "recently-viewed",
+    "collection-return",
+    "sub",
+    "apps"
+  ]
+}

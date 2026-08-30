@@ -1,0 +1,57 @@
+{
+  "home": [
+    {
+      "viewport": 390,
+      "jsErrors": 0,
+      "overflowX": false,
+      "pageHeight": 9502,
+      "firstShoppingSurfaceY": 1457,
+      "brokenImages": 0,
+      "stickyHeader": true
+    },
+    {
+      "viewport": 1440,
+      "jsErrors": 0,
+      "overflowX": false,
+      "pageHeight": 8891,
+      "firstShoppingSurfaceY": 1677,
+      "brokenImages": 0,
+      "stickyHeader": true
+    }
+  ],
+  "grid100": [
+    {
+      "viewport": 390,
+      "jsErrors": 0,
+      "cards": 100,
+      "cols": 2,
+      "overflowX": false,
+      "titleOverflow": 0,
+      "pagerLinks": 6,
+      "minCardH": 336,
+      "maxCardH": 359
+    },
+    {
+      "viewport": 768,
+      "jsErrors": 0,
+      "cards": 100,
+      "cols": 3,
+      "overflowX": false,
+      "titleOverflow": 0,
+      "pagerLinks": 6,
+      "minCardH": 423,
+      "maxCardH": 445
+    },
+    {
+      "viewport": 1440,
+      "jsErrors": 0,
+      "cards": 100,
+      "cols": 4,
+      "overflowX": false,
+      "titleOverflow": 0,
+      "pagerLinks": 6,
+      "minCardH": 558,
+      "maxCardH": 558
+    }
+  ]
+}

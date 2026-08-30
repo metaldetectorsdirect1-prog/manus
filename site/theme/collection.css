@@ -1,0 +1,169 @@
+/* ─────────────────────────────────────────────────────────────
+   HIVOLT — collection + search
+   Additive only. build-theme.py concatenates this file into
+   assets/hivolt.css AFTER theme-hivolt.css, which owns every token
+   and every shared class used below. Nothing here redefines a token
+   or a colour literal, and nothing here edits theme-hivolt.css.
+
+   Serves templates/collection.liquid and templates/search.liquid.
+
+   New components only: the facet bar, the active-filter chips, the
+   numbered pager, the empty state, the search field, and the plain
+   list used for article/page hits. Product tiles reuse .grid/.item
+   from hivolt.css unchanged.
+   ───────────────────────────────────────────────────────────── */
+
+/* Grid children hold aspect-ratio media; min-width:auto lets a track
+   push past the viewport. Guard it here rather than in the shared file. */
+.grid > *{min-width:0}
+
+/* ── page shell ────────────────────────────────────────────── */
+.col{padding-block:clamp(26px,4vw,44px) var(--band)}
+.col__desc{max-width:68ch;margin:20px 0 0;color:var(--ink-2);font-size:15px;line-height:1.62}
+.col__desc > :first-child{margin-top:0}
+.col__desc > :last-child{margin-bottom:0}
+.col__desc p{margin:0 0 12px}
+/* Same guard as .rte table in pages.css: an editor table can be any width,
+   so scroll the table, not the document. */
+.col__desc table{display:block;width:max-content;max-width:100%;min-width:0;
+  overflow-x:auto;margin:1.2em 0}
+.col__desc th,.col__desc td{text-align:left}
+.col__desc a{color:var(--blueprint)}
+
+/* ── facet + sort bar ──────────────────────────────────────── */
+.facets{position:relative;margin-top:22px;border-top:1px solid var(--rule)}
+.facets__row{display:flex;flex-wrap:wrap;align-items:center;
+  border-bottom:1px solid var(--rule)}
+.facets__row > *{min-width:0}
+
+.facet{position:relative;min-width:0;border-right:1px solid var(--rule)}
+.facet__sum{list-style:none;cursor:pointer;user-select:none;
+  display:flex;align-items:center;gap:9px;padding:13px 16px;color:var(--ink-2);
+  transition:background .16s ease}
+.facet__sum::-webkit-details-marker{display:none}
+.facet__sum::after{content:"+";font-family:var(--mono);font-size:14px;line-height:1;color:var(--steel)}
+.facet__sum:hover{background:var(--paper-2)}
+.facet[open] .facet__sum{background:var(--paper-2)}
+.facet[open] .facet__sum::after{content:"–"}
+.facet__on{font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.06em;
+  background:var(--blueprint);color:var(--on-blueprint);padding:2px 6px;
+  font-variant-numeric:tabular-nums}
+
+.facet__pan{position:absolute;z-index:30;top:100%;left:-1px;
+  min-width:240px;max-width:min(320px,calc(100vw - 32px));
+  max-height:min(52vh,392px);overflow-y:auto;
+  background:var(--paper);border:1px solid var(--ink);padding:6px 0}
+
+.facet__list{list-style:none;margin:0;padding:0}
+.facet__opt{display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center;
+  padding:8px 16px;cursor:pointer;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.04em}
+.facet__opt:hover{background:var(--paper-2)}
+.facet__opt input{accent-color:var(--blueprint);width:14px;height:14px;margin:0}
+.facet__lab{min-width:0;overflow-wrap:anywhere}
+.facet__ct{color:var(--steel);font-size:10.5px;font-variant-numeric:tabular-nums}
+.facet__opt--off{opacity:.42;cursor:not-allowed}
+
+.facet__price{display:grid;grid-template-columns:auto 1fr;gap:10px 11px;align-items:center;
+  padding:13px 16px}
+.facet__price .mono{color:var(--steel)}
+.facet__num{width:100%;min-width:0;font-family:var(--mono);font-size:12px;
+  font-variant-numeric:tabular-nums;padding:9px 10px;
+  border:1px solid var(--rule);background:var(--paper);color:var(--ink)}
+.facet__num:focus{border-color:var(--ink)}
+.facet__note{font-family:var(--mono);font-size:10px;color:var(--steel);
+  margin:0;padding:0 16px 13px;line-height:1.65}
+
+.facets__sort{display:flex;align-items:center;gap:11px;margin-left:auto;
+  padding:10px 14px;border-left:1px solid var(--rule)}
+.facets__sort .mono{color:var(--steel);flex:none}
+.facets__sel{min-width:0;max-width:100%;cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  padding:9px 10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink)}
+.facets__sel:hover{border-color:var(--ink)}
+.facets__go{padding:11px 18px;font-size:10.5px;margin:8px 14px 8px 0;flex:none}
+
+/* the bar stacks below the tablet breakpoint; panels flow inline so a
+   dropdown can never hang off the right edge of a phone */
+@media (max-width:760px){
+  .facet{width:100%;border-right:0;border-bottom:1px solid var(--rule)}
+  .facet__pan{position:static;width:100%;max-width:none;max-height:340px;
+    border-width:1px 0 0}
+  .facets__sort{width:100%;margin-left:0;border-left:0;padding:12px 14px}
+  .facets__sel{flex:1}
+  .facets__go{width:calc(100% - 28px);margin:0 14px 14px}
+}
+
+/* ── active filter chips ───────────────────────────────────── */
+.chips{display:flex;flex-wrap:wrap;gap:7px;padding:12px 14px;
+  border-bottom:1px solid var(--rule)}
+.chip{display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--rule);padding:6px 9px;
+  transition:background .16s ease,color .16s ease,border-color .16s ease}
+.chip span{color:var(--steel)}
+.chip:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip:hover span{color:var(--paper)}
+.chip--clear{color:var(--blueprint);border-color:var(--blueprint)}
+.chip--clear:hover{background:var(--blueprint);border-color:var(--blueprint);color:var(--on-blueprint)}
+
+/* ── numbered pager ────────────────────────────────────────── */
+.pager{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:26px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.pager__a{min-width:40px;padding:10px 11px;text-align:center;text-decoration:none;
+  border:1px solid var(--rule);color:var(--ink-2);font-variant-numeric:tabular-nums;
+  transition:background .16s ease,color .16s ease,border-color .16s ease}
+a.pager__a:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.pager__a--on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.pager__a--off{color:var(--steel);border-style:dashed}
+.pager__gap{color:var(--steel);padding:0 4px}
+.pager__count{margin-left:auto;color:var(--steel);font-variant-numeric:tabular-nums}
+@media (max-width:560px){
+  .pager__count{width:100%;margin-left:0;padding-top:6px}
+}
+
+/* ── empty state ───────────────────────────────────────────── */
+.empty{border:1px solid var(--rule);background:var(--paper-2);
+  padding:clamp(24px,4vw,44px)}
+.empty__h{margin:0;font-size:clamp(17px,2.2vw,22px);font-weight:700;
+  letter-spacing:-.01em;text-wrap:balance}
+.empty__p{max-width:60ch;margin:12px 0 0;color:var(--ink-2);font-size:14.5px;line-height:1.62}
+.empty__p b{font-family:var(--mono);font-weight:400;color:var(--ink)}
+.empty__act{margin:22px 0 0}
+.empty__links{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.empty__links a{display:inline-block;text-decoration:none;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--ink);padding:11px 16px;
+  transition:background .16s ease,color .16s ease,border-color .16s ease}
+.empty__links a:hover{background:var(--blueprint);border-color:var(--blueprint);color:var(--on-blueprint)}
+
+/* ── search field ──────────────────────────────────────────── */
+.srch{display:flex;max-width:640px;margin-top:22px;border:1px solid var(--ink)}
+.srch__in{flex:1;min-width:0;border:0;outline-offset:-3px;
+  font-family:var(--mono);font-size:13px;letter-spacing:.03em;
+  background:var(--paper);color:var(--ink);padding:14px 16px}
+.srch__in::placeholder{color:var(--steel)}
+.srch__go{flex:none;border:0;border-left:1px solid var(--ink);padding:14px 22px;font-size:11px}
+/* the search grid has no facet bar above it, so it needs its own top rule —
+   on the collection page that job is done by the bottom edge of .facets */
+.srch + .grid{margin-top:clamp(24px,3.5vw,40px);border-top:1px solid var(--ink)}
+
+/* ── article / page hits ───────────────────────────────────── */
+.hits__head{margin-top:clamp(30px,4vw,48px);padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.hits__head h2{margin:0;color:var(--steel)}
+.hits{list-style:none;margin:0;padding:0;
+  border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+.hits__i{border-bottom:1px solid var(--rule)}
+.hits__a{display:grid;grid-template-columns:92px 1fr;gap:5px 18px;align-items:baseline;
+  padding:18px;text-decoration:none;transition:background .16s ease}
+.hits__a > *{min-width:0}
+.hits__a:hover{background:var(--paper-2)}
+.hits__a:hover .hits__t{color:var(--blueprint)}
+.hits__k{grid-row:1/span 2;color:var(--steel)}
+.hits__t{font-size:15px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;line-height:1.3}
+.hits__d{grid-column:2;color:var(--ink-2);font-size:13.5px;line-height:1.6}
+@media (max-width:560px){
+  .hits__a{grid-template-columns:1fr}
+  .hits__k{grid-row:auto}
+  .hits__d{grid-column:1}
+}

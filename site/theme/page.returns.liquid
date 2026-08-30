@@ -1,0 +1,230 @@
+{%- comment -%}
+  HIVOLT — templates/page.returns.liquid
+  ──────────────────────────────────────
+  Alternate page template. In the admin: Pages → Returns → Template suffix →
+  "returns". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
+
+  Published terms only, and they are the ones in the store's Return & Refund
+  Policy: 60 days from delivery, UNWORN with tags attached, free prepaid US
+  label, no restocking fee, no reason required, started from the order email.
+
+  On 2026-08-12 this template contradicted that policy in three places at once.
+  The hero offered "including items you have worn and washed"; the condition
+  section said "Train in it. Wash it… a worn garment is still returnable"; and
+  the postage section said "You do" pay. All three were wrong. The refund
+  policy, the terms of service, this page's own data sheet, its own FAQ, its own
+  FAQPage JSON-LD and every product page said unworn-with-tags and free postage.
+  Six surfaces against three, and the three were the promise a customer reads
+  first.
+
+  This template's own header used to warn that "a returns page that promises one
+  and delivers the other is the single most expensive sentence a store can
+  print." It was describing itself.
+
+  Nothing about refund timing, refund method or exchanges appears here. Those
+  terms have not been set, and inventing them would put a number in front of a
+  customer that nobody has agreed to honour.
+
+  The FAQPage JSON-LD at the foot mirrors the visible questions word for word.
+{%- endcomment -%}
+
+{%- assign contact_url = pages.contact.url | default: '/pages/contact-us' -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Returns' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Returns policy</p>
+  <h1 class="hero__h">60 days.<br>Try it on.<br><em>Send it back.</em></h1>
+  <p class="hero__sub">
+    Send anything back within 60 days of delivery, unworn and with the tags
+    attached. There is no restocking fee and you do not have to tell us why.
+    Start it from your order email and we send a prepaid label within one
+    business day. Returns inside the US are free.
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">The terms</h2>
+    <span class="mono">The same terms as the Return &amp; Refund Policy</span>
+  </div>
+
+  <div class="pg__cols">
+    <div class="rte">
+      <h3>Who pays return postage</h3>
+      <p>
+        We do. You get a prepaid US label and there is no restocking fee, so
+        sending something back costs you nothing. That applies whether the item
+        was faulty, wrong, or simply not what you wanted — we do not make you
+        argue a reason to earn the label.
+      </p>
+
+      <h3>The condition</h3>
+      <p>
+        Unworn, with the tags still attached. Try it on, move in it, check the
+        fit against the size guide — that is what the 60 days are for. Training
+        in it, washing it or cutting the tags off puts it outside the window,
+        because at that point we cannot sell it to anyone else. Faulty or wrong
+        items are separate and always covered. Final-sale items and gift cards
+        are excluded.
+      </p>
+
+      <h3>No reason required</h3>
+      <p>
+        We do not ask why, and there is no drop-down of approved reasons to pick
+        from. It did not fit, you did not like the colour, you changed your mind
+        on the way to the door — all the same to us, and none of it changes the
+        outcome.
+      </p>
+
+      <h3>How to start one</h3>
+      <p>
+        Use the link in your order confirmation email. It is tied to your order,
+        so nothing has to be looked up and nobody has to ask you for a number you
+        no longer have. If you cannot find the email, write to us and we will
+        start it from our side.
+      </p>
+
+      <h3>The 60 days</h3>
+      <p>
+        Sixty days is longer than the category norm of 30, and it is longer for a
+        reason: this store is new, you have no reviews to read, and the fabric
+        weight we publish is a number until you have the garment in your hands.
+        A short return window would be asking you to take that on trust. A long
+        one is us taking the risk instead.
+      </p>
+    </div>
+
+    <aside class="pg__aside">
+      <p class="mono pg__aside-h">Returns, as data</p>
+      <div class="sheet">
+        <div class="sheet__row">
+          <span class="sheet__k">Window</span>
+          <span class="sheet__v"><em>60 days</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Condition</span>
+          <span class="sheet__v">Unworn, tags attached</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Restocking fee</span>
+          <span class="sheet__v">None</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Reason required</span>
+          <span class="sheet__v">No</span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Started from</span>
+          <span class="sheet__v">Your order email</span>
+        </div>
+        <div class="sheet__row">
+          {%- comment -%}
+            Said "Paid by you" until 2026-08-12, which contradicted both the
+            refund policy ("Free. We provide the return label") and the assurance
+            block on every product page ("Free prepaid US label"). Two of the
+            store's own surfaces already said free; this was the outlier.
+          {%- endcomment -%}
+          <span class="sheet__k">Return postage</span>
+          <span class="sheet__v"><em>Free — we send the label</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Faulty or wrong item</span>
+          <span class="sheet__v"><em>Replaced or refunded in full</em></span>
+        </div>
+        <div class="sheet__row">
+          <span class="sheet__k">Returns accepted from</span>
+          <span class="sheet__v">United States only</span>
+        </div>
+      </div>
+      <p class="sheet__src">
+        These are the store's published terms. Anything not listed here has not
+        been set, and we will not print a figure we have not agreed to honour.
+      </p>
+    </aside>
+  </div>
+</section>
+
+{%- if page.content != blank -%}
+  <section class="pg wrap">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </section>
+{%- endif -%}
+
+<!-- ── FAQ: mirrored exactly by the JSON-LD below ──────────── -->
+<section class="faq">
+  <div class="wrap">
+    <h2 class="faq__h">Returns questions</h2>
+    <div class="faq__list">
+      <details>
+        <summary>How long do I have to return something?</summary>
+        <p class="faq__a">60 days from delivery.</p>
+      </details>
+      <details>
+        <summary>What condition does it have to be in?</summary>
+        <p class="faq__a">Unworn, with the tags still attached. Trying it on is
+          fine — that is what the 60 days are for. Training in it, washing it or
+          removing the tags puts it outside the window. Faulty or wrong items are
+          separate and always covered.</p>
+      </details>
+      <details>
+        <summary>Is there a restocking fee?</summary>
+        <p class="faq__a">No.</p>
+      </details>
+      <details>
+        <summary>Do I have to give a reason?</summary>
+        <p class="faq__a">No. We do not ask, and there is no list of approved
+          reasons to choose from.</p>
+      </details>
+      <details>
+        <summary>How do I start a return?</summary>
+        <p class="faq__a">From the link in your order confirmation email. If you
+          cannot find it, write to us and we will start it from our side.</p>
+      </details>
+      <details>
+        <summary>Who pays for return postage?</summary>
+        <p class="faq__a">We do. The Return &amp; Refund Policy provides a prepaid
+          US label and there is no restocking fee, so a return costs you nothing
+          to send back.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How long do I have to return something?","acceptedAnswer":{"@type":"Answer","text":"60 days from delivery."}},
+    {"@type":"Question","name":"What condition does it have to be in?","acceptedAnswer":{"@type":"Answer","text":"Unworn, with the tags still attached. Trying it on is fine. Training in it, washing it or removing the tags puts it outside the window. Faulty or wrong items are separate and always covered."}},
+    {"@type":"Question","name":"Is there a restocking fee?","acceptedAnswer":{"@type":"Answer","text":"No. There is no restocking fee on a HIVOLT return."}},
+    {"@type":"Question","name":"Do I have to give a reason?","acceptedAnswer":{"@type":"Answer","text":"No. We do not ask, and there is no list of approved reasons to choose from."}},
+    {"@type":"Question","name":"How do I start a return?","acceptedAnswer":{"@type":"Answer","text":"From the link in your order confirmation email. If you cannot find it, write to us and we will start it from our side."}},
+    {"@type":"Question","name":"Who pays for return postage?","acceptedAnswer":{"@type":"Answer","text":"HIVOLT does. The Return and Refund Policy provides a prepaid US label and there is no restocking fee, so a return costs you nothing to send back."}}
+  ]
+}
+</script>
+
+<!-- ── questions ───────────────────────────────────────────── -->
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Questions?</span>
+      If your return is not covered by anything above, ask us directly. Replies
+      within one business day.
+    </p>
+    <a class="btn btn--ghost" href="{{ contact_url }}">Contact us</a>
+  </div>
+</section>

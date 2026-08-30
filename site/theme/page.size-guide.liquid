@@ -1,0 +1,168 @@
+{%- comment -%}
+  HIVOLT — templates/page.size-guide.liquid
+  ─────────────────────────────────────────
+  Alternate page template. In the admin: Pages → Size Guide → Template suffix →
+  "size-guide". Renders inside layout/theme.liquid, which supplies <main>.
+
+  Styles live in site/theme/pages.css. build-theme.py concatenates that into
+  the single assets/hivolt.css that layout/theme.liquid already links, after
+  theme-hivolt.css — so there is no second stylesheet to add.
+
+  This page deliberately carries NO size table.
+
+  Every product's own description already contains the supplier's measured
+  table for that exact style, in inches and centimetres, for the sizes that
+  style is actually cut in. A second table here would be a copy — and a copy
+  of a measurement is the thing that goes stale and starts contradicting the
+  garment. So this page explains how to use the tables and where they are,
+  and the numbers stay in one place.
+
+  The measuring instructions below are generic tailoring method, not a claim
+  about any HIVOLT garment. Nothing here asserts a fit, a stretch allowance or
+  a "runs small" — none of that is in the supplier data, so none of it is said.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Size guide' | escape }}</li>
+  </ol>
+</nav>
+
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Sizing</p>
+  <h1 class="hero__h">The table<br>is on the<br><em>product.</em></h1>
+  <p class="hero__sub">
+    Every style publishes the supplier's own measured table — inches and
+    centimetres, for the sizes that style is actually cut in. This page is how
+    to read it.
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="pg__cols">
+
+    <div class="rte">
+      {%- if page.content != blank -%}
+        {{ page.content }}
+      {%- else -%}
+        <p>
+          Sizing runs differ by category, because different garments are cut to
+          different blocks. Open any product and the measured table for that
+          style sits on the page.
+        </p>
+      {%- endif -%}
+    </div>
+
+    <aside class="pg__aside">
+      <p class="mono pg__aside-h">How to measure</p>
+      <div class="rte rte--tight">
+        <p>
+          Measure over the underwear you would train in, with the tape flat and
+          level — snug, not pulled tight. Compare against the garment table on
+          the product page.
+        </p>
+        <ul>
+          <li><strong>Chest / bust</strong> — around the fullest part, tape level under the arms.</li>
+          <li><strong>Waist</strong> — around the narrowest part, usually just above the navel.</li>
+          <li><strong>Hip</strong> — around the fullest part, feet together.</li>
+          <li><strong>Inseam</strong> — from the crotch seam to where you want the hem to sit.</li>
+          <li><strong>Length</strong> — from the high point of the shoulder straight down.</li>
+        </ul>
+      </div>
+
+      <p class="mono pg__aside-h pg__aside-h--gap">Reading the table</p>
+      <div class="rte rte--tight">
+        <p>
+          Product tables are <strong>garment measurements laid flat</strong>, not
+          body measurements. A 20&Prime; chest figure is the garment across the
+          chest — roughly a 40&Prime; body measurement once it goes around.
+        </p>
+        <p>
+          Both units are printed. The centimetre column is the supplier's
+          original; the inch column is its conversion.
+        </p>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<section class="pub">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="sec__h">Where the numbers come from</h2>
+      <span class="mono">Supplier specification</span>
+    </div>
+
+    <div class="pub__grid">
+      <div class="pub__c">
+        <p class="pub__n">01</p>
+        <h3 class="pub__t">One table per style</h3>
+        <p class="pub__d">
+          Each product carries the table for that garment only — the sizes it is
+          cut in, and no others. Nothing is interpolated to fill a gap.
+        </p>
+      </div>
+      <div class="pub__c">
+        <p class="pub__n">02</p>
+        <h3 class="pub__t">Metric first</h3>
+        <p class="pub__d">
+          The supplier measures in centimetres. The inch figures beside them are
+          conversions of those measurements, not a separate set.
+        </p>
+      </div>
+      <div class="pub__c">
+        <p class="pub__n">03</p>
+        <h3 class="pub__t">Weight is published too</h3>
+        <p class="pub__d">
+          Alongside the table, each product states its fibre composition and
+          fabric weight in g/m&sup2;. How heavy a knit is changes how it sits as
+          much as the measurements do.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">Find a table</h2>
+    <span class="mono">Open any product</span>
+  </div>
+
+  {%- comment -%}
+    Link only to collections that exist and hold something. A dead category
+    link on the page a buyer opens before adding to cart is worse than a
+    shorter list.
+  {%- endcomment -%}
+  {%- assign cats = 'womens-activewear,mens-activewear,leggings,sports-bras,shorts,outerwear-hoodies' | split: ',' -%}
+  <div class="sheet">
+    {%- for h in cats -%}
+      {%- assign c = collections[h] -%}
+      {%- if c != blank and c.products_count > 0 -%}
+        <div class="sheet__row">
+          <span class="sheet__k"><a href="{{ c.url }}">{{ c.title | escape }}</a></span>
+          <span class="sheet__v">{{ c.products_count }} styles</span>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+    <div class="sheet__row">
+      <span class="sheet__k"><a href="{{ routes.all_products_collection_url }}">Everything</a></span>
+      <span class="sheet__v">Full catalogue</span>
+    </div>
+  </div>
+</section>
+
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">Still between two sizes?</span>
+      Send the measurements you took and the style you're looking at. We'll read
+      them against the same table you're looking at — we don't have a different
+      one.
+    </p>
+    {%- assign contact_page = pages['contact-us'] | default: pages['contact'] -%}
+    <a class="btn" href="{{ contact_page.url | default: '/pages/contact-us' }}">Ask about fit</a>
+  </div>
+</section>

@@ -1,0 +1,231 @@
+{
+  "sections": {
+    "hero": {
+      "type": "slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "HIVOLT",
+            "title": "Built in the open.",
+            "title_size": 72,
+            "subheading": "Every figure we publish carries its source. Where we don't have one, we say so instead of guessing.",
+            "link": "/blogs/news",
+            "link_text": "Read the journal",
+            "link_2": "/pages/size-guide",
+            "link_text_2": "How we size",
+            "color_accent": "rgba(0,0,0,0)",
+            "text_align": "vertical-center horizontal-left",
+            "image": "shopify://shop_images/hivolt-hero-dark-desktop.png",
+            "parallax_direction": "top",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": ["slide-1"],
+      "settings": {
+        "section_height": "650px",
+        "mobile_height": "auto",
+        "parallax": false,
+        "style": "bars",
+        "autoplay": false,
+        "autoplay_speed": 5
+      }
+    },
+    "brand-statement": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "title": "What HIVOLT is",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "enlarge_text": true,
+            "text": "<p>We make apparel for women and men, and we publish the details that usually stay hidden — fabric weight, composition, how a seam is finished. Not because it makes good marketing, but because it is what we would want to read before buying. When a figure isn't confirmed by a supplier, we leave the space empty rather than fill it.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "link_text": "Read our mission",
+            "link": "/pages/about-us"
+          }
+        }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "align_text": "left",
+        "narrow_column": true,
+        "divider": false
+      }
+    },
+    "editorial-construction": {
+      "type": "text-and-image",
+      "settings": {
+        "image": "shopify://shop_images/hivolt-editorial-seam-detail.png",
+        "image_mask": "none",
+        "image2": "",
+        "image2_mask": "none",
+        "subtitle": "Construction",
+        "title": "",
+        "heading_size": "h2",
+        "text": "<h2>The parts you can't see</h2><p>A flat-lock seam lies flat against the skin instead of standing proud of it. That is the difference between a garment you forget you are wearing and one you notice all day.</p><p>We photograph construction close because it is the part of a garment that decides how it feels after an hour, and it is the part that pictures of people wearing clothes never show. Where we can state a construction detail, we state it. Where we cannot, that space stays empty.</p>",
+        "button_label": "Read our mission",
+        "button_link": "/pages/about-us",
+        "button_style": "primary",
+        "align_text": "left",
+        "image_width": "50",
+        "layout": "right",
+        "divider": false,
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    },
+    "editorial-fit": {
+      "type": "text-and-image",
+      "settings": {
+        "image": "shopify://shop_images/hivolt-editorial-folded-stack.png",
+        "image_mask": "none",
+        "image2": "",
+        "image2_mask": "none",
+        "subtitle": "Fit",
+        "title": "",
+        "heading_size": "h2",
+        "text": "<h2>Fit before flourish</h2><p>Sizing is where most stores quietly guess. A chart gets copied from somewhere, converted between systems, and published as though it had been measured.</p><p>We would rather show you the grade we build to and tell you plainly that it is a grade, not the measurement of a specific garment. When pieces are in production, their own measurements go on their pages, and those measurements govern.</p>",
+        "button_label": "How we size",
+        "button_link": "/pages/size-guide",
+        "button_style": "secondary",
+        "align_text": "left",
+        "image_width": "50",
+        "layout": "left",
+        "divider": false,
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    },
+    "journal": {
+      "type": "blog-posts",
+      "settings": {
+        "title": "From the journal",
+        "heading_size": "h2",
+        "blog": "news",
+        "post_limit": 3,
+        "blog_show_tags": false,
+        "blog_show_date": true,
+        "blog_show_comments": false,
+        "blog_show_author": false,
+        "view_all": true,
+        "blog_image_size": "landscape",
+        "divider": true
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "title": "What does HIVOLT sell?",
+            "text": "<p>Apparel for women and men. The catalogue is being rebuilt, and pieces appear here as they are confirmed.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "title": "How long do I have to return something?",
+            "text": "<p>60 days from delivery, on every order, with a free return label and no restocking fee. The window is confirmed; the operational detail behind it is still being finalised with our fulfilment partner.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "title": "What does shipping cost?",
+            "text": "<p>Nothing. Shipping is free on every US order with no minimum spend — that is set in our checkout, not a promotion.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "title": "Where does HIVOLT ship?",
+            "text": "<p>Within the United States only.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "title": "Why are some figures on this site missing?",
+            "text": "<p>Because the number that belongs there is not confirmed yet. We would rather publish a gap than a guess, and the gap closes as soon as the figure has a source.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "title": "Who operates HIVOLT?",
+            "text": "<p>Dn Global Trading LLC, 10s225 Kaye Ln, Willowbrook, IL 60527, United States.</p>"
+          }
+        },
+        "more": {
+          "type": "rich-text",
+          "settings": {
+            "title": "",
+            "text": "<p><a href=\"/pages/faq\">Read the full Help Center</a></p>",
+            "align_text": "left"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "more"],
+      "settings": {
+        "title": "Questions we can answer today",
+        "heading_size": "h2"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title": "First look",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>One email when new pieces go live, and when something that sold out comes back. No discount codes, no countdowns.</p><p>By subscribing you agree that we may email you about new arrivals and restocks. Unsubscribe in one click, any time — see our <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>"
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {}
+        }
+      },
+      "block_order": ["title", "text", "form"],
+      "settings": {
+        "align_text": "left",
+        "image": "shopify://shop_images/hivolt-newsletter-plaster-bg.png",
+        "image_width": "50",
+        "image_mask": "none",
+        "image_position": "right",
+        "color_background": "#EFEBE4",
+        "color_text": "#141414",
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "brand-statement",
+    "editorial-construction",
+    "editorial-fit",
+    "journal",
+    "faq",
+    "newsletter"
+  ]
+}

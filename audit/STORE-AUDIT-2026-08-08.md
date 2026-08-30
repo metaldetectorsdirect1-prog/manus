@@ -1,0 +1,571 @@
+# HIVOLT — full store audit, 2026-08-08
+
+Three read-only agents swept the store in parallel: theme Liquid, theme CSS and
+design system, and SEO metadata across all 642 resources (110 products, 14
+collections, 18 pages, 500 articles). Everything below was verified against live
+Shopify data before it was changed. Where an agent was wrong, that is recorded
+too — including the one case where I acted on a wrong finding and had to revert.
+
+The theme fixes are in commit `86ad852`. This document covers the store-side
+data changes, which are live immediately and independent of which theme is
+published.
+
+---
+
+## 1. Factual contradictions in metadata — 5 found, 5 fixed
+
+These are the severe class: the store asserting a number that its own published
+data contradicts. Same family as the Drop 04 "210 gsm" bug.
+
+| Resource | Was | Verified truth | Now |
+|---|---|---|---|
+| `voltcore-2-piece-set…` product | "save **$10.98**" | bra $38 + leggings $54 = $92, set $79 | "save **$13**" |
+| `leggings` collection | "**220**-270 g/m2" | published gsm: 200, 220×5, 230, 250, 270 | "**200**-270 g/m2" |
+| `leggings` collection | "Sizes **S-2XL**" | max size in collection is XL; 6 of 15 are 4–12 numeric; one runs 2XS | "Sizes 2XS-XL and 4-12" |
+| `outerwear-hoodies` collection | "Sizes **XS-2XL**" | two products run 2XS; three are 2-4/6-8/10-12 | "Sizes 2XS-2XL and 2-12" |
+| `tennis-and-court` collection | "tennis and **pickleball** apparel" | none of the 9 members mentions pickleball | phrase removed |
+
+### The one I got wrong
+
+The SEO agent reported the `outerwear-hoodies` fabric range "130-380 g/m2" as
+fabricated, on the grounds that the lightest published `spec.gsm` metafield in
+the collection is 165. I changed it to 165-380 on that basis.
+
+That was wrong, and I reverted it. `soft-hooded-sports-jacket` has no
+`spec.gsm` metafield — `build-spec-metafields.py` only wrote the metafield where
+the supplier gave a g/m² figure, and this supplier gave imperial:
+
+> **Weight:** Light (3.8 oz/yd²)
+
+3.8 oz/yd² × 33.906 = **128.8 g/m²**. The original 130 was accurate. The
+collection now reads "130-380 g/m2 from light layers to heavy fleece" — the
+range restored, and the word "fleece" no longer applied to a 130 g/m² shell.
+
+**Lesson worth keeping: absence of a metafield is not absence of the fact.**
+Nine of the ten products in that collection had the metafield; reasoning from
+that set alone produced a confident wrong answer.
+
+---
+
+## 2. The Drop Calendar was selling two things that do not exist
+
+`/pages/drops`, body copy:
+
+1. **"210gsm quick-dry knit"** — the third appearance of this contradiction.
+   Product `spec.gsm` metafields, the Drop 04 collection description and the
+   collection's SEO description all say **220**. Corrected.
+
+2. **"sizes are held for 15 minutes at checkout"** — Shopify does not do this.
+   There is no 15-minute size reservation on this plan; inventory is decremented
+   at payment. This is a manufactured-scarcity mechanic that a shopper can
+   directly disprove by leaving a tab open, and it sits on the page whose whole
+   job is to make the drop model credible. Replaced with what actually happens:
+   nothing is held or reserved.
+
+3. **"Circuit members get 24-hour early access"** — removed, because the
+   Membership page states the opposite in as many words: *"There is no members'
+   discount, no points balance and no tier to climb. The Circuit is a
+   notification list."* Two pages, two incompatible descriptions of the same
+   programme. The Membership page is the one the theme template was built
+   around, so the Drop Calendar was brought into line with it.
+
+---
+
+## 3. The shipping page was selling a country the store cannot ship to
+
+`/pages/shipping-delivery` opened with:
+
+> "We currently ship to the **United States and Canada** only."
+
+followed by a full Canada section — **$9.95 flat rate, tracked, 10–20 business
+days, customer pays duties**.
+
+The store is US-only. The delivery profiles are US-only, the Returns & Refunds
+page says "We ship within the United States only", and the shipping policy
+agrees. A Canadian shopper could read a priced, specified service and then find
+no way to buy it at checkout.
+
+Canada section removed; opening line now says United States only.
+
+---
+
+## 4. The under-$50 article was quoting a price the store has never charged
+
+`quality-activewear-under-50-what-39-99-should-get-you` claimed, in the body:
+
+> "**HIVOLT prices most pieces at $39.99**"
+
+and built a table headed *"What $39.99 Gets You at HIVOLT"* around three
+products. The store uses whole-dollar pricing. The real prices of those three:
+
+| Product named in the article | Real price |
+|---|---|
+| "Performance Short Sleeve T-Shirt" (actually *Unisex Performance Training T-Shirt*) | **$34** |
+| "Soft Hooded Sports Jacket" | **$69** — not under $50 at all |
+| "Women's Cropped Sports Bra" (actually *Women's High-Stretch Cropped Sports Bra*) | **$38** |
+
+It also attributed "87% polyester, 13% spandex at 200 g/m2" to the short-sleeve
+tee. That spec belongs to the **long**-sleeve tee; the short-sleeve product
+publishes no composition or weight at all.
+
+Rewritten against verified data. The sub-$50 tier is **$34 / $38 / $42**, and
+the table now carries eight products whose price, composition and gsm are all
+published on their own product pages. The $69 jacket is gone.
+
+One knock-on: the original set a "minimum 160 g/m² for tops" rule that HIVOLT's
+own $34 tee (130 g/m², 100% polyester) fails. The FAQ now describes what weight
+is *for* — 130–180 for hot-weather tops and layering, 200+ where opacity under
+stretch matters — instead of a threshold the catalogue contradicts. The FAQ
+JSON-LD was updated to match; it had the $39.99 figure in it too.
+
+Title and meta title no longer name a price. The handle still contains
+`39-99`; changing it would break the URL, and a redirect is a separate call.
+
+---
+
+## 5. Missing metadata — 17 of 18 pages now covered
+
+Only 4 of 18 published pages had any SEO metadata. Google was building snippets
+from body text — which is how the "United States and Canada" line above could
+have reached a search result.
+
+Written for 13 pages (title + description), plus a title for the
+`drop-04-voltcore` collection, which had a description but no title.
+
+Notable: **`/pages/voltcore` — the Voltcore landing page, the store's single
+conversion target — had neither.** So did the 60-Day Guarantee page.
+
+`google-site-verification` was deliberately **not** given metadata. Its entire
+body is the verification token; it is thin content with nothing to rank. It now
+emits `<meta name="robots" content="noindex,follow">` via a handle check in
+`layout/theme.liquid` — noindex rather than disallow, so the verification fetch
+still succeeds.
+
+---
+
+## 6. Blog metadata — 500 articles
+
+Every article's `description_tag` was byte-identical to its `title_tag`. There
+was no real meta description anywhere in the blog, so Google discards it and
+writes its own snippet: 500 URLs with no snippet control.
+
+Separately, the six boilerplate suffixes stripped from article *titles* in
+commit `0b20f8c` were never stripped from the *meta* titles, so 105 meta titles
+disagreed with their own H1.
+
+Both are mechanically fixable because two fields are already correct:
+`article.title` (de-boilerplated) and `article.summary` (a real, specific
+~150-char description per article). So `title_tag ← "{title} | HIVOLT"` and
+`description_tag ← summary`.
+
+The pipe also settles the separator: the store was running four conventions at
+once — `| HIVOLT` on 123 products and collections, ` - HIVOLT` on 500 articles,
+` — HIVOLT` on one page, and three pages with the brand mid-title.
+
+**One correction issued mid-run.** The first instruction was to drop the brand
+suffix when the total exceeded 60 characters. That is wrong here, because
+`layout/theme.liquid` does:
+
+```liquid
+{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+```
+
+Omitting the brand does not shorten the rendered title — Liquid appends
+" – HIVOLT" itself, with an en dash, reintroducing the exact separator
+inconsistency the pass exists to remove. The rule became: always append
+" | HIVOLT", accept the length.
+
+---
+
+## 7. Checked and clean
+
+Worth recording, because these were the suspicions going in:
+
+- **Zero exact duplicate SEO titles or descriptions** across all 642 resources,
+  normalised or not. The duplication is self-duplication (§6), not collision.
+- **Zero competing-brand contamination in live metadata** — no "Focus Foxes",
+  "YUBBEX", "collagen", "supplement" or "gummies" in any of the 642
+  title/description values.
+- **Zero hardcoded colour literals** in the stylesheets outside the documented
+  `.swatch` exception.
+- **Shipping and returns claims in product/collection metadata are consistent** —
+  every one says "Free US shipping", none claims worldwide, Canada, UK or EU,
+  and none misstates the 60-day window.
+- **All 110 product titles and descriptions are within length.** The length
+  violations are entirely in the blog.
+
+---
+
+## 8. Still open
+
+**Needs the merchant, not the API:**
+
+1. **Publish theme v21.** The connector cannot publish themes. v19 is currently
+   MAIN; v21 carries every fix in commit `86ad852` plus the two above.
+2. **The three legal policies** still describe a collagen-peptide subscription
+   business, and are linked from the checkout page. `shopPolicyUpdate` needs the
+   `write_legal_policies` scope, which this connector does not hold. Replacement
+   text is in `LEGAL-POLICY-REWRITE.md`.
+3. **Customer accounts still point at `https://account.focusfoxes.shop`.**
+4. **The delivery window disagrees with the legal Shipping Policy.** Every
+   storefront surface now says 2–4 to dispatch and 8–14 to arrive — 13 templates,
+   the shipping page, the JSON-LD and the Voltcore FAQ, which was still on 5–8
+   and is now aligned. The legal Shipping Policy says 1–2 and 5–8. Only the
+   merchant knows which the fulfilment partner actually hits.
+
+**Judgement calls left alone deliberately:**
+
+5. **`/pages/wholesale` and `/pages/ambassadors`** describe operated programmes —
+   trade pricing tiers, 24-unit minimums, 3–4 week custom-branding lead times,
+   ambassador commission and seasonal kit. Nothing in the store contradicts them,
+   but nothing evidences them either. They are business claims, not factual
+   errors, so they were left as written and given accurate metadata. If those
+   programmes are not actually running, both pages need rewriting.
+6. **Eight unpublished pages carry YUBBEX and supplement-business titles**
+   (`ambassador`, `team`, `ingredients`, `halal`, `subscribe`,
+   `subscription-help`, `quality`, `help`). All are `isPublished: false` and
+   return 404, so they emit nothing today. Deleting is irreversible and they are
+   already inert, so they were left. They become live titles the moment anyone
+   publishes them.
+
+**Known and unfixed in the theme** (lower severity than the above):
+
+7. `customers-addresses.liquid` — the province field is unusable without JS, and
+   there is no `posted_successfully?` state.
+8. `list-collections.liquid` — no `paginate`.
+9. `product.liquid` — price and `compare_at` can disagree with the selected
+   variant; `aria-pressed` default state.
+10. `settings_schema.json` — no `favicon` or `share_image` setting.
+11. `page.voltcore.liquid` — "Sizes S–XL, matte black" and the fit claims are
+    hand-typed rather than read from the product.
+
+---
+
+## 9. Sales channels — 61 of 110 products were invisible to TikTok
+
+Found while looking for organic distribution that costs nothing.
+
+The store has an **"AfterShip for TikTok" publication installed** on Shopify
+(`gid://shopify/Publication/188060008680`), and only **49 of 110 active products
+were published to it**. The 61 missing ones included:
+
+- `voltcore-2-piece-set-twist-front-bra-flare-leggings` — the flagship, the
+  single product with its own landing page and the store's one conversion target
+- `women-s-twist-front-v-neck-sports-bra` — its own component
+- every unisex jersey, every skirt, every varsity jacket, most joggers
+
+All 61 published via `publishablePublish`, zero `userErrors`, and verified by
+re-reading `publishedOnPublication` on exactly the 61 IDs that were changed —
+61/61 now true. **110/110.**
+
+### This does not put anything on TikTok yet
+
+Two separate facts, and they were worth separating:
+
+| Check | Result |
+|---|---|
+| Shopify publication (`publishedOnPublication`) | **110/110** — done |
+| AfterShip Feed onboarding (`check-onboarding-status`) | `connect_ecommerce_store`, `connect_sales_channel_stores`, `configure_initial_settings` — **all three false** |
+| Connected TikTok Shop stores (`get-sales-channel-stores`) | **`[]` — none** |
+
+So the catalogue is staged on the Shopify side and nothing is syncing, because
+there is no TikTok Shop seller account linked. The value of doing it now is that
+when that account is connected, all 110 flow rather than 49 — and nobody has to
+notice that the flagship was among the missing.
+
+### Also confirmed while checking
+
+- **Payments work.** Shopify Pay, Apple Pay and Google Pay are all live, USD,
+  SSL valid on `hivolt-usa.com`, `checkoutApiSupported: true`. The 0-for-24
+  checkout record is not a broken gateway. (`read_shopify_payments` is still
+  missing, so the card gateway itself could not be inspected directly — but
+  three digital wallets being active means Shopify Payments is enabled.)
+- **Markets are correct.** "United States" is primary and enabled;
+  "International" is disabled. The market's handle is the legacy string
+  `united-states-and-canada`, which is cosmetic — the market itself is US-only,
+  which is why the Canada section on the shipping page (§3) described a service
+  that genuinely could not be bought.
+- **Other channels are complete**, not partial: Online Store, Shop,
+  Facebook & Instagram, Microsoft Copilot and Manus all carry the catalogue.
+  TikTok was the only one with a gap.
+
+## 10. Blog metadata — complete
+
+All **499 in-scope articles** repaired (500 minus the one handled by hand in §4):
+
+- `title_tag` ← `"{title} | HIVOLT"` — 499/499, every one carrying the suffix
+- `description_tag` ← `article.summary` verbatim — 499/499
+- Articles where `title_tag == description_tag`: **500 → 0**
+- Zero `userErrors` across 40 batched `metafieldsSet` calls
+- Zero articles skipped for an empty summary — every one had a real summary
+- Verified across the **full corpus**, not a sample: a second bulk export
+  re-read `title`, `summary` and both metafields and diffed against intent
+
+`bulkOperationRunMutation` was refused by the connector's safety policy. That is
+a legitimate guardrail; the work went through batched `metafieldsSet` instead
+and no attempt was made to route around it.
+
+---
+
+## 11. Pricing — margin floor applied, and the sourcing problem it exposed
+
+`inventoryItem.unitCost` is populated on all 110 active products, so margin here
+is measured, not estimated.
+
+Margin ran from **32.4% to 83.4%**, median 64.3%. That 51-point spread is the
+real defect: price was never derived from cost. Three tees shared the $34 shelf
+at costs of $22.98, $8.98 and $7.48 — 32%, 74% and 78% margin on the same rail.
+
+A 60% floor was applied, snapped up to the existing ladder. Products already
+above the floor were untouched; this raises the floor rather than hiking the
+store.
+
+| | Before | After |
+|---|---|---|
+| mean margin | 64.1% | **65.6%** |
+| products below 60% | 40 | **10** |
+| mean price | $44.78 | $46.80 (+4.5%) |
+| prices ending .99 | 7 | **0** |
+
+**10 products were deliberately not repriced.** They need a 42–74% rise to clear
+60%, which would make them unsellable rather than profitable. A $22.98 unisex
+colour-block tee costs more than most of the leggings — that is a sourcing
+decision (re-source or drop), not a pricing one.
+
+No elasticity data exists behind any of this: the store has never taken an
+order. HIVOLT also already prices above LSKD, which sells its oversized tee at
+roughly US$19 against HIVOLT's $34–42 tees. Raising thin items to a floor is
+defensible; a further across-the-board rise would not be.
+
+Prior prices are recorded in `audit/pricing.py`, so this reverses cleanly.
+
+## 12. Sport collections — 11 products had nowhere to live
+
+Nike's information architecture is sport-first. HIVOLT had `training`,
+`yoga-studio` and `tennis-and-court`, but was **selling into two sports with no
+collection to hold them**:
+
+- **8 football/soccer jerseys** — raglan, paneled, collared, long-sleeve
+- **3 basketball shorts** — mesh and woven
+
+All 11 were reachable only through `/collections/all` or a gender collection.
+A shopper looking for a soccer jersey could not navigate to one.
+
+Created `/collections/football-soccer` (8) and `/collections/basketball` (3),
+both with descriptions and SEO metadata in the published-not-claimed voice, and
+both published to Online Store, Shop and Facebook & Instagram.
+
+**Basketball is thin at 3 products** and was left thin deliberately rather than
+padded with tank tops that are not court kit — the miscategorisation this audit
+has been removing everywhere else. It needs product, not reclassification.
+
+Neither collection copies Nike branding, imagery or copy. Organising a catalogue
+by sport is a standard retail pattern; the Nike-specific things — its identity,
+its franchise names, its photography — are not reproducible and were not
+attempted.
+
+---
+
+## 13. 11 of 16 collections had no link anywhere in the theme
+
+Found while wiring in the two sport collections from §12 — the problem was much
+larger than the two I had just created.
+
+The footer listed four collections and the header five links. Everything else
+was reachable only by typing the URL:
+
+| Unreachable | Products |
+|---|---|
+| `tops`, `bottoms` | the two top-level category collections |
+| `sports-bras`, `leggings`, `shorts`, `outerwear-hoodies` | the four buyable sub-categories |
+| `yoga-studio`, `tennis-and-court` | two existing sport collections |
+| `drop-04-voltcore` | **the drop the whole brand narrative is built around** |
+| `football-soccer`, `basketball` | created in §12 |
+
+This is the same defect class as the orphaned `page.fabric.liquid` template
+found earlier: content that exists, renders correctly, and reaches nobody.
+
+It also compounds the traffic pattern. 76 sessions a week arrive from Facebook
+and Instagram and land **directly on the Voltcore product page** — not the
+homepage. From there the only routes out were Women, Men, Training, Fabric and
+About. A shopper who wanted to see other leggings, or the rest of Drop 04, had
+no link to follow.
+
+Footer rebuilt as a real catalogue map, split the way the catalogue is actually
+organised:
+
+- **Shop** — Women, Men, Tops, Bottoms, Sports bras, Leggings, Shorts,
+  Outerwear & hoodies, Everything
+- **Sport** — Training, Yoga & studio, Tennis & court, Football & soccer,
+  Basketball, Drop 04 — Voltcore
+- **Information** and **Company** unchanged
+
+Grid widened 4 → 5 columns with a 3-up step at 1080px before the existing 2-up
+at 860px. Internal link targets went 48 → **59, all resolving** under
+`check-links.py`, which now also knows the two new collection handles.
+
+### Two theme settings were referenced but never declared
+
+`layout/theme.liquid` reads `settings.favicon` and `settings.share_image`, and
+each is wrapped in an `{% if %}`. Neither was declared in `settings_schema.json`,
+so both conditions were permanently false:
+
+- **No favicon rendered at all** — the browser tab fell back to a globe.
+- **`og:image` had no store-wide fallback.** For any page without an image of
+  its own, Facebook and Instagram had nothing to render in the link preview —
+  and those two are where essentially all of this store's real traffic comes
+  from.
+
+Both now declared as `image_picker` settings with sizing guidance. They still
+need an image uploaded in the theme editor to take effect.
+
+Also fixed: `theme_support_url` pointed at `/pages/contact`, one of the dead
+handles from §10. Now `/pages/contact-us`.
+
+Deployed as theme v23.
+
+---
+
+## 14. Account-level audit — the menus, and a correction to §10
+
+### The theme's hardcoded navigation has never rendered
+
+`layout/theme.liquid` reads `linklists['main-menu']` and falls back to hardcoded
+arrays only when it is empty. **Both menus exist and are populated**, so the
+fallback arrays have never been what visitors see.
+
+`main-menu` — 8 items, **all resolving**:
+
+    Women, Men, Drop 04, Sports Bras, Leggings, Shorts, Tennis & Court, Circuit
+
+**This corrects §10 of this document.** That section reported "6 dead nav
+targets, three of five header links 404" and framed it as live breakage that
+shoppers were hitting. It was not. Those dead handles were in the *fallback*
+arrays, which `main_count > 0` has been short-circuiting. The repair was still
+correct — a fallback that 404s is a real latent defect, and it would fire the
+moment a menu were deleted — but the claim that the live header was broken, and
+the reasoning built on it about social visitors hitting dead links, was wrong.
+
+### The footer menu was live and genuinely broken
+
+`footer` had **5 top-level items, every one with zero children**:
+
+    Shop → /collections/all      About → /pages/about-us
+    Help → /pages/faq            Legal → /policies/privacy-policy
+    Your Privacy Choices → /pages/data-sharing-opt-out
+
+The theme renders each top-level item as a column heading, then its children as
+the list — or, when there are no children, a single link repeating the heading.
+So the live footer was **four columns each containing one link with the same
+text as its own heading**, and "Your Privacy Choices" — a CCPA-required link —
+was silently dropped by `limit: 4`.
+
+Four fully-populated menus already existed for this — `footer-shop`,
+`footer-about`, `footer-help`, `footer-legal` — and **nothing referenced any of
+them.** The theme reads `linklists.footer`, not those.
+
+Rebuilt `footer` with proper nesting: 4 columns, **28 nested links**, matching
+the hardcoded fallback so live and fallback now agree. Every target verified
+against the live handle list.
+
+The four orphan menus are now redundant. They are harmless and were left alone.
+
+### Other account-level findings
+
+| Finding | Detail |
+|---|---|
+| **Address mismatch** | The only location is `10s225 Kaye Ln, Willowbrook, IL`. Every policy and the Contact page say `Addison, IL 60101`. One of the two is wrong. |
+| **3 active discount codes, none expiring** | "Welcome 10% off first order", "Abandoned Cart — 10% Comeback Offer", "Launch Offer — 20% Off First Order". The 20% and 10% welcome offers overlap. A 20% code against the new 65.6% blended margin lands around 56%. |
+| **`learn` blog: 0 articles** | Still exists, no longer linked from the footer (`footer-about` correctly points at `/blogs/news`). |
+| Markets | US enabled and primary, International disabled. Correct. |
+| Metaobject definitions | None. Nothing orphaned. |
+
+---
+
+## 15. Product imagery — measured, and one defect I caused
+
+The proxy in this session blocks Shopify's CDN, so the images could not be
+viewed. Aesthetic judgement was not possible; what follows is what the data
+supports.
+
+**All 110 active products: 1400×1400, descriptive alt text, no missing images.**
+The 102 fabricated images removed in the earlier remediation have not been
+replaced by anything similar. Two products carry a single image
+(`women-s-color-block-yoga-tank-top`, `womens-ruched-halter-neck-sports-bra`);
+both need an alternate view from the supplier.
+
+### A shared media object, and the alt text I corrupted through it
+
+`MediaImage/40137363292392` was attached to **two products at once** — the
+standalone `women-s-high-waisted-flare-leggings` and the Voltcore set. It is one
+media object, not two copies, so its alt text is shared.
+
+When §12 work set the Voltcore set's featured alt to *"Voltcore 2-Piece Set —
+high-waisted flare leggings…"*, that rewrote the standalone leggings product's
+alt too. For some hours the flare leggings described itself as a 2-piece set.
+
+It also means the set's hero image was literally the leggings product's photo,
+shared — which is the mechanical reason the set has no image of the set.
+
+Fixed in four steps, each verified:
+
+1. Alt on the shared media restored to *"Women's High-Waisted Flare Leggings in
+   Black — HIVOLT"*, correct for the product that owns it.
+2. A **copy** of that image created on the Voltcore set via `productCreateMedia`
+   with `originalSource` pointing at the existing CDN URL — so Shopify fetched it
+   server-side, no download needed.
+3. The shared media detached from the set with `productDeleteMedia`.
+4. The copy moved to position 0.
+
+**The delete was the risky step** and was verified immediately on both products,
+because the earlier image remediation hit exactly this failure mode — a paired
+mutation where one half succeeded silently. Result: leggings still has 2 images
+with its own alt; the set has 4, all its own, none shared.
+
+The set still has no photograph showing both pieces together. That needs a
+camera, not an API.
+
+---
+
+## 16. Three live discount codes, zero uses, nothing on the site mentioning them
+
+| Code | Offer | Live since | Uses |
+|---|---|---|---|
+| `WELCOME10` | 10% first order | 22 Jul | **0** |
+| `COMEBACK10` | 10% abandoned cart | 24 Jul | **0** |
+| **`VOLT20`** | **20% first order** | **5 Aug** | **0** |
+
+All three are ACTIVE with no end date and no minimum spend. `asyncUsageCount` is
+zero on every one. Nothing anywhere on the storefront named any of them — the
+ticker ran five standing trust lines and no offer at all.
+
+`VOLT20` surfaced in the ticker, as three theme settings rather than hardcoded
+copy: `promo_enabled`, `promo_text`, `promo_code`. Defaults are written into
+`settings_data.json` as well as the schema, because declaring a setting without
+a saved value leaves its `{% if %}` false — the same failure that kept the
+favicon and `share_image` from ever rendering.
+
+It renders only when **both** the text and the code are non-blank. A code with no
+text, or text with no code, sends a shopper hunting for something that isn't
+there. Emptying either field removes it cleanly.
+
+### The ticker could not simply carry it
+
+`.ticker__track` prints its contents twice — that duplication is what makes the
+marquee loop seamlessly — and the whole block was `aria-hidden="true"` for
+exactly that reason. Dropping a discount code into it would have announced the
+offer to sighted visitors only.
+
+The `aria-hidden` moved from the wrapper to the track, and the offer is now also
+stated once in a `visually-hidden` paragraph outside it. Decoration stays
+hidden; the one line a shopper is meant to act on is available to everyone.
+
+Margin: 20% against the 65.6% blended margin from §11 lands near **57%**. That is
+the owner's existing decision — the code was already live — and this only makes
+it visible.
+
+`WELCOME10` was left active deliberately. It is strictly worse for the customer
+than `VOLT20` and better for the store, so it costs nothing sitting there, and
+switching off someone else's discount is not a call to make unilaterally.
+
+Deployed as v26.

@@ -1,0 +1,407 @@
+# HIVOLT-1000-PRODUCT-RESEARCH.md — fashion best-seller backlog, 2026-08-28
+
+Owner directive: research 1000 best-selling fashion products for the store.
+Method: the AB Inner Circle Google-Ads playbook (categories not single
+products; seasonal timing; compliant listing SOP; title formula) + live
+Trendtrack traction signals + AutoDS supplier availability. The insertion
+route is the proven one in `HIVOLT-PRODUCT-IMPORT-METHOD.md`
+(`productCreate` DRAFT with supplier image URLs; read-back verified;
+honest tags; zero inventory; supplier's words only).
+
+**What "1000" means here, honestly:** the playbook's live-store sweet spot
+is 500–800 products; more than that dilutes spend. So this backlog is
+**1000 researched candidates feeding a live catalog of ~700–800**, with the
+remainder consumed by the playbook's rotation rule (every zombie product
+drafted is replaced 1:1 from the backlog). Nothing is imported in one dump:
+**50/week batch pace** (or 25/day only while the GMC is fresh-approved),
+because feed-change events trigger Google reviews.
+
+## Timing (why these categories, why now)
+
+Today is 2026-08-28. The playbook imports categories **2–3 months before
+their seasonal peak, at the trough**. That makes late August exactly the
+window for Oct–Jan peaks: knitwear, coats, boots, holiday dresses — and the
+playbook's own worked example (letterman jackets: "import end of July, ride
+Aug–Dec") is already live in ad data. Late-summer categories (linen
+dresses, swim) are deliberately excluded despite currently high reach —
+importing at the peak is the classic error.
+
+## Live traction evidence (Trendtrack, pulled 2026-08-28, US-targeted ads)
+
+Scaling fashion ads by 7-day reach growth, category 257 Fashion & Style
+(credits used: ~40 of 10,000; 7,763 remaining):
+
+| Signal | Advertiser (live ads) | 7-day reach Δ | Category confirmed |
+|---|---|---|---|
+| "Riviera Knit co-ords" | Mauvais (530) | +254K | Knit co-ord sets |
+| "gradient boucle knit… Knit Season" | bound (289) | +407K | Statement knits |
+| "Asana Wide Pant — soft brushed knit" | Ninepine (1,577) | +523K | Wide-leg knit pants |
+| "Martinne chiffon overlay maxi" | Meshki (4,687) | +450K | Maxi/occasion dresses |
+| "ribbed bamboo maxi slip dress" | Ninepine | +338K | Slip dresses |
+| "bootcut flared jeans" | JADED MAN (203) | +446K | Bootcut/flare denim |
+| "petite jeans, stylist approved" | L'AGENCE (1,170) | +212K | Fit-specific denim |
+| "Baxter Mohair Knit + Woven Overshirt" | bound | +93K | Layering knits/shackets |
+| Satin/backless formal minis | Rihoas (882) | +168K | Party dresses |
+
+Top US-market fashion shops (200+ products, by active ads) for ongoing
+category mining: Meshki, BloomChic, Babyboo, Scuffers, Blakely, Nude
+Project, JW PEI (bags), Veinci, Miss Rosier, The Normal Brand.
+
+## Supplier availability check (AutoDS research channel)
+
+Query "women chunky knit sweater" (US region): returns exactly on-category
+listings — e.g. Eytino chunky cable-knit pullovers, **US warehouse
+(Walmart), $27.99 cost + $6.99 ship, 1–2 day delivery, MSRP ~$37–40**; and
+Amazon-warehouse fleece-lined leggings at $11.99. Two honest economics
+notes:
+1. **US-warehouse retail-arbitrage costs mostly fail the 3.5× pricing
+   floor** (a $35 landed sweater needs ~$98 retail). They win on 1–2 day
+   shipping and image quality. AliExpress-region sourcing hits the floor
+   but ships in ~3 weeks. The mix is an owner economics decision per
+   category; every import is tagged `margin-fails-3-5x-floor` when it does.
+2. AutoDS free-text search still drifts on short queries (the documented
+   polo→Volkswagen failure) — **every candidate is eyeballed before
+   `productCreate`**, now actually possible in-session via the sandbox
+   image pipeline proven this morning.
+
+## The 1000-candidate category tree (quotas, P=permanent / S=seasonal)
+
+| # | Category (research keywords per title formula) | Quota | Class | Evidence |
+|---|---|---:|---|---|
+| 1 | Chunky/cable crew-neck sweaters | 70 | P (winter-weighted) | AutoDS verified; "Knit Season" ads scaling |
+| 2 | Turtleneck sweaters | 40 | S (Oct–Feb) | store's own category |
+| 3 | Cardigans — long & cropped | 50 | P | homepage category live |
+| 4 | Sweater dresses | 35 | S (Oct–Jan) | knit + dress crossover |
+| 5 | Knit co-ord sets | 45 | P | Mauvais +254K |
+| 6 | Statement/boucle/gradient knits | 25 | S | bound +407K |
+| — | **Knitwear** | **265** | | |
+| 7 | Wool/tailored coats | 50 | S (Oct–Feb) | V3 brand direction |
+| 8 | Puffer jackets | 40 | S (Nov–Feb) | |
+| 9 | Trench coats | 25 | P (two peaks) | |
+| 10 | Teddy/sherpa jackets | 30 | S | |
+| 11 | Varsity/letterman jackets | 25 | S (import NOW per playbook example) | |
+| 12 | Faux-leather/moto jackets | 25 | S (Sep–Dec) | |
+| 13 | Shackets/overshirts | 25 | S | bound layering ad |
+| — | **Outerwear** | **220** | | |
+| 14 | Maxi/slip dresses | 40 | P | Meshki/Ninepine scaling |
+| 15 | Cocktail/party dresses | 35 | P (peaks Nov — playbook: keep permanently) | |
+| 16 | Everyday midi dresses | 30 | P | |
+| 17 | Satin/formal minis | 20 | S (Nov–Dec) | Rihoas |
+| — | **Dresses** | **125** | | |
+| 18 | Wide-leg jeans | 30 | P | Ninepine +523K |
+| 19 | Bootcut/flare jeans | 25 | P | JADED +446K; playbook 10K–100K band |
+| 20 | Boyfriend/straight jeans | 25 | P (playbook market-gap example) | |
+| 21 | Denim jackets | 15 | P | |
+| — | **Denim** | **95** | | |
+| 22 | Fleece-lined leggings | 25 | S (Oct–Feb) | AutoDS $11.99 US-warehouse |
+| 23 | Wide-leg knit/lounge pants | 25 | P | Ninepine |
+| 24 | Lounge/hoodie-jogger sets | 35 | P (playbook 10K–100K) | |
+| 25 | Tailored trousers | 20 | P | store direction |
+| — | **Bottoms & sets** | **105** | | |
+| 26 | Layering basics/bodysuits | 30 | P | |
+| 27 | Blouses/shirts | 25 | P | |
+| 28 | Hoodies/sweatshirts | 35 | P | |
+| — | **Tops** | **90** | | |
+| 29 | Knee-high/heeled boots | 25 | S (Sep–Dec) | playbook title example |
+| 30 | Chelsea/ankle boots | 25 | S | |
+| 31 | Cowboy boots | 15 | P | |
+| 32 | Sneakers | 15 | P | |
+| 33 | Loafers | 10 | P (playbook 10K–100K) | |
+| — | **Shoes** | **90** | | |
+| 34 | Bags (unbranded) | 30 | P (Q4 gifting) | JW PEI top shop |
+| 35 | Scarves/beanies/gloves | 25 | S (Oct–Jan) | |
+| 36 | Belts/hair/jewelry (unbranded only) | 15 | P | |
+| — | **Accessories** | **70** | | |
+| | **TOTAL** | **1000** | | 60% fall/winter-seasonal-weighted, 40% permanent |
+
+Keyword validation per playbook: each category keyword set goes through
+Keyword Planner (10K–100K band = strong; 1K–10K = keep; below = only with
+strongly positive 3-month change) and Google Trends 5-year seasonality —
+this is an owner-side/Google-Ads-side step (Keyword Planner needs the Ads
+account; egress here can't reach it) and slots into each batch's checklist.
+
+## The batch pipeline (repeats weekly until the backlog is live)
+
+Per batch of 50 (one week):
+1. **Discover**: AutoDS `search_products` with 4–6-word category queries
+   (short queries drift) + Trendtrack ad mining of the shop list above.
+2. **Eyeball**: every candidate's supplier images checked with real vision
+   via the sandbox pipeline. Reject: watermarks/text/logos on images,
+   branded/counterfeit goods (terminal GMC risk), raw-AliExpress-quality
+   photos, misrepresented garments.
+3. **Title**: AB formula, 3–4 real keywords + one feeling word, unique, no
+   caps, no sale text; handle matches title.
+4. **Create**: `productCreate` **DRAFT**, vendor HIVOLT (never the
+   supplier), supplier images via `originalSource`, category assigned, tags
+   `hivolt-sourcing-candidate` + honesty tags, **zero inventory**,
+   supplier's own words in description marked as such. Read-back per
+   mutation rules (media READY, status, mediaCount).
+5. **Owner gate**: price vs the 3.5× floor (or a deliberate AOV-strategy
+   exception), then activation **in one weekly batch event**, never
+   dripped — and only within GMC pacing rules.
+
+## Hard gates before any of this goes ACTIVE (playbook phase check)
+
+The store relaunched its storefront **today**. Per the playbook's sequence
+the feed must not balloon while GMC standing is unestablished: (1) GMC
+domain claim (5838274874) still pending per the earlier audit; (2) the
+misrepresentation gate is designed to be triggered/cleared on a SMALL clean
+store first; (3) after any approval: 4-week freeze, ads live, then paced
+import. Products can be **researched and created as DRAFTS at full speed**
+— activation follows the pacing. This is what protects the GMC, which is
+the business.
+
+## Batch 1 ledger — 2026-08-28 (run on owner "go")
+
+**19 candidates discovered (AutoDS, `site_name=aliexpress` filter), every lead
+image reviewed with real vision via the sandbox pipeline
+(`qa/sourcing/batch1/*.png`). 5 rejected, 14 created as DRAFTs, all
+read-back verified.**
+
+Rejected at the eyeball gate (nothing rejected was created):
+
+| Candidate | Reason |
+|---|---|
+| BRANDY&MANDY preppy V-neck knit (1005003761207123) | Supplier brand watermark printed on image; brand-mimicry name risk |
+| YE94 fleece crew (S2) | 27-swatch catalog collage — raw-AliExpress image class |
+| HH burgundy coat (1005008147286241) | Right collage frame is a street-style editorial photo of a real person — image-rights / GMC misrepresentation risk |
+| JoeAmple Korean knit set (1005003380322165) | Supplier watermark + printed slogan garment |
+| Keramo Y2K jeans (1005005111312860) | Supplier brand watermark on image |
+
+Created (all: `status DRAFT`, vendor HIVOLT, `totalInventory 0`, tags
+`hivolt-sourcing-candidate` + `unpriced-needs-owner-review` +
+`unverified-specs` + `batch-2026-08-28` + category; media = the one
+eyeball-verified lead image, `READY` on Shopify CDN; supplier's words
+quoted as supplier's in every description):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Effortless striped longline knit cardigan (9614445674728) | 3256806102969301 | $17.44 + $18.48 | **fails** (tagged) |
+| Polished longline pocket knit cardigan (9614445707496) | 2255799988657297 | $23.78 + $2.63 | **fails** (tagged) |
+| Dreamy plush oversized long cardigan coat (9614445740264) | 3256806579898504 | $8.40 + $13.39 | clears (~$79) |
+| Cozy chunky cable knit button cardigan (9614445773032) | 1005009801759123 | $13.06 free | clears (~$49) |
+| Airy pointelle knit relaxed cardigan (9614445805800) | 1005009819353627 | $7.58 free | clears (~$29+) |
+| Breezy open crochet knit cardigan (9614445969640) | 1005002944796559 | $19.38 + $7.17 | **fails** (tagged) |
+| Timeless tailored wool blend lapel coat (9614446002408) | 1005007643694490 | $31–34 free | clears (~$119) |
+| Sharp double breasted wool blend coat (9614446035176) | 1005009067062910 | $28–35 free | clears (~$109) |
+| Snug snowflake knit two piece set (9614446067944) | 3256810525415695 | $25.68 + $17.66 (US wh) | **fails** (tagged) |
+| Relaxed oversized hoodie jogger lounge set (9614446100712) | 1005010211771318 | $15–23 free | clears (~$67) |
+| Laid back high waist wide leg jeans (9614446461160) | 1005008925977853 | $24.25 free, ~11d | **fails** (tagged) |
+| Edgy black baggy straight leg jeans (9614446526696) | 3256807723572588 | $31.12 free | **fails** (tagged) |
+| Classic dark wash wide leg jeans (9614446559464) | 3256807347439289 | $25.86 + $9.39 | **fails** (tagged) |
+| Vintage washed baggy wide leg jeans (9614446592232) | 3256807333585130 | $20.43 free | clears (~$71) |
+
+Read-back (fresh query, post-mutation): 14/14 `DRAFT`, vendor `HIVOLT`,
+`totalInventory: 0`, `mediaCount: 1`, every `MediaImage` `READY`
+(651–1600 px), `updatedAt` 16:06–16:07 UTC. Floor verdicts are candidate
+flags at plausible retail — pricing is the owner's call at the gate.
+
+Honest notes: (1) each draft carries only its pixel-reviewed lead image;
+remaining supplier images get the same eyeball gate before activation.
+(2) "Sharp double breasted" coat: unreadable garment label inside the
+collar (800px source) — confirm white-label with supplier. (3) "Laid back"
+jeans lead image has faint partial in-scene background signage (not a
+watermark) — swappable at activation review.
+
+**Catalog-state finding (not this session's write):** the 4 documented
+polo-era drafts are gone; the store instead holds 4 knitwear drafts
+created outside this session (Ivy/cable-cardigan/Nora/Elena,
+9613182370024/402792/435560/468328) with **non-zero inventory
+(10/10/10/680)**. Artificial inventory is prohibited for this session's
+writes; these are owner-side records — flagged for the owner to confirm
+the counts are real or zero them.
+
+Batch pace: 14 of this week's 50 created. The remaining ~36 continue
+through the same discover → eyeball → draft loop.
+
+### Tranche 2 — 2026-08-28 ~16:47 UTC (owner "go go go")
+
+11 more candidates (crew sweaters, turtlenecks, sweater dresses,
+teddy/sherpa; thumbnails in `qa/sourcing/batch1b/`). **6 rejected, 5
+created and read-back verified.** Also screened out pre-eyeball: kids'
+knits, men's items, a real-fur coat, a pet coat, a $58 "Luxury Designer"
+title, an unverifiable "Cashmere" fiber claim, and listings with $27–110
+shipping.
+
+Rejected at the eyeball gate:
+
+| Candidate | Reason |
+|---|---|
+| GIBSIE plus crew (1005006965674091) | Supplier watermark on image |
+| AOSSVIAO velvet-lined turtleneck (3256807484981390) | Overlaid flame graphic on image (GMC image-policy class) |
+| Anne Wan oversized mini sweater dress (1005001432377852) | Supplier watermark on image |
+| SINGREINY pencil knit dress (1005003015921293) | Supplier watermark on image |
+| Sherpa hooded fleece (1005011562153384) | Lead image appears AI-composited (synthetic fireplace scene) — misrepresentation class |
+| Nerazzurri teddy coat (1005001297348518) | Supplier watermark on image |
+
+Created (same discipline as tranche 1 — DRAFT, HIVOLT, 0 inventory,
+honest tags, single eyeball-verified lead image READY):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Essential soft turtleneck knit sweater (9614465925352) | 3256809364765157 | $10.15–10.53 free | clears (~$37) |
+| Sleek ribbed turtleneck knit jumper (9614466023656) | 32947177916 | $7.40–8.15 + $1.99 | clears (~$33) |
+| Chic zip neck knit pullover sweater (9614466056424) | 1005010141542131 | $8.87–9.31 + $1.99 | clears (~$39) |
+| Elegant cable knit turtleneck sweater dress (9614466089192) | 3256807098504897 | $32.16–33.75 + $1.03 | **fails** (tagged) |
+| Playful off shoulder knit mini dress (9614466154728) | 1005007600021002 | $29.70 + $6.52 | **fails** (tagged) |
+
+Read-back: 5/5 `DRAFT`, `totalInventory: 0`, media `READY`. Notes:
+zip-neck sweater's lead photo has decorative prop cards with text in
+scene (noted in its description; swap candidate at activation review).
+
+**Batch running total: 19 of 50 created; 30 eyeballed; 11 rejected
+(37% rejection rate — the gate is doing real work).**
+
+### Tranche 3 — 2026-08-28 ~16:50 UTC
+
+8 candidates (puffers, varsity bombers, fleece-lined leggings; thumbnails
+in `qa/sourcing/batch1c/`). **5 rejected, 3 created and read-back
+verified.** Pre-eyeball screening removed men's-only listings, dog
+clothes, a real-fur $325 coat, and an $88+$21-ship sukajan.
+
+Rejected at the eyeball gate:
+
+| Candidate | Reason |
+|---|---|
+| MAGCOMSEN puffer (3256805981962571) | Supplier watermark on image |
+| Booer Jue varsity (1005007345346054) | Supplier watermark on image |
+| soqoool fleece leggings (3256804942174044) | Overlaid badge graphic on garment area of photo |
+| TIKITIKI plush leggings (3256805535316856) | Supplier watermark on image |
+| Thermal translucent tights (3256807285939873) | Overlaid flame graphic; "fake translucent" category carries deceptive-marketing baggage |
+
+**Fleece-lined leggings quota went 0-for-3 on image compliance this
+tranche — source cleaner suppliers (US-warehouse or brand stores) next
+batch.**
+
+Created (same discipline):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Toasty long hooded puffer parka coat (9614472118504) | 1005007234316536 | $23.46–28.32 + $10.08 | **fails** (tagged) |
+| Cute cropped hooded puffer jacket (9614472184040) | 3256809381486177 | $34.36 + $2.73 | **fails** (tagged) |
+| Bold embroidered varsity bomber jacket (9614472216808) | 1005008625664868 | $42.46 free | **fails** (tagged) |
+
+Read-back: 3/3 `DRAFT`, `totalInventory: 0`, media `READY`. Notes: parka
+lead image is a two-frame collage (swap at activation); cropped puffer's
+hood-trim material (fur vs faux) must be supplier-confirmed before
+activation — US fur-labeling rules apply; varsity embroidery is the
+supplier's original graphic, no third-party marks visible.
+
+**Batch running total: 22 of 50 created; 38 eyeballed; 16 rejected
+(42% rejection rate).**
+
+### Tranche 4 — 2026-08-28 ~16:53 UTC
+
+6 candidates (satin maxi/slip dresses per the Meshki/Ninepine scaling
+evidence; trench coats; thumbnails in `qa/sourcing/batch1d/`).
+**2 rejected, 4 created and read-back verified.** Pre-eyeball screening
+removed an abaya (off-category), a $9 coat with $19.49 shipping from a
+supplier with erratic shipping quotes, and two duplicate listings.
+
+Rejected at the eyeball gate:
+
+| Candidate | Reason |
+|---|---|
+| HBLL sequin maxi (4000779975720) | Lead image is a real red-carpet event photo with third-party sponsor logos — image-rights + GMC risk |
+| Lautaro oversized trench (3256806725078045) | Supplier watermark on image |
+
+Created (same discipline):
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Luxe satin v neck slip maxi dress (9614477525224) | 32923631399 | $21.15–21.94 free | clears (~$76) |
+| Graceful cowl back satin midi dress (9614477623528) | 1005008861344607 | $35.44 + $1.20 | borderline (~$129 occasion pricing; noted in description) |
+| Silky draped satin slip midi dress (9614477689064) | 3256807093763753 | $20.87–26.17 free | clears (~$82) |
+| Crisp cropped double breasted trench jacket (9614477754600) | 3256808644332983 | $32.63–36.37 free | **fails** (tagged) |
+
+Read-back: 4/4 `DRAFT`, `totalInventory: 0`, media `READY`. Notes: the
+two satin model shots (M1/M2) are supplier-boutique-grade photos whose
+provenance cannot be verified from here — flagged like all supplier
+imagery for the activation review; trench lead is a collage (swap at
+activation).
+
+**Batch running total: 26 of 50 created; 44 eyeballed; 18 rejected
+(41% rejection rate).**
+
+### Tranche 5 — 2026-08-28 ~16:55 UTC
+
+**Category finding:** the hoodie/sweatshirt search returned only wearable
+blankets and men's items — zero usable women's basics; the quota stays
+open for a cleaner query next pass. Summer-weight ice-silk/chiffon pants
+were screened out per the seasonal-timing rule.
+
+2 wide-leg pants candidates eyeballed (`qa/sourcing/batch1e/`), both
+passed, both created:
+
+| Product (GID suffix) | Supplier item | Cost + ship | 3.5× floor |
+|---|---|---|---|
+| Sporty piped wide leg track pants (9614480802024) | 1005011607621650 | $27.33–30.78 free | **fails** (tagged) |
+| Comfy high waist flare leggings pants (9614480867560) | 4001291836861 | $16.09 + $5.11 | clears (~$74) |
+
+Read-back: 2/2 `DRAFT`, `totalInventory: 0`, media `READY`.
+
+## Batch 1 sprint summary (2026-08-28, five tranches)
+
+**28 of 50 weekly drafts created — 46 candidates eyeballed, 18 rejected
+(39%).** Store total: 32 products (4 owner-side knitwear drafts + 28
+batch drafts), all DRAFT, all zero-inventory on this session's writes.
+Every rejection reason is logged above; every creation was independently
+read-back verified (status, vendor, inventory, tags, media READY).
+Remaining 22 continue via the same loop — open quotas: chunky crew
+sweaters (clean suppliers needed), fleece-lined leggings (clean suppliers
+needed), hoodies/sweatshirts (query refinement needed), knit co-ord sets,
+wool coats, shackets, boots, bags.
+
+### W35 gap-fill tranche — 2026-08-28 ~18:39 UTC
+
+Ledger for the seven products created under the strengthened gate. Full
+funnel stats, rejection breakdown and the inventory adjudication are in
+`docs/GENERAL-STORE-CATALOG-SCORECARD.md`; the ranking is in
+`docs/CATALOG-TOP20-LAUNCH-SHORTLIST.md`.
+
+**Sourcing target was deliberately spent on zero-coverage categories.**
+28 listings evaluated (22 unique), 8 pixel-inspected, 7 created, 21
+rejected (75%).
+
+| Product | Source | Supplier item | Cat | Cost | Ship | Landed | Retail | GM$ | Mult. | Image | Claim risk | Decision |
+|---|---|---|---|---:|---:|---:|---:|---:|---:|---|---|---|
+| Double Breasted Tailored Blazer | AutoDS/AliExpress | 1005008240019052 | Blazers | 20.90 | 0 (US wh) | 20.90 | 79 | 58.10 | 3.78× | pass | fibre unstated | **CREATE** |
+| Relaxed Satin Button-Up Shirt | AutoDS/AliExpress | 1005004066965871 | Tops | 8.08 | 1.99 (US wh) | 10.07 | 39 | 28.93 | 3.87× | pass | "silk" stripped | **CREATE** |
+| Square Neck Bodysuit | AutoDS/AliExpress | 1005006635913453 | Basics | 4.44 | 1.99 (US wh) | 6.43 | 29 | 22.57 | 4.51× | pass | none | **CREATE** |
+| Structured Shoulder Tote | AutoDS/AliExpress | 1005008228307352 | Bags | 24.46 | 0 | 24.46 | 79 | 54.54 | 3.23× | pass | PU stated as synthetic | **CREATE** |
+| Cable Detail Knit Midi Skirt | AutoDS/AliExpress | 1005008230273083 | Skirts | 16.36 | 4.82 | 21.18 | 59 | 37.82 | 2.79× | pass | yarn unstated | **CREATE** (floor documented) |
+| Full Pleated Midi Skirt | AutoDS/AliExpress | 1005004894494365 | Skirts | 21.13 | 9.30 | 30.43 | 79 | 48.57 | 2.60× | pass | fabric unstated | **CREATE** (floor documented) |
+| Fitted Denim Blazer Jacket | AutoDS/AliExpress | 1005003923504038 | Denim jkts | 30.89 | 4.39 | 35.28 | 89 | 53.72 | 2.52× | pass | weight unstated | **CREATE** (floor documented) |
+| INSTYLISH satin shirt | AutoDS | 1005010757379001 | Tops | 8.84 | 1.99 | 10.83 | — | — | — | **FAIL** watermark | — | REJECT |
+| ZAROY giraffe blouse | AutoDS | 3256808321180416 | Tops | 20.83 | 7.73 | 28.56 | 59 | — | 2.07× | not reached | "Luxury" | REJECT (economics) |
+| Black satin blouse | AutoDS | 3256809841299949 | Tops | 21.39 | 0 | 21.39 | 49 | — | 2.29× | not reached | — | REJECT (economics) |
+| Yogodlns tote | AutoDS | 3256807298105020 | Bags | 11.38 | 0 | 11.38 | — | — | — | **FAIL** watermark + monogram | designer lookalike | REJECT (image + trademark) |
+| Oil PU tote | AutoDS | 3256809657641222 | Bags | 5.01 | 3.61–59.11 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| NEEDARNA knit + skirt set | AutoDS | 3256809319486456 | Sets | 24.99 | 0 | 24.99 | — | — | — | **FAIL** watermark + text | — | REJECT (image) |
+| Miracle pleated knit set | AutoDS | 1005008504231631 | Sets | 40.21 | 0–22.31 | 40.21 | — | — | — | **FAIL** watermark + chest emblem + hangtag | brand copy | REJECT (image + trademark) |
+| Doyerl co-ord set | AutoDS | 1005003283748310 | Sets | 19.19 | 6.96–35.33 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| Cryptographic Y2K set | AutoDS | 1005005997014422 | Sets | 18.89 | 4.02–54.35 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| FUNN corduroy skirt | AutoDS | 3256806084342972 | Skirts | 22.81 | 6.39–53.14 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| APRIL MODA floral skirt | AutoDS | 32994708453 | Skirts | 16.88 | 15.76 | 32.64 | 69 | — | 2.11× | not reached | — | REJECT (economics) |
+| Velvet blazer | AutoDS | 1005001863986605 | Blazers | 66.12 | 0 | 66.12 | 159 | — | 2.40× | not reached | — | REJECT (economics) |
+| WIWT-MISS woolen blazer | AutoDS | 1005006408168662 | Blazers | 38.89 | 18.79–75.07 | volatile | — | — | — | not reached | — | REJECT (shipping) |
+| Kids 3pc hat/scarf/glove | AutoDS | 1005007871325957 | Accessories | 12.04 | 0 | 12.04 | — | — | — | not reached | children's product | REJECT (off-category) |
+| URGENTMAN beanie | AutoDS | 1005006997301834 | Accessories | 3.00 | 1.99 | 4.99 | 19 | 14.01 | 3.81× | not reached | supplier brand name | REJECT (brand risk + WEAK ads) |
+| Bodysuit duplicate listings ×3 | AutoDS | 1005002057933553 / 3256801871618801 / 3256806449598701 | Basics | — | — | — | — | — | — | — | — | REJECT (duplicate) |
+| Beanie duplicate listings ×2 | AutoDS | 3256806810987082 / 1005005848029615 | Accessories | — | — | — | — | — | — | — | — | REJECT (duplicate) |
+| PU crossbody duplicate | AutoDS | 3256807985752374 | Bags | — | — | — | — | — | — | — | designer lookalike title | REJECT (duplicate) |
+
+Read-back on all 7: `DRAFT`, vendor HIVOLT, `totalInventory: 0`,
+`tracked: false`, `mediaCount: 1`, every `MediaImage` `READY` (800–1785
+px), proposed price stored, `compareAtPrice: null` on every variant.
+
+**Programme total: 35 sourced drafts of a 50 ceiling. Stopped at 35 by
+the quality gate, not by exhausting the target.**
+
+## Standing prohibitions (unchanged)
+
+No fake products/inventory/reviews; no invented specs (CLASS A/B only —
+supplier-attributed text allowed and labeled); no counterfeit/branded
+goods; no >50% discounts, ever; no AutoDS→store auto-upload (no store
+connected; `productCreate` is the route); publish/activation authority is
+the owner's.

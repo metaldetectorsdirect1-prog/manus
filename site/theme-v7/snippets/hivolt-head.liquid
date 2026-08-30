@@ -1,0 +1,15 @@
+{%- comment -%}
+  HIVOLT — head additions
+
+  One entry point for everything HIVOLT adds to <head>, so a future change is a
+  one-line edit here rather than a hunt through the layout.
+
+  Rendered from social-meta-tags.liquid. That snippet is the theme's existing
+  page-metadata hook and already runs in <head> on every template, which is
+  exactly what structured data needs; putting this here avoids rewriting the
+  15 KB layout file for a three-line addition.
+{%- endcomment -%}
+
+{{ 'hivolt-pdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'hivolt-size-guide.js' | asset_url }}" defer="defer"></script>
+{%- render 'hivolt-structured-data' -%}

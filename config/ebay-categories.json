@@ -1,0 +1,116 @@
+{
+  "_README": [
+    "eBay leaf category ids, keyed by '<gender>:<Shopify productType>', with",
+    "per-handle overrides for garments the key cannot separate.",
+    "",
+    "eBay requires a LEAF category id on every listing. A wrong id either",
+    "rejects the row or files the garment somewhere no buyer looks, so every id",
+    "below was read off an eBay browse URL of the form",
+    "ebay.com/b/<name>/<ID>/ and none is guessed. scripts/ebay-listings.py",
+    "refuses to emit any row whose category is still null.",
+    "",
+    "TO FILL A NULL: eBay Seller Hub -> Listings -> Create listing, search the",
+    "garment name, and take the id from the end of the resulting browse URL.",
+    "",
+    "CORRECTION 2026-08-13: an earlier version of this file recorded 185082 as",
+    "a browse parent not to be listed into. That was wrong. 185082 is the leaf",
+    "for Women's Activewear Tops — eBay serves many marketing names off one id",
+    "(/b/Womens-Activewear-Tops/185082/ and",
+    "/b/Active-Athletic-Apparel-for-Women/185082/ are the same category), and a",
+    "different display name is not a different node. 185098 (Women's",
+    "Activewear) and 185099 (Men's Activewear) do look like parents of the",
+    "leaves used here, and are still avoided.",
+    "",
+    "UNISEX: eBay has no unisex activewear leaf. Unisex garments are listed in",
+    "the men's leaf with the Department item specific set to 'Unisex Adult',",
+    "which is what that field is for and is standard practice — the category",
+    "describes the garment type, Department describes who it is cut for."
+  ],
+
+  "_verified": {
+    "59315": "Women's Sports Bras — /b/Womens-Sports-Bras/59315/",
+    "155226": "Activewear Hoodies & Sweatshirts for Women — /b/Activewear-Hoodies-Sweatshirts-for-Women/155226/",
+    "169001": "Activewear Leggings for Women — /b/Activewear-Leggings-for-Women/169001/",
+    "185076": "Men's Sportswear Activewear / Activewear Tops for Men — /b/Gym-Training-Activewear-Tops-for-Men/185076/",
+    "185079": "Women's Activewear Jackets — /b/Womens-Activewear-Jackets/185079/",
+    "185082": "Women's Activewear Tops — /b/Womens-Activewear-Tops/185082/",
+    "185084": "Women's Tracksuits & Sets — /b/Womens-Tracksuits-Sets/185084/",
+    "155183": "Men's Hoodies & Sweatshirts, activewear — /b/Active-Hoodies-Sweatshirts-for-Men/155183/",
+    "185708": "Men's Tracksuits & Sets — /b/Mens-Tracksuits-Sets/185708/",
+    "123490": "Men's Soccer Clothing, jerseys — /b/Jerseys-Soccer-Clothing-for-Men/123490/",
+    "3009": "Women's Jumpsuits & Rompers — /b/Womens-Jumpsuits-Rompers/3009/. Bodysuits sit here too: /b/Bodysuit-Black-Jumpsuits-Rompers-for-Women/3009/",
+    "63861": "Women's Dresses — /b/Womens-Dresses/63861/, also /b/Sports-Dresses-for-Women/63861/",
+    "185702": "Men's Activewear Jackets — /b/Mens-Activewear-Jackets/185702/. eBay's own browse name /b/Unbranded-Athletic-Activewear-Jackets-for-Men/185702/ describes these exactly.",
+    "260954": "Women's Activewear Pants — /b/Womens-Activewear-Pants/260954/",
+    "260955": "Women's Activewear Shorts — /b/Womens-Activewear-Shorts/260955/",
+    "260956": "Men's Activewear Pants — /b/Sports-Men-Activewear-Breathable-Mens-Activewear/260956/",
+    "260957": "Men's Activewear Shorts — /b/Mens-Activewear-Shorts/260957/",
+    "261046": "Women's Activewear Skirts & Skorts — /b/Womens-Activewear-Skirts-Skorts/261046/"
+  },
+
+  "_rejected": {
+    "2887": "International Club Soccer FAN Jerseys. HIVOLT's jerseys are unbranded blanks, not club merchandise — listing them here would put them in front of people shopping for a team.",
+    "185098": "Women's Activewear — parent of 185082/260954/260955/261046.",
+    "185099": "Men's Activewear — parent of 185076/260956/260957."
+  },
+
+  "categories": {
+    "womens:Leggings": 169001,
+    "womens:Yoga Pants": 260954,
+    "womens:Pants": 260954,
+    "womens:Sports Bra": 59315,
+    "womens:Tank Top": 185082,
+    "womens:T-Shirt": 185082,
+    "womens:Shorts": 260955,
+    "womens:Skirt": 261046,
+    "womens:Hoodie": 155226,
+    "womens:Sweatshirt": 155226,
+    "womens:Jacket": 185079,
+
+    "mens:T-Shirt": 185076,
+    "mens:Tank Top": 185076,
+    "mens:Shorts": 260957,
+    "mens:Joggers": 260956,
+    "mens:Sweatpants": 260956,
+    "mens:Set": 185708,
+
+    "womens:Set": 185084,
+
+    "unisex:T-Shirt": 185076,
+    "unisex:Polo Shirt": 185076,
+    "unisex:Shorts": 260957,
+    "unisex:Hoodie": 155183,
+
+    "womens:Romper": 3009,
+    "womens:Bodysuit": 3009,
+    "womens:Dress": 63861,
+    "unisex:Jacket": 185702,
+
+    "unisex:Jersey": null
+  },
+
+  "_overrides_README": [
+    "Per-handle, and they win over `categories`. These exist because",
+    "'unisex:Jersey' covers two different garments: four are explicitly soccer",
+    "jerseys and belong in Men's Soccer Clothing, where people shop for a",
+    "jersey; three are generic long-sleeve training jerseys and do not. Filing",
+    "all seven in one place would mis-list three of them, so the key is",
+    "overridden rather than stretched."
+  ],
+  "overrides": {
+    "unisex-boxy-striped-collared-soccer-jersey": 123490,
+    "unisex-boxy-v-neck-soccer-jersey": 123490,
+    "unisex-color-block-jacquard-soccer-jersey": 123490,
+    "unisex-paneled-raglan-soccer-jersey": 123490,
+
+    "unisex-color-block-long-sleeve-jersey": 185076,
+    "unisex-paneled-long-sleeve-jersey": 185076,
+    "unisex-striped-raglan-jersey": 185076
+  },
+
+  "department": {
+    "womens": "Women",
+    "mens": "Men",
+    "unisex": "Unisex Adult"
+  }
+}

@@ -1,0 +1,216 @@
+{%- comment -%}
+  HIVOLT — customer login
+  ───────────────────────
+  Installs as templates/customers/login.liquid.
+
+  Requires two stylesheets, linked from layout/theme.liquid in this order:
+      'hivolt.css'  | asset_url | stylesheet_tag     (theme-hivolt.css, renamed)
+      'account.css' | asset_url | stylesheet_tag     (site/theme/account.css, renamed)
+
+  No <main> element here: layout/theme.liquid already opens one around
+  content_for_layout, and a nested main is invalid.
+
+  Two panes live in this template — sign in, and recover password. Only one is
+  ever visible. Three mechanisms reveal the recover pane, in order of how much
+  the browser has to support:
+
+    1. :target      — the "Forgot your password" link is href="#recover".
+                      Works with scripting off.
+    2. .is-open     — added by the three-line script at the foot when the
+                      recover form came back from the server with something to
+                      say (an error, or the sent confirmation).
+    3. :has()       — the same server round-trip, handled in CSS alone for
+                      browsers that support :has and users without scripting.
+
+  Forms are novalidate: the server is the only authority on whether a sign-in
+  is valid, so browser-side validation would only ever produce a second, less
+  accurate set of messages. Every error is rendered twice on purpose — once as
+  a plain summary at the top of the form, which is what a person reads, and
+  once through default_errors, which is what Shopify's own tooling expects.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Sign in</li>
+  </ol>
+</nav>
+
+<section class="acct acct--solo wrap">
+  <div class="acct__panes">
+
+    {%- comment -%} ── recover password ─────────────────────────────────── {%- endcomment -%}
+    <div class="rev" id="recover">
+      <div class="sec__head">
+        <h1 class="sec__h">Reset password</h1>
+        <span class="mono">Step 1 of 2</span>
+      </div>
+
+      {%- form 'recover_customer_password', novalidate: 'novalidate' -%}
+
+        {%- if form.posted_successfully? -%}
+          <span hidden data-open-target="recover"></span>
+          <p class="frm__ok" role="status">
+            If that address has an account, a reset link is on its way to it.
+            Open the link on this device to set a new password.
+          </p>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <span hidden data-open-target="recover"></span>
+          <div class="frm__alert" role="alert" tabindex="-1" id="recover-alert">
+            <p class="frm__alert-h">The reset was not sent. Fix this, then send it again.</p>
+            <ul class="frm__alert-l">
+              {%- for field in form.errors -%}
+                <li>
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    <a href="#RecoverEmail">Email address — {{ form.errors.messages[field] }}. Type the address you use for orders.</a>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+            <div class="frm__raw">{{ form.errors | default_errors }}</div>
+          </div>
+        {%- endif -%}
+
+        <div class="fld{% if form.errors %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="RecoverEmail">Email address</label>
+          <input
+            class="fld__in"
+            type="email"
+            id="RecoverEmail"
+            name="email"
+            value="{{ form.email }}"
+            autocomplete="email"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            required
+            {% if form.errors %}aria-invalid="true" aria-describedby="RecoverEmail-err"{% endif %}>
+          {%- if form.errors -%}
+            <p class="fld__err" id="RecoverEmail-err">Type the address you use for orders, then send the link again.</p>
+          {%- endif -%}
+        </div>
+
+        <div class="frm__acts">
+          <button type="submit" class="btn">Send reset link</button>
+          <a class="frm__link" href="{{ routes.account_login_url }}">Back to sign in</a>
+        </div>
+      {%- endform -%}
+    </div>
+
+    {%- comment -%} ── sign in ──────────────────────────────────────────── {%- endcomment -%}
+    <div id="login">
+      <div class="sec__head">
+        <h1 class="sec__h">Sign in</h1>
+        <span class="mono">Account</span>
+      </div>
+
+      {%- form 'customer_login', novalidate: 'novalidate' -%}
+
+        {%- if form.errors -%}
+          <div class="frm__alert" role="alert" tabindex="-1" id="login-alert">
+            <p class="frm__alert-h">You are not signed in. Fix the following, then try again.</p>
+            <ul class="frm__alert-l">
+              {%- for field in form.errors -%}
+                <li>
+                  {%- case field -%}
+                    {%- when 'form' -%}
+                      {{ form.errors.messages[field] }} Check the address and the password, then retype the password in full.
+                    {%- when 'email' -%}
+                      <a href="#CustomerEmail">Email address — {{ form.errors.messages[field] }}. Type the address you use for orders.</a>
+                    {%- when 'password' -%}
+                      <a href="#CustomerPassword">Password — {{ form.errors.messages[field] }}. If you cannot remember it, reset it below.</a>
+                    {%- else -%}
+                      {{ form.errors.translated_fields[field] | capitalize }} — {{ form.errors.messages[field] }}
+                  {%- endcase -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+            <div class="frm__raw">{{ form.errors | default_errors }}</div>
+          </div>
+        {%- endif -%}
+
+        {%- assign email_bad = false -%}
+        {%- if form.errors contains 'email' or form.errors contains 'form' -%}
+          {%- assign email_bad = true -%}
+        {%- endif -%}
+        {%- assign pass_bad = false -%}
+        {%- if form.errors contains 'password' or form.errors contains 'form' -%}
+          {%- assign pass_bad = true -%}
+        {%- endif -%}
+
+        <div class="fld{% if email_bad %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="CustomerEmail">Email address</label>
+          <input
+            class="fld__in"
+            type="email"
+            id="CustomerEmail"
+            name="customer[email]"
+            value="{{ form.email }}"
+            autocomplete="email"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            required
+            {% if email_bad %}aria-invalid="true" aria-describedby="CustomerEmail-err"{% endif %}>
+          {%- if email_bad -%}
+            <p class="fld__err" id="CustomerEmail-err">Type the address you use for orders.</p>
+          {%- endif -%}
+        </div>
+
+        <div class="fld{% if pass_bad %} fld--bad{% endif %}">
+          <label class="fld__lab mono" for="CustomerPassword">Password</label>
+          <input
+            class="fld__in"
+            type="password"
+            id="CustomerPassword"
+            name="customer[password]"
+            autocomplete="current-password"
+            required
+            {% if pass_bad %}aria-invalid="true" aria-describedby="CustomerPassword-err"{% endif %}>
+          {%- if pass_bad -%}
+            <p class="fld__err" id="CustomerPassword-err">Retype the password in full. It is case sensitive.</p>
+          {%- endif -%}
+        </div>
+
+        <div class="frm__acts">
+          <button type="submit" class="btn">Sign in</button>
+          <a class="frm__link" href="#recover">Forgot your password</a>
+        </div>
+      {%- endform -%}
+
+      <div class="acct__alt">
+        <h2 class="acct__sub">No account yet</h2>
+        <p class="acct__p">An account keeps your order history and addresses in one place. It is not required to buy anything.</p>
+        <a class="btn btn--ghost" href="{{ routes.account_register_url }}">Create an account</a>
+      </div>
+
+      {%- if shop.checkout.guest_login -%}
+        <div class="acct__alt">
+          <h2 class="acct__sub">Check out as a guest</h2>
+          <p class="acct__p">You can complete this order without an account. Order updates go to the email address you enter at checkout.</p>
+          {%- form 'guest_login' -%}
+            <button type="submit" class="btn btn--ghost">Continue as guest</button>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<script>
+/* Reveals a pane the server has something to say about. The CSS :has() rule
+   already does this without scripting; this covers browsers that lack it. */
+(function(){
+  document.querySelectorAll('[data-open-target]').forEach(function(mark){
+    var pane = document.getElementById(mark.getAttribute('data-open-target'));
+    if (pane) pane.classList.add('is-open');
+  });
+  var alert = document.querySelector('.frm__alert');
+  if (alert && alert.offsetParent !== null) alert.focus();
+})();
+</script>

@@ -1,0 +1,12 @@
+{
+  "id": "session-1786149172419",
+  "startedAt": "2026-08-08T00:32:52.419Z",
+  "cwd": "/home/user/manus/site",
+  "context": {},
+  "metrics": {
+    "edits": 30,
+    "commands": 0,
+    "tasks": 0,
+    "errors": 0
+  }
+}

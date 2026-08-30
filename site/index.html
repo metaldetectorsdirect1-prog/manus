@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVOLT — Published, not claimed</title>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   HIVOLT — design tokens
+   Ground: warm concrete. Ink: blue-black. One accent: blueprint.
+   Identity is carried by the monospace data face, not a webfont.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --paper:#E9E7E2;
+  --paper-2:#DFDCD5;
+  --ink:#16181C;
+  --ink-2:#22252B;
+  --steel:#6B6F76;
+  --rule:#C6C2BA;
+  --blueprint:#1B36C4;
+  --on-blueprint:#F4F3EF;
+  /* Text on the var(--ink) band. The band's ground inverts between themes,
+     so these are mixed from the pair rather than fixed greys — a fixed grey
+     chosen against the dark band drops to ~2:1 when the band goes light. */
+  --on-ink-2:color-mix(in srgb, var(--paper) 66%, var(--ink));
+  --on-ink-1:color-mix(in srgb, var(--paper) 80%, var(--ink));
+  /* The accent sitting ON the ink band is the opposite theme's blueprint:
+     the band ground inverts, so the accent must invert against it. */
+  --blueprint-on-ink:#8FA0FF;
+  /* Hairline on the ink band. Same inversion problem as the text: a fixed
+     #2E323A reads as a subtle rule on the dark band and a hard black line
+     once the band flips light. 16% holds ~1.5:1 in both. */
+  --rule-on-ink:color-mix(in srgb, var(--paper) 16%, var(--ink));
+
+  --grot:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Segoe UI",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+
+  --gut:clamp(16px,4vw,56px);
+  --band:clamp(56px,8vw,116px);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#121417; --paper-2:#191C21; --ink:#E7E5E0; --ink-2:#CFCCC5;
+    --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013; --blueprint-on-ink:#1B36C4;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121417; --paper-2:#191C21; --ink:#E7E5E0; --ink-2:#CFCCC5;
+  --steel:#8A8F97; --rule:#2E323A; --blueprint:#8FA0FF; --on-blueprint:#0E1013; --blueprint-on-ink:#1B36C4;
+}
+:root[data-theme="light"]{
+  --paper:#E9E7E2; --paper-2:#DFDCD5; --ink:#16181C; --ink-2:#22252B;
+  --steel:#6B6F76; --rule:#C6C2BA; --blueprint:#1B36C4; --on-blueprint:#F4F3EF; --blueprint-on-ink:#8FA0FF;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--grot); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+:where(a,button,input,summary):focus-visible{
+  outline:2px solid var(--blueprint); outline-offset:3px;
+}
+
+/* ── shared type roles ─────────────────────────────────────── */
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:var(--gut)}
+.rule{border:0;border-top:1px solid var(--rule);margin:0}
+
+/* ── ticker ────────────────────────────────────────────────── */
+.ticker{background:var(--ink);color:var(--paper);overflow:hidden;padding:9px 0}
+.ticker__track{display:flex;gap:44px;white-space:nowrap;width:max-content;
+  animation:slide 34s linear infinite}
+.ticker__track span{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.92}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){
+  .ticker__track{animation:none;width:100%;justify-content:center;flex-wrap:wrap;white-space:normal}
+}
+
+/* ── masthead ──────────────────────────────────────────────── */
+.mast{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--rule)}
+.mast__in{display:flex;align-items:center;justify-content:space-between;gap:24px;height:62px}
+.logo{font-weight:800;font-size:19px;letter-spacing:.26em;text-transform:uppercase;text-decoration:none}
+.nav{display:flex;gap:26px}
+.nav a{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-2);padding-block:6px}
+.nav a:hover{color:var(--blueprint)}
+.mast__act{display:flex;align-items:center;gap:18px}
+.mast__act .mono{color:var(--ink-2);text-decoration:none}
+@media (max-width:860px){.nav{display:none}}
+
+/* ── hero: the specification IS the hero ───────────────────── */
+.hero{padding-block:clamp(44px,7vw,92px) clamp(36px,5vw,64px)}
+.hero__eyebrow{color:var(--steel);margin-bottom:26px}
+.hero__h{
+  font-size:clamp(44px,10.5vw,148px); line-height:.9; letter-spacing:-.035em;
+  font-weight:800; text-transform:uppercase; margin:0; text-wrap:balance;
+}
+.hero__h em{font-style:normal;color:var(--blueprint)}
+.hero__sub{
+  max-width:56ch; margin:30px 0 0; font-size:clamp(16px,1.5vw,19px);
+  color:var(--ink-2); line-height:1.62;
+}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+
+.btn{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  padding:15px 26px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  text-decoration:none;display:inline-block;cursor:pointer;
+  transition:background .16s ease,color .16s ease;
+}
+.btn:hover{background:var(--blueprint);border-color:var(--blueprint);color:var(--on-blueprint)}
+.btn--ghost{background:transparent;color:var(--ink)}
+.btn--ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* the spec strip under the hero — the brand's whole argument, as data */
+.spec{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  border-top:1px solid var(--ink);border-left:1px solid var(--rule);
+  margin-top:clamp(40px,6vw,74px);
+}
+.spec__cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px 18px}
+.spec__k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+.spec__v{font-family:var(--mono);font-size:clamp(20px,2.4vw,30px);margin-top:9px;
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.spec__n{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:5px;letter-spacing:.02em;text-transform:none}
+
+/* ── the comparator: signature element ─────────────────────── */
+.band-ink{background:var(--ink);color:var(--paper)}
+.band-ink .spec__k,.band-ink .spec__n{color:var(--on-ink-2)}
+.cmp{padding-block:var(--band)}
+.cmp__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,76px);align-items:center}
+@media (max-width:900px){.cmp__grid{grid-template-columns:1fr}}
+.cmp__h{font-size:clamp(28px,4.2vw,50px);line-height:1.02;letter-spacing:-.025em;
+  font-weight:800;text-transform:uppercase;margin:16px 0 0;text-wrap:balance}
+.cmp__p{max-width:52ch;color:var(--on-ink-1);margin:20px 0 0;line-height:1.62}
+.cmp__eyebrow{color:var(--blueprint-on-ink)}
+
+/* Fabric laid over a printed card — how opacity is actually tested.
+   These colours are deliberately fixed, not tokens: the panel depicts a dark
+   knit over a light print card, and inverting it by theme would destroy the
+   demonstration. It is an illustration, not chrome. */
+.swatch{position:relative;aspect-ratio:4/3;border:1px solid #33373F;overflow:hidden;background:#D9D5CD}
+.swatch__print{position:absolute;inset:0;padding:22px 24px;display:flex;flex-direction:column;
+  justify-content:center;gap:9px;color:#23262C;font-family:var(--mono)}
+.swatch__print .l{font-size:clamp(9px,1.15vw,13px);letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:clip}
+.swatch__print .l--big{font-size:clamp(15px,2.6vw,30px);letter-spacing:-.01em;font-weight:700}
+.swatch__print .r{height:1px;background:#23262C;opacity:.35}
+/* the knit itself — density driven by --d */
+.swatch__knit{
+  position:absolute;inset:0;background-color:#1A1D22;
+  background-image:
+    repeating-linear-gradient(45deg,rgba(255,255,255,.055) 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(-45deg,rgba(0,0,0,.30) 0 1px,transparent 1px 4px);
+  opacity:var(--d,.9);
+  transition:opacity .18s linear;
+}
+.swatch__tag{position:absolute;left:0;bottom:0;background:var(--blueprint);color:var(--on-blueprint);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;padding:7px 12px}
+.cmp__ctl{margin-top:22px}
+.cmp__read{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-2);margin-bottom:10px}
+.cmp__read b{color:var(--paper);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--blueprint);height:26px}
+.cmp__note{font-family:var(--mono);font-size:10.5px;color:var(--on-ink-2);margin-top:14px;line-height:1.7}
+
+/* ── catalogue ─────────────────────────────────────────────── */
+.cat{padding-block:var(--band)}
+.sec__head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+  padding-bottom:18px;border-bottom:1px solid var(--ink);margin-bottom:0}
+.sec__h{font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;font-weight:800;
+  text-transform:uppercase;margin:0}
+.sec__head .mono{color:var(--steel)}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid var(--rule)}
+@media (max-width:1080px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid{grid-template-columns:repeat(2,1fr)}
+  .item__body{padding:12px 11px 14px}
+  .item__name{font-size:12px}
+  .item__meta{font-size:9.5px}
+  .item__price{font-size:12.5px}
+  .item__buy{font-size:9px;padding:6px 8px}}
+
+.item{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  text-decoration:none;display:flex;flex-direction:column;background:var(--paper)}
+.item:hover .item__fig{background:var(--paper-2)}
+.item:hover .item__buy{background:var(--blueprint);border-color:var(--blueprint);color:var(--on-blueprint)}
+.item__fig{position:relative;aspect-ratio:3/4;background:var(--paper);
+  display:grid;place-items:center;transition:background .18s ease;overflow:hidden}
+.item__fig img{width:100%;height:100%;object-fit:cover}
+/* placeholder used only in this static preview — Liquid fills it with the real cutout */
+.ph{width:62%;height:66%;border:1px solid var(--rule);background:var(--paper-2);
+  display:grid;place-items:center}
+.ph span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--steel);text-align:center;padding:8px}
+.item__ref{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.1em;color:var(--steel)}
+.item__gsm{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.1em;color:var(--paper);background:var(--ink);padding:3px 7px}
+.item__body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.item__name{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin:0;line-height:1.3}
+.item__meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--steel);
+  text-transform:none;margin:0}
+.item__foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px}
+.item__price{font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums}
+.item__buy{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--ink);padding:7px 11px;transition:background .16s ease,color .16s ease}
+
+/* ── what we publish ───────────────────────────────────────── */
+.pub{padding-block:var(--band);background:var(--paper-2)}
+.pub__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-top:34px}
+@media (max-width:860px){.pub__grid{grid-template-columns:1fr}}
+.pub__c{background:var(--paper-2);padding:28px 24px}
+.pub__n{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--blueprint);text-transform:uppercase}
+.pub__t{font-size:17px;font-weight:700;letter-spacing:.02em;margin:14px 0 9px;text-transform:uppercase}
+.pub__d{color:var(--ink-2);font-size:14.5px;margin:0;line-height:1.62}
+
+/* ── trust, stated plainly ─────────────────────────────────── */
+.trust{padding-block:var(--band)}
+.trust__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-top:32px}
+@media (max-width:960px){.trust__grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.trust__grid{grid-template-columns:1fr}}
+.trust__c{background:var(--paper);padding:26px 22px}
+.trust__k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+.trust__v{font-size:16px;font-weight:700;margin:11px 0 7px;letter-spacing:.01em}
+.trust__d{font-size:13.5px;color:var(--ink-2);margin:0;line-height:1.6}
+
+/* ── faq ───────────────────────────────────────────────────── */
+.faq{padding-block:var(--band);background:var(--ink);color:var(--paper)}
+.faq__h{font-size:clamp(22px,3vw,34px);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;margin:0 0 8px}
+.faq details{border-top:1px solid var(--rule-on-ink);padding:0}
+.faq details:last-of-type{border-bottom:1px solid var(--rule-on-ink)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;
+  gap:20px;align-items:center;font-size:15.5px;font-weight:600;letter-spacing:.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);font-size:17px;color:var(--blueprint-on-ink);flex:none}
+.faq details[open] summary::after{content:"–"}
+.faq__a{padding:0 0 22px;color:var(--on-ink-1);max-width:72ch;margin:0;line-height:1.66;font-size:14.5px}
+.faq__list{margin-top:30px}
+
+/* ── footer ────────────────────────────────────────────────── */
+.foot{padding-block:52px 34px;background:var(--ink);color:var(--paper);border-top:1px solid var(--rule-on-ink)}
+.foot__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:34px}
+@media (max-width:860px){.foot__grid{grid-template-columns:1fr 1fr}}
+.foot h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--on-ink-2);margin:0 0 14px;font-weight:400}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.foot a{font-size:13.5px;text-decoration:none;color:var(--on-ink-1)}
+.foot a:hover{color:var(--blueprint-on-ink)}
+.foot__legal{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule-on-ink);
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-2)}
+.foot__addr{font-size:13.5px;color:var(--on-ink-1);line-height:1.7;margin:0}
+
+/* utility used by index.liquid for the range-slider label */
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ── PDP ───────────────────────────────────────────────────── */
+.crumb{padding-block:18px;border-bottom:1px solid var(--rule)}
+.crumb ol{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
+.crumb a{text-decoration:none;color:var(--steel)}
+.crumb a:hover{color:var(--blueprint)}
+.crumb li+li::before{content:"/";margin-right:8px;color:var(--rule)}
+
+.pdp{display:grid;grid-template-columns:1.15fr .85fr;gap:0;border-bottom:1px solid var(--rule)}
+.pdp>*{min-width:0}
+@media (max-width:960px){.pdp{grid-template-columns:1fr}}
+
+/* gallery — supplier cutouts sit on flat colour, no fake lifestyle framing */
+.gal{border-right:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;min-width:0}
+.gal>*{min-width:0}
+@media (max-width:560px){.gal{grid-template-columns:1fr}}
+.gal__f{aspect-ratio:3/4;background:var(--paper-2);display:grid;place-items:center;
+  border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);position:relative}
+.gal__f:nth-child(1){grid-column:1/-1;aspect-ratio:1/1}
+.gal__f img{width:100%;height:100%;object-fit:cover}
+.gal__n{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.1em;color:var(--steel)}
+.ph--lg{width:58%;height:62%;border:1px solid var(--rule);background:var(--paper);
+  display:grid;place-items:center}
+.ph--lg span{font-family:var(--mono);font-size:10px;letter-spacing:.09em;color:var(--steel);text-align:center;padding:10px}
+
+/* buy column — sticky on desktop */
+.buy{padding:clamp(24px,3vw,44px);position:sticky;top:62px;align-self:start}
+@media (max-width:960px){.buy{position:static}}
+.buy__ref{color:var(--steel)}
+.buy__h{font-size:clamp(26px,3.4vw,40px);line-height:1.02;letter-spacing:-.025em;
+  font-weight:800;text-transform:uppercase;margin:14px 0 0;text-wrap:balance}
+.buy__price{font-family:var(--mono);font-size:22px;margin:18px 0 0;font-variant-numeric:tabular-nums}
+.buy__ship{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--steel);
+  margin:7px 0 0;text-transform:none}
+
+/* the spec table — the reason to buy here rather than anywhere else */
+.sheet{margin-top:26px;border-top:1px solid var(--ink)}
+.sheet__row{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:11px 0;
+  border-bottom:1px solid var(--rule);align-items:baseline}
+.sheet__k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--steel);white-space:nowrap}
+.sheet__v{font-family:var(--mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.sheet__v em{font-style:normal;color:var(--blueprint);font-weight:700}
+.sheet__src{font-family:var(--mono);font-size:10px;color:var(--steel);margin:12px 0 0;line-height:1.7}
+
+.opt{margin-top:26px}
+.opt__lab{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.opt__lab .mono{color:var(--steel)}
+.opt__lab a{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blueprint)}
+.sizes{display:flex;flex-wrap:wrap;gap:7px}
+.size{font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:11px 0;width:56px;
+  text-align:center;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;
+  transition:border-color .14s ease,background .14s ease,color .14s ease}
+.size:hover{border-color:var(--ink)}
+.size[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.size[disabled]{color:var(--steel);border-style:dashed;cursor:not-allowed;text-decoration:line-through}
+
+.add{width:100%;margin-top:22px;padding:18px;font-size:12px}
+.assure{display:grid;gap:9px;margin-top:20px;padding-top:18px;border-top:1px solid var(--rule)}
+.assure li{list-style:none;display:grid;grid-template-columns:auto 1fr;gap:11px;
+  font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.assure ul{margin:0;padding:0;display:grid;gap:9px}
+.assure b{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blueprint);padding-top:3px}
+
+.disc{margin-top:22px;padding:16px 18px;border:1px solid var(--rule);background:var(--paper-2)}
+.disc p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.6}
+.disc strong{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  display:block;margin-bottom:7px;color:var(--ink)}
+
+/* size table */
+.sz{padding-block:var(--band)}
+.sz__wrap{overflow-x:auto;border:1px solid var(--rule);margin-top:26px}
+table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{font-family:var(--mono);font-size:12px;padding:12px 14px;text-align:right;
+  border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);font-weight:400;
+  background:var(--paper-2)}
+th:first-child,td:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:0}
+</style>
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>Free US shipping · no minimum</span><span>60-day returns</span>
+    <span>Every fabric weight published</span><span>Ships from Illinois</span>
+    <span>US orders only</span>
+    <span>Free US shipping · no minimum</span><span>60-day returns</span>
+    <span>Every fabric weight published</span><span>Ships from Illinois</span>
+    <span>US orders only</span>
+  </div>
+</div>
+
+<header class="mast">
+  <div class="wrap mast__in">
+    <a href="/" class="logo">Hivolt</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/collections/womens">Women</a>
+      <a href="/collections/mens">Men</a>
+      <a href="/collections/training">Training</a>
+      <a href="/pages/fabric">Fabric</a>
+      <a href="/pages/about">About</a>
+    </nav>
+    <div class="mast__act">
+      <a href="/search" class="mono">Search</a>
+      <a href="/cart" class="mono">Bag (0)</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO — the specification is the thesis -->
+  <section class="hero wrap">
+    <p class="mono hero__eyebrow">Technical activewear · United States</p>
+    <h1 class="hero__h">Every number<br>on this page<br><em>is measured.</em></h1>
+    <p class="hero__sub">
+      Most activewear brands describe fabric with adjectives. We publish the specification —
+      fibre composition, fabric weight in grams per square metre, and where it ships from.
+      Compare it against anything.
+    </p>
+    <div class="hero__cta">
+      <a class="btn" href="/collections/all">Shop the range</a>
+      <a class="btn btn--ghost" href="/pages/fabric">How we measure</a>
+    </div>
+
+    <div class="spec">
+      <div class="spec__cell">
+        <div class="spec__k">Fabric weight</div>
+        <div class="spec__v">220 <small>g/m²</small></div>
+        <p class="spec__n">Core legging knit. Category norm is 180–200.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Composition</div>
+        <div class="spec__v">75/25</div>
+        <p class="spec__n">Nylon / spandex, from the mill spec sheet.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Ships from</div>
+        <div class="spec__v">IL, USA</div>
+        <p class="spec__n">8–14 business days, tracked.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Returns</div>
+        <div class="spec__v">60 days</div>
+        <p class="spec__n">Unworn, tags on. No restocking fee.</p>
+      </div>
+      <div class="spec__cell">
+        <div class="spec__k">Catalogue</div>
+        <div class="spec__v">105</div>
+        <p class="spec__n">Styles, each with a published spec.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNATURE: the opacity comparator -->
+  <section class="band-ink cmp">
+    <div class="wrap cmp__grid">
+      <div>
+        <p class="mono cmp__eyebrow">The 220 argument</p>
+        <h2 class="cmp__h">Why fabric weight is<br>the only number<br>that matters in a squat.</h2>
+        <p class="cmp__p">
+          Grams per square metre is knit density. Below about 200 g/m², a legging stretched
+          across the glute thins enough to go translucent — the failure everyone has had and
+          nobody photographs. Our core knit is 220.
+        </p>
+        <p class="cmp__p">
+          Drag the slider. This is a diagram of how density changes opacity, not a photograph
+          of our fabric — we don't publish pictures we haven't taken.
+        </p>
+      </div>
+
+      <div>
+        <div class="swatch">
+          <div class="swatch__print" aria-hidden="true">
+            <div class="l">Opacity test card</div>
+            <div class="r"></div>
+            <div class="l l--big">Can you read this?</div>
+            <div class="r"></div>
+            <div class="l">If yes, the knit is too light to squat in</div>
+          </div>
+          <div class="swatch__knit" id="knit" aria-hidden="true"></div>
+          <div class="swatch__tag" id="tag">220 g/m² — opaque</div>
+        </div>
+        <div class="cmp__ctl">
+          <div class="cmp__read">
+            <span>Fabric weight</span>
+            <span><b id="read">220</b> g/m²</span>
+          </div>
+          <label for="gsm" class="mono" style="position:absolute;left:-9999px">Fabric weight in grams per square metre</label>
+          <input type="range" id="gsm" min="150" max="220" step="5" value="220">
+          <p class="cmp__note">
+            Illustration of relative opacity across knit densities. Not a photograph of a
+            HIVOLT garment. The 220 g/m² figure is taken from our mill's specification sheet.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOGUE -->
+  <section class="cat wrap">
+    <div class="sec__head">
+      <h2 class="sec__h">The range</h2>
+      <span class="mono">105 styles · named by weight</span>
+    </div>
+
+    <div class="grid">
+      <a class="item" href="/products/womens-high-rise-flared-yoga-pants">
+        <div class="item__fig">
+          <span class="item__ref">REF 01</span><span class="item__gsm">220</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 220 Flare Legging</h3>
+          <p class="item__meta">75% nylon / 25% spandex · high rise · squat-opaque</p>
+          <div class="item__foot"><span class="item__price">$54.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+
+      <a class="item" href="/products/women-s-high-rise-topstitching-leggings">
+        <div class="item__fig">
+          <span class="item__ref">REF 02</span><span class="item__gsm">220</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 220 Topstitch Legging</h3>
+          <p class="item__meta">75% nylon / 25% spandex · flat-seam · high rise</p>
+          <div class="item__foot"><span class="item__price">$54.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+
+      <a class="item" href="/products/performance-short-sleeve-t-shirt">
+        <div class="item__fig">
+          <span class="item__ref">REF 03</span><span class="item__gsm">165</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 165 Training Tee</h3>
+          <p class="item__meta">Polyester / spandex · unisex · quick-dry</p>
+          <div class="item__foot"><span class="item__price">$34.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+
+      <a class="item" href="/products/mens-drawstring-shorts">
+        <div class="item__fig">
+          <span class="item__ref">REF 04</span><span class="item__gsm">190</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 190 Training Short</h3>
+          <p class="item__meta">Drawstring waist · side pockets · 7&quot; inseam</p>
+          <div class="item__foot"><span class="item__price">$38.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+
+      <a class="item" href="/products/women-s-cropped-sports-bra">
+        <div class="item__fig">
+          <span class="item__ref">REF 05</span><span class="item__gsm">220</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 220 Cropped Bra</h3>
+          <p class="item__meta">Removable cups · medium support · wide band</p>
+          <div class="item__foot"><span class="item__price">$34.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+
+      <a class="item" href="/products/cropped-half-zip-hoodie">
+        <div class="item__fig">
+          <span class="item__ref">REF 06</span><span class="item__gsm">300</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 300 Half-Zip</h3>
+          <p class="item__meta">Brushed back · cropped hem · thumbholes</p>
+          <div class="item__foot"><span class="item__price">$69.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+
+      <a class="item" href="/products/mens-piping-straight-leg-sweatpants">
+        <div class="item__fig">
+          <span class="item__ref">REF 07</span><span class="item__gsm">280</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 280 Straight Sweatpant</h3>
+          <p class="item__meta">Side piping · straight leg · elastic cuffless hem</p>
+          <div class="item__foot"><span class="item__price">$54.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+
+      <a class="item" href="/products/men-s-lightweight-sport-jersey">
+        <div class="item__fig">
+          <span class="item__ref">REF 08</span><span class="item__gsm">150</span>
+          <div class="ph"><span>Product cutout<br>fills this frame</span></div>
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">The 150 Sport Jersey</h3>
+          <p class="item__meta">Open-hole mesh · lightweight · relaxed cut</p>
+          <div class="item__foot"><span class="item__price">$38.00</span><span class="item__buy">Add</span></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- WHAT WE PUBLISH -->
+  <section class="pub">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 class="sec__h">What we publish</h2>
+        <span class="mono">And what we won't</span>
+      </div>
+
+      <div class="pub__grid">
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">The mill specification</h3>
+          <p class="pub__d">Fibre composition and fabric weight for every style, copied from the
+            supplier's sheet without editing. If a number looks unflattering, it stays.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">Where it ships from</h3>
+          <p class="pub__d">Orders leave a facility in Illinois and take 8–14 business days. That's
+            slower than Amazon and we'd rather say so than surprise you at the door.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Published</div>
+          <h3 class="pub__t">Photographs we took</h3>
+          <p class="pub__d">Product images are the supplier's own studio photography of the exact
+            garment. Diagrams are labelled as diagrams.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Reviews we don't have</h3>
+          <p class="pub__d">HIVOLT is new. There are no star ratings on this site because there are
+            no customers yet to write them. When there are, they'll be real.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Countdown timers</h3>
+          <p class="pub__d">No fake stock counters, no "12 people are viewing", no expiring offer
+            that resets when you reload. The price is the price.</p>
+        </div>
+        <div class="pub__c">
+          <div class="pub__n">Not here</div>
+          <h3 class="pub__t">Health claims</h3>
+          <p class="pub__d">Leggings are not a medical device. Competitors in this category sell
+            them as treatments for cellulite and varicose veins. We won't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust wrap">
+    <div class="sec__head">
+      <h2 class="sec__h">Buying from us</h2>
+      <span class="mono">The whole policy, no asterisks</span>
+    </div>
+    <div class="trust__grid">
+      <div class="trust__c">
+        <div class="trust__k">Shipping</div>
+        <p class="trust__v">Free, every order</p>
+        <p class="trust__d">No minimum, no threshold. 8–14 business days, tracked from dispatch.
+          Continental US only — we don't ship anywhere we can't deliver on time.</p>
+      </div>
+      <div class="trust__c">
+        <div class="trust__k">Returns</div>
+        <p class="trust__v">60 days</p>
+        <p class="trust__d">Unworn with tags, for any reason or none. Start it from your order
+          email. No restocking fee and no explanation required.</p>
+      </div>
+      <div class="trust__c">
+        <div class="trust__k">Payment</div>
+        <p class="trust__v">Shopify Checkout</p>
+        <p class="trust__d">Card details go to Shopify's PCI-compliant checkout and never touch
+          our servers. Apple Pay, Google Pay, Shop Pay accepted.</p>
+      </div>
+      <div class="trust__c">
+        <div class="trust__k">Reaching a person</div>
+        <p class="trust__v">One inbox, answered</p>
+        <p class="trust__d">support@hivolt-usa.com — replies within one business day. No bot, no
+          ticket number, no "your call is important to us".</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="wrap">
+      <h2 class="faq__h">Questions worth asking</h2>
+      <p class="mono" style="color:var(--on-ink-2)">Including the ones most stores avoid</p>
+
+      <div class="faq__list">
+        <details>
+          <summary>Are these your own designs, or blanks?</summary>
+          <p class="faq__a">They're manufacturer blanks, chosen and specified by us — the same
+            model most activewear labels under $100 use, including several you'd recognise. We
+            don't claim to run a factory. What we do is publish the actual specification instead
+            of hiding it behind words like "buttery" and "second-skin".</p>
+        </details>
+        <details>
+          <summary>Why does shipping take 8–14 days?</summary>
+          <p class="faq__a">Because that's how long it takes. Orders are picked and dispatched
+            from a facility in Illinois. We could quote 3–5 days and disappoint most of you; we'd
+            rather quote the real window and hit it.</p>
+        </details>
+        <details>
+          <summary>There are no reviews on this site. Why?</summary>
+          <p class="faq__a">Because HIVOLT is new and nobody has written one yet. Every review
+            widget you've seen on a store this young was either imported from a supplier or
+            bought. When we have real customers, we'll publish what they actually say, including
+            the bad ones.</p>
+        </details>
+        <details>
+          <summary>What does 220 g/m² actually mean for me?</summary>
+          <p class="faq__a">Grams per square metre is how much a square metre of the fabric
+            weighs — a direct proxy for knit density. Denser knit stretches less at the same load,
+            which is why it stays opaque through a deep squat. Most leggings in this price range
+            sit at 180–200 and don't publish the figure at all.</p>
+        </details>
+        <details>
+          <summary>Do you ship outside the United States?</summary>
+          <p class="faq__a">No. Not yet, and we'd rather say no than take an order we can't
+            deliver properly. If that changes it'll be announced here first.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a href="/" class="logo" style="font-size:17px">Hivolt</a>
+        <p class="foot__addr" style="margin-top:16px">
+          Technical activewear, specified in public.<br>
+          Shipping within the United States.<br>
+          support@hivolt-usa.com
+        </p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="/collections/womens">Women</a></li>
+          <li><a href="/collections/mens">Men</a></li>
+          <li><a href="/collections/training">Training</a></li>
+          <li><a href="/collections/all">Everything</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <ul>
+          <li><a href="/pages/fabric">Fabric &amp; specifications</a></li>
+          <li><a href="/pages/shipping">Shipping</a></li>
+          <li><a href="/pages/returns-refunds">Returns &amp; refunds</a></li>
+          <li><a href="/pages/materials-sustainability">Materials</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/pages/about">About</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="/policies/privacy-policy">Privacy</a></li>
+          <li><a href="/policies/terms-of-service">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__legal">
+      <span>© 2026 HIVOLT</span>
+      <span>Free US shipping · 60-day returns · US orders only</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var s=document.getElementById('gsm'),k=document.getElementById('knit'),
+      r=document.getElementById('read'),t=document.getElementById('tag');
+  if(!s)return;
+  function paint(){
+    var v=+s.value;
+    // 150 g/m² -> sheer (.30) ... 240 g/m² -> fully opaque (1)
+    k.style.setProperty('--d',Math.min(1,0.16+((v-150)/70)*0.84).toFixed(3));
+    r.textContent=v;
+    var label = v>=215 ? 'fully opaque' : v>=200 ? 'mostly opaque' : v>=180 ? 'thins under stretch' : 'sheer under stretch';
+    t.textContent=v+' g/m² — '+label;
+  }
+  s.addEventListener('input',paint); paint();
+})();
+</script>
+</body>
+</html>

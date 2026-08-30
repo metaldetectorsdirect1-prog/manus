@@ -1,0 +1,160 @@
+{%- comment -%}
+  HIVOLT PDP info — spec-driven product details, trust block, Product JSON-LD.
+  Every spec row is blank-safe: nothing renders unless the metafield holds a
+  value (no empty accordions, no invented facts). Trust copy is limited to
+  verified store configuration: free US shipping ($0 rate, read back),
+  60-day returns (owner-confirmed policy), Shop Pay / Apple Pay / Google Pay
+  (paymentSettings read-back).
+{%- endcomment -%}
+
+{%- liquid
+  assign spec = product.metafields.spec
+  assign lede = product.metafields.hivolt.lede
+-%}
+
+<div class="pdp-info page-width">
+  {%- assign jm = product.metafields.judgeme.review_widget_data.value -%}
+  {%- if jm.number_of_reviews > 0 -%}
+    <div class="pdp-info__rating">{{ product.metafields.judgeme.badge }}</div>
+  {%- endif -%}
+
+  {%- if lede != blank -%}
+    <div class="pdp-info__lede">{{ lede | newline_to_br }}</div>
+  {%- endif -%}
+
+  {%- capture spec_rows -%}
+    {%- if spec.composition != blank -%}
+      <div class="pdp-info__row"><dt>Composition</dt><dd>{{ spec.composition | escape }}</dd></div>
+    {%- endif -%}
+    {%- if spec.knit != blank -%}
+      <div class="pdp-info__row"><dt>Knit</dt><dd>{{ spec.knit | escape }}</dd></div>
+    {%- endif -%}
+    {%- if spec.fit != blank -%}
+      <div class="pdp-info__row"><dt>Fit</dt><dd>{{ spec.fit | escape }}</dd></div>
+    {%- endif -%}
+    {%- if spec.gsm != blank -%}
+      <div class="pdp-info__row"><dt>Fabric weight</dt><dd>{{ spec.gsm }} g/m&sup2;</dd></div>
+    {%- endif -%}
+    {%- if spec.care != blank -%}
+      <div class="pdp-info__row"><dt>Care</dt><dd>{{ spec.care | escape }}</dd></div>
+    {%- endif -%}
+    {%- if spec.origin != blank -%}
+      <div class="pdp-info__row"><dt>Made in</dt><dd>{{ spec.origin | escape }}</dd></div>
+    {%- endif -%}
+    {%- if spec.model_height_cm != blank and spec.model_wears_size != blank -%}
+      <div class="pdp-info__row"><dt>Model</dt><dd>{{ spec.model_height_cm }} cm &middot; wears size {{ spec.model_wears_size | escape }}</dd></div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if spec_rows != blank -%}
+    <details class="pdp-info__group" open>
+      <summary class="pdp-info__summary">Details</summary>
+      <dl class="pdp-info__list">{{ spec_rows }}</dl>
+    </details>
+  {%- endif -%}
+
+  <details class="pdp-info__group">
+    <summary class="pdp-info__summary">Delivery &amp; returns</summary>
+    <div class="pdp-info__body">
+      <p>Free tracked shipping on every US order — no minimum. See the <a href="/policies/shipping-policy">shipping policy</a>.</p>
+      <p>60 days from delivery to return, with a free return label and no restocking fee. See the <a href="/policies/refund-policy">refund policy</a>.</p>
+    </div>
+  </details>
+
+  <p class="pdp-info__secure">Secure Shopify checkout &middot; Shop&nbsp;Pay &middot; Apple&nbsp;Pay &middot; Google&nbsp;Pay</p>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ request.origin | append: product.url | json }},
+  "description": {{ product.description | strip_html | truncate: 300 | json }},
+  "brand": { "@type": "Brand", "name": "HIVOLT" },
+  {%- if product.featured_media.preview_image -%}
+  "image": [{% for media in product.media limit: 3 %}{{ media.preview_image | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+  {%- endif -%}
+  "sku": {{ product.selected_or_first_available_variant.sku | json }},
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "lowPrice": {{ product.price_min | divided_by: 100.0 | json }},
+    "highPrice": {{ product.price_max | divided_by: 100.0 | json }},
+    "offerCount": {{ product.variants.size | json }},
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition",
+    "url": {{ request.origin | append: product.url | json }}
+  }
+}
+</script>
+
+{% style %}
+  .pdp-info {
+    max-width: 760px;
+    margin: 24px auto 40px;
+  }
+  .pdp-info__rating { margin: 0 0 12px; }
+  .pdp-info__rating .jdgm-prev-badge { display: block !important; }
+  .pdp-info__lede {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 20px;
+  }
+  .pdp-info__group {
+    border-top: 1px solid #E5E5E5;
+    padding: 4px 0;
+  }
+  .pdp-info__group:last-of-type {
+    border-bottom: 1px solid #E5E5E5;
+  }
+  .pdp-info__summary {
+    cursor: pointer;
+    padding: 14px 0;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    list-style: none;
+  }
+  .pdp-info__summary::-webkit-details-marker { display: none; }
+  .pdp-info__summary::after {
+    content: '+';
+    float: right;
+    font-size: 16px;
+  }
+  .pdp-info__group[open] > .pdp-info__summary::after { content: '\2212'; }
+  .pdp-info__list {
+    margin: 0 0 16px;
+  }
+  .pdp-info__row {
+    display: flex;
+    gap: 16px;
+    padding: 6px 0;
+    font-size: 15px;
+  }
+  .pdp-info__row dt {
+    flex: 0 0 130px;
+    color: #6D6D6D;
+  }
+  .pdp-info__row dd { margin: 0; }
+  .pdp-info__body {
+    padding: 0 0 16px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .pdp-info__body p { margin: 0 0 10px; }
+  .pdp-info__secure {
+    margin: 16px 0 0;
+    font-size: 13px;
+    color: #6D6D6D;
+    letter-spacing: 0.06em;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Product details & trust",
+  "settings": [],
+  "presets": [ { "name": "Product details & trust" } ]
+}
+{% endschema %}

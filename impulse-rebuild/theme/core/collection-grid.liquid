@@ -1,0 +1,196 @@
+{% comment %}
+Snippet Arguments
+- collection: Liquid 'collection' or 'search' object
+- items: Paginated 'collection.products' or 'search.results' list. Cannot be pulled from the the 'collection' object passed in above
+- enable_sidebar: boolean
+- filter_style: 'sidebar' or 'drawer'
+- enable_sort: boolean
+- enable_collection_count
+- per_row
+- mobile_flush_grid
+- quick_shop_enable
+- campaign_section: section object that may own 'campaign_tile' blocks (in-grid merchandising; optional)
+- current_page: current pagination page — campaign tiles render on page 1 only (optional)
+{% endcomment %}
+
+{% liquid
+  if collection.products
+    assign count = collection.products_count
+    assign count_label = 'collections.general.items_with_count'
+  endif
+
+  if collection.results
+    assign count = collection.results_count
+    assign count_label = 'general.search.result_count'
+  endif
+
+  assign filters = collection.filters
+  assign sort_by = collection.sort_by
+  assign default_sort_by = collection.default_sort_by
+  assign sort_options = collection.sort_options
+  assign current_filter_size = 0
+
+  for filter in filters
+    assign current_filter_size = current_filter_size | plus: filter.active_values.size
+  endfor
+
+  assign show_campaign_tiles = false
+  if campaign_section and current_filter_size == 0 and current_page == 1 and collection.products
+    for cblock in campaign_section.blocks
+      if cblock.type == 'campaign_tile'
+        assign show_campaign_tiles = true
+      endif
+    endfor
+  endif
+
+  case per_row
+    when 2
+      assign tile_col = 'medium-up--one-half'
+      assign tile_wide = 'medium-up--one-whole'
+    when 3
+      assign tile_col = 'medium-up--one-third'
+      assign tile_wide = 'medium-up--two-thirds'
+    when 5
+      assign tile_col = 'medium-up--one-fifth'
+      assign tile_wide = 'medium-up--two-fifths'
+    else
+      assign tile_col = 'medium-up--one-quarter'
+      assign tile_wide = 'medium-up--one-half'
+  endcase
+%}
+
+<div class="collection-grid__wrapper">
+  <div class="collection-filter">
+    <div class="collection-filter__item collection-filter__item--drawer">
+      <button
+        type="button"
+        class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
+        aria-controls="FilterDrawer">
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><title>icon-filter</title><path d="M48 42h10"/><path d="M48 42a5 5 0 1 1-5-5 5 5 0 0 1 5 5Z"/><path d="M7 42h31"/><path d="M16 22H6"/><path d="M16 22a5 5 0 1 1 5 5 5 5 0 0 1-5-5Z"/><path d="M57 22H26"/></svg>
+          {{ 'collections.filters.title_tags' | t }}
+          {%- if current_filter_size > 0 -%}
+              ({{ current_filter_size }})
+          {%- endif -%}
+      </button>
+    </div>
+
+    <div class="collection-filter__item collection-filter__item--count small--hide">
+      {%- if enable_collection_count -%}
+        {{ count_label | t: count: count }}
+      {%- endif -%}
+    </div>
+
+    <div class="collection-filter__item collection-filter__item--sort">
+        <div class="collection-filter__sort-container">
+        {%- assign sort_by = sort_by | default: default_sort_by -%}
+        <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
+        <select name="SortBy" id="SortBy" data-default-sortby="{{ default_sort_by }}">
+          <option value="title-ascending"{% if sort_by == default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
+          {%- for option in sort_options -%}
+          <option value="{{ option.value }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name }}</option>
+          {%- endfor -%}
+        </select>
+        </div>
+    </div>
+  </div>
+
+  <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
+    {%- for item in items -%}
+      {%- assign item_index = forloop.index -%}
+      {%- if show_campaign_tiles -%}
+        {%- for cblock in campaign_section.blocks -%}
+          {%- if cblock.type == 'campaign_tile' and cblock.settings.position == item_index -%}
+            {%- if cblock.settings.image or cblock.settings.heading != blank -%}
+              <div class="grid__item campaign-tile {% if cblock.settings.wide %}small--one-whole {{ tile_wide }}{% else %}small--one-half {{ tile_col }}{% endif %}" {{ cblock.shopify_attributes }}>
+                {%- if cblock.settings.link != blank -%}<a href="{{ cblock.settings.link }}" class="campaign-tile__link">{%- endif -%}
+                  <div class="campaign-tile__media campaign-tile__media--{{ cblock.settings.scheme }}{% if cblock.settings.wide %} campaign-tile__media--wide{% endif %}">
+                    {%- if cblock.settings.image -%}
+                      {%- assign tile_alt = cblock.settings.heading | default: cblock.settings.image.alt -%}
+                      {{ cblock.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '360, 540, 720, 1080, 1400', alt: tile_alt }}
+                    {%- endif -%}
+                    <span class="campaign-tile__copy">
+                      {%- if cblock.settings.heading != blank -%}<span class="campaign-tile__heading">{{ cblock.settings.heading | escape }}</span>{%- endif -%}
+                      {%- if cblock.settings.subtext != blank -%}<span class="campaign-tile__subtext">{{ cblock.settings.subtext | escape }}</span>{%- endif -%}
+                    </span>
+                  </div>
+                {%- if cblock.settings.link != blank -%}</a>{%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- if item.object_type == 'product' -%}
+        {%- render 'product-grid-item',
+          product: item,
+          per_row: per_row,
+          quick_shop_enable: quick_shop_enable
+        -%}
+      {%- else -%}
+        {%- render 'search-grid-item',
+          item: item,
+          per_row: per_row
+        %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- if show_campaign_tiles -%}
+{% style %}
+.campaign-tile__link { display: block; text-decoration: none; }
+.campaign-tile__media { position: relative; overflow: hidden; background: #0A0A0B; aspect-ratio: 3/4; }
+.campaign-tile__media--wide { aspect-ratio: 3/2; }
+@media screen and (max-width: 768px) { .campaign-tile__media--wide { aspect-ratio: 2/1; } }
+.campaign-tile__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.campaign-tile__media--light { background: #F7F7F5; }
+.campaign-tile__media--red { background: #D0021B; }
+.campaign-tile__copy { position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 1; color: #fff; }
+.campaign-tile__media--light .campaign-tile__copy { color: #0A0A0B; }
+.campaign-tile__heading { display: block; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; font-size: 18px; line-height: 1.15; }
+.campaign-tile__subtext { display: block; font-size: 13px; margin-top: 4px; opacity: .85; }
+{% endstyle %}
+{%- endif -%}
+
+{%- if enable_sidebar and filter_style != 'drawer' and collection.filters.size > 0 -%}
+{% comment %}
+  Sidebar enabled but not in drawer mode, only show filter button on mobile
+{% endcomment %}
+{% style %}
+@media screen and (min-width: 769px) {
+  .collection-filter__item--drawer {
+    display: none;
+  }
+  .collection-filter__item--count {
+    text-align: left;
+  }
+  html[dir="rtl"] .collection-filter__item--count {
+    text-align: right;
+  }
+}
+{% endstyle %}
+{%- endif -%}
+
+{%- if enable_sidebar == false or collection.filters.size == 0 -%}
+{% comment %}
+    Disable sidebar & filter features
+{% endcomment %}
+{% style %}
+.collection-filter__item--drawer {
+  display: none;
+}
+.collection-filter__item--count {
+  text-align: left;
+}
+html[dir="rtl"] .collection-filter__item--count {
+  text-align: right;
+}
+{% endstyle %}
+{%- endif -%}
+
+{%- unless enable_sort -%}
+{% style %}
+.collection-filter__sort-container {
+  display: none;
+}
+{% endstyle %}
+{%- endunless -%}

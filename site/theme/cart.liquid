@@ -1,0 +1,302 @@
+{%- comment -%}
+  HIVOLT — cart template
+  ─────────────────────
+  Drop-in replacement for templates/cart.liquid.
+  Requires assets/hivolt.css and assets/cart.css, both linked from
+  layout/theme.liquid:
+
+      {{ 'hivolt.css' | asset_url | stylesheet_tag }}
+      {{ 'cart.css'   | asset_url | stylesheet_tag }}
+
+  The whole page works with JavaScript switched off. Quantities are plain
+  number inputs named updates[] inside the cart form, applied by a
+  real Update submit. Remove is a link to item.url_to_remove — a GET, no
+  script. The script at the foot only saves a click by submitting the form
+  when a quantity changes; nothing depends on it.
+
+  Every figure on this page comes from the cart object. There is no
+  "you saved" line, because the store cannot honestly compute one, and no
+  claim beyond the four in the strip at the bottom.
+{%- endcomment -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">Cart</li>
+  </ol>
+</nav>
+
+{%- comment -%}
+  <main>, the ticker, masthead and footer come from layout/theme.liquid.
+  This template supplies page content only.
+{%- endcomment -%}
+  <section class="ct wrap">
+
+    <div class="sec__head">
+      <h1 class="sec__h">Cart</h1>
+      <span class="mono">
+        {%- if cart.item_count > 0 -%}
+          {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}
+        {%- else -%}
+          Empty
+        {%- endif -%}
+      </span>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+
+      {%- comment -%} Empty state — short, and straight back to the three collections {%- endcomment -%}
+      <div class="ct__empty">
+        <p class="ct__empty-t">Nothing in the cart.</p>
+        <p class="ct__empty-p">Pick up where you left off.</p>
+        <div class="ct__links">
+          <a class="btn btn--ghost" href="/collections/womens-activewear">Women's</a>
+          <a class="btn btn--ghost" href="/collections/mens-activewear">Men's</a>
+          <a class="btn btn--ghost" href="/collections/training">Training</a>
+        </div>
+      </div>
+
+    {%- else -%}
+
+      {%- form 'cart', cart, id: 'ct-form', class: 'ct__form' -%}
+
+        {%- comment -%} Wide by nature — its own scroll container, and it stacks under 640px {%- endcomment -%}
+        <div class="ct__scroll">
+          <div class="ct__tbl">
+
+            {%- comment -%}
+              Column headings are decoration: every cell carries its own label,
+              visually hidden until the row stacks. Hidden from assistive tech so
+              the label is not announced twice.
+            {%- endcomment -%}
+            <div class="ln ln--head" aria-hidden="true">
+              <span class="ln__fig"></span>
+              <span class="ln__desc">Item</span>
+              <span class="ln__unit">Unit</span>
+              <span class="ln__qty">Qty</span>
+              <span class="ln__tot">Line total</span>
+              <span class="ln__rm">Remove</span>
+            </div>
+
+            {%- for item in cart.items -%}
+              <div class="ln">
+
+                <span class="ln__fig">
+                  {%- if item.image -%}
+                    <img
+                      src="{{ item.image | image_url: width: 220 }}"
+                      srcset="{{ item.image | image_url: width: 220 }} 220w,
+                              {{ item.image | image_url: width: 440 }} 440w"
+                      sizes="72px"
+                      alt="{{ item.image.alt | default: item.product.title | escape }}"
+                      width="{{ item.image.width }}" height="{{ item.image.height }}"
+                      loading="lazy">
+                  {%- else -%}
+                    <span class="ph"><span>No image</span></span>
+                  {%- endif -%}
+                </span>
+
+                <span class="ln__desc">
+                  <a class="ln__name" href="{{ item.url }}">{{ item.product.title }}</a>
+                  {%- unless item.product.has_only_default_variant -%}
+                    <span class="ln__var">{{ item.variant.title }}</span>
+                  {%- endunless -%}
+                  {%- if item.selling_plan_allocation != blank -%}
+                    <span class="ln__var">{{ item.selling_plan_allocation.selling_plan.name }}</span>
+                  {%- endif -%}
+                  {%- for alloc in item.line_level_discount_allocations -%}
+                    <span class="ln__disc">{{ alloc.discount_application.title }} −{{ alloc.amount | money }}</span>
+                  {%- endfor -%}
+                </span>
+
+                <span class="ln__unit">
+                  <span class="ln__lab">Unit</span>
+                  <span class="ln__num">
+                    {%- if item.original_price > item.final_price -%}
+                      <s>{{ item.original_price | money }}</s>
+                    {%- endif -%}
+                    {{ item.final_price | money }}
+                  </span>
+                </span>
+
+                <span class="ln__qty">
+                  <label class="ln__lab" for="updates_{{ item.key }}">Qty</label>
+                  <input
+                    type="number"
+                    id="updates_{{ item.key }}"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    aria-label="Quantity for {{ item.product.title | escape }}">
+                </span>
+
+                <span class="ln__tot">
+                  <span class="ln__lab">Line total</span>
+                  <span class="ln__num">{{ item.final_line_price | money }}</span>
+                </span>
+
+                <span class="ln__rm">
+                  <a href="{{ item.url_to_remove }}"
+                     aria-label="Remove {{ item.product.title | escape }} from cart">Remove</a>
+                </span>
+
+              </div>
+            {%- endfor -%}
+
+          </div>
+        </div>
+
+        {%- comment -%}
+          ── the two-or-more offer, surfaced at the decision point ──────────
+          "Two or more — 15% off" has been ACTIVE and automatic since launch,
+          but nothing on the storefront ever said so — a shopper only found
+          out at checkout, after deciding. The unit economics make this the
+          page that matters: at a ~$30 acquisition cost a single-item order
+          loses money, so the one honest sentence that turns one item into
+          two is worth more than any redesign.
+
+          Shown only when exactly one item is in the cart. At two or more the
+          discount itself appears in the totals sheet via the existing
+          discount-application rows, which is better proof than a banner.
+
+          Recommendations are gender-aware via the cart item's collections,
+          link to the PDP rather than blind-adding a sized variant (a wrong
+          size added in one click is a return, not a sale), and never render
+          at all if the pools are empty. Nothing here invents a claim: the
+          discount title is read off the store's own automatic discount.
+        {%- endcomment -%}
+        {%- if cart.item_count == 1 -%}
+          {%- assign solo = cart.items.first.product -%}
+          {%- assign pool = collections['sets'] -%}
+          {%- for c in solo.collections -%}
+            {%- if c.handle == 'mens-activewear' -%}
+              {%- assign pool = collections['mens-activewear'] -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <div class="ct__offer">
+            <p class="ct__offer-t">
+              <strong>Add any second item and both get 15% off.</strong>
+              Applied automatically at checkout — no code.
+            </p>
+            {%- assign shown = 0 -%}
+            {%- if pool.handle != blank -%}
+              <div class="ct__offer-grid">
+                {%- for p in pool.products limit: 6 -%}
+                  {%- if p.id != solo.id and p.available and shown < 2 -%}
+                    {%- assign shown = shown | plus: 1 -%}
+                    <a class="ct__offer-item" href="{{ p.url }}">
+                      {%- if p.featured_image -%}
+                        <img src="{{ p.featured_image | image_url: width: 300 }}"
+                             alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                             width="{{ p.featured_image.width }}"
+                             height="{{ p.featured_image.height }}" loading="lazy">
+                      {%- endif -%}
+                      <span class="ct__offer-name">{{ p.title | escape }}</span>
+                      <span class="ct__offer-price mono">{{ p.price | money }}</span>
+                    </a>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="ct__foot">
+
+          <div class="ct__note">
+            <label class="mono ct__note-l" for="cart-note">Order note</label>
+            <textarea id="cart-note" name="note" rows="4"
+                      placeholder="Anything we need to know about this order.">{{ cart.note }}</textarea>
+            <p class="ct__note-h">Saved when you press Update or Checkout.</p>
+          </div>
+
+          <div class="ct__sum">
+            <div class="sheet">
+              <div class="sheet__row">
+                <span class="sheet__k">Subtotal</span>
+                <span class="sheet__v">{{ cart.items_subtotal_price | money }}</span>
+              </div>
+              {%- for d in cart.cart_level_discount_applications -%}
+                <div class="sheet__row">
+                  <span class="sheet__k">{{ d.title }}</span>
+                  <span class="sheet__v">−{{ d.total_allocated_amount | money }}</span>
+                </div>
+              {%- endfor -%}
+              <div class="sheet__row">
+                <span class="sheet__k">Total</span>
+                <span class="sheet__v"><em>{{ cart.total_price | money }}</em></span>
+              </div>
+            </div>
+
+            <p class="ct__terms">
+              Shipping is free within the US, with no minimum. Tax is calculated at checkout.
+            </p>
+
+            <div class="ct__acts">
+              <button type="submit" name="update" class="btn btn--ghost ct__update">Update</button>
+              <button type="submit" name="checkout" class="btn ct__checkout">Checkout</button>
+            </div>
+          </div>
+
+        </div>
+
+      {%- endform -%}
+
+    {%- endif -%}
+
+    {%- comment -%} Four facts. Nothing else is claimed anywhere on this page. {%- endcomment -%}
+    <div class="ct__assure">
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Shipping</span>
+        <p class="ct__assure-d">Free within the US, no minimum.</p>
+      </div>
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Delivery</span>
+        <p class="ct__assure-d">8–14 business days, from Illinois.</p>
+      </div>
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Returns</span>
+        <p class="ct__assure-d">60 days, unworn with tags. No restocking fee.</p>
+      </div>
+      <div class="ct__assure-c">
+        <span class="ct__assure-k">Payment</span>
+        <p class="ct__assure-d">Shopify Checkout. Card details never touch our servers.</p>
+      </div>
+    </div>
+
+  </section>
+
+<style>
+  .ct__offer{border:1px solid var(--rule);padding:16px;margin:20px 0}
+  .ct__offer-t{margin:0 0 12px}
+  .ct__offer-grid{display:flex;gap:16px;flex-wrap:wrap}
+  .ct__offer-item{display:flex;flex-direction:column;gap:4px;max-width:150px;
+                  text-decoration:none;color:inherit}
+  .ct__offer-item img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}
+  .ct__offer-name{font-size:13px;line-height:1.3}
+  .ct__offer-price{font-size:12px}
+</style>
+
+<script>
+/* Progressive enhancement only. With scripting off, the Update button below
+   the totals does exactly the same job — this just saves the click. */
+(function(){
+  var form = document.getElementById('ct-form');
+  if(!form) return;
+  var update = form.querySelector('button[name="update"]');
+  if(!update) return;
+
+  form.querySelectorAll('input[name="updates[]"]').forEach(function(input){
+    var initial = input.value;
+    input.addEventListener('change', function(){
+      var n = parseInt(input.value, 10);
+      if (isNaN(n) || n < 0) { input.value = initial; return; }
+      if (String(n) === String(initial)) return;
+      if (form.requestSubmit) { form.requestSubmit(update); } else { update.click(); }
+    });
+  });
+})();
+</script>

@@ -1,0 +1,53 @@
+{
+  "type": "header",
+  "name": "t:sections.header-group.name",
+  "sections": {
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "a0": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free tracked shipping",
+            "link_text": "On every US order, no minimum",
+            "link": "/policies/shipping-policy"
+          }
+        },
+        "a1": {
+          "type": "announcement",
+          "settings": {
+            "text": "60-day returns",
+            "link_text": "Free return label, no restocking fee",
+            "link": "/policies/refund-policy"
+          }
+        }
+      },
+      "block_order": ["a0", "a1"],
+      "settings": {
+        "announcement_compact": false,
+        "sticky_on_scroll": true,
+        "sticky_on_mobile": false
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo": "",
+        "desktop_logo_width": 200,
+        "mobile_logo_width": 130,
+        "main_menu_link_list": "fashion-main",
+        "hover_menu": true,
+        "main_menu_alignment": "center",
+        "header_style": "sticky",
+        "sticky_index": false,
+        "sticky_collection": false,
+        "toolbar_menu": "",
+        "toolbar_social": false,
+        "show_currency_selector": false,
+        "show_currency_flags": false,
+        "show_locale_selector": false
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

@@ -1,0 +1,451 @@
+{
+  "sections": {
+    "hero": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-v3-hero-desktop.png",
+        "image_mobile": "shopify://shop_images/hivolt-v3-portrait-01.png",
+        "is_first": true,
+        "preheading": "HIVOLT · New season",
+        "heading": "Modern essentials, redefined.",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 40,
+        "desktop_height": 86,
+        "desktop_focal": "center center"
+      }
+    },
+    "brand-strip": {
+      "type": "fashion-strip",
+      "settings": {
+        "text": "Free tracked US shipping · 60-day free returns · No restocking fees",
+        "scheme": "dark"
+      }
+    },
+    "trending": {
+      "type": "image-grid",
+      "blocks": {
+        "b1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-trend-01.png",
+            "link": "",
+            "heading": "Knitwear"
+          }
+        },
+        "b2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-trend-02.png",
+            "link": "",
+            "heading": "New season"
+          }
+        },
+        "b3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-trend-03.png",
+            "link": "",
+            "heading": "Essentials"
+          }
+        },
+        "b4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-trend-04.png",
+            "link": "",
+            "heading": "Layers"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "Trending now",
+        "heading_size": "h2",
+        "text_alignment": "left",
+        "images_per_row": 4,
+        "image_shape": "portrait",
+        "grid_spacing": 8,
+        "full_width": false,
+        "space_above": false,
+        "space_below": false,
+        "divider": false,
+        "overlay_text_color": "#ffffff",
+        "overlay_color": "#0A0A0B",
+        "overlay_opacity": 15
+      }
+    },
+    "campaign-a": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-a.png",
+        "image_mobile": "shopify://shop_images/hivolt-v3-portrait-02.png",
+        "is_first": false,
+        "preheading": "The campaign",
+        "heading": "Two ways to layer",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 74,
+        "desktop_focal": "center center"
+      }
+    },
+    "campaign-b": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-b.png",
+        "image_mobile": "shopify://shop_images/hivolt-v3-portrait-03.png",
+        "is_first": false,
+        "preheading": "Women",
+        "heading": "The new season edit",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 74,
+        "desktop_focal": "center center"
+      }
+    },
+    "category-strip": {
+      "type": "fashion-category-strip",
+      "blocks": {
+        "c1": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-cat-01.png",
+            "label": "Knitwear",
+            "link": ""
+          }
+        },
+        "c2": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-cat-02.png",
+            "label": "Sweaters",
+            "link": ""
+          }
+        },
+        "c3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-cat-03.png",
+            "label": "Cardigans",
+            "link": ""
+          }
+        },
+        "c4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-cat-04-b.png",
+            "label": "New in",
+            "link": ""
+          }
+        },
+        "c5": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-cat-05.png",
+            "label": "Essentials",
+            "link": ""
+          }
+        },
+        "c6": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-cat-06.png",
+            "label": "Layers",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "heading": "Shop by category"
+      }
+    },
+    "campaign-c": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-v3-campaign-c-alt-b.png",
+        "image_mobile": "",
+        "is_first": false,
+        "preheading": "Feel the knit",
+        "heading": "Built for the cold months",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 70,
+        "desktop_focal": "center center"
+      }
+    },
+    "collage": {
+      "type": "fashion-collage",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-collage-anchor.png",
+            "title": "The full look",
+            "link": ""
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-collage-01.png",
+            "title": "Cable knit",
+            "link": ""
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-collage-02.png",
+            "title": "Knit details",
+            "link": ""
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-collage-03.png",
+            "title": "Sweaters",
+            "link": ""
+          }
+        },
+        "t5": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-v3-collage-04.png",
+            "title": "Layers",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "settings": {
+        "heading": "Explore the collection"
+      }
+    },
+    "latest": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "title": "The latest",
+        "heading_size": "h2",
+        "home_featured_products": "knitwear",
+        "per_row": 4,
+        "rows": 2,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title": "Be first to know",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>New drops, restocks and HIVOLT edits. Unsubscribe in one click, any time — see our <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>"
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "text",
+        "form"
+      ],
+      "settings": {
+        "align_text": "left",
+        "image_width": "50",
+        "image_mask": "none",
+        "image_position": "right",
+        "color_background": "#D0021B",
+        "color_text": "#FFFFFF",
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    },
+    "master-hero-disabled": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-master-hero-desktop.png",
+        "image_mobile": "shopify://shop_images/hivolt-master-hero-mobile.png",
+        "is_first": false,
+        "preheading": "HIVOLT",
+        "heading": "Women and men, one standard",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 80,
+        "desktop_focal": "center center"
+      },
+      "disabled": true
+    },
+    "men-hero-disabled": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-men-editorial-desktop.png",
+        "image_mobile": "shopify://shop_images/hivolt-men-editorial-mobile.png",
+        "is_first": false,
+        "preheading": "Men",
+        "heading": "The men's edit",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 35,
+        "desktop_height": 70,
+        "desktop_focal": "center center"
+      },
+      "disabled": true
+    },
+    "men-trends-disabled": {
+      "type": "image-grid",
+      "blocks": {
+        "b1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-new-season.png",
+            "link": "",
+            "heading": "New season"
+          }
+        },
+        "b2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-smart-casual.png",
+            "link": "",
+            "heading": "Smart casual"
+          }
+        },
+        "b3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-street-style.png",
+            "link": "",
+            "heading": "Street style"
+          }
+        },
+        "b4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/hivolt-men-denim.png",
+            "link": "",
+            "heading": "Denim"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "For him",
+        "heading_size": "h2",
+        "text_alignment": "left",
+        "images_per_row": 4,
+        "image_shape": "portrait",
+        "grid_spacing": 8,
+        "full_width": false,
+        "space_above": false,
+        "space_below": false,
+        "divider": false,
+        "overlay_text_color": "#ffffff",
+        "overlay_color": "#0A0A0B",
+        "overlay_opacity": 15
+      },
+      "disabled": true
+    },
+    "category-circles": {
+      "type": "fashion-category-circles",
+      "settings": {
+        "circle_size": 84,
+        "highlight_color": "#D0021B"
+      }
+    },
+    "value-strip": {
+      "type": "fashion-value-strip",
+      "settings": {
+        "scheme": "white"
+      }
+    },
+    "edit-cards": {
+      "type": "fashion-edit-cards",
+      "settings": {
+        "heading": "The Edit"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "category-circles",
+    "value-strip",
+    "brand-strip",
+    "edit-cards",
+    "trending",
+    "campaign-a",
+    "category-strip",
+    "latest",
+    "campaign-b",
+    "collage",
+    "campaign-c",
+    "newsletter",
+    "master-hero-disabled",
+    "men-hero-disabled",
+    "men-trends-disabled"
+  ]
+}

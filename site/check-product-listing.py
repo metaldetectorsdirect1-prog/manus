@@ -1,0 +1,324 @@
+#!/usr/bin/env python3
+"""Product Listing SOP validator — Google Merchant Center compliance.
+
+Adjudicates a product (JSON) against the course Product Listing SOP before it
+is published. Exit 1 = refusal; do not work around it. No network access —
+fetch with the connector, adjudicate here (same model as
+check-hivolt-theme-target.py).
+
+Input product JSON shape (subset of Shopify product):
+  {"title": str, "body_html": str, "handle": str, "vendor": str,
+   "product_type": str, "tags": [str] | str,
+   "variants": [{"price": "37.95", "compare_at_price": "59.95"|null, ...}],
+   "images": [{"src": str, "alt": str|null}], "currency": "USD"}
+
+Usage:
+  python3 site/check-product-listing.py --product product.json [--report]
+  python3 site/check-product-listing.py --self-test
+"""
+import argparse, json, re, sys, unicodedata
+
+PSY95 = {"EUR", "USD", "GBP", "CAD", "CHF", "NZD"}   # prices end .95
+ROUND05 = {"DKK", "PLN"}                              # prices end 0 or 5
+
+PROMO_TITLE = re.compile(
+    r"free\s+shipping|%\s*off|\b\d+\s*%|buy\s*\d+\s*get|\bsale\b|best\s*seller|"
+    r"discount|clearance|hot\s*deal|limited", re.I)
+CTA = re.compile(r"click\s+here|buy\s+now|order\s+now|shop\s+now|add\s+to\s+cart\s+now", re.I)
+URGENCY = re.compile(
+    r"limited\s+stock|flash\s+sale|last\s+pieces?|only\s+\d+\s+left|selling\s+fast|"
+    r"while\s+(stocks?|supplies)\s+last|hurry", re.I)
+MEDICAL = re.compile(
+    r"cures?|heals?|therapeutic|orthopedic|orthopaedic|anti[- ]?bacterial|"
+    r"medical[- ]grade|fda[- ]approved|clinically\s+proven", re.I)
+SUPPLIER_VENDORS = re.compile(r"aliexpress|cj\s*drop|cjdropshipping|alibaba|temu|1688|taobao", re.I)
+# Copyright/trademark screen — a copyright suspension is terminal (<1% recovery).
+BRAND_MARKS = re.compile(
+    r"\bgucci|goyard|louis\s*vuitton|\blv\b|chanel|dior|prada|hermes|herm\u00e8s|balenciaga|"
+    r"fendi|versace|burberry|celine|ysl|saint\s*laurent|bottega|moncler|canada\s*goose|"
+    r"dr\.?\s*martens?|doc\s*martens?|birkenstock|\bugg\b|nike|adidas|jordan|yeezy|"
+    r"lululemon|north\s*face|patagonia|ralph\s*lauren|tommy\s*hilfiger|calvin\s*klein|"
+    r"skims|zara|shein", re.I)
+DUPE = re.compile(r"\bdupe\b|inspired\s+by|\breplica\b|(look|style)\s+of\s+[A-Z]|designer\s+style", re.I)
+
+def _has_emoji_or_symbols(text):
+    for ch in text:
+        if ch in "™®★☆✓✔✖❌❤":  # ™ ® ★ ☆ ✓ ✔ ✖ ❌ ❤
+            return ch
+        cat = unicodedata.category(ch)
+        if cat == "So" or (0x1F000 <= ord(ch) <= 0x1FAFF):
+            return ch
+    return None
+
+FEELING = re.compile(
+    r"\b(elegant|elegance|effortless|stylish|chic|cozy|cosy|luxurious|luxe|dreamy|"
+    r"timeless|graceful|flattering|sleek|classy)\b", re.I)
+
+def _style_warnings(title):
+    """Title-formula style layer (7.3): warnings, not refusals — the lexicon
+    is a floor and some feeling words double as real queries (rule 4)."""
+    w = []
+    words = title.split()
+    if len(words) > 8:
+        w.append(f"STYLE: {len(words)} words — formula targets ~8 max (mobile fold)")
+    feels = FEELING.findall(title)
+    if len(feels) >= 2:
+        w.append(f"STYLE: {len(feels)} feeling words {feels} — exactly one; spend the slot on a keyword")
+    sig = [x.lower().strip(",.-") for x in words if len(x) >= 4]
+    dupes = {x for x in sig if sig.count(x) > 1}
+    if dupes:
+        w.append(f"STYLE: repeated word(s) {sorted(dupes)} — no keyword twice")
+    return w
+
+def _slug(title):
+    s = unicodedata.normalize("NFKD", title.lower())
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s
+
+def check(product):
+    errs, warns = [], []
+    title = product.get("title") or ""
+    body = product.get("body_html") or ""
+    handle = product.get("handle") or ""
+    vendor = product.get("vendor") or ""
+    currency = (product.get("currency") or "USD").upper()
+
+    # 2. Titles
+    if not title:
+        errs.append("TITLE: missing")
+    if len(title) > 150:
+        errs.append(f"TITLE: {len(title)} chars > 150 max")
+    if title.isupper() and len(title) > 3:
+        errs.append("TITLE: ALL CAPS")
+    words = [w for w in re.findall(r"[A-Za-z]{4,}", title)]
+    caps_words = [w for w in words if w.isupper()]
+    if caps_words:
+        errs.append(f"TITLE: all-caps word(s) {caps_words}")
+    if PROMO_TITLE.search(title):
+        errs.append(f"TITLE: promotional language: {PROMO_TITLE.search(title).group(0)!r}")
+    bad = _has_emoji_or_symbols(title)
+    if bad:
+        errs.append(f"TITLE: symbol/emoji {bad!r}")
+    tags = product.get("tags") or []
+    if isinstance(tags, str): tags = [tags]
+    for field, text in (("TITLE", title), ("DESC", body), ("TAGS", " ".join(tags))):
+        m = BRAND_MARKS.search(text)
+        if m:
+            errs.append(f"{field}: trademark {m.group(0)!r} — copyright suspension is TERMINAL")
+        m = DUPE.search(text)
+        if m:
+            errs.append(f"{field}: dupe/replica phrasing {m.group(0)!r} — trademark flag")
+        if field != "DESC":  # DESC already screened below with the same regex
+            m = MEDICAL.search(text)
+            if m:
+                errs.append(f"{field}: medical/health claim {m.group(0)!r} — health-adjacent products are excluded long-term")
+
+    # 3. Descriptions
+    if re.search(r"<img\b", body, re.I):
+        errs.append("DESC: <img> inside description (suspension trigger)")
+    for m in re.finditer(r'href="([^"]+)"', body, re.I):
+        url = m.group(1)
+        if url.startswith("http") and "{{shop" not in url:
+            errs.append(f"DESC: external link {url[:60]}")
+    if CTA.search(body):
+        errs.append(f"DESC: call-to-action: {CTA.search(body).group(0)!r}")
+    if URGENCY.search(body):
+        errs.append(f"DESC: urgency language: {URGENCY.search(body).group(0)!r}")
+    if MEDICAL.search(body):
+        errs.append(f"DESC: medical/health claim: {MEDICAL.search(body).group(0)!r}")
+    if "✓" in body or "✔" in body:
+        errs.append("DESC: checkmark characters — use bullet points")
+
+    # 4. Pricing
+    for i, v in enumerate(product.get("variants") or []):
+        try:
+            price = float(v.get("price"))
+        except (TypeError, ValueError):
+            errs.append(f"VARIANT {i}: unparseable price {v.get('price')!r}")
+            continue
+        cents = round(price * 100) % 100
+        if currency in PSY95 and cents != 95:
+            errs.append(f"VARIANT {i}: {price} {currency} — must end .95")
+        if currency in ROUND05 and round(price) % 5 != 0:
+            errs.append(f"VARIANT {i}: {price} {currency} — round to 0 or 5")
+        cap = v.get("compare_at_price")
+        if cap:
+            try:
+                cap = float(cap)
+                if cap > 0 and price < cap:
+                    disc = (cap - price) / cap * 100
+                    if disc > 50.0:
+                        errs.append(f"VARIANT {i}: discount {disc:.0f}% > 50% max")
+            except (TypeError, ValueError):
+                errs.append(f"VARIANT {i}: unparseable compare_at_price")
+
+    # 5. Organization
+    if not vendor:
+        errs.append("VENDOR: missing — set to the store name")
+    if SUPPLIER_VENDORS.search(vendor):
+        errs.append(f"VENDOR: supplier name {vendor!r} — a named suspension trigger")
+    if not product.get("product_type") and not product.get("tags"):
+        errs.append("CATEGORY: no product_type and no tags — assign at least one category")
+    if re.search(r"-\d{2,}$", handle):
+        errs.append(f"HANDLE: trailing number {handle!r} — base URL on the title")
+    if title and handle:
+        tslug = _slug(title)
+        if handle not in (tslug, tslug[:len(handle)]) and _slug(handle) not in tslug:
+            # top automatic trigger: retitled product, stale handle
+            errs.append(f"HANDLE: {handle!r} does not match title slug {tslug!r}")
+
+    # 1. Images (what is checkable without fetching pixels)
+    warns += _style_warnings(title)
+    imgs = product.get("images") or []
+    if not imgs:
+        errs.append("IMAGES: none")
+    for i, im in enumerate(imgs):
+        src = (im.get("src") or "").lower()
+        if re.search(r"alicdn|aliexpress|cjdropshipping", src):
+            errs.append(f"IMAGE {i}: supplier CDN url")
+        if not (im.get("alt") or "").strip():
+            warns.append(f"IMAGE {i}: missing alt text")
+    return errs, warns
+
+def check_batch(products):
+    """Cross-catalog checks: title and handle uniqueness (case-insensitive)."""
+    errs = []
+    seen_t, seen_h = {}, {}
+    for i, p in enumerate(products):
+        t = (p.get("title") or "").strip().lower()
+        h = (p.get("handle") or "").strip().lower()
+        if t and t in seen_t:
+            errs.append(f"BATCH: duplicate title (items {seen_t[t]} and {i}): {p.get('title')!r}")
+        seen_t.setdefault(t, i)
+        if h and h in seen_h:
+            errs.append(f"BATCH: duplicate handle (items {seen_h[h]} and {i}): {h!r}")
+        seen_h.setdefault(h, i)
+    # Discount-mix pattern (n>=10): all-discounted or one uniform discount rate
+    # is the "sale never ends" signature Google reads across a feed.
+    discs = []
+    for p in products:
+        v = (p.get("variants") or [{}])[0]
+        try:
+            price, cap = float(v.get("price") or 0), float(v.get("compare_at_price") or 0)
+            discs.append(round((cap - price) / cap * 100) if cap > price > 0 else 0)
+        except (TypeError, ValueError, ZeroDivisionError):
+            discs.append(0)
+    if len(discs) >= 10:
+        nonzero = [d for d in discs if d > 0]
+        if len(nonzero) == len(discs):
+            errs.append(f"BATCH: all {len(discs)} products discounted — mix in full-price items")
+        if len(nonzero) >= 10 and len(set(nonzero)) == 1:
+            errs.append(f"BATCH: every discount is {nonzero[0]}% — vary the levels (0/20/40, best sellers 50)")
+    return errs
+
+def _norm_tokens(text):
+    t = re.sub(r"[-/&']", " ", text.lower())
+    toks = set(re.findall(r"[a-z0-9]+", t))
+    return toks | {x[:-1] for x in toks if x.endswith("s") and len(x) > 3} | {x + "s" for x in toks}
+
+def stack(title, keywords):
+    """Which researched keywords does this title catch? Bag-of-words match —
+    all tokens of the keyword present in the title (Google matches tokens, not
+    contiguous phrases: 'knee-high heeled cowboy boots' catches 'knee high boots')."""
+    tt = _norm_tokens(title)
+    hits = []
+    for kw in keywords:
+        kt = set(re.findall(r"[a-z0-9]+", re.sub(r"[-/&']", " ", kw.lower())))
+        if kt and kt <= tt:
+            hits.append(kw)
+    return sorted(hits, key=lambda k: (-len(k.split()), k))
+
+def self_test():
+    good = {"title": "Elena relaxed merino wool turtleneck sweater",
+            "body_html": "<p>Merino wool knit.</p><ul><li>Ribbed cuffs</li></ul>",
+            "handle": "elena-relaxed-merino-wool-turtleneck-sweater",
+            "vendor": "HIVOLT", "product_type": "Knitwear", "tags": ["womens", "knitwear"],
+            "variants": [{"price": "44.95", "compare_at_price": "59.95"}],
+            "images": [{"src": "https://cdn.shopify.com/x.jpg", "alt": "sweater"}],
+            "currency": "USD"}
+    e, w = check(good)
+    assert e == [], f"clean product failed: {e}"
+
+    cases = [
+        (dict(good, title="FREE SHIPPING Floral Dress ★ 50% OFF"), "TITLE"),
+        (dict(good, title="x" * 151), "150"),
+        (dict(good, body_html='<img src="x.jpg"><p>Hurry, limited stock! Click here</p>'), "DESC"),
+        (dict(good, body_html="<p>✓ soft ✓ warm</p>"), "checkmark"),
+        (dict(good, variants=[{"price": "44.99", "compare_at_price": None}]), ".95"),
+        (dict(good, variants=[{"price": "24.95", "compare_at_price": "99.95"}]), "50%"),
+        (dict(good, vendor="AliExpress"), "VENDOR"),
+        (dict(good, handle="dress-231", title="Floral Summer Dress"), "HANDLE"),
+        (dict(good, images=[{"src": "https://ae01.alicdn.com/x.jpg", "alt": "a"}]), "IMAGE"),
+        (dict(good, currency="DKK", variants=[{"price": "251", "compare_at_price": None}]), "round"),
+        (dict(good, body_html="<p>Orthopedic support, clinically proven.</p>"), "medical"),
+        (dict(good, title="Gucci style leather jacket"), "trademark"),
+        (dict(good, title="Elegant orthopedic high heels"), "medical"),
+        (dict(good, tags=["orthopedic", "heels"]), "medical"),
+        (dict(good, body_html="<p>A perfect Skims dupe.</p>"), "TERMINAL"),
+        (dict(good, tags=["dr martens", "boots"]), "trademark"),
+    ]
+    for prod, must in cases:
+        e, _ = check(prod)
+        assert any(must.lower() in x.lower() for x in e), f"expected {must!r} violation, got {e}"
+    be = check_batch([good, dict(good, handle="other-handle"), dict(good, title="Different Title Here")])
+    assert any("duplicate title" in x for x in be) and any("duplicate handle" in x for x in be), be
+    assert check_batch([good, dict(good, title="Unique B", handle="unique-b")]) == []
+    hits = stack("Maria Women's Knee-High Heeled Cowboy Boots",
+                 ["cowboy boots", "heeled boots", "knee high boots", "boots", "ankle boots", "midi dress"])
+    assert hits == ["knee high boots", "cowboy boots", "heeled boots", "boots"], hits
+    _, w = check(dict(good, title="Elena elegant stylish winter jacket with style and warmth extra"))
+    assert any("feeling" in x for x in w) and any("words" in x for x in w), w
+    _, w = check(dict(good, title="Nora midi dress knit midi dress"))
+    assert any("repeated" in x for x in w), w
+    uni = [dict(good, title=f"T {i}", handle=f"h-{i}", variants=[{"price": "24.95", "compare_at_price": "49.95"}]) for i in range(12)]
+    be = check_batch(uni)
+    assert any("all 12 products discounted" in x for x in be) and any("every discount is 50%" in x for x in be), be
+    mixed = uni[:6] + [dict(good, title=f"F {i}", handle=f"f-{i}", variants=[{"price": "24.95", "compare_at_price": None}]) for i in range(6)]
+    assert check_batch(mixed) == [], check_batch(mixed)
+    print(f"self-test: {8 + len(cases)}/{8 + len(cases)} passed")
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--product")
+    ap.add_argument("--batch", help="JSON array or JSONL of products; adds cross-catalog uniqueness checks")
+    ap.add_argument("--stack", metavar="TITLE", help="show which researched keywords a title catches")
+    ap.add_argument("--keywords", default="impulse-rebuild/keywords/keyword-master-list.txt")
+    ap.add_argument("--report", action="store_true")
+    ap.add_argument("--self-test", action="store_true")
+    a = ap.parse_args()
+    if a.self_test:
+        self_test(); return 0
+    if a.stack:
+        kws = [l.strip() for l in open(a.keywords) if l.strip()]
+        hits = stack(a.stack, kws)
+        print(f"{len(hits)} keyword(s) caught:")
+        for h in hits: print(f"  {h}")
+        if len(hits) < 3: print("warn    fewer than 3 — formula targets 3-4 stacked keywords")
+        return 0
+    if a.batch:
+        raw = open(a.batch).read().strip()
+        prods = json.loads(raw) if raw.startswith("[") else [json.loads(l) for l in raw.splitlines() if l.strip()]
+        errs, warns = [], []
+        for i, p in enumerate(prods):
+            e, w = check(p)
+            errs += [f"[{i}] {p.get('handle','?')}: {x}" for x in e]
+            warns += [f"[{i}] {p.get('handle','?')}: {x}" for x in w]
+        errs += check_batch(prods)
+        for e in errs: print(f"REFUSE  {e}")
+        for w in warns: print(f"warn    {w}")
+        if not errs:
+            print(f"PASS — {len(prods)} products SOP compliant" + (f" ({len(warns)} warning(s))" if warns else ""))
+        return 1 if errs else 0
+    if not a.product:
+        ap.error("--product, --batch or --self-test required")
+    p = json.load(open(a.product))
+    errs, warns = check(p)
+    if a.report or errs or warns:
+        for e in errs: print(f"REFUSE  {e}")
+        for w in warns: print(f"warn    {w}")
+    if not errs:
+        print("PASS — SOP compliant" + (f" ({len(warns)} warning(s))" if warns else ""))
+    return 1 if errs else 0
+
+if __name__ == "__main__":
+    sys.exit(main())

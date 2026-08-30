@@ -1,0 +1,49 @@
+{%- comment -%}
+  HIVOLT Organization + WebSite JSON-LD. The Impulse layout emits no
+  structured data at all (audited 2026-08-28), so this section supplies the
+  two site-level entities. Output is limited to the homepage to avoid
+  duplicate entity declarations on every page. Facts only: legal name and
+  contact details are the verified policy identity. No aggregateRating, no
+  sameAs (no social profiles exist).
+{%- endcomment -%}
+
+{%- if request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "HIVOLT",
+  "legalName": "Dn Global Trading LLC",
+  "url": {{ shop.url | json }},
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "support@hivolt-usa.com",
+    "telephone": "+1-914-650-2041"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "HIVOLT",
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Structured data",
+  "settings": []
+}
+{% endschema %}

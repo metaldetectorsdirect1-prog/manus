@@ -1,0 +1,49 @@
+{%- comment -%}
+  HIVOLT — feed title resolver (G6)
+
+  Shopping feeds and the storefront want different titles. Feeds reward literal,
+  front-loaded titles ("HIVOLT Pique Polo Shirt - Men's - Black - M"); a premium
+  PDP wants the brand's own naming. Rather than degrade one for the other, the
+  feed title lives in its own field and this snippet resolves it.
+
+  Params
+    product  required
+    variant  optional — when given, variant attributes are appended, which is
+                        what an item-level feed row needs
+    format   'plain' (default) — the resolved title
+             'source'          — 'metafield' or 'fallback', for the audit view
+
+  Fallback is deliberate: with no feed title set, the storefront title is used
+  unchanged. That is a valid feed title, not a missing value.
+{%- endcomment -%}
+
+{%- liquid
+  assign hv_feed_title = product.metafields.custom.feed_title.value | default: '' | strip
+  assign hv_source = 'metafield'
+  if hv_feed_title == ''
+    assign hv_feed_title = product.title
+    assign hv_source = 'fallback'
+  endif
+
+  assign hv_suffix = ''
+  if variant != blank and product.has_only_default_variant == false
+    for hv_option in variant.options
+      assign hv_suffix = hv_suffix | append: ' - ' | append: hv_option
+    endfor
+  endif
+
+  assign hv_resolved = hv_feed_title | append: hv_suffix | strip
+
+  comment
+    Merchant Center truncates titles at 150 characters. Truncating here means
+    the important words are the ones we chose, not the ones that happened to
+    survive.
+  endcomment
+  assign hv_resolved = hv_resolved | truncate: 150, ''
+-%}
+
+{%- if format == 'source' -%}
+  {{- hv_source -}}
+{%- else -%}
+  {{- hv_resolved -}}
+{%- endif -%}

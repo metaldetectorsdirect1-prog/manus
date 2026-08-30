@@ -1,0 +1,76 @@
+# STEP 2 — batch 3: 10 products, 12 images
+
+mutation RemoveFabricatedImages {
+  # Soft Hooded Sports Jacket  (1 image)
+  op22_SoftHoodedSportsJacket: productDeleteMedia(
+    productId: "gid://shopify/Product/9571188277480"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182758211816"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Two Tone Raglan Sleeve Varsity Jacket  (1 image)
+  op23_TwoToneRaglanSleeveVarsityJacket: productDeleteMedia(
+    productId: "gid://shopify/Product/9572372545768"
+    mediaIds: [
+      "gid://shopify/MediaImage/40160763871464"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Two-Tone Fleeced Varsity Jacket  (2 images)
+  op24_TwoToneFleecedVarsityJacket: productDeleteMedia(
+    productId: "gid://shopify/Product/9572358684904"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432760040",
+      "gid://shopify/MediaImage/40160763904232"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Unisex Color Block Jacquard Soccer Jersey  (1 image)
+  op25_UnisexColorBlockJacquardSoccerJersey: productDeleteMedia(
+    productId: "gid://shopify/Product/9572448272616"
+    mediaIds: [
+      "gid://shopify/MediaImage/40160764690664"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Unisex Color Block Polo Shirt  (2 images)
+  op26_UnisexColorBlockPoloShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9572387389672"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432563432",
+      "gid://shopify/MediaImage/40160764657896"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Unisex Mesh Basketball Shorts  (1 image)
+  op27_UnisexMeshBasketballShorts: productDeleteMedia(
+    productId: "gid://shopify/Product/9572483203304"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432530664"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Unisex Panel Mesh Sleeveless Hoodie  (1 image)
+  op28_UnisexPanelMeshSleevelessHoodie: productDeleteMedia(
+    productId: "gid://shopify/Product/9572488118504"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432497896"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Unisex Raglan Sleeve Mesh Boxy T-Shirt  (1 image)
+  op29_UnisexRaglanSleeveMeshBoxyTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9572386111720"
+    mediaIds: [
+      "gid://shopify/MediaImage/40160764625128"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's Cropped Half-Zip Hoodie  (1 image)
+  op30_WomensCroppedHalfZipHoodie: productDeleteMedia(
+    productId: "gid://shopify/Product/9571207282920"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182759063784"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Women's High Waisted Ankle Leggings  (1 image)
+  op31_WomensHighWaistedAnkleLeggings: productDeleteMedia(
+    productId: "gid://shopify/Product/9572273684712"
+    mediaIds: [
+      "None"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+}

@@ -1,0 +1,176 @@
+{%- comment -%}
+  HIVOLT — structured data (G8)
+
+  Emits Organization, WebSite, BreadcrumbList and, on product pages,
+  Product with one Offer per variant.
+
+  What is deliberately absent:
+    * AggregateRating and Review — HIVOLT has no review data. Marking up
+      ratings that do not exist is a manual-action risk and a lie to the
+      shopper, so there is no code path that can emit them.
+    * gtin / mpn unless the identifier resolver confirms a real value.
+    * priceValidUntil, shippingDetails and hasMerchantReturnPolicy — each
+      encodes a commercial commitment that has not been made. They belong here
+      once shipping, duties and returns are settled per market, not before.
+
+  Every emitted value is read from the same drops the page renders from, so the
+  markup cannot disagree with the visible price, currency, availability, title,
+  variant or URL.
+{%- endcomment -%}
+
+{%- liquid
+  assign hv_currency = cart.currency.iso_code | default: shop.currency
+  assign hv_shop_url = shop.url
+
+  comment
+    product.url can carry _pos/_sid tracking, or an existing variant param,
+    depending on how the page was reached. The query is stripped so that
+    appending a variant param cannot produce a double-query URL.
+  endcomment
+  assign hv_product_url = product.url | split: '?' | first | prepend: hv_shop_url
+
+  comment
+    GemPages emits its own product markup on the templates it owns. Emitting a
+    second Product node on the same page would put two answers in front of the
+    crawler, so this one stands down there.
+  endcomment
+  assign hv_gempages_template = false
+  if template.suffix contains 'gp-template-'
+    assign hv_gempages_template = true
+  endif
+-%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ hv_shop_url | append: '#organization' | json }},
+      "name": {{ shop.name | json }},
+      "url": {{ hv_shop_url | json }}
+      {%- comment -%}
+        Google wants an Organization logo of at least 112 px. The width goes
+        through default so an unset favicon becomes 0 rather than reaching the
+        comparison as nil, which is an error in some Liquid engines and is why
+        a combined `!= blank and .width >= 112` condition is not used here.
+      {%- endcomment -%}
+      {%- assign hv_logo_width = settings.favicon.width | default: 0 -%}
+      {%- if hv_logo_width >= 112 -%}
+        , "logo": {{ settings.favicon | image_url: width: 512 | prepend: 'https:' | json }}
+      {%- endif -%}
+      {%- assign hv_social_settings = settings.social_facebook_link | append: '|' | append: settings.social_instagram_link | append: '|' | append: settings.social_youtube_link | append: '|' | append: settings.social_tiktok_link | append: '|' | append: settings.social_pinterest_link | split: '|' -%}
+      {%- assign hv_social_clean = '' -%}
+      {%- for hv_link in hv_social_settings -%}
+        {%- assign hv_trimmed = hv_link | strip -%}
+        {%- if hv_trimmed != '' -%}
+          {%- if hv_social_clean == '' -%}
+            {%- assign hv_social_clean = hv_trimmed -%}
+          {%- else -%}
+            {%- assign hv_social_clean = hv_social_clean | append: '|' | append: hv_trimmed -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if hv_social_clean != '' -%}
+        , "sameAs": [
+          {%- assign hv_social_list = hv_social_clean | split: '|' -%}
+          {%- for hv_link in hv_social_list -%}
+            {{ hv_link | json }}{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      {%- endif -%}
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ hv_shop_url | append: '#website' | json }},
+      "url": {{ hv_shop_url | json }},
+      "name": {{ shop.name | json }},
+      "publisher": { "@id": {{ hv_shop_url | append: '#organization' | json }} }
+    }
+
+    {%- comment -%} ---------- Breadcrumbs ---------- {%- endcomment -%}
+    {%- if request.page_type != 'index' and request.page_type != 'cart' -%}
+      ,{
+        "@type": "BreadcrumbList",
+        "@id": {{ canonical_url | append: '#breadcrumb' | json }},
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ hv_shop_url | json }} }
+          {%- assign hv_pos = 1 -%}
+
+          {%- if request.page_type == 'product' -%}
+            {%- if collection.handle -%}
+              {%- assign hv_pos = hv_pos | plus: 1 -%}
+              ,{ "@type": "ListItem", "position": {{ hv_pos }}, "name": {{ collection.title | json }}, "item": {{ hv_shop_url | append: collection.url | json }} }
+            {%- endif -%}
+            {%- assign hv_pos = hv_pos | plus: 1 -%}
+            ,{ "@type": "ListItem", "position": {{ hv_pos }}, "name": {{ product.title | json }}, "item": {{ hv_product_url | json }} }
+
+          {%- elsif request.page_type == 'collection' and collection.handle -%}
+            {%- assign hv_pos = hv_pos | plus: 1 -%}
+            ,{ "@type": "ListItem", "position": {{ hv_pos }}, "name": {{ collection.title | json }}, "item": {{ canonical_url | json }} }
+
+          {%- elsif request.page_type == 'page' -%}
+            {%- assign hv_pos = hv_pos | plus: 1 -%}
+            ,{ "@type": "ListItem", "position": {{ hv_pos }}, "name": {{ page.title | json }}, "item": {{ canonical_url | json }} }
+
+          {%- elsif request.page_type == 'article' -%}
+            {%- assign hv_pos = hv_pos | plus: 1 -%}
+            ,{ "@type": "ListItem", "position": {{ hv_pos }}, "name": {{ blog.title | json }}, "item": {{ hv_shop_url | append: blog.url | json }} }
+            {%- assign hv_pos = hv_pos | plus: 1 -%}
+            ,{ "@type": "ListItem", "position": {{ hv_pos }}, "name": {{ article.title | json }}, "item": {{ canonical_url | json }} }
+          {%- endif -%}
+        ]
+      }
+    {%- endif -%}
+
+    {%- comment -%} ---------- Product ---------- {%- endcomment -%}
+    {%- if request.page_type == 'product' and product != blank and product.empty? == false and hv_gempages_template == false -%}
+      {%- assign hv_current = product.selected_or_first_available_variant -%}
+      ,{
+        "@type": "Product",
+        "@id": {{ hv_product_url | append: '#product' | json }},
+        "name": {{ product.title | json }},
+        "url": {{ hv_product_url | json }},
+        {%- if product.description != blank -%}
+          "description": {{ product.description | strip_html | strip | truncate: 5000 | json }},
+        {%- endif -%}
+        {%- if product.images.size > 0 -%}
+          "image": [
+            {%- for hv_image in product.images limit: 8 -%}
+              {{ hv_image | image_url: width: 1600 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ],
+        {%- endif -%}
+        {%- if product.vendor != blank -%}
+          "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+        {%- endif -%}
+        {%- if hv_current.sku != blank -%}
+          "sku": {{ hv_current.sku | json }},
+        {%- endif -%}
+        {%- render 'hivolt-identifier', product: product, variant: hv_current, format: 'jsonld' -%}
+        "offers": [
+          {%- for hv_variant in product.variants -%}
+            {
+              "@type": "Offer",
+              "@id": {{ hv_product_url | append: '?variant=' | append: hv_variant.id | json }},
+              "url": {{ hv_product_url | append: '?variant=' | append: hv_variant.id | json }},
+              {%- if hv_variant.title != blank and product.has_only_default_variant == false -%}
+                "name": {{ hv_variant.title | json }},
+              {%- endif -%}
+              {%- if hv_variant.sku != blank -%}
+                "sku": {{ hv_variant.sku | json }},
+              {%- endif -%}
+              {%- render 'hivolt-identifier', product: product, variant: hv_variant, format: 'jsonld' -%}
+              "priceCurrency": {{ hv_currency | json }},
+              "price": {{ hv_variant.price | divided_by: 100.0 | json }},
+              "availability": "https://schema.org/{% if hv_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+              "itemCondition": "https://schema.org/NewCondition",
+              "seller": { "@id": {{ hv_shop_url | append: '#organization' | json }} }
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    {%- endif -%}
+  ]
+}
+</script>

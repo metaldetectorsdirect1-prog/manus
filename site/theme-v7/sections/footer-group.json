@@ -1,0 +1,54 @@
+{
+  "type": "footer",
+  "name": "t:sections.footer-group.name",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu-1": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": true,
+            "menu": "hivolt-draft-shop",
+            "container_width": 20
+          }
+        },
+        "menu-2": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": true,
+            "menu": "footer-about",
+            "container_width": 25
+          }
+        },
+        "menu-3": {
+          "type": "menu",
+          "settings": {
+            "show_footer_title": true,
+            "menu": "footer-legal",
+            "container_width": 20
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "show_footer_title": true,
+            "title": "The HIVOLT list",
+            "text": "<p>New drops and restocks, and nothing else. One email a month at most.</p>",
+            "container_width": 35
+          }
+        }
+      },
+      "block_order": ["menu-1", "menu-2", "menu-3", "newsletter"],
+      "settings": {
+        "show_currency_selector": false,
+        "show_currency_flags": false,
+        "show_locale_selector": false,
+        "show_payment_icons": true,
+        "show_copyright": true,
+        "copyright_text": "HIVOLT — published by the specification, not the adjective."
+      }
+    }
+  },
+  "order": ["footer"]
+}

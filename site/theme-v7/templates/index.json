@@ -1,0 +1,87 @@
+{
+  "sections": {
+    "hero": {
+      "type": "promo-grid",
+      "blocks": {
+        "hero-main": {
+          "type": "advanced",
+          "settings": {
+            "subheading": "HIVOLT",
+            "heading": "Activate your potential",
+            "heading_size": "h1",
+            "textarea": "Every product page publishes the composition, the fabric weight and the measured size chart. Where a number has not been measured, the page leaves it out rather than filling it in.",
+            "cta_text1": "Shop all",
+            "cta_link1": "shopify://collections/all",
+            "cta_text2": "",
+            "cta_link2": "",
+            "image": "",
+            "video_url": "",
+            "width": "100",
+            "height": 520,
+            "text_align": "vertical-center horizontal-center",
+            "color_accent": "#000000",
+            "boxed": false,
+            "framed": false
+          }
+        }
+      },
+      "block_order": [
+        "hero-main"
+      ],
+      "settings": {
+        "full_width": true,
+        "gutter_size": 0,
+        "space_above": false,
+        "space_below": false
+      }
+    },
+    "text-with-icons": {
+      "type": "text-with-icons",
+      "blocks": {
+        "text-block-1": {
+          "type": "text_block",
+          "settings": {
+            "icon": "truck",
+            "title": "Free US shipping",
+            "text": "<p>Free on every order, no minimum. Tracked door to door, 8–14 business days.</p>"
+          }
+        },
+        "text-block-2": {
+          "type": "text_block",
+          "settings": {
+            "icon": "package",
+            "title": "60-day returns",
+            "text": "<p>60 days from delivery, unworn with tags. Free prepaid return label, no restocking fee.</p>"
+          }
+        },
+        "text-block-3": {
+          "type": "text_block",
+          "settings": {
+            "icon": "ruler",
+            "title": "Measured, not estimated",
+            "text": "<p>Sizes come from the chart measured for that garment. A product without a measured chart shows no size guide at all, rather than a generic one.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text-block-1",
+        "text-block-2",
+        "text-block-3"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "align_text": "left",
+        "desktop_columns_per_row": 3,
+        "icon_color": "#000000",
+        "button_label": "",
+        "button_link": "",
+        "divider": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "text-with-icons"
+  ]
+}

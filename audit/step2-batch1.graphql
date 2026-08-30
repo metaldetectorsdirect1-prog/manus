@@ -1,0 +1,78 @@
+# STEP 2 — batch 1: 10 products, 14 images
+
+mutation RemoveFabricatedImages {
+  # Men's Drawstring Training Shorts  (1 image)
+  op2_MensDrawstringTrainingShorts: productDeleteMedia(
+    productId: "gid://shopify/Product/9571203285224"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447800552"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's High-Stretch Lightweight Gym T-Shirt  (1 image)
+  op3_MensHighStretchLightweightGymTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9572602642664"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432465128"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Jacquard Performance Tank Top  (1 image)
+  op4_MensJacquardPerformanceTankTop: productDeleteMedia(
+    productId: "gid://shopify/Product/9571272458472"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447571176"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Jacquard Slim Mesh Training T-Shirt  (1 image)
+  op5_MensJacquardSlimMeshTrainingTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9571193192680"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447603944"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Lightweight Sport Jersey  (1 image)
+  op6_MensLightweightSportJersey: productDeleteMedia(
+    productId: "gid://shopify/Product/9571243098344"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447636712"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Quarter-Zip Performance Long Sleeve T-Shirt  (5 images)
+  op7_MensQuarterZipPerformanceLongSleeveTShir: productDeleteMedia(
+    productId: "gid://shopify/Product/9571307946216"
+    mediaIds: [
+      "gid://shopify/MediaImage/40160661242088",
+      "gid://shopify/MediaImage/40160661340392",
+      "gid://shopify/MediaImage/40160661274856",
+      "gid://shopify/MediaImage/40160661307624",
+      "gid://shopify/MediaImage/40160661373160"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Quarter-Zip Performance Polo Shirt  (1 image)
+  op8_MensQuarterZipPerformancePoloShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9571277701352"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447669480"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Quarter-Zip Raglan Training T-Shirt  (1 image)
+  op9_MensQuarterZipRaglanTrainingTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9571234054376"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447702248"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Raglan Reflective T-Shirt  (1 image)
+  op10_MensRaglanReflectiveTShirt: productDeleteMedia(
+    productId: "gid://shopify/Product/9572296130792"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182432694504"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+  # Men's Slim-Fit Topstitch Tank Top  (1 image)
+  op11_MensSlimFitTopstitchTankTop: productDeleteMedia(
+    productId: "gid://shopify/Product/9571276423400"
+    mediaIds: [
+      "gid://shopify/MediaImage/40182447735016"
+    ]
+  ) { deletedMediaIds mediaUserErrors { field message } }
+}

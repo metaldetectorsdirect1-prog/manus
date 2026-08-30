@@ -1,0 +1,83 @@
+{%- comment -%}
+  HIVOLT — published specification table (T1 consumer)
+
+  Renders the spec.* metafields. A row with no value is not rendered and is
+  never filled with a placeholder: the page's entire claim is that every number
+  on it is real, and one invented row breaks that on the first product a
+  customer checks. When nothing is filled in, the whole block disappears.
+
+  Order and labels live in the two lists below — one source of truth, so adding
+  a spec is a one-line change and no row can drift out of order.
+
+  Params
+    product  required
+    heading  optional — defaults to "Specification"
+{%- endcomment -%}
+
+{%- liquid
+  assign hv_s = product.metafields.spec
+
+  assign hv_keys = 'composition,gsm,knit,fit,collar,placket,cuff,hem,finish,seams,opacity,care,origin' | split: ','
+  assign hv_labels = 'Composition,Fabric weight,Knit,Fit,Collar,Placket,Sleeve,Hem,Finish,Seams,Opacity,Care,Made in' | split: ','
+
+  comment
+    Every value is read through default so an unset metafield is an empty
+    string, not nil. Comparing nil is engine-dependent; comparing '' is not.
+  endcomment
+  assign hv_filled = 0
+  for hv_key in hv_keys
+    assign hv_probe = hv_s[hv_key].value | default: ''
+    if hv_probe != ''
+      assign hv_filled = hv_filled | plus: 1
+    endif
+  endfor
+
+  assign hv_benefits = hv_s.benefits.value
+  assign hv_benefit_count = hv_benefits.size | default: 0
+
+  assign hv_model_height = hv_s.model_height_cm.value | default: ''
+  assign hv_model_size = hv_s.model_wears_size.value | default: ''
+  assign hv_has_model = false
+  if hv_model_height != '' and hv_model_size != ''
+    assign hv_has_model = true
+  endif
+-%}
+
+{%- if hv_filled > 0 or hv_benefit_count > 0 or hv_has_model -%}
+  <div class="hv-spec">
+    {%- if hv_benefit_count > 0 -%}
+      <ul class="hv-spec__benefits">
+        {%- for hv_benefit in hv_benefits -%}
+          <li>{{ hv_benefit | escape }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if hv_filled > 0 -%}
+      <h2 class="hv-spec__heading">{{ heading | default: 'Specification' }}</h2>
+      <dl class="hv-spec__list">
+        {%- for hv_key in hv_keys -%}
+          {%- assign hv_value = hv_s[hv_key].value | default: '' -%}
+          {%- if hv_value != '' -%}
+            <div class="hv-spec__row">
+              <dt>{{ hv_labels[forloop.index0] }}</dt>
+              <dd>
+                {%- if hv_key == 'gsm' -%}
+                  {{ hv_value }} g/m&sup2;
+                {%- else -%}
+                  {{ hv_value | escape }}
+                {%- endif -%}
+              </dd>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </dl>
+    {%- endif -%}
+
+    {%- if hv_has_model -%}
+      <p class="hv-spec__model">
+        Model is {{ hv_model_height }} cm and wears size {{ hv_model_size | escape }}.
+      </p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

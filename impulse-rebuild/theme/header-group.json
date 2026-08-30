@@ -1,0 +1,74 @@
+{
+  "type": "header",
+  "name": "t:sections.header-group.name",
+  "sections": {
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "announcement-0": {
+          "type": "announcement",
+          "settings": {
+            "text": "Every number we publish has a source.",
+            "link_text": "See how",
+            "link": "/pages/size-guide"
+          }
+        }
+      },
+      "block_order": ["announcement-0"],
+      "settings": {
+        "announcement_compact": true,
+        "sticky_on_scroll": false,
+        "sticky_on_mobile": false
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega-menu-help": {
+          "type": "mega_menu",
+          "name": "Help",
+          "settings": {
+            "menu_item": "Help",
+            "show_images": false,
+            "image_aspect_ratio": "landscape",
+            "center_content": false,
+            "promo_text_alignment": "left",
+            "promo_heading_size": "small",
+            "promo1_image": "",
+            "promo1_image_shape": "landscape",
+            "promo1_link": "",
+            "promo1_heading": "",
+            "promo1_text": "",
+            "promo1_button_label": "",
+            "promo1_position": "after",
+            "promo2_image": "",
+            "promo2_image_shape": "landscape",
+            "promo2_link": "",
+            "promo2_heading": "",
+            "promo2_text": "",
+            "promo2_button_label": "",
+            "promo2_position": "after"
+          }
+        }
+      },
+      "block_order": ["mega-menu-help"],
+      "settings": {
+        "logo": "",
+        "desktop_logo_width": 160,
+        "mobile_logo_width": 120,
+        "main_menu_link_list": "main-menu",
+        "hover_menu": true,
+        "main_menu_alignment": "center",
+        "header_style": "sticky",
+        "sticky_index": true,
+        "sticky_collection": true,
+        "toolbar_menu": "",
+        "toolbar_social": false,
+        "show_currency_selector": false,
+        "show_currency_flags": false,
+        "show_locale_selector": false
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

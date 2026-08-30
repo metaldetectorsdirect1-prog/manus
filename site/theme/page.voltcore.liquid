@@ -1,0 +1,378 @@
+{%- comment -%}
+  HIVOLT — templates/page.voltcore.liquid
+  ───────────────────────────────────────
+  One-product landing page for the Voltcore 2-Piece Set. In the admin:
+  Pages → Voltcore → Template suffix → "voltcore". Renders inside
+  layout/theme.liquid, which supplies <main>.
+
+  Styles live in site/theme/pages.css and theme-hivolt.css. build-theme.py
+  concatenates both into assets/hivolt.css, which the layout already links.
+
+  Everything on this page is read from the live product. Price, sizes, stock
+  state, fabric weight and composition all come from Shopify — so the page
+  cannot drift out of step with the product it sells, and a price change in
+  admin updates the saving arithmetic here automatically.
+
+  The saving is COMPUTED, not typed. The product description used to claim
+  "$10.98 less than buying them separately" when the components were $38 and
+  $54 against a $79 set — a real saving of $13.00. That is what happens when a
+  number is written by hand once and the prices move underneath it. Here the
+  component products are looked up by handle and the arithmetic is done in
+  Liquid, so it is right or it does not render at all.
+
+  Four things are deliberately absent, because none of them would be true:
+
+    · There is no "cut from one fabric" line. The bra is 75/25 nylon-spandex
+      and the leggings are 80/20 — three different blends were being described
+      as one. What IS shared, and verified on all three products, is the
+      220 g/m² weight, so that is the claim the page is built on.
+    · There are no reviews, ratings or testimonials. The store has zero orders,
+      so every one of them would be fabricated.
+    · There is no urgency furniture of any kind — no timer, no stock warning,
+      no viewer count. All three would be inventions.
+    · There are no invented delivery promises. Shipping and returns are stated
+      exactly as the published policies state them.
+
+  CORRECTED 2026-08-13. This list used to carry a fourth entry claiming "there
+  is no 'unworn' condition on returns — the 60-Day Love-It Guarantee explicitly
+  covers worn and washed items." That was false, and the page contradicted it
+  twice in its own body, which already said "unworn with tags". The binding
+  Return & Refund Policy reads: "Items must be unworn and returned with the
+  original tags attached. Trying a garment on is fine. Training in it, washing
+  it, or removing the tags places it outside the window." The FAQ below still
+  promised returns "including after you have trained and washed it" — a
+  customer-facing promise the business does not honour, on the hero product's
+  own landing page. Both are fixed. This is the same defect found in
+  page.returns.liquid on 2026-08-12; this file was the second site of it.
+
+  check-liquid.py enforces most of that list.
+{%- endcomment -%}
+
+{%- assign set = all_products['voltcore-2-piece-set-twist-front-bra-flare-leggings'] -%}
+{%- assign bra = all_products['women-s-twist-front-v-neck-sports-bra'] -%}
+{%- assign legs = all_products['women-s-high-waisted-flare-leggings'] -%}
+
+{%- if set == blank or set.id == blank -%}
+  {%- comment -%} The product was renamed, archived or unpublished. Say so
+  plainly rather than rendering a landing page for nothing. {%- endcomment -%}
+  <section class="pg pg--solo wrap">
+    <div class="rte">
+      <h1 class="sec__h">Not available</h1>
+      <p>This set isn't currently published.
+        <a href="{{ routes.all_products_collection_url }}">Browse everything else</a> —
+        every style lists its fibre composition and fabric weight.</p>
+    </div>
+  </section>
+{%- else -%}
+
+{%- assign v = set.selected_or_first_available_variant -%}
+{%- comment -%}
+  Both components must resolve, or the comparison is not made at all.
+
+  This summed whichever of the two happened to load. Either is looked up by a
+  hardcoded handle, so archiving or renaming one dropped its term silently and
+  the page went on printing "Bought separately $X" and "You save $Y" computed
+  from a single garment — a smaller, wrong saving, stated with total
+  confidence. That is precisely the hand-typed-number failure this page was
+  written to avoid, arrived at by arithmetic instead of by typing.
+{%- endcomment -%}
+{%- assign parts_total = 0 -%}
+{%- if bra.price > 0 and legs.price > 0 -%}
+  {%- assign parts_total = bra.price | plus: legs.price -%}
+{%- endif -%}
+{%- assign saving = parts_total | minus: set.price -%}
+
+<nav class="crumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    <li aria-current="page">{{ page.title | default: 'Voltcore Set' | escape }}</li>
+  </ol>
+</nav>
+
+{%- comment -%} ── Hero: the number is the thesis ───────────────── {%- endcomment -%}
+<section class="hero hero--doc wrap">
+  <p class="mono hero__eyebrow">Drop 04 — Voltcore</p>
+  <h1 class="hero__h">Both pieces.<br>Same knit.<br><em>220 g/m².</em></h1>
+  <p class="hero__sub">
+    Most matching sets pair a light top with a heavier bottom, and the mismatch
+    shows the moment you move. These are knit at the same weight, so they hang,
+    stretch and hold their shape together.
+  </p>
+</section>
+
+<section class="pg wrap">
+  <div class="pg__cols">
+
+    <div>
+      {%- if set.featured_image -%}
+        <img src="{{ set.featured_image | image_url: width: 1200 }}"
+             alt="{{ set.featured_image.alt | default: set.title | escape }}"
+             width="{{ set.featured_image.width }}" height="{{ set.featured_image.height }}"
+             style="width:100%;height:auto">
+      {%- endif -%}
+    </div>
+
+    <aside class="pg__aside">
+      <h2 class="sec__h">{{ set.title | escape }}</h2>
+
+      <div class="sheet">
+        <div class="sheet__row">
+          <span class="sheet__k">Price</span>
+          <span class="sheet__v"><em>{{ set.price | money }}</em></span>
+        </div>
+        {%- if saving > 0 -%}
+          <div class="sheet__row">
+            <span class="sheet__k">Bought separately</span>
+            <span class="sheet__v">{{ parts_total | money }}</span>
+          </div>
+          <div class="sheet__row">
+            <span class="sheet__k">You save</span>
+            <span class="sheet__v"><em>{{ saving | money }}</em></span>
+          </div>
+        {%- endif -%}
+        {%- if set.metafields.spec.gsm != blank -%}
+          <div class="sheet__row">
+            <span class="sheet__k">Fabric weight</span>
+            <span class="sheet__v"><em>{{ set.metafields.spec.gsm }} g/m²</em></span>
+          </div>
+        {%- endif -%}
+        {%- if set.metafields.spec.composition != blank -%}
+          <div class="sheet__row">
+            <span class="sheet__k">Composition</span>
+            <span class="sheet__v">{{ set.metafields.spec.composition }}</span>
+          </div>
+        {%- endif -%}
+        <div class="sheet__row">
+          <span class="sheet__k">Shipping</span>
+          <span class="sheet__v">Free, US</span>
+        </div>
+      </div>
+
+      <p class="sheet__src">
+        Every figure above is read from the product record, not typed onto this
+        page. Change a price in admin and the saving recalculates itself.
+      </p>
+
+      {%- form 'product', set, id: 'voltcore-buy', class: 'opt' -%}
+        {%- unless set.has_only_default_variant -%}
+          <div class="opt__lab">
+            <label class="mono" for="voltcore-size">Size</label>
+            {%- assign sg = pages['size-guide'] -%}
+            {%- if sg != blank and sg.handle != blank -%}
+              <a href="{{ sg.url }}">Size guide</a>
+            {%- endif -%}
+          </div>
+        {%- endunless -%}
+
+        {%- comment -%}
+          The select IS the control. An earlier version rendered radio buttons
+          named opt-1 beside a hidden select and wired nothing between them —
+          so choosing L submitted whatever variant happened to be selected by
+          default. A picker that silently adds the wrong size is worse than a
+          plain select, and this page ships no JavaScript to bridge them.
+        {%- endcomment -%}
+        <select name="id" id="voltcore-size" class="cf__in" style="max-width:220px">
+          {%- for variant in set.variants -%}
+            <option value="{{ variant.id }}"
+                    {% if variant == v %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}>
+              {{ variant.title }}{% unless variant.available %} — sold out{% endunless %}
+            </option>
+          {%- endfor -%}
+        </select>
+
+        <button class="btn add" type="submit" name="add"
+                {% unless v.available %}disabled{% endunless %}>
+          {%- if v.available -%}Add the set — {{ set.price | money }}{%- else -%}Sold out{%- endif -%}
+        </button>
+      {%- endform -%}
+
+      <p class="cf__note">
+        Free US shipping. 60 days to return it, unworn with tags, free label.
+      </p>
+    </aside>
+
+  </div>
+</section>
+
+{%- comment -%} ── Why 220 ──────────────────────────────────────── {%- endcomment -%}
+<section class="pub">
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="sec__h">Why the weight is the whole argument</h2>
+      <span class="mono">Published, not claimed</span>
+    </div>
+
+    <div class="pub__grid">
+      <div class="pub__c">
+        <p class="pub__n">180–200</p>
+        <h3 class="pub__t">Where most leggings sit</h3>
+        <p class="pub__d">
+          Light enough to feel good on the hanger. Light enough to go sheer at
+          the bottom of a squat, which is where you find out.
+        </p>
+      </div>
+      <div class="pub__c">
+        <p class="pub__n">220</p>
+        <h3 class="pub__t">Where these sit</h3>
+        <p class="pub__d">
+          Dense enough to stay opaque through full range and hold shape rep
+          after rep. It is a fabric property, not a claim about the fabric.
+        </p>
+      </div>
+      <div class="pub__c">
+        <p class="pub__n">Both</p>
+        <h3 class="pub__t">Bra and leggings alike</h3>
+        <p class="pub__d">
+          The pieces use slightly different blends because a support piece and
+          a compression piece are engineered differently. The weight is what
+          we match, and weight is what governs opacity and drape.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ── What's in it, priced from the live products ──── {%- endcomment -%}
+<section class="cat wrap">
+  <div class="sec__head">
+    <h2 class="sec__h">The two pieces</h2>
+    {%- if saving > 0 -%}
+      <span class="mono">{{ parts_total | money }} apart · {{ set.price | money }} together</span>
+    {%- endif -%}
+  </div>
+
+  <div class="grid">
+    {%- if bra.id != blank -%}
+      <a class="item" href="{{ bra.url }}">
+        <div class="item__fig">
+          {%- if bra.metafields.spec.gsm != blank -%}
+            <span class="item__gsm">{{ bra.metafields.spec.gsm }}</span>
+          {%- endif -%}
+          {%- if bra.featured_image -%}
+            <img src="{{ bra.featured_image | image_url: width: 800 }}"
+                 alt="{{ bra.featured_image.alt | default: bra.title | escape }}"
+                 width="{{ bra.featured_image.width }}" height="{{ bra.featured_image.height }}"
+                 loading="lazy">
+          {%- else -%}
+            <div class="ph"><span>No image</span></div>
+          {%- endif -%}
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">{{ bra.title }}</h3>
+          <p class="item__meta">{{ bra.metafields.spec.composition | default: bra.type }}</p>
+          <div class="item__foot">
+            <span class="item__price">{{ bra.price | money }} on its own</span>
+            <span class="item__buy">View</span>
+          </div>
+        </div>
+      </a>
+    {%- endif -%}
+
+    {%- if legs.id != blank -%}
+      <a class="item" href="{{ legs.url }}">
+        <div class="item__fig">
+          {%- if legs.metafields.spec.gsm != blank -%}
+            <span class="item__gsm">{{ legs.metafields.spec.gsm }}</span>
+          {%- endif -%}
+          {%- if legs.featured_image -%}
+            <img src="{{ legs.featured_image | image_url: width: 800 }}"
+                 alt="{{ legs.featured_image.alt | default: legs.title | escape }}"
+                 width="{{ legs.featured_image.width }}" height="{{ legs.featured_image.height }}"
+                 loading="lazy">
+          {%- else -%}
+            <div class="ph"><span>No image</span></div>
+          {%- endif -%}
+        </div>
+        <div class="item__body">
+          <h3 class="item__name">{{ legs.title }}</h3>
+          <p class="item__meta">{{ legs.metafields.spec.composition | default: legs.type }}</p>
+          <div class="item__foot">
+            <span class="item__price">{{ legs.price | money }} on its own</span>
+            <span class="item__buy">View</span>
+          </div>
+        </div>
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} ── Objections, answered straight ────────────────── {%- endcomment -%}
+<section class="faq">
+  <div class="wrap">
+    <h2 class="faq__h">The questions worth asking</h2>
+    <div class="faq__list">
+
+      <details>
+        <summary>Is it actually squat-proof, or is that just a word?</summary>
+        <p class="faq__a">
+          It is a consequence of the knit density. At 220 g/m² there is enough
+          yarn per square metre that the fabric does not thin out when stretched
+          across the widest part of a deep squat. That is why we publish the
+          number instead of the adjective — you can compare 220 against anything
+          else you own.
+        </p>
+      </details>
+
+      <details>
+        <summary>Why do the two pieces have different fibre blends?</summary>
+        <p class="faq__a">
+          Because a support piece and a compression piece are engineered
+          differently. The bra is 75% nylon / 25% spandex; the leggings are
+          80% nylon / 20% spandex. What is matched is the weight — both at
+          220 g/m² — and weight is what governs opacity and how the fabric
+          drapes. We would rather tell you they differ than average the two
+          numbers into one that describes neither.
+        </p>
+      </details>
+
+      <details>
+        <summary>What if the fit is wrong?</summary>
+        <p class="faq__a">
+          Both pieces run true to size. Between sizes, size up for the bra and
+          stay true for the leggings. If it is still wrong, you have 60 days
+          from delivery to send it back unworn with the tags on, and returns
+          inside the US are free with a prepaid label.
+        </p>
+      </details>
+
+      <details>
+        <summary>Are there reviews?</summary>
+        <p class="faq__a">
+          No. This is a new store and nobody has left one yet. We would rather
+          say that than print testimonials nobody wrote — which is exactly what
+          the specification on this page is for. Judge the fabric weight, then
+          judge the garment for 60 days at our risk.
+        </p>
+      </details>
+
+      <details>
+        <summary>How long does delivery take?</summary>
+        <p class="faq__a">
+          Free standard shipping within the United States, 2–4 business days to
+          dispatch and 8–14 business days to arrive. We ship within the US only.
+        </p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<section class="pg__qw wrap">
+  <div class="pg__q">
+    <p class="pg__q-t">
+      <span class="mono">{{ set.price | money }}{% if saving > 0 %} · {{ saving | money }} less than the pieces{% endif %}</span>
+      {%- for o in set.options_with_values -%}
+        {%- if o.values.size > 1 -%}
+          {{ o.name }} {{ o.values.first }}–{{ o.values.last }}.
+        {%- else -%}
+          {{ o.name }} {{ o.values.first }}.
+        {%- endif -%}
+      {%- endfor -%}
+      Free US shipping, and 60 days to decide — unworn with tags, return label on us.
+    </p>
+    <a class="btn" href="{{ set.url }}">Go to the product page</a>
+  </div>
+</section>
+
+{%- endif -%}

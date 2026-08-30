@@ -1,0 +1,191 @@
+{%- comment -%}
+  HIVOLT — size guide (T2)
+
+  Driven entirely by the spec.size_chart metaobject. There is no built-in table
+  and no generic fallback chart: a product with no chart attached renders no
+  trigger and no dialog, so a shopper is never shown measurements that were not
+  measured.
+
+  Params
+    product  required
+    part     'trigger' — the button that opens the guide
+             'dialog'  — the guide itself; render once per product
+    uid      optional — disambiguates ids when a product appears twice on a page
+    label    optional — trigger text, defaults to the theme's size-chart string
+
+  Units: the chart stores one unit and this converts to the other at render
+  time, so a rounding choice is never baked into the stored data. Without
+  JavaScript the stored unit is shown and the toggle is hidden.
+{%- endcomment -%}
+
+{%- liquid
+  assign hv_chart = product.metafields.spec.size_chart.value
+  assign hv_cols = hv_chart.columns.value
+  assign hv_rows = hv_chart.rows.value
+
+  comment
+    Liquid compares right to left, so hv_rows.size > 0 would run before the
+    blank check. Sizes go through default so a missing field counts as zero
+    rather than reaching the comparison as nil.
+  endcomment
+  assign hv_col_count = hv_cols.size | default: 0
+  assign hv_row_count = hv_rows.size | default: 0
+
+  assign hv_cell_count = 0
+  if hv_col_count > 0 and hv_row_count > 0
+    for hv_row in hv_rows
+      for hv_col in hv_cols
+        assign hv_probe = hv_row.values[hv_col.key]
+        if hv_probe
+          assign hv_cell_count = hv_cell_count | plus: 1
+        endif
+      endfor
+    endfor
+  endif
+
+  assign hv_unit = hv_chart.source_unit.value | default: 'cm'
+  assign hv_basis = hv_chart.measurement_basis.value | default: 'garment_flat'
+
+  assign hv_uid = uid | default: product.id
+  assign hv_dialog_id = 'HvSizeGuide-' | append: hv_uid
+-%}
+
+{%- comment -%}
+  No real measurements means no guide: no trigger, no dialog, no empty table.
+  Liquid has no early return, so the whole body hangs off this one condition.
+{%- endcomment -%}
+{%- if hv_cell_count > 0 -%}
+{%- if part == 'trigger' -%}
+  <button
+    type="button"
+    class="hv-sg-trigger"
+    aria-haspopup="dialog"
+    data-hv-sg-open="{{ hv_dialog_id }}">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" class="hv-sg-trigger__icon">
+      <path d="M22.39 33.53c-7.46 0-13.5-3.9-13.5-8.72s6-8.72 13.5-8.72 13.5 3.9 13.5 8.72a12 12 0 0 1-.22 1.73"/>
+      <ellipse cx="22.39" cy="24.81" rx="3.28" ry="2.12"/>
+      <path d="M8.89 24.81V38.5c0 7.9 6.4 9.41 14.3 9.41h31.92V33.53H22.39"/>
+      <path d="M46.78 33.53v7.44"/><path d="M38.65 33.53v7.44"/>
+      <path d="M30.52 33.53v7.44"/><path d="M22.39 33.53v7.44"/>
+    </svg>
+    <span>{{ label | default: 'Size guide' }}</span>
+  </button>
+
+{%- else -%}
+  <dialog
+    id="{{ hv_dialog_id }}"
+    class="hv-sg"
+    aria-labelledby="{{ hv_dialog_id }}-title"
+    data-active-unit="{{ hv_unit }}">
+    <div class="hv-sg__panel">
+      <header class="hv-sg__head">
+        <div>
+          <h2 class="hv-sg__title" id="{{ hv_dialog_id }}-title">Size guide</h2>
+          <p class="hv-sg__basis">
+            {%- if hv_basis == 'body' -%}
+              Body measurements. Measure yourself, then pick the row you fall in.
+            {%- else -%}
+              Garment measured flat. These are the garment's own dimensions,
+              not body measurements.
+            {%- endif -%}
+          </p>
+        </div>
+        <button type="button" class="hv-sg__close" data-hv-sg-close aria-label="Close size guide">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+      </header>
+
+      <div class="hv-sg__units" role="radiogroup" aria-label="Measurement unit">
+        <label class="hv-sg__unit">
+          <input type="radio" name="hv-sg-unit-{{ hv_uid }}" value="cm" data-hv-sg-unit
+            {% if hv_unit == 'cm' %}checked{% endif %}>
+          <span>cm</span>
+        </label>
+        <label class="hv-sg__unit">
+          <input type="radio" name="hv-sg-unit-{{ hv_uid }}" value="in" data-hv-sg-unit
+            {% if hv_unit == 'in' %}checked{% endif %}>
+          <span>inches</span>
+        </label>
+      </div>
+
+      <div class="hv-sg__scroll" tabindex="0" role="region" aria-label="Size chart, scrollable">
+        <table class="hv-sg__table">
+          <caption class="visually-hidden">
+            {{ hv_chart.title.value | default: product.title | escape }} —
+            {% if hv_basis == 'body' %}body measurements{% else %}garment measured flat{% endif %}
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Size</th>
+              {%- for hv_col in hv_cols -%}
+                <th scope="col">{{ hv_col.label | default: hv_col.key | escape }}</th>
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- for hv_row in hv_rows -%}
+              {%- liquid
+                assign hv_row_cells = 0
+                for hv_col in hv_cols
+                  assign hv_probe = hv_row.values[hv_col.key]
+                  if hv_probe
+                    assign hv_row_cells = hv_row_cells | plus: 1
+                  endif
+                endfor
+              -%}
+              {%- if hv_row_cells > 0 -%}
+                <tr>
+                  <th scope="row">{{ hv_row.size | escape }}</th>
+                  {%- for hv_col in hv_cols -%}
+                    {%- assign hv_value = hv_row.values[hv_col.key] -%}
+                    <td>
+                      {%- if hv_value -%}
+                        {%- if hv_unit == 'cm' -%}
+                          {%- assign hv_cm = hv_value -%}
+                          {%- assign hv_in = hv_value | divided_by: 2.54 | round: 1 -%}
+                        {%- else -%}
+                          {%- assign hv_in = hv_value -%}
+                          {%- assign hv_cm = hv_value | times: 2.54 | round: 1 -%}
+                        {%- endif -%}
+                        <span data-unit-cm>{{ hv_cm }}</span><span data-unit-in>{{ hv_in }}</span>
+                      {%- else -%}
+                        <span class="hv-sg__absent" aria-hidden="true">&mdash;</span><span class="visually-hidden">Not measured</span>
+                      {%- endif -%}
+                    </td>
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+
+      {%- comment -%}
+        An unset note must produce no paragraph at all. Reading through default
+        makes that true regardless of how the engine compares nil to blank.
+        Escaped before newline_to_br so the line breaks survive but the note's
+        own text cannot introduce markup.
+      {%- endcomment -%}
+      {%- assign hv_note = hv_chart.note.value | default: '' -%}
+      {%- if hv_note != '' -%}
+        <p class="hv-sg__note">{{ hv_note | escape | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- comment -%}
+        Height without a size, or a size without a height, says nothing useful:
+        the sentence would read "and wears size ." Both are resolved first and
+        both must be present.
+      {%- endcomment -%}
+      {%- assign hv_model_cm = product.metafields.spec.model_height_cm.value | default: '' -%}
+      {%- assign hv_model_size = product.metafields.spec.model_wears_size.value | default: '' -%}
+      {%- if hv_model_cm != '' and hv_model_size != '' -%}
+        {%- assign hv_model_in = hv_model_cm | divided_by: 2.54 -%}
+        <p class="hv-sg__model">
+          Model is <span data-unit-cm>{{ hv_model_cm }} cm</span><span data-unit-in>{{ hv_model_in | round: 1 }} in</span>
+          and wears size {{ hv_model_size | escape }}.
+        </p>
+      {%- endif -%}
+    </div>
+  </dialog>
+{%- endif -%}
+{%- endif -%}
