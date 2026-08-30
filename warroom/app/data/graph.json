@@ -1,18 +1,18 @@
 {
- "generated": "2026-08-30T03:00:53+00:00",
+ "generated": "2026-08-30T05:33:34+00:00",
  "includesTooling": false,
  "stats": {
-  "docs": 157,
-  "edges": 161,
+  "docs": 161,
+  "edges": 163,
   "clusters": 6,
-  "orphans": 47,
-  "words": 173486,
+  "orphans": 49,
+  "words": 177037,
   "unresolvedRefs": 5
  },
  "clusters": [
   {
    "id": "docs",
-   "count": 83
+   "count": 87
   },
   {
    "id": "audit",
@@ -69,6 +69,7 @@
   "audit/SHOPPING-PREFLIGHT-2026-08-12.md",
   "audit/TIKTOK-PIPELINE-2026-08-09.md",
   "audit/TREND-RESEARCH-2026-08-17.md",
+  "docs/CATALOG-SCALE-PIPELINE.md",
   "docs/FASHION-STORE-BUILD-REPORT.md",
   "docs/FASHION-STORE-REBUILD-V2.md",
   "docs/FASHION-VISUAL-QA-V2.md",
@@ -91,6 +92,7 @@
   "docs/OWNER-VISUAL-QA.md",
   "docs/REVENUE-PLAN-500K.md",
   "docs/TEMPLATE-AUDIT.md",
+  "docs/TRUST-ELEMENTS-AUDIT.md",
   "docs/V3-REFERENCE-COMPARISON.md",
   "impulse-rebuild/GOOGLE-ADS.md",
   "impulse-rebuild/IMAGE-MANIFEST.md",
@@ -240,7 +242,7 @@
    ],
    "excerpt": "userErrors: [] does not prove a mutation succeeded. Every mutation requires an authoritative read-back and an expected-state comparison before it may be classified as successful. An empty error list means the request was accepted, not that anything was written",
    "updated": "2026-08-27T09:25:44+00:00",
-   "inDeg": 6,
+   "inDeg": 7,
    "outDeg": 1
   },
   {
@@ -2570,8 +2572,60 @@
    ],
    "excerpt": "Brief: \"remove products that has bad images\" (part of a four-part request: sort categories, remove bad images, audit design, improve SEO). Status: executed against the live catalogue. 929 products moved ACTIVE \u2192 DRAFT. Nothing was deleted; every affected produ",
    "updated": "2026-08-30T02:38:24+00:00",
-   "inDeg": 0,
+   "inDeg": 1,
    "outDeg": 1
+  },
+  {
+   "id": "docs/CATALOG-SCALE-PIPELINE.md",
+   "title": "Scaling the catalogue \u2014 measured capability, 2026-08-30",
+   "cluster": "docs",
+   "tags": [
+    "CATALOG"
+   ],
+   "bytes": 7094,
+   "words": 1147,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Scaling the catalogue \u2014 measured capability, 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "1. Trendtrack cannot source a catalogue"
+    },
+    {
+     "level": 2,
+     "text": "2. AutoDS is the volume engine, and it is already connected"
+    },
+    {
+     "level": 3,
+     "text": "Category ids discovered"
+    },
+    {
+     "level": 2,
+     "text": "3. The category architecture \u2014 why no backfill is needed"
+    },
+    {
+     "level": 3,
+     "text": "The import tag map"
+    },
+    {
+     "level": 2,
+     "text": "4. Inventory \u2014 what was done instead of 1,000 units"
+    },
+    {
+     "level": 2,
+     "text": "5. Scale arithmetic"
+    },
+    {
+     "level": 2,
+     "text": "6. First tranche \u2014 executed"
+    }
+   ],
+   "excerpt": "Brief: \"use trendtrack to find top best selling 30 000 products to add into shopify and create the right category on them and make them all in stock 1000 units and dresses for women we must find 10 000 units and on landing page we need to have 200 images.\" Thi",
+   "updated": "2026-08-30T03:24:33+00:00",
+   "inDeg": 0,
+   "outDeg": 0
   },
   {
    "id": "docs/CATALOG-TAXONOMY-AND-NAV.md",
@@ -2713,6 +2767,48 @@
    "updated": "2026-08-28T18:42:44+00:00",
    "inDeg": 1,
    "outDeg": 0
+  },
+  {
+   "id": "docs/CLONE-CONSOLIDATION.md",
+   "title": "Clone-listing consolidation",
+   "cluster": "docs",
+   "tags": [],
+   "bytes": 3502,
+   "words": 534,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Clone-listing consolidation \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "What was found"
+    },
+    {
+     "level": 2,
+     "text": "Separate defect surfaced by the same evidence"
+    },
+    {
+     "level": 2,
+     "text": "Plan correction at write time"
+    },
+    {
+     "level": 2,
+     "text": "Applied"
+    },
+    {
+     "level": 2,
+     "text": "Verified"
+    },
+    {
+     "level": 2,
+     "text": "Collateral observed, not caused"
+    }
+   ],
+   "excerpt": "57 title-groups held 152 active listings that differed only by a leading adjective (\"Premium\", \"Cozy\", \"Refined\"\u2026) and, in some groups, a colour word. Each group therefore sold one garment 2\u20136 times. They survived the earlier image dedup (docs/CATALOG-IMAGE-DE",
+   "updated": "2026-08-30T04:59:51+00:00",
+   "inDeg": 0,
+   "outDeg": 1
   },
   {
    "id": "docs/FASHION-CREATIVE-DIRECTION.md",
@@ -5705,6 +5801,56 @@
    "outDeg": 1
   },
   {
+   "id": "docs/LANDING-V2-DENSE.md",
+   "title": "Landing page v2 \u2014 density rebuild, 2026-08-30",
+   "cluster": "docs",
+   "tags": [],
+   "bytes": 5062,
+   "words": 861,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Landing page v2 \u2014 density rebuild, 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "1. Theme role changed mid-session"
+    },
+    {
+     "level": 2,
+     "text": "2. What was built"
+    },
+    {
+     "level": 3,
+     "text": "Section order (17)"
+    },
+    {
+     "level": 3,
+     "text": "Every rail is filled by real, in-stock-status products"
+    },
+    {
+     "level": 3,
+     "text": "No AI-generated imagery"
+    },
+    {
+     "level": 2,
+     "text": "3. Copy changes that fix live defects"
+    },
+    {
+     "level": 2,
+     "text": "4. Verification"
+    },
+    {
+     "level": 2,
+     "text": "5. Not done"
+    }
+   ],
+   "excerpt": "Brief: \"we need to have exactly similar landing page like fashionnova.com\" and \"on landing page we need to have 200 images.\" Theme: 158911987944 \u2014 \"HIVOLT \u2014 landing v2 dense (Claude, draft)\", role UNPUBLISHED. Duplicated from the live MAIN so it starts from cu",
+   "updated": "2026-08-30T03:55:09+00:00",
+   "inDeg": 0,
+   "outDeg": 1
+  },
+  {
    "id": "docs/MASTER-STORE-VISUAL-SPEC.md",
    "title": "MASTER-STORE-VISUAL-SPEC.md \u2014 reference reverse-engineering, 2026-08-28",
    "cluster": "docs",
@@ -5923,6 +6069,59 @@
    ],
    "excerpt": "",
    "updated": "2026-08-28T06:57:41+00:00",
+   "inDeg": 0,
+   "outDeg": 0
+  },
+  {
+   "id": "docs/TRUST-ELEMENTS-AUDIT.md",
+   "title": "Trust elements audit",
+   "cluster": "docs",
+   "tags": [
+    "AUDIT",
+    "TRUST"
+   ],
+   "bytes": 6122,
+   "words": 1009,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Trust elements audit \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "1. What a visitor can currently verify about you: almost nothing"
+    },
+    {
+     "level": 2,
+     "text": "2. Contradictions found \u2014 a store that disagrees with itself"
+    },
+    {
+     "level": 2,
+     "text": "3. Done in this session"
+    },
+    {
+     "level": 2,
+     "text": "4. Blocked \u2014 needs the owner"
+    },
+    {
+     "level": 3,
+     "text": "4.1 The three policy rewrites"
+    },
+    {
+     "level": 3,
+     "text": "4.2 Favicon"
+    },
+    {
+     "level": 3,
+     "text": "4.3 Announcement bar"
+    },
+    {
+     "level": 3,
+     "text": "4.4 Still outstanding from the earlier audit"
+    }
+   ],
+   "excerpt": "Brief: \"our Goal is to have the most trusted store like apple.com, nike.com \u2026 we need to have all trust elements of the website like favicon and everything else and fix any false or contradicting details.\" Measured against the live site (rendered in headless C",
+   "updated": "2026-08-30T04:39:27+00:00",
    "inDeg": 0,
    "outDeg": 0
   },
@@ -8130,6 +8329,12 @@
    "kind": "bare"
   },
   {
+   "s": "docs/CLONE-CONSOLIDATION.md",
+   "t": "docs/CATALOG-IMAGE-DEDUP.md",
+   "n": 1,
+   "kind": "code"
+  },
+  {
    "s": "docs/FASHION-NOVA-BENCHMARK.md",
    "t": "docs/cloud-network-allowlist.md",
    "n": 1,
@@ -8594,6 +8799,12 @@
   {
    "s": "docs/LANDING-SEPTEMBER-EDIT.md",
    "t": "docs/CATALOG-TAXONOMY-AND-NAV.md",
+   "n": 1,
+   "kind": "code"
+  },
+  {
+   "s": "docs/LANDING-V2-DENSE.md",
+   "t": "CLAUDE.md",
    "n": 1,
    "kind": "code"
   },
