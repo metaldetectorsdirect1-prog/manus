@@ -1,18 +1,18 @@
 {
- "generated": "2026-08-29T19:52:42+00:00",
+ "generated": "2026-08-30T03:00:53+00:00",
  "includesTooling": false,
  "stats": {
-  "docs": 155,
-  "edges": 159,
+  "docs": 157,
+  "edges": 161,
   "clusters": 6,
   "orphans": 47,
-  "words": 169213,
+  "words": 173486,
   "unresolvedRefs": 5
  },
  "clusters": [
   {
    "id": "docs",
-   "count": 81
+   "count": 83
   },
   {
    "id": "audit",
@@ -36,8 +36,8 @@
   }
  ],
  "hubs": [
-  "impulse-rebuild/BLOG-AUDIT.md",
   "CLAUDE.md",
+  "impulse-rebuild/BLOG-AUDIT.md",
   "docs/HIVOLT-POLICY-CORRECTIONS.md",
   "docs/HIVOLT-POLO-MEASUREMENT-REQUEST.md",
   "impulse-rebuild/APP-CONFLICTS.md",
@@ -240,7 +240,7 @@
    ],
    "excerpt": "userErrors: [] does not prove a mutation succeeded. Every mutation requires an authoritative read-back and an expected-state comparison before it may be classified as successful. An empty error list means the request was accepted, not that anything was written",
    "updated": "2026-08-27T09:25:44+00:00",
-   "inDeg": 5,
+   "inDeg": 6,
    "outDeg": 1
   },
   {
@@ -2521,6 +2521,59 @@
    "outDeg": 4
   },
   {
+   "id": "docs/CATALOG-IMAGE-DEDUP.md",
+   "title": "Duplicate-image sweep",
+   "cluster": "docs",
+   "tags": [
+    "CATALOG",
+    "IMAGE"
+   ],
+   "bytes": 6646,
+   "words": 1034,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Duplicate-image sweep \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "1. What \"bad images\" turned out to mean"
+    },
+    {
+     "level": 3,
+     "text": "How duplicates were detected without downloading anything"
+    },
+    {
+     "level": 3,
+     "text": "The two failure modes"
+    },
+    {
+     "level": 2,
+     "text": "2. The keep rule"
+    },
+    {
+     "level": 2,
+     "text": "3. Execution and verification"
+    },
+    {
+     "level": 2,
+     "text": "4. The 26 that did not stick \u2014 and why"
+    },
+    {
+     "level": 2,
+     "text": "5. What this does not fix"
+    },
+    {
+     "level": 2,
+     "text": "6. Artifacts"
+    }
+   ],
+   "excerpt": "Brief: \"remove products that has bad images\" (part of a four-part request: sort categories, remove bad images, audit design, improve SEO). Status: executed against the live catalogue. 929 products moved ACTIVE \u2192 DRAFT. Nothing was deleted; every affected produ",
+   "updated": "2026-08-30T02:38:24+00:00",
+   "inDeg": 0,
+   "outDeg": 1
+  },
+  {
    "id": "docs/CATALOG-TAXONOMY-AND-NAV.md",
    "title": "CATALOG-TAXONOMY-AND-NAV.md",
    "cluster": "docs",
@@ -2702,6 +2755,104 @@
    "updated": "2026-08-28T02:33:35+00:00",
    "inDeg": 1,
    "outDeg": 0
+  },
+  {
+   "id": "docs/FASHION-NOVA-BENCHMARK.md",
+   "title": "Fashion Nova audit and HIVOLT gap analysis",
+   "cluster": "docs",
+   "tags": [],
+   "bytes": 18895,
+   "words": 2998,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Fashion Nova audit and HIVOLT gap analysis \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "0. How this was measured"
+    },
+    {
+     "level": 2,
+     "text": "1. What Fashion Nova actually is"
+    },
+    {
+     "level": 3,
+     "text": "They are not on a Shopify theme"
+    },
+    {
+     "level": 2,
+     "text": "2. Homepage anatomy"
+    },
+    {
+     "level": 3,
+     "text": "Their design system is deliberately plain"
+    },
+    {
+     "level": 2,
+     "text": "3. The product card is the real engine"
+    },
+    {
+     "level": 2,
+     "text": "4. Collection page"
+    },
+    {
+     "level": 2,
+     "text": "5. Product page"
+    },
+    {
+     "level": 2,
+     "text": "6. HIVOLT measured against them, same day, same method"
+    },
+    {
+     "level": 2,
+     "text": "7. Five defects that must be fixed before \"better\" is achievable"
+    },
+    {
+     "level": 3,
+     "text": "7.1 The live hero says WINTER, on 30 August"
+    },
+    {
+     "level": 3,
+     "text": "7.2 Clone listings survived the image sweep"
+    },
+    {
+     "level": 3,
+     "text": "7.3 Colour claims are back in 54 titles"
+    },
+    {
+     "level": 3,
+     "text": "7.4 918 of 925 active products carry phantom inventory"
+    },
+    {
+     "level": 3,
+     "text": "7.5 Collection and category structure is duplicated and partly fabricated"
+    },
+    {
+     "level": 2,
+     "text": "8. What \"large collection\" can honestly mean"
+    },
+    {
+     "level": 2,
+     "text": "9. Recommended sequence"
+    },
+    {
+     "level": 2,
+     "text": "10. What this audit does not establish"
+    },
+    {
+     "level": 2,
+     "text": "Appendix \u2014 fixes applied in this session, 2026-08-30"
+    },
+    {
+     "level": 3,
+     "text": "These fixes may not hold"
+    }
+   ],
+   "excerpt": "Brief: \"audit https://www.fashionnova.com/\" and \"our goal is to make our store look better then fashionnova.com and have best collection of all top best selling fashion products and our landing page must be better then them and we need to display large collect",
+   "updated": "2026-08-30T02:50:44+00:00",
+   "inDeg": 0,
+   "outDeg": 1
   },
   {
    "id": "docs/FASHION-STORE-BUILD-REPORT.md",
@@ -4354,8 +4505,8 @@
    "tags": [
     "AUDIT"
    ],
-   "bytes": 5093,
-   "words": 830,
+   "bytes": 6673,
+   "words": 1071,
    "headings": [
     {
      "level": 1,
@@ -4372,10 +4523,14 @@
     {
      "level": 2,
      "text": "Product mutation verification (fresh read, this audit)"
+    },
+    {
+     "level": 2,
+     "text": "`collectionUpdate` echoes a stale `updatedAt` \u2014 2026-08-30"
     }
    ],
    "excerpt": "Read-only audit of every Shopify mutation this engagement executed, against the governance rule that global mutations require caution/authorization. Nothing was reverted; nothing new was mutated during this audit. \"Enabled new customer accounts\" did not happen",
-   "updated": "2026-08-28T07:29:53+00:00",
+   "updated": "2026-08-30T02:50:44+00:00",
    "inDeg": 0,
    "outDeg": 0
   },
@@ -5824,7 +5979,7 @@
    ],
    "excerpt": "Two separate blockers stop this session seeing the live store, the videos it generates, Merchant Center and Search Console. Both are environment configuration. Neither is a missing repository, and installing a browser-agent framework would not touch either one",
    "updated": "2026-08-27T09:25:44+00:00",
-   "inDeg": 1,
+   "inDeg": 2,
    "outDeg": 0
   },
   {
@@ -7966,6 +8121,18 @@
    "s": "docs/AI-IMAGE-PRODUCTION.md",
    "t": "docs/HIVOLT-V3-IMAGE-REVIEW.md",
    "n": 2,
+   "kind": "code"
+  },
+  {
+   "s": "docs/CATALOG-IMAGE-DEDUP.md",
+   "t": "CLAUDE.md",
+   "n": 1,
+   "kind": "bare"
+  },
+  {
+   "s": "docs/FASHION-NOVA-BENCHMARK.md",
+   "t": "docs/cloud-network-allowlist.md",
+   "n": 1,
    "kind": "code"
   },
   {
