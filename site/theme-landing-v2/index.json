@@ -6,13 +6,13 @@
         "image-1": {
           "type": "image",
           "settings": {
-            "top_subheading": "SEPTEMBER — OCTOBER",
+            "top_subheading": "SEPTEMBER \u2014 OCTOBER",
             "title": "The turn of the season",
             "title_size": 72,
             "subheading": "Outerwear to layer now, and the boots that carry it through to winter.",
             "link": "shopify://collections/september-edit",
             "link_text": "Shop the September Edit",
-            "link_2": "shopify://collections/coats-jackets",
+            "link_2": "shopify://collections/womens-coats-jackets",
             "link_text_2": "All outerwear",
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-bottom horizontal-left",
@@ -41,7 +41,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/81AB4KAcHeL._AC_UL1500.jpg",
-            "link": "shopify://collections/coats-jackets",
+            "link": "shopify://collections/womens-coats-jackets",
             "heading": "Outerwear"
           }
         },
@@ -49,7 +49,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/Sc9f0a4c940054144a316268df8f35f7a7.webp",
-            "link": "shopify://collections/knitwear",
+            "link": "shopify://collections/knitwear-sweaters",
             "heading": "Knitwear"
           }
         },
@@ -57,7 +57,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/712tuNUF7QL._AC_SL1500.jpg",
-            "link": "shopify://collections/dresses",
+            "link": "shopify://collections/dresses-1",
             "heading": "Dresses"
           }
         }
@@ -203,7 +203,7 @@
           "type": "text",
           "settings": {
             "enlarge_text": false,
-            "text": "<p>Free tracked shipping on every US order with no minimum, and sixty days to send anything back with a prepaid label. Not store credit — your money back.</p>"
+            "text": "<p>Free tracked shipping on every US order with no minimum, and sixty days to send anything back with a prepaid label. Not store credit \u2014 your money back.</p>"
           }
         }
       },
@@ -278,7 +278,7 @@
         "subtitle": "",
         "title": "",
         "heading_size": "h2",
-        "text": "<h2>Made to be kept</h2><p>We choose the pieces you reach for first — fabrics that hold their shape, cuts that flatter without fuss, and colours that sit easily alongside everything already in your wardrobe.</p><p>Every order ships free and tracked, and comes with 60 days to change your mind.</p>",
+        "text": "<h2>Made to be kept</h2><p>We choose the pieces you reach for first \u2014 fabrics that hold their shape, cuts that flatter without fuss, and colours that sit easily alongside everything already in your wardrobe.</p><p>Every order ships free and tracked, arrives in 10-18 business days, and comes with 60 days to change your mind.</p>",
         "button_label": "Our Story",
         "button_link": "/pages/about-us",
         "button_style": "outline",
