@@ -25,7 +25,7 @@ A concurrent writer is active on this store.
 | `coats-jackets` | no | `womens-coats-jackets` | 153 |
 | `denim` | no | `jeans-bottoms` | 117 |
 | `tops` | no | `tops-blouses` | 74 |
-| `loungewear` | no | *none* | — |
+| `loungewear` | no | `loungewear-sleep` | 61 |
 
 Consequence on the live storefront:
 
@@ -37,6 +37,30 @@ Consequence on the live storefront:
 
 The replacement handles suggest the originals were deleted and recreated; the
 new ones took suffixed handles and the homepage was never repointed.
+
+**Correction (same day).** This table first recorded `loungewear` as having no
+replacement. That was drawn from an exact-handle lookup only. A full collection
+listing shows `loungewear-sleep` — "Loungewear & Sleep", 61 products. Every one
+of the nine broken links has a correct target.
+
+### Exact fix per broken link on theme `158911561960`
+
+Confirmed on the live storefront: the "Knitwear We Love" rail renders empty.
+
+| Section on homepage | Setting | Points at (missing) | Choose |
+|---|---|---|---|
+| Knitwear We Love | Collection | `knitwear` | **Knitwear & Sweaters** |
+| Shop by category — Knitwear tile | Link | `knitwear` | **Knitwear & Sweaters** |
+| Shop by category — Dresses tile | Link | `dresses` | **Dresses** |
+| Shop by category — Outerwear tile | Link | `coats-jackets` | **Coats & Jackets** |
+| Hero — second button | Link | `dresses` | **Dresses** |
+| The Dress Edit banner — CTA | Link | `dresses` | **Dresses** |
+| Explore — Denim tile | Link | `denim` | **Jeans & Trousers** |
+| Explore — Tops tile | Link | `tops` | **Tops & Blouses** |
+| Explore — Loungewear tile | Link | `loungewear` | **Loungewear & Sleep** |
+
+Unaffected and working: the New This Week rail (`new-arrivals`, 1,618) and the
+Explore Matching Sets tile (`sets`, 66).
 
 The draft theme had inherited four of the same broken handles in its category
 tiles and hero. That was introduced when the draft was built here, and is fixed.
