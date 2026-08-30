@@ -40,7 +40,7 @@ images, 57 distinct products.
 | `description` | names the categories, free shipping, 60-day returns | good |
 | `canonical` | `https://hivolt-usa.com/` | correct |
 | `og:url` | `https://hivolt-usa.com/` | correct |
-| **`og:image`** | **`http://hivolt-usa.com/cdn/...`** | **insecure protocol** |
+| `og:image` | `http://hivolt-usa.com/cdn/...` | correct — see note |
 | `twitter:card` | summary_large_image | correct |
 | `robots` | absent | indexable, correct |
 | **favicon** | **no `<link rel=icon>` emitted at all** | **missing** |
@@ -48,9 +48,15 @@ images, 57 distinct products.
 No console errors. No 4xx or 5xx responses. No broken image files. The theme is
 technically clean; the defects are content and configuration.
 
-The `og:image` served over `http` on an `https` page is commonly refused or
-downgraded by social and messaging previews. `config/settings_data.json` has
-`"favicon": ""`, so the browser tab shows a default globe.
+**Correction.** This audit first recorded the `http` `og:image` as a defect.
+It is not. `snippets/social-meta-tags.liquid` emits the standard Open Graph
+pair — `og:image` over `http` and `og:image:secure_url` over `https` — which is
+stock Impulse behaviour and what the OG spec describes. Consumers read the
+secure URL when present. The original render only captured `og:image`. No
+change was made and none is needed.
+
+`config/settings_data.json` has `"favicon": ""`, so the browser tab shows a
+default globe. That one is real.
 
 ## 3. Structured data — live output
 
@@ -140,23 +146,43 @@ decision: which one is HIVOLT.
 
 ## 8. Ranked repair list
 
-| # | Fix | Where | Blocked on |
-|---:|---|---|---|
-| 1 | Nine broken links on the homepage | theme editor | — |
-| 2 | Four broken links in footer Shop menu | Navigation | — |
-| 3 | Announcement: remove the exchange promise | theme editor | — |
-| 4 | Add `footer-legal` as a fourth footer column | theme editor | — |
-| 5 | Favicon | theme settings | 512×512 image |
-| 6 | `og:image` to https | theme settings | re-upload asset |
-| 7 | Header logo | theme settings | logo file |
-| 8 | Enriched Organization schema | staged on draft | publish draft |
-| 9 | Social profile links | theme settings | real URLs |
-| 10 | Reconcile Terms vs catalogue | policy or catalogue | owner decision |
+### Fixed on production, live now
 
-Items 1, 3 and 8 are already fixed and verified on unpublished draft
-`158911987944`. Items 2 and 4 are Navigation and footer settings, outside the
-theme file, and must be done in admin either way.
+Menus are global resources rather than theme files, so the connector's
+live-theme block does not apply to them.
 
-Production theme writes are refused by the connector, which permits
-`themeFilesUpsert` on unpublished themes only. No theme was published or
-unpublished as a workaround.
+| Fix | Verified |
+|---|---|
+| `nova-footer-shop`: four dead links repointed to `dresses-1`, `knitwear-sweaters`, `womens-coats-jackets`, `jeans-bottoms` | independent read-back; all six target collections carry products (149 / 122 / 153 / 117 / 166 / 1,618) |
+
+This footer renders on every page, so the repair is sitewide and immediate.
+
+### Staged on draft `158911987944`, needs a publish
+
+| Fix | File |
+|---|---|
+| Nine broken homepage links repaired | `templates/index.json` |
+| Exchange promise removed from announcement | `sections/header-group.json` |
+| Enriched Organization schema — legalName, telephone, address, contactPoint | `sections/hivolt-schema.liquid` |
+| Contact column added — email and phone visible sitewide | `sections/footer-group.json` |
+| Legal entity and street address in the footer copyright line | `sections/footer-group.json` |
+| Delivery window disclosure restored to the brand story | `templates/index.json` |
+| Dense layout: 235 product slots against the current 7 | `templates/index.json` |
+
+All verified by independent read-back issued after each mutation returned;
+`userErrors: []` was not treated as evidence. Draft role re-checked as
+`UNPUBLISHED` after every write. Live theme `158911561960` still holds role
+`MAIN` with `updatedAt` unchanged at `09:36:47Z` — production was not written
+to, and no theme was published or unpublished as a workaround.
+
+### Blocked on assets or decisions only the owner holds
+
+| Item | Needs |
+|---|---|
+| Favicon | a 512×512 image |
+| Header logo | a logo file |
+| Social profile links | the real profile URLs |
+| Terms vs catalogue identity | a decision about what HIVOLT sells |
+
+Production theme file writes are refused by the connector, which permits
+`themeFilesUpsert` on unpublished themes only.
