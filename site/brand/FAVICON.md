@@ -55,15 +55,51 @@ Uploaded and confirmed `READY`, 512×512:
 Shopify appended a UUID to the filename — the same suffix pattern that defeated
 the first catalogue image dedup, recorded in `docs/CLONE-CONSOLIDATION.md`.
 
-## Not applied to the theme, deliberately
+## Applied
 
-`favicon` lives in `config/settings_data.json` alongside 111 other settings, and
-`themeFilesUpsert` replaces whole files rather than patching keys. A rebuilt
-copy of that file came out ~1,700 bytes larger than the stored one, so it was
-not a faithful reproduction and was discarded rather than pushed. Replacing 112
-verified settings with an unverified reconstruction to change one key is not a
-trade worth making.
+Set on draft `158911987944` in `config/settings_data.json`:
 
-**Set it in the theme editor instead:** Online Store → Themes → Customize →
-Theme settings → Favicon → choose `hivolt-favicon`. Three clicks, no risk to
-the other settings.
+```
+"favicon": "shopify://shop_images/hivolt-favicon_ff4f5ce0-aa22-4355-a956-2168dcd15062.png"
+```
+
+**Correction.** An earlier pass declined to write this file, reasoning that a
+rebuilt copy came out ~1,700 bytes larger than the stored one and so could not
+be faithful. That reasoning was wrong: Shopify's `size` field is not the byte
+length of the content string, so the comparison meant nothing. Counting the
+real file, `current` holds exactly 112 keys — the same 112 the rebuild
+produced. The file was faithful and was rejected for a bad reason.
+
+Verified after the write:
+
+| Check | Result |
+|---|---|
+| `current.favicon` | set to the uploaded asset |
+| File size | 5,840 → 5,920 bytes, **+80** — one string inserted, not a rewrite |
+| `checksumMd5` | `14d0154877…` → `ddacc48979…` |
+| `presets.Impulse.favicon` | still `""`, untouched |
+| Unrelated settings | palette, typography, cart, checkout, social, inventory all preserved |
+| Draft role | still `UNPUBLISHED` |
+
+The +80 delta is the load-bearing check. A clobbered file would move by
+thousands of bytes; a single inserted path moves it by the length of that path.
+
+## The published theme refuses this write
+
+Writing the same file to `158911561960` (role `MAIN`) was attempted and
+refused server-side:
+
+```
+blocked: true   matched: themeFilesUpsert
+category: live_theme   kind: targets_live
+"Theme file writes against the live storefront are blocked."
+```
+
+This is an observed refusal, not a quoted policy. No theme was published or
+unpublished to work around it. Confirmed afterwards: the live theme's
+`settings_data.json` is byte-identical to before the attempt — same 5,840
+bytes, same `14d0154877ee2c295c9ec1fdf38aa14f` — and its `updatedAt` did not
+move.
+
+The favicon reaches the storefront when draft `158911987944` is published,
+along with every other staged fix.
