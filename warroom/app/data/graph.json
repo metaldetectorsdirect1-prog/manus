@@ -1,18 +1,18 @@
 {
- "generated": "2026-08-30T05:33:34+00:00",
+ "generated": "2026-08-30T11:09:24+00:00",
  "includesTooling": false,
  "stats": {
-  "docs": 161,
-  "edges": 163,
+  "docs": 165,
+  "edges": 168,
   "clusters": 6,
-  "orphans": 49,
-  "words": 177037,
+  "orphans": 48,
+  "words": 181112,
   "unresolvedRefs": 5
  },
  "clusters": [
   {
    "id": "docs",
-   "count": 87
+   "count": 90
   },
   {
    "id": "audit",
@@ -28,7 +28,7 @@
   },
   {
    "id": "site",
-   "count": 2
+   "count": 3
   },
   {
    "id": "HIVOLT-deliverables",
@@ -50,7 +50,6 @@
   "docs/HIVOLT-CURRENT-STATE.md"
  ],
  "orphans": [
-  "README.md",
   "audit/BLOG-SPEC-CONTRADICTIONS-2026-08-11.md",
   "audit/CHECKOUT-2026-08-09.md",
   "audit/DROPSHIP-PLAYBOOK.md",
@@ -83,6 +82,7 @@
   "docs/HIVOLT-GLOBAL-LAUNCH-ROADMAP.md",
   "docs/HIVOLT-GLOBAL-MARKETS.md",
   "docs/HIVOLT-GLOBAL-TRUST-SCORE.md",
+  "docs/HIVOLT-LIVE-THEME-AUDIT.md",
   "docs/HIVOLT-MERCHANDISING-CALENDAR.md",
   "docs/HIVOLT-MUTATION-AUDIT.md",
   "docs/HIVOLT-OPERATIONS-BLOCKERS.md",
@@ -97,8 +97,7 @@
   "impulse-rebuild/GOOGLE-ADS.md",
   "impulse-rebuild/IMAGE-MANIFEST.md",
   "impulse-rebuild/policies/README.md",
-  "site/README.md",
-  "site/brand/README.md"
+  "site/README.md"
  ],
  "unresolved": [
   {
@@ -442,7 +441,7 @@
    ],
    "excerpt": "Working repository for Metal Detectors Direct. Each work stream lives on its own branch and merges here. - instagram-growth-audit.md \u2014 capability audit against the 1M-follower target, organic-only - tools/format-rd-tracker.xlsx \u2014 60-day plan, hook bank, post l",
    "updated": "2026-08-27T09:25:44+00:00",
-   "inDeg": 0,
+   "inDeg": 1,
    "outDeg": 0
   },
   {
@@ -2807,7 +2806,7 @@
    ],
    "excerpt": "57 title-groups held 152 active listings that differed only by a leading adjective (\"Premium\", \"Cozy\", \"Refined\"\u2026) and, in some groups, a colour word. Each group therefore sold one garment 2\u20136 times. They survived the earlier image dedup (docs/CATALOG-IMAGE-DE",
    "updated": "2026-08-30T04:59:51+00:00",
-   "inDeg": 0,
+   "inDeg": 1,
    "outDeg": 1
   },
   {
@@ -2947,7 +2946,77 @@
    ],
    "excerpt": "Brief: \"audit https://www.fashionnova.com/\" and \"our goal is to make our store look better then fashionnova.com and have best collection of all top best selling fashion products and our landing page must be better then them and we need to display large collect",
    "updated": "2026-08-30T02:50:44+00:00",
-   "inDeg": 0,
+   "inDeg": 1,
+   "outDeg": 1
+  },
+  {
+   "id": "docs/FASHION-NOVA-SITEWIDE.md",
+   "title": "Fashion Nova \u2014 site-wide audit beyond the homepage",
+   "cluster": "docs",
+   "tags": [],
+   "bytes": 6102,
+   "words": 1015,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Fashion Nova \u2014 site-wide audit beyond the homepage \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "0. How this was measured"
+    },
+    {
+     "level": 2,
+     "text": "1. Navigation taxonomy \u2014 25 top-level destinations"
+    },
+    {
+     "level": 2,
+     "text": "2. Footer \u2014 20 destinations, four columns"
+    },
+    {
+     "level": 2,
+     "text": "3. The ten pages, measured"
+    },
+    {
+     "level": 3,
+     "text": "3.1 The Help Center is a hub, not a contact form"
+    },
+    {
+     "level": 3,
+     "text": "3.2 Track Order needs no login"
+    },
+    {
+     "level": 3,
+     "text": "3.3 Response times are published as numbers"
+    },
+    {
+     "level": 3,
+     "text": "3.4 Reviews are real infrastructure, honestly displayed"
+    },
+    {
+     "level": 3,
+     "text": "3.5 They admit a limit on a page they kept anyway"
+    },
+    {
+     "level": 2,
+     "text": "4. Where they are weak \u2014 and HIVOLT is not"
+    },
+    {
+     "level": 2,
+     "text": "5. What to apply, ranked by trust value \u00f7 cost"
+    },
+    {
+     "level": 2,
+     "text": "6. What to refuse"
+    },
+    {
+     "level": 2,
+     "text": "7. What this audit does not establish"
+    }
+   ],
+   "excerpt": "The first audit (FASHION-NOVA-BENCHMARK.md) covered homepage, product card, collection page and PDP. This one covers what it didn't: navigation taxonomy, footer architecture, and all ten support/policy/company pages. Rendered in the Higgsfield sandbox with Pla",
+   "updated": "2026-08-30T09:18:26+00:00",
+   "inDeg": 1,
    "outDeg": 1
   },
   {
@@ -3943,6 +4012,75 @@
    "outDeg": 0
   },
   {
+   "id": "docs/HIVOLT-FULL-THEME-AUDIT.md",
+   "title": "HIVOLT \u2014 full theme and landing page audit",
+   "cluster": "docs",
+   "tags": [
+    "AUDIT",
+    "THEME"
+   ],
+   "bytes": 8000,
+   "words": 1237,
+   "headings": [
+    {
+     "level": 1,
+     "text": "HIVOLT \u2014 full theme and landing page audit \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "1. The landing page as a customer sees it"
+    },
+    {
+     "level": 2,
+     "text": "2. Head and meta"
+    },
+    {
+     "level": 2,
+     "text": "3. Structured data \u2014 live output"
+    },
+    {
+     "level": 2,
+     "text": "4. Announcement bar \u2014 live text"
+    },
+    {
+     "level": 2,
+     "text": "5. Navigation"
+    },
+    {
+     "level": 3,
+     "text": "A contact menu exists but is not wired in"
+    },
+    {
+     "level": 2,
+     "text": "6. Correction to the Fashion Nova comparison"
+    },
+    {
+     "level": 2,
+     "text": "7. The store carries two identities"
+    },
+    {
+     "level": 2,
+     "text": "8. Ranked repair list"
+    },
+    {
+     "level": 3,
+     "text": "Fixed on production, live now"
+    },
+    {
+     "level": 3,
+     "text": "Staged on draft `158911987944`, needs a publish"
+    },
+    {
+     "level": 3,
+     "text": "Blocked on assets or decisions only the owner holds"
+    }
+   ],
+   "excerpt": "Live theme 158911561960, role MAIN (read from Shopify's role field). Storefront rendered with headless Chromium via the Higgsfield sandbox; local egress to hivolt-usa.com is blocked. 6,648px tall. 18 images. 7 product links on the entire page. new-in is the on",
+   "updated": "2026-08-30T10:05:47+00:00",
+   "inDeg": 0,
+   "outDeg": 1
+  },
+  {
    "id": "docs/HIVOLT-GLOBAL-LAUNCH-ROADMAP.md",
    "title": "HIVOLT-GLOBAL-LAUNCH-ROADMAP.md",
    "cluster": "docs",
@@ -4446,6 +4584,71 @@
    "excerpt": "Verified against Shopify Admin API, 2026-08-20. Canada (Tier 1) and every Tier 2 European market are inside the disabled market. Nothing outside the United States can transact today. Both markets report webPresence: null \u2014 no locale root URLs, no country-speci",
    "updated": "2026-08-27T09:25:44+00:00",
    "inDeg": 2,
+   "outDeg": 0
+  },
+  {
+   "id": "docs/HIVOLT-LIVE-THEME-AUDIT.md",
+   "title": "Live theme audit",
+   "cluster": "docs",
+   "tags": [
+    "AUDIT",
+    "THEME"
+   ],
+   "bytes": 7271,
+   "words": 1157,
+   "headings": [
+    {
+     "level": 1,
+     "text": "Live theme audit \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "Target identification"
+    },
+    {
+     "level": 2,
+     "text": "Finding 1 \u2014 six collection handles on the live homepage do not exist"
+    },
+    {
+     "level": 3,
+     "text": "Exact fix per broken link on theme `158911561960`"
+    },
+    {
+     "level": 2,
+     "text": "Finding 2 \u2014 announcement bar contradicts the refund policy"
+    },
+    {
+     "level": 2,
+     "text": "Finding 3 \u2014 production carries the unenriched Organization schema"
+    },
+    {
+     "level": 2,
+     "text": "Finding 4 \u2014 identity and brand assets absent"
+    },
+    {
+     "level": 2,
+     "text": "Finding 5 \u2014 the policies are complete, and better than assumed"
+    },
+    {
+     "level": 2,
+     "text": "Finding 6 \u2014 the Terms describe a different business"
+    },
+    {
+     "level": 2,
+     "text": "Production writes are blocked at the connector"
+    },
+    {
+     "level": 2,
+     "text": "Applied to the draft `158911987944` (UNPUBLISHED)"
+    },
+    {
+     "level": 2,
+     "text": "Smallest human action"
+    }
+   ],
+   "excerpt": "Role read from Shopify's role field, not from the theme name or the prompt. Adjudicated with site/check-hivolt-theme-target.py --report, exit 0. The MAIN theme's updatedAt was 09:36:47Z, seconds before the audit query. A concurrent writer is active on this sto",
+   "updated": "2026-08-30T09:55:59+00:00",
+   "inDeg": 0,
    "outDeg": 0
   },
   {
@@ -8165,6 +8368,52 @@
    "outDeg": 0
   },
   {
+   "id": "site/brand/FAVICON.md",
+   "title": "HIVOLT favicon",
+   "cluster": "site",
+   "tags": [],
+   "bytes": 4342,
+   "words": 666,
+   "headings": [
+    {
+     "level": 1,
+     "text": "HIVOLT favicon \u2014 2026-08-30"
+    },
+    {
+     "level": 2,
+     "text": "Where it came from"
+    },
+    {
+     "level": 2,
+     "text": "Why the badge could not be used as-is"
+    },
+    {
+     "level": 2,
+     "text": "How it is built"
+    },
+    {
+     "level": 2,
+     "text": "Verification"
+    },
+    {
+     "level": 2,
+     "text": "On Shopify"
+    },
+    {
+     "level": 2,
+     "text": "Applied"
+    },
+    {
+     "level": 2,
+     "text": "The published theme refuses this write"
+    }
+   ],
+   "excerpt": "Nothing here is invented. The mark, the accent and the ground all come from site/brand/hivolt-badge.png, supplied by the owner on 2026-08-23 and designated in site/brand/README.md for favicon use. An earlier attempt in this session drew a geometric serif \"H\" b",
+   "updated": "2026-08-30T11:04:37+00:00",
+   "inDeg": 0,
+   "outDeg": 3
+  },
+  {
    "id": "site/brand/README.md",
    "title": "HIVOLT brand assets",
    "cluster": "site",
@@ -8191,7 +8440,7 @@
    ],
    "excerpt": "Supplied by the owner 2026-08-23. These are authoritative and supersede the deprecated site/impulse/hivolt-logo.png, which carries the retired tagline \"SPEC-FIRST APPAREL\" and is monochrome with no volt accent. Volt accent: #DAF305 \u2014 sampled directly from the ",
    "updated": "2026-08-27T09:25:44+00:00",
-   "inDeg": 0,
+   "inDeg": 1,
    "outDeg": 0
   }
  ],
@@ -8341,6 +8590,12 @@
    "kind": "code"
   },
   {
+   "s": "docs/FASHION-NOVA-SITEWIDE.md",
+   "t": "docs/FASHION-NOVA-BENCHMARK.md",
+   "n": 1,
+   "kind": "code"
+  },
+  {
    "s": "docs/GENERAL-STORE-DESIGN-SCORECARD.md",
    "t": "docs/MASTER-STORE-VISUAL-SPEC.md",
    "n": 1,
@@ -8469,6 +8724,12 @@
   {
    "s": "docs/HIVOLT-CURRENT-STATE.md",
    "t": "docs/HIVOLT-PRODUCT-DATA-PROVENANCE.md",
+   "n": 1,
+   "kind": "code"
+  },
+  {
+   "s": "docs/HIVOLT-FULL-THEME-AUDIT.md",
+   "t": "docs/FASHION-NOVA-SITEWIDE.md",
    "n": 1,
    "kind": "code"
   },
@@ -9171,6 +9432,24 @@
   {
    "s": "impulse-rebuild/keywords/title-generator.md",
    "t": "impulse-rebuild/FEED-CALENDAR.md",
+   "n": 1,
+   "kind": "code"
+  },
+  {
+   "s": "site/brand/FAVICON.md",
+   "t": "README.md",
+   "n": 1,
+   "kind": "bare"
+  },
+  {
+   "s": "site/brand/FAVICON.md",
+   "t": "docs/CLONE-CONSOLIDATION.md",
+   "n": 1,
+   "kind": "code"
+  },
+  {
+   "s": "site/brand/FAVICON.md",
+   "t": "site/brand/README.md",
    "n": 1,
    "kind": "code"
   }
