@@ -2,16 +2,16 @@
 
 **Operational source of truth for future sessions. Not a history.**
 
-Queried: **2026-08-30T05:40Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+Queried: **2026-08-30T10:17Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
 
 **Cutover status: superseded by the owner's own path — the owner is
 actively iterating live themes via parallel Claude sessions.** At
-**2026-08-30T05:25Z** the theme **"HIVOLT — landing v2 dense (Claude,
-draft)" (`158911987944`) was published as MAIN**, replacing "Nova Rebuild +
-Meta domain verification" (live 03:28–05:25Z), which had replaced the
-original Nova Rebuild (live 08-29 07:02 → 08-30 03:28). Three different
-Nova-line themes have held MAIN inside 24 hours. The certified **MASTER r2
-remains UNPUBLISHED and byte-intact** (`updatedAt` unmoved at
+**2026-08-30T09:36Z** the owner republished **"HIVOLT — Nova Rebuild +
+Meta domain verification" (`158911561960`) as MAIN**, reverting from
+"landing v2 dense" (live 05:25–09:36Z, now unpublished and still being
+edited). MAIN has changed hands four times since 08-29 07:02Z, all within
+the Nova/landing line built by parallel Claude sessions. The certified
+**MASTER r2 remains UNPUBLISHED and byte-intact** (`updatedAt` unmoved at
 2026-08-28T21:33:42Z since the last verified session write). The r2 cutover
 authorization was never executed (`themePublish` is categorically blocked
 by the MCP connector — verified by an actual refused attempt at 21:15Z on
@@ -31,7 +31,9 @@ homepage" created. 08-30: **03:28:14/03:28:21 publish signature: Nova
 Rebuild → UNPUBLISHED, "Nova Rebuild + Meta domain verification"
 (`158911561960`) → MAIN**; ~03:54 draft "landing v2 dense" created;
 **05:25:19/05:25:28 publish signature: "Nova Rebuild + Meta domain
-verification" → UNPUBLISHED, "landing v2 dense" (`158911987944`) → MAIN.**
+verification" → UNPUBLISHED, "landing v2 dense" (`158911987944`) → MAIN**;
+**~09:36:47 revert: "Nova Rebuild + Meta domain verification" republished
+as MAIN, "landing v2 dense" → UNPUBLISHED** (still edited, 10:05Z).
 **Catalog at 21:15Z 08-28:** 819 products (344 ACTIVE, rest DRAFT), **0
 published to the Online Store channel** — the storefront still shows zero
 products. Theme publication ≠ commerce launch: analytics NOT CONFIGURED, do
@@ -46,12 +48,12 @@ not send paid traffic.
 
 ---
 
-## Shopify themes (roles as read 2026-08-30T05:40Z)
+## Shopify themes (roles as read 2026-08-30T10:17Z)
 
 | Theme ID | Role now | Name (descriptive only) |
 |---|---|---|
-| `158911987944` | **`MAIN`** | "HIVOLT — landing v2 dense (Claude, draft)" — published 08-30 05:25Z |
-| `158911561960` | `UNPUBLISHED` | "HIVOLT — Nova Rebuild + Meta domain verification" — was MAIN 08-30 03:28 → 05:25 |
+| `158911561960` | **`MAIN`** | "HIVOLT — Nova Rebuild + Meta domain verification" — republished 08-30 09:36Z (also MAIN 03:28–05:25) |
+| `158911987944` | `UNPUBLISHED` | "HIVOLT — landing v2 dense (Claude, draft)" — was MAIN 08-30 05:25 → 09:36; still being edited |
 | `158888526056` | `UNPUBLISHED` | "HIVOLT — Nova Rebuild (Claude)" — parallel-session build, was MAIN 08-29 07:02 → 08-30 03:28 |
 | `158874960104` | `UNPUBLISHED` | "GENERAL STORE — MASTER r2 (approved image swaps)" — certified READY candidate; carries image swaps, JSON-LD system, nav, favicon, hardened sticky ATC, honest page templates. Intact, `updatedAt` unmoved since 2026-08-28T21:33:42Z |
 | `158753849576` | `UNPUBLISHED` | "GENERAL STORE — IMPULSE MASTER CANDIDATE" — previous MAIN (08-28 15:41–21:33), recorded rollback artifact of the r2 plan |
