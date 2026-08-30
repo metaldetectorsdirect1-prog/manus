@@ -1,0 +1,386 @@
+{
+  "sections": {
+    "hero": {
+      "type": "slideshow",
+      "blocks": {
+        "image-1": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "SEPTEMBER — OCTOBER",
+            "title": "The turn of the season",
+            "title_size": 72,
+            "subheading": "Outerwear to layer now, and the boots that carry it through to winter.",
+            "link": "shopify://collections/september-edit",
+            "link_text": "Shop the September Edit",
+            "link_2": "shopify://collections/coats-jackets",
+            "link_text_2": "All outerwear",
+            "color_accent": "rgba(0,0,0,0)",
+            "text_align": "vertical-bottom horizontal-left",
+            "image": "shopify://shop_images/D07B905F-0847-472A-B359-2BBA560544A1.jpg",
+            "parallax_direction": "top",
+            "overlay_opacity": 20
+          }
+        }
+      },
+      "block_order": [
+        "image-1"
+      ],
+      "settings": {
+        "section_height": "750px",
+        "mobile_height": "auto",
+        "parallax": true,
+        "style": "bars",
+        "autoplay": false,
+        "autoplay_speed": 7
+      }
+    },
+    "category-edit": {
+      "type": "image-grid",
+      "blocks": {
+        "cat-outerwear": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/81AB4KAcHeL._AC_UL1500.jpg",
+            "link": "shopify://collections/coats-jackets",
+            "heading": "Outerwear"
+          }
+        },
+        "cat-knitwear": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Sc9f0a4c940054144a316268df8f35f7a7.webp",
+            "link": "shopify://collections/knitwear",
+            "heading": "Knitwear"
+          }
+        },
+        "cat-dresses": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/712tuNUF7QL._AC_SL1500.jpg",
+            "link": "shopify://collections/dresses",
+            "heading": "Dresses"
+          }
+        }
+      },
+      "block_order": [
+        "cat-outerwear",
+        "cat-knitwear",
+        "cat-dresses"
+      ],
+      "settings": {
+        "heading": "Shop by category",
+        "heading_size": "h2",
+        "text_alignment": "center",
+        "images_per_row": 3,
+        "image_shape": "portrait",
+        "grid_spacing": 10,
+        "full_width": true,
+        "space_above": false,
+        "space_below": true,
+        "divider": false,
+        "overlay_text_color": "#ffffff",
+        "overlay_color": "#1a1a1a",
+        "overlay_opacity": 20
+      }
+    },
+    "september-edit": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "The September Edit",
+        "heading_size": "h2",
+        "home_featured_products": "september-edit",
+        "per_row": 5,
+        "rows": 2,
+        "mobile_scrollable": true,
+        "view_all": false,
+        "divider": false
+      }
+    },
+    "new-in": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "New this week",
+        "heading_size": "h2",
+        "home_featured_products": "new-arrivals",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "outerwear": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Outerwear, first",
+        "heading_size": "h2",
+        "home_featured_products": "womens-coats-jackets",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": true
+      }
+    },
+    "season-note": {
+      "type": "rich-text",
+      "blocks": {
+        "note-title": {
+          "type": "heading",
+          "settings": {
+            "title": "Published, not claimed",
+            "heading_size": "h3"
+          }
+        },
+        "note-text": {
+          "type": "text",
+          "settings": {
+            "enlarge_text": false,
+            "text": "<p>Where a supplier publishes a fabric weight, a composition or a garment measurement, we publish it on the product's own page. Where they publish nothing, we say so rather than estimating a figure.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "note-title",
+        "note-text"
+      ],
+      "settings": {
+        "align_text": "center",
+        "narrow_column": true,
+        "divider": true
+      }
+    },
+    "knitwear": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Knitwear we live in",
+        "heading_size": "h2",
+        "home_featured_products": "knitwear-sweaters",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "dresses": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "The dress edit",
+        "heading_size": "h2",
+        "home_featured_products": "dresses-1",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": true
+      }
+    },
+    "footwear": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Boots that carry the season",
+        "heading_size": "h2",
+        "home_featured_products": "boots-shoes",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "returns-note": {
+      "type": "rich-text",
+      "blocks": {
+        "rn-title": {
+          "type": "heading",
+          "settings": {
+            "title": "Sixty days, and a real refund",
+            "heading_size": "h3"
+          }
+        },
+        "rn-text": {
+          "type": "text",
+          "settings": {
+            "enlarge_text": false,
+            "text": "<p>Free tracked shipping on every US order with no minimum, and sixty days to send anything back with a prepaid label. Not store credit — your money back.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "rn-title",
+        "rn-text"
+      ],
+      "settings": {
+        "align_text": "center",
+        "narrow_column": true,
+        "divider": true
+      }
+    },
+    "denim": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Denim and bottoms",
+        "heading_size": "h2",
+        "home_featured_products": "jeans-bottoms",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "tops": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Tops and blouses",
+        "heading_size": "h2",
+        "home_featured_products": "tops-blouses",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": true
+      }
+    },
+    "accessories": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Finishing pieces",
+        "heading_size": "h2",
+        "home_featured_products": "bags-accessories",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false
+      }
+    },
+    "menswear": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Menswear",
+        "heading_size": "h2",
+        "home_featured_products": "men",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": true
+      }
+    },
+    "brand-story": {
+      "type": "text-and-image",
+      "settings": {
+        "image": "shopify://shop_images/Screenshot2023-12-29at12.55.13-Photoroom_859444fd-ae22-4bae-bae2-4edc2f19a5bf.jpg",
+        "image_mask": "none",
+        "image2_mask": "none",
+        "subtitle": "",
+        "title": "",
+        "heading_size": "h2",
+        "text": "<h2>Made to be kept</h2><p>We choose the pieces you reach for first — fabrics that hold their shape, cuts that flatter without fuss, and colours that sit easily alongside everything already in your wardrobe.</p><p>Every order ships free and tracked, and comes with 60 days to change your mind.</p>",
+        "button_label": "Our Story",
+        "button_link": "/pages/about-us",
+        "button_style": "outline",
+        "align_text": "left",
+        "layout": "left"
+      }
+    },
+    "service": {
+      "type": "text-with-icons",
+      "blocks": {
+        "i1": {
+          "type": "text_block",
+          "settings": {
+            "icon": "truck",
+            "title": "Complimentary US shipping",
+            "text": "<p>Tracked delivery on every order, with no minimum spend.</p>"
+          }
+        },
+        "i2": {
+          "type": "text_block",
+          "settings": {
+            "icon": "package",
+            "title": "60 days to decide",
+            "text": "<p>Free returns if it is not right. No questions, no restocking fees.</p>"
+          }
+        },
+        "i3": {
+          "type": "text_block",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure checkout",
+            "text": "<p>Encrypted payments through Shopify, Shop Pay, PayPal and Apple Pay.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "align_text": "center",
+        "desktop_columns_per_row": 3
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "nl-title": {
+          "type": "title",
+          "settings": {
+            "title": "Join the list",
+            "heading_size": "h2"
+          }
+        },
+        "nl-text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Early access to new arrivals and seasonal edits. One email a week, never more.</p>"
+          }
+        },
+        "nl-form": {
+          "type": "form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "nl-title",
+        "nl-text",
+        "nl-form"
+      ],
+      "settings": {
+        "align_text": "center",
+        "image_width": "33",
+        "image_mask": "none",
+        "image_position": "right",
+        "color_background": "#f7f5f2",
+        "color_text": "#1a1a1a",
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "category-edit",
+    "september-edit",
+    "new-in",
+    "outerwear",
+    "season-note",
+    "knitwear",
+    "dresses",
+    "footwear",
+    "returns-note",
+    "denim",
+    "tops",
+    "accessories",
+    "menswear",
+    "brand-story",
+    "service",
+    "newsletter"
+  ]
+}
