@@ -104,13 +104,27 @@
       bar.classList.toggle('is-active', on);
       bar.setAttribute('aria-hidden', on ? 'false' : 'true');
     }
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        var e = entries[0];
-        // Show only after the real button has scrolled ABOVE the viewport.
-        setActive(!e.isIntersecting && e.boundingClientRect.top < 0);
-      }, { threshold: 0 }).observe(mainBtn);
+    // Show only after the real button has scrolled ABOVE the viewport.
+    // State is recomputed from geometry on every signal rather than from
+    // IntersectionObserver crossings alone: a fast fling or an instant jump
+    // (anchor link) can skip every frame in which the button intersected, so
+    // a crossings-only observer would never fire and the bar would stay hidden.
+    var updateQueued = false;
+    function update() {
+      updateQueued = false;
+      setActive(mainBtn.getBoundingClientRect().bottom < 0);
     }
+    function queueUpdate() {
+      if (updateQueued) return;
+      updateQueued = true;
+      requestAnimationFrame(update);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(queueUpdate, { threshold: 0 }).observe(mainBtn);
+    }
+    window.addEventListener('scroll', queueUpdate, { passive: true });
+    window.addEventListener('resize', queueUpdate, { passive: true });
+    update();
 
     btnDst.addEventListener('click', function () {
       if (btnDst.disabled) return;

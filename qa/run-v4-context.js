@@ -23,7 +23,7 @@ fs.mkdirSync(OUT, { recursive: true });
       pageHeight: Math.round(document.documentElement.scrollHeight),
       firstShoppingSurfaceY: (() => { const el = document.querySelector('[data-first-shopping-surface]'); return el ? Math.round(el.getBoundingClientRect().top + window.scrollY) : null; })(),
       brokenImages: [...document.images].filter((i) => !i.complete || i.naturalWidth === 0).length,
-      stickyHeader: getComputedStyle(document.querySelector('.hdr')).position === 'sticky',
+      stickyHeader: getComputedStyle(document.querySelector('.site-head')).position === 'sticky',
     }));
     await page.screenshot({ path: path.join(OUT, `v4-full-${vp.w}.png`), fullPage: true });
     for (const el of await page.$$('[data-shot]')) {

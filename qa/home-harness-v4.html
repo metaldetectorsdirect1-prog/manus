@@ -15,7 +15,8 @@
   a.skip:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #1a73e8;outline-offset:2px}
   /* announcement + header (reference 1.1/1.2) */
   .announce{background:var(--ink);color:#fff;text-align:center;font-size:11px;padding:8px 16px;letter-spacing:.1em;text-transform:uppercase}
-  .hdr{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:40}
+  .site-head{position:sticky;top:0;z-index:40}
+  .hdr{background:#fff;border-bottom:1px solid var(--line)}
   .hdr__in{display:flex;align-items:center;gap:24px;height:62px}
   .hdr__logo{font-weight:800;font-size:21px;letter-spacing:.06em;text-decoration:none;color:var(--ink)}
   .hdr__nav{display:flex;gap:20px;margin:0 auto}
@@ -130,7 +131,7 @@
   .foot{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px}
   @media(max-width:900px){.foot{grid-template-columns:repeat(2,1fr)}}
   .foot__brand p{font-size:13px;color:var(--muted);max-width:240px}
-  footer h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px}
+  footer .foot-h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px}
   footer a{color:#444;text-decoration:none;font-size:13.5px;display:block;margin:7px 0}
   .legal{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   .payicons{display:flex;gap:6px}
@@ -138,9 +139,10 @@
 </style>
 </head>
 <body>
-<div class="announce" data-shot="announce">Free tracked US shipping on every order · 60-day free returns</div>
 
-<header class="hdr" data-shot="header">
+<header class="site-head" data-shot="header">
+<div class="announce" data-shot="announce">Free tracked US shipping on every order · 60-day free returns</div>
+<div class="hdr">
   <div class="page-width hdr__in">
     <a class="hdr__logo" href="#">HIVOLT</a>
     <nav class="hdr__nav" aria-label="Main">
@@ -152,7 +154,9 @@
       <span class="hdr__cart"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="hdr__dot">2</span></span>
     </div>
   </div>
+</div>
 </header>
+<main id="MainContent">
 
 <section class="hero" data-shot="hero">
   <picture>
@@ -189,7 +193,7 @@
   </div>
 </div>
 
-<main class="page-width">
+<div class="page-width">
   <section data-shot="edit">
     <div class="shead">
       <div><h2>The Edit</h2><p>Curated looks, styled for the season.</p></div>
@@ -210,7 +214,7 @@
     </div>
     <div class="grid" id="grid1"></div>
   </section>
-</main>
+</div>
 
 <section class="campaign campaign--a" data-shot="campaign-a">
   <picture>
@@ -224,7 +228,7 @@
   </div>
 </section>
 
-<main class="page-width">
+<div class="page-width" data-main-2>
   <section data-shot="cats">
     <div class="shead"><div><h2>Shop by category</h2></div></div>
     <div class="cats">
@@ -243,7 +247,7 @@
     </div>
     <div class="grid" id="grid2"></div>
   </section>
-</main>
+</div>
 
 <section class="campaign campaign--b" data-shot="campaign-b">
   <picture>
@@ -257,7 +261,7 @@
   </div>
 </section>
 
-<main class="page-width">
+<div class="page-width" data-main-3>
   <section data-shot="collage">
     <div class="shead"><div><h2>Made to keep</h2><p>The craft behind the knit.</p></div></div>
     <div class="collage">
@@ -268,7 +272,7 @@
       <figure><img src="visual-review/v3/22-hivolt-v3-collage-04.png" alt=""></figure>
     </div>
   </section>
-</main>
+</div>
 
 <section class="campaign campaign--c" data-shot="campaign-c">
   <img src="visual-review/v3/A9-hivolt-v3-campaign-c-alt-b.png" alt="">
@@ -289,6 +293,7 @@
   </div>
 </div>
 
+</main>
 <footer data-shot="footer">
   <div class="page-width">
     <div class="foot">
@@ -296,10 +301,10 @@
         <a class="hdr__logo" href="#">HIVOLT</a>
         <p>Modern fashion, effortless confidence. Designed to move with you — every day, everywhere.</p>
       </div>
-      <div><h4>Shop</h4><a href="#">New in</a><a href="#">Knitwear</a><a href="#">Coats</a><a href="#">Essentials</a><a href="#">Sale</a></div>
-      <div><h4>Help</h4><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Size guide</a><a href="#">Contact</a><a href="#">FAQ</a></div>
-      <div><h4>About</h4><a href="#">Our story</a><a href="#">Materials</a><a href="#">Care</a></div>
-      <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Refunds</a><a href="#">Shipping policy</a><a href="#">Accessibility</a></div>
+      <div><h3 class="foot-h">Shop</h3><a href="#">New in</a><a href="#">Knitwear</a><a href="#">Coats</a><a href="#">Essentials</a><a href="#">Sale</a></div>
+      <div><h3 class="foot-h">Help</h3><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Size guide</a><a href="#">Contact</a><a href="#">FAQ</a></div>
+      <div><h3 class="foot-h">About</h3><a href="#">Our story</a><a href="#">Materials</a><a href="#">Care</a></div>
+      <div><h3 class="foot-h">Legal</h3><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Refunds</a><a href="#">Shipping policy</a><a href="#">Accessibility</a></div>
     </div>
     <div class="legal">
       <span>© HIVOLT — QA FIXTURE, local harness only. Imagery: V3 review copies (≤520px), layout evaluation only.</span>

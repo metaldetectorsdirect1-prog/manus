@@ -1,0 +1,76 @@
+{
+  "sections": {
+    "hero": {
+      "type": "fashion-hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/hivolt-master-hero-desktop.png",
+        "image_mobile": "shopify://shop_images/hivolt-master-hero-mobile.png",
+        "is_first": true,
+        "preheading": "About HIVOLT",
+        "heading": "Specification over slogan",
+        "subtext": "",
+        "cta1_label": "",
+        "cta1_link": "",
+        "cta2_label": "",
+        "cta2_link": "",
+        "text_position": "left",
+        "overlay_opacity": 40,
+        "desktop_height": 62,
+        "desktop_focal": "center center"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "value-strip": {
+      "type": "fashion-value-strip",
+      "settings": {
+        "scheme": "white"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "title": "Be first to know",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>New drops, restocks and HIVOLT edits. Unsubscribe in one click, any time — see our <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>"
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "text",
+        "form"
+      ],
+      "settings": {
+        "align_text": "left",
+        "image_width": "50",
+        "image_mask": "none",
+        "image_position": "right",
+        "color_background": "#D0021B",
+        "color_text": "#FFFFFF",
+        "top_padding": true,
+        "bottom_padding": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "main",
+    "value-strip",
+    "newsletter"
+  ]
+}

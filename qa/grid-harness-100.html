@@ -22,7 +22,7 @@
   @media(min-width:1024px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 10px}}
   .card{position:relative;display:flex;flex-direction:column;min-width:0}
   .card__media{position:relative;aspect-ratio:3/4;background:var(--soft);overflow:hidden}
-  .card__media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c9c5bd;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .card__media .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#6b6b6b;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
   .card__badge{position:absolute;top:8px;left:8px;background:var(--sale);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 7px;z-index:2}
   .card__badge--soldout{background:var(--ink)}
   .card__quick{position:absolute;left:8px;right:8px;bottom:8px;background:var(--ink);color:#fff;border:0;min-height:38px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;opacity:0;transition:opacity .15s;cursor:pointer}
@@ -70,12 +70,12 @@ const SWATCH_COLORS = {Black:'#111',White:'#fff',Red:'#c0182b',Blue:'#27548e',Gr
       <div class="card__media">
         ${sale ? `<span class="card__badge">-${pct}%</span>` : ''}
         ${p.sold_out ? `<span class="card__badge card__badge--soldout">Sold out</span>` : ''}
-        <span class="ph">QA fixture ${p.has_second_image ? '· hover alt' : ''}</span>
+        <span class="ph" aria-hidden="true">QA fixture ${p.has_second_image ? '· hover alt' : ''}</span>
         <button class="card__quick" ${p.sold_out ? 'disabled' : ''} aria-label="${p.requires_variant_selection ? 'Choose options' : 'Quick add'}: ${p.title.replace(/"/g,'')}">
           ${p.sold_out ? 'Sold out' : (p.requires_variant_selection ? 'Choose options' : 'Quick add')}
         </button>
       </div>
-      <h3 class="card__title">${p.title}</h3>
+      <div class="card__title">${p.title}</div>
       <div class="card__price-row">
         ${p.sold_out ? `<span class="soldout-label">Sold out</span>` : ''}
         <span class="price ${sale ? 'price--sale' : ''}">$${p.price.toFixed(2)}</span>

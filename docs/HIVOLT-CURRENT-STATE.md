@@ -2,7 +2,51 @@
 
 **Operational source of truth for future sessions. Not a history.**
 
-Queried: **2026-08-22T12:31Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+Queried: **2026-08-31T20:30Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.com`.
+
+**Cutover status: CLOSED — the certified MASTER r2 theme was deleted from
+the store between 18:58Z and 20:29Z on 2026-08-31.** Direct GID lookups
+return "Theme does not exist" for both **r2 (`158874960104`)** and the
+recorded rollback artifact **IMPULSE MASTER CANDIDATE (`158753849576`)**;
+"Horizon" (`158882693352`) was deleted in the same sweep. Nine themes
+became six. The r2 production-cutover plan
+(`docs/PRODUCTION-CUTOVER-PLAN.md`) and the READY-FOR-CUTOVER verdict in
+`docs/PRODUCTION-RELEASE-GATE.md` refer to artifacts that **no longer
+exist** and cannot be executed. The owner chose the Nova/landing line
+instead: MAIN is **"HIVOLT — Nova Rebuild + Meta domain verification"
+(`158911561960`)**, live since the 09:36Z 08-30 republish and still being
+edited (last touch 2026-08-31T20:28:19Z). The r2 cutover authorization was
+never executed (`themePublish` is categorically blocked by the MCP
+connector — verified by an actual refused attempt at 21:15Z on 08-28); the
+post-cutover verification watcher was retired on 2026-08-31 when its
+target ceased to exist. The r2 file sources remain recoverable from this
+repo's history and QA records if ever needed, but any rebuild would be a
+new theme with a new ID.
+
+**Theme-admin timeline (observed via role/updatedAt reads):** 08-28
+~21:33:01 old MAIN unpublished; ~21:33:42 r2 touched (briefly published,
+most likely); 21:36:35 STOCK "Impulse" demo (`158743363816`) became MAIN;
+~21:52 "Horizon" added. 08-29: ~04:07 owner edited the live stock theme;
+~05:03 "HIVOLT — Nova Rebuild (Claude)" created (parallel Claude session);
+06:12–06:13 Nova Rebuild + IMPULSE-REBUILD edited; **07:02:30/07:02:37
+publish signature: stock Impulse → UNPUBLISHED, Nova Rebuild → MAIN**;
+11:07 last edit to live Nova Rebuild; ~19:28 draft "September Edit
+homepage" created. 08-30: **03:28:14/03:28:21 publish signature: Nova
+Rebuild → UNPUBLISHED, "Nova Rebuild + Meta domain verification"
+(`158911561960`) → MAIN**; ~03:54 draft "landing v2 dense" created;
+**05:25:19/05:25:28 publish signature: "Nova Rebuild + Meta domain
+verification" → UNPUBLISHED, "landing v2 dense" (`158911987944`) → MAIN**;
+**~09:36:47 revert: "Nova Rebuild + Meta domain verification" republished
+as MAIN, "landing v2 dense" → UNPUBLISHED** (still edited, 10:05Z).
+08-31: live MAIN edited ~21:43Z 08-30 / 23:59Z 08-30 / 20:28Z 08-31;
+**between 18:58Z and 20:29Z three themes deleted: MASTER r2
+(`158874960104`), IMPULSE MASTER CANDIDATE (`158753849576`), Horizon
+(`158882693352`)** — deletion confirmed by direct GID lookups returning
+"Theme does not exist".
+**Catalog at 21:15Z 08-28:** 819 products (344 ACTIVE, rest DRAFT), **0
+published to the Online Store channel** — the storefront still shows zero
+products. Theme publication ≠ commerce launch: analytics NOT CONFIGURED, do
+not send paid traffic.
 
 > ## This file is a convenience, not an authority.
 >
@@ -13,18 +57,25 @@ Queried: **2026-08-22T12:31Z**. Store `f36zps-yd.myshopify.com` / `hivolt-usa.co
 
 ---
 
-## Shopify themes
+## Shopify themes (roles as read 2026-08-31T20:30Z)
 
 | Theme ID | Role now | Name (descriptive only) |
 |---|---|---|
-| `158482727144` | **`MAIN`** | "HIVOLT v35 — Returns Copy Correction" |
-| `158653808872` | `UNPUBLISHED` | "HIVOLT v7 — Production Baseline — PDP Data Layer" |
-| `158570021096` | `UNPUBLISHED` | "HIVOLT v6 — PUBLISH ME: logo in header" |
-| `158563467496` | `UNPUBLISHED` | "HIVOLT v37 — PUBLISH: 15% two-item upsell" |
-| `158568906984` | `UNPUBLISHED` | "HIVOLT v5 — PUBLISH ME: favicon + full footer" |
-| `158347559144` | `UNPUBLISHED` | "HIVOLT v30 — product schema. PUBLISH ME" |
-| `158001037544` | `UNPUBLISHED` | "Impulse" |
-| `158568546536` | `UNPUBLISHED` | "Copy of Impulse" |
+| `158911561960` | **`MAIN`** | "HIVOLT — Nova Rebuild + Meta domain verification" — live since 08-30 09:36Z republish (also MAIN 03:28–05:25); still edited, last 08-31 20:28Z |
+| `158911987944` | `UNPUBLISHED` | "HIVOLT — landing v2 dense (Claude, draft)" — was MAIN 08-30 05:25 → 09:36 |
+| `158888526056` | `UNPUBLISHED` | "HIVOLT — Nova Rebuild (Claude)" — parallel-session build, was MAIN 08-29 07:02 → 08-30 03:28 |
+| `158743363816` | `UNPUBLISHED` | "Impulse" (stock) — was MAIN 08-28 21:36 → 08-29 07:02 |
+| `158753652968` | `UNPUBLISHED` | "IMPULSE-REBUILD-2026-08-24" |
+| `158905008360` | `UNPUBLISHED` | "HIVOLT — September Edit homepage (Claude, draft)" — parallel-session draft, 08-29 ~19:28 |
+
+**Deleted 2026-08-31 (between 18:58Z and 20:29Z), confirmed by direct GID
+lookup:** `158874960104` "GENERAL STORE — MASTER r2 (approved image
+swaps)" — the certified READY candidate; `158753849576` "GENERAL STORE —
+IMPULSE MASTER CANDIDATE" — the recorded rollback artifact; `158882693352`
+"Horizon". **Do not target these GIDs; they do not exist.**
+
+The v3x/v7 HIVOLT theme line listed in earlier versions of this file no
+longer exists on the store.
 
 **The IDs and names in this table are informational only. Re-query roles before
 writes.** A name records what a theme *is for*; only Shopify's `role` field

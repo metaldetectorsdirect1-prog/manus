@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QA FIXTURE — PDP harness: sticky ATC + PDP info (local only)</title>
+<style>
+  :root{--ink:#0A0A0B;--sale:#D0021B;--soft:#F7F7F5;--line:#E5E5E5;--muted:#6B6B6B}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:16px}
+  img{display:block;max-width:100%}
+  .page-width{max-width:1420px;margin:0 auto;padding:0 20px}
+  .btn{display:inline-block;background:var(--ink);color:#fff;border:0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;cursor:pointer}
+  .btn:focus-visible,button:focus-visible,input:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #1a73e8;outline-offset:2px}
+  .hdr{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:40;height:56px;display:flex;align-items:center;padding:0 20px;gap:16px}
+  .hdr a{font-weight:800;font-size:20px;letter-spacing:.06em;color:var(--ink);text-decoration:none}
+  /* PDP layout */
+  .pdp{display:grid;grid-template-columns:1fr;gap:28px;padding:20px}
+  @media(min-width:769px){.pdp{grid-template-columns:minmax(0,58%) minmax(0,42%);align-items:start}}
+  .pdp__media{display:grid;gap:10px}
+  .pdp__media .ph{background:var(--soft);border:1px solid var(--line);width:100%;aspect-ratio:4/5;display:grid;place-items:center;color:var(--muted);font-size:13px}
+  .product-single__meta{padding:0 0 40px}
+  @media(min-width:769px){.product-single__meta{position:sticky;top:100px}}
+  h1{font-family:inherit;font-size:28px;font-weight:600;line-height:1.15;margin:0 0 10px}
+  .price-row{display:flex;align-items:center;gap:10px;margin:0 0 18px}
+  [data-product-price]{font-size:20px;font-weight:700}
+  [data-compare-price]{color:var(--muted);font-size:16px}
+  .save-pill{background:var(--sale);color:#fff;font-size:12px;font-weight:700;padding:3px 8px}
+  fieldset{border:0;margin:0 0 16px;padding:0}
+  legend{font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .vbtns{display:flex;gap:8px;flex-wrap:wrap}
+  .vbtn{border:1px solid var(--ink);background:#fff;min-width:52px;min-height:44px;padding:8px 12px;cursor:pointer;font-size:14px}
+  .vbtn[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .vbtn--soldout{color:var(--muted);border-color:var(--line);text-decoration:line-through}
+  .qty{display:flex;align-items:center;gap:0;border:1px solid var(--ink);width:max-content;margin:0 0 16px}
+  .qty button{width:44px;height:44px;border:0;background:#fff;font-size:18px;cursor:pointer}
+  .qty input{width:52px;height:44px;border:0;text-align:center;font-size:15px}
+  .atc-row{display:grid;gap:10px;margin:0 0 20px}
+  .atc-row .btn[name="add"]{min-height:50px;width:100%}
+  .dyn{min-height:50px;background:#5A31F4;color:#fff;border:0;font-weight:700;letter-spacing:.08em;cursor:pointer}
+  /* pdp-info (mirrors fashion-pdp-info styles) */
+  .pdp-info{max-width:760px;margin:24px auto 40px}
+  .pdp-info__lede{font-size:16px;line-height:1.6;margin:0 0 20px}
+  .pdp-info__group{border-top:1px solid #E5E5E5;padding:4px 0}
+  .pdp-info__group:last-of-type{border-bottom:1px solid #E5E5E5}
+  .pdp-info__summary{cursor:pointer;padding:14px 0;font-size:14px;letter-spacing:.12em;text-transform:uppercase;list-style:none}
+  .pdp-info__summary::-webkit-details-marker{display:none}
+  .pdp-info__summary::after{content:'+';float:right;font-size:16px}
+  .pdp-info__group[open]>.pdp-info__summary::after{content:'\2212'}
+  .pdp-info__list{margin:0 0 16px}
+  .pdp-info__row{display:flex;gap:16px;padding:6px 0;font-size:15px}
+  .pdp-info__row dt{flex:0 0 130px;color:#6D6D6D}
+  .pdp-info__row dd{margin:0}
+  .pdp-info__body{padding:0 0 16px;font-size:15px;line-height:1.6}
+  .pdp-info__secure{margin:16px 0 0;font-size:13px;color:#6D6D6D;letter-spacing:.06em}
+  /* recommendations */
+  .recs{padding:10px 20px 60px}
+  .recs h2{font-size:22px;margin:0 0 16px}
+  .recs__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(min-width:769px){.recs__grid{grid-template-columns:repeat(4,1fr)}}
+  .recs .ph{background:var(--soft);border:1px solid var(--line);aspect-ratio:4/5}
+  /* ===== EXACT CSS from fashion-sticky-atc.liquid (section.id resolved to "qa") ===== */
+  .sticky-atc {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 20;
+    background: #fff;
+    border-top: 1px solid #E5E5E5;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(110%);
+    visibility: hidden;
+    transition: transform .22s ease, visibility .22s;
+  }
+  .sticky-atc.is-active { transform: translateY(0); visibility: visible; }
+  .sticky-atc__inner { display: flex; align-items: center; gap: 12px; max-width: 640px; margin: 0 auto; }
+  .sticky-atc__thumb { flex: 0 0 44px; width: 44px; height: 55px; object-fit: cover; }
+  .sticky-atc__info { flex: 1 1 auto; min-width: 0; }
+  .sticky-atc__title {
+    display: block; font-size: 13px; font-weight: 600; line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sticky-atc__price { display: block; font-size: 14px; font-weight: 700; }
+  .sticky-atc__compare { font-weight: 400; opacity: .6; margin-left: 6px; font-size: 12px; }
+  .sticky-atc__btn { flex: 0 0 auto; min-height: 44px; padding: 0 22px; }
+  .sticky-atc__btn[disabled] { opacity: .5; cursor: default; }
+  @media (min-width: 769px) { .sticky-atc { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .sticky-atc { transition: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main" style="position:absolute;left:-9999px">Skip to content</a>
+<header class="hdr" data-shot="pdp-header"><a href="#">HIVOLT</a></header>
+
+<main id="main">
+<div class="pdp page-width" data-shot="pdp-top">
+  <div class="pdp__media">
+    <div class="ph">Image 1 (gallery)</div>
+    <div class="ph">Image 2</div>
+    <div class="ph">Image 3</div>
+    <div class="ph">Image 4</div>
+  </div>
+
+  <div class="product-single__meta">
+    <h1>Elena Relaxed Merino Wool Mock Neck Sweater — Extra-Long Title Wrap Test for Card and Bar Truncation</h1>
+    <div class="price-row">
+      <span data-product-price>$68.00</span>
+      <s data-compare-price>$88.00</s>
+      <span class="save-pill" data-save-pill>Save 23%</span>
+    </div>
+
+    <form id="AddToCartForm-1" action="#" method="post">
+      <fieldset>
+        <legend>Color</legend>
+        <div class="vbtns" role="group" aria-label="Color">
+          <button type="button" class="vbtn" aria-pressed="true" data-variant='{"price":"$68.00","compare":"$88.00","available":true,"label":"Oat"}'>Oat</button>
+          <button type="button" class="vbtn" aria-pressed="false" data-variant='{"price":"$74.00","compare":"","available":true,"label":"Charcoal"}'>Charcoal</button>
+          <button type="button" class="vbtn vbtn--soldout" aria-pressed="false" data-variant='{"price":"$68.00","compare":"$88.00","available":false,"label":"Ivory"}'>Ivory</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Size</legend>
+        <div class="vbtns" role="group" aria-label="Size">
+          <button type="button" class="vbtn" aria-pressed="false">XS</button>
+          <button type="button" class="vbtn" aria-pressed="true">S</button>
+          <button type="button" class="vbtn" aria-pressed="false">M</button>
+          <button type="button" class="vbtn" aria-pressed="false">L</button>
+        </div>
+      </fieldset>
+      <div class="qty" aria-label="Quantity">
+        <button type="button" aria-label="Decrease quantity">−</button>
+        <input type="text" inputmode="numeric" value="1" aria-label="Quantity">
+        <button type="button" aria-label="Increase quantity">+</button>
+      </div>
+      <div class="atc-row">
+        <button type="submit" name="add" class="btn">Add to cart</button>
+        <button type="button" class="dyn">Buy with Shop&nbsp;Pay</button>
+      </div>
+    </form>
+
+    <div class="pdp-info">
+      <div class="pdp-info__lede">Relaxed through the body with a stand-collar mock neck. Merino-blend knit that holds its shape.</div>
+      <details class="pdp-info__group" open>
+        <summary class="pdp-info__summary">Details</summary>
+        <dl class="pdp-info__list">
+          <div class="pdp-info__row"><dt>Composition</dt><dd>100% Cotton</dd></div>
+          <div class="pdp-info__row"><dt>Fit</dt><dd>Relaxed</dd></div>
+          <div class="pdp-info__row"><dt>Care</dt><dd>Machine wash cold, lay flat to dry</dd></div>
+        </dl>
+      </details>
+      <details class="pdp-info__group">
+        <summary class="pdp-info__summary">Delivery &amp; returns</summary>
+        <div class="pdp-info__body">
+          <p>Free tracked shipping on every US order — no minimum. See the <a href="#">shipping policy</a>.</p>
+          <p>60 days from delivery to return, with a free return label and no restocking fee. See the <a href="#">refund policy</a>.</p>
+        </div>
+      </details>
+      <p class="pdp-info__secure">Secure Shopify checkout · Shop&nbsp;Pay · Apple&nbsp;Pay · Google&nbsp;Pay</p>
+    </div>
+  </div>
+</div>
+
+<section class="recs" data-shot="pdp-recs">
+  <h2>You may also like</h2>
+  <div class="recs__grid"><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div></div>
+</section>
+</main>
+
+<!-- ===== EXACT markup from fashion-sticky-atc.liquid (Liquid resolved: section.id=qa, product fixture) ===== -->
+<div id="StickyAtc-qa" class="sticky-atc" data-sticky-atc aria-hidden="true">
+  <div class="sticky-atc__inner">
+    <img class="sticky-atc__thumb"
+      src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='55'%3E%3Crect width='44' height='55' fill='%23F7F7F5'/%3E%3C/svg%3E"
+      alt="" width="44" height="55" loading="lazy">
+    <div class="sticky-atc__info">
+      <span class="sticky-atc__title">Elena Relaxed Merino Wool Mock Neck Sweater — Extra-Long Title Wrap Test for Card and Bar Truncation</span>
+      <span class="sticky-atc__price">
+        <span data-sticky-price></span>
+        <s class="sticky-atc__compare" data-sticky-compare hidden></s>
+      </span>
+    </div>
+    <button type="button" class="btn sticky-atc__btn" data-sticky-submit>
+      Add to cart
+    </button>
+  </div>
+</div>
+
+<script>
+  // Harness plumbing (NOT part of the section): variant buttons update the main
+  // PDP nodes the way Impulse's theme.js does, so the section's MutationObserver
+  // mirroring is exercised exactly as in production.
+  window.__submits = 0;
+  (function () {
+    var form = document.getElementById('AddToCartForm-1');
+    form.addEventListener('submit', function (e) { e.preventDefault(); window.__submits++; });
+    var priceEl = document.querySelector('[data-product-price]');
+    var cmpEl = document.querySelector('[data-compare-price]');
+    var pill = document.querySelector('[data-save-pill]');
+    var addBtn = form.querySelector('[name="add"]');
+    document.querySelectorAll('.vbtn[data-variant]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('.vbtn[data-variant]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        var v = JSON.parse(b.getAttribute('data-variant'));
+        priceEl.textContent = v.price;
+        cmpEl.textContent = v.compare;
+        cmpEl.style.display = v.compare ? '' : 'none';
+        pill.style.display = v.compare ? '' : 'none';
+        if (v.available) { addBtn.disabled = false; addBtn.textContent = 'Add to cart'; }
+        else { addBtn.disabled = true; addBtn.textContent = 'Sold out'; }
+      });
+    });
+  })();
+</script>
+
+<!-- ===== EXACT JS from fashion-sticky-atc.liquid (section.id resolved to "qa") ===== -->
+<script>
+  (function () {
+    var bar = document.getElementById('StickyAtc-qa');
+    if (!bar) return;
+    var mainForm = document.querySelector('form[id^="AddToCartForm"]');
+    var mainBtn = mainForm && mainForm.querySelector('[name="add"]');
+    // No main form on the page (e.g. onboarding/empty product): never show the bar.
+    if (!mainForm || !mainBtn) return;
+
+    var meta = document.querySelector('.product-single__meta') || document;
+    var priceSrc = meta.querySelector('[data-product-price]');
+    var compareSrc = meta.querySelector('[data-compare-price]');
+    var priceDst = bar.querySelector('[data-sticky-price]');
+    var compareDst = bar.querySelector('[data-sticky-compare]');
+    var btnDst = bar.querySelector('[data-sticky-submit]');
+
+    function mirror() {
+      if (priceSrc && priceDst) priceDst.textContent = priceSrc.textContent.trim();
+      if (compareDst) {
+        var cmp = compareSrc ? compareSrc.textContent.trim() : '';
+        compareDst.hidden = cmp === '';
+        compareDst.textContent = cmp;
+      }
+      var label = (mainBtn.textContent || '').trim();
+      if (label) btnDst.textContent = label;
+      btnDst.disabled = mainBtn.disabled || mainBtn.getAttribute('aria-disabled') === 'true';
+    }
+    mirror();
+
+    var mo = new MutationObserver(mirror);
+    mo.observe(mainBtn, { attributes: true, childList: true, subtree: true, characterData: true });
+    if (priceSrc) mo.observe(priceSrc, { childList: true, subtree: true, characterData: true });
+    if (compareSrc) mo.observe(compareSrc, { childList: true, subtree: true, characterData: true });
+
+    function setActive(on) {
+      bar.classList.toggle('is-active', on);
+      bar.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+    // Show only after the real button has scrolled ABOVE the viewport.
+    // State is recomputed from geometry on every signal rather than from
+    // IntersectionObserver crossings alone: a fast fling or an instant jump
+    // (anchor link) can skip every frame in which the button intersected, so
+    // a crossings-only observer would never fire and the bar would stay hidden.
+    var updateQueued = false;
+    function update() {
+      updateQueued = false;
+      setActive(mainBtn.getBoundingClientRect().bottom < 0);
+    }
+    function queueUpdate() {
+      if (updateQueued) return;
+      updateQueued = true;
+      requestAnimationFrame(update);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(queueUpdate, { threshold: 0 }).observe(mainBtn);
+    }
+    window.addEventListener('scroll', queueUpdate, { passive: true });
+    window.addEventListener('resize', queueUpdate, { passive: true });
+    update();
+
+    btnDst.addEventListener('click', function () {
+      if (btnDst.disabled) return;
+      if (typeof mainForm.requestSubmit === 'function') {
+        mainForm.requestSubmit(mainBtn);
+      } else {
+        mainBtn.click();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
