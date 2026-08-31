@@ -79,3 +79,25 @@ No theme file was modified; both theme updatedAt values are unchanged.
 - THE ONE HUMAN ACTION: Shopify admin → Online Store → Themes →
   "GENERAL STORE — MASTER r2 (approved image swaps)" → Publish.
   Then follow docs/PRODUCTION-CUTOVER-PLAN.md steps 5–15.
+
+---
+
+## GATE CLOSED — 2026-08-31 (appended; certification record above is historical)
+
+- The certified theme **MASTER r2 (`158874960104`) was deleted from the
+  store between 18:58Z and 20:29Z on 2026-08-31**, together with the
+  recorded rollback theme `158753849576` and "Horizon" `158882693352`.
+  Deletion confirmed by direct GID lookups returning "Theme does not
+  exist" on two independent reads.
+- The verdict above therefore refers to an artifact that no longer exists.
+  **This cutover can never be executed.** The owner adopted a different
+  live theme line ("HIVOLT — Nova Rebuild + Meta domain verification",
+  `158911561960`, MAIN since 2026-08-30 09:36Z) built by parallel
+  sessions, and the r2/rollback pair was removed in what reads as a
+  deliberate library cleanup.
+- The post-cutover verification watcher was retired at this point; the
+  ONE HUMAN ACTION named in the execution record is void. Current live
+  state is tracked in `docs/HIVOLT-CURRENT-STATE.md` (re-query before
+  trusting it). The r2 sources and QA evidence remain in this repository's
+  history; any revival would be a new theme with a new ID requiring
+  re-certification of live state.
