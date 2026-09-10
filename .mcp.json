@@ -29,6 +29,18 @@
         "GSC_DATA_STATE": "all"
       },
       "autoStart": false
+    },
+    "perplexity": {
+      "command": "npx",
+      "args": [
+        "-yq",
+        "@perplexity-ai/mcp-server"
+      ],
+      "env": {
+        "PERPLEXITY_API_KEY": "${PERPLEXITY_API_KEY}",
+        "npm_config_update_notifier": "false"
+      },
+      "autoStart": false
     }
   }
 }
