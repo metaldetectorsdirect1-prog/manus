@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# One-time setup for the KDP publish bot on a Mac. Re-runnable.
+# One-time setup for the KDP publish bot on macOS / Linux. Re-runnable.
+# Windows users: run scripts/kdp/setup.ps1 in PowerShell instead.
 set -euo pipefail
 mkdir -p ~/kdp-bot/shots
 cd ~/kdp-bot

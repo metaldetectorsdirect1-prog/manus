@@ -5,8 +5,13 @@ Drives a real, headed Chromium window with a persistent profile so you log in
 once and later runs reuse the session. Every book-specific value lives in
 CONFIG below; the next title is a config change only.
 
-Run (after scripts/kdp/setup.sh):
-    cd ~/kdp-bot && source .venv/bin/activate && python publish.py
+Runs on Windows, macOS and Linux. Paths in CONFIG use "~" and forward
+slashes; they are expanded and normalized for the host OS at startup, so on
+Windows "~/Downloads/x.epub" resolves to C:\\Users\\<you>\\Downloads\\x.epub.
+
+Run (after the setup script for your OS):
+    Windows (PowerShell):  cd ~\\kdp-bot; .\\.venv\\Scripts\\Activate.ps1; python publish.py
+    macOS / Linux:         cd ~/kdp-bot && source .venv/bin/activate && python publish.py
 
 The script prints "LOGIN NEEDED" and waits when KDP asks for a password / OTP.
 Type them in the Chrome window; nothing else needs a click.
@@ -42,6 +47,10 @@ CONFIG = {
     "upload_wait_s": 300,
     "step_timeout_ms": 60_000,
 }
+
+# Expand "~" and normalize separators so the same CONFIG works on every OS.
+for _k in ("manuscript", "cover", "bot_dir"):
+    CONFIG[_k] = os.path.normpath(os.path.expanduser(CONFIG[_k]))
 
 BASE = "https://kdp.amazon.com/en_US"
 CONTENT_URL = f"{BASE}/title-setup/kindle/{CONFIG['title_id']}/content"
@@ -423,7 +432,15 @@ def main():
         p = CONFIG[key]
         if not os.path.isfile(p):
             print(f"STOP: {key} file not found: {p}")
-            os.system(f'ls -la "{os.path.dirname(p)}"')
+            folder = os.path.dirname(p)
+            if os.path.isdir(folder):
+                print(f"Contents of {folder}:")
+                for entry in sorted(os.listdir(folder)):
+                    full = os.path.join(folder, entry)
+                    size = os.path.getsize(full) if os.path.isfile(full) else "<dir>"
+                    print(f"  {size:>12}  {entry}")
+            else:
+                print(f"The folder {folder} does not exist either.")
             return 2
         log(f"{key}: {p} ({os.path.getsize(p)} bytes)")
     os.makedirs(SHOTS, exist_ok=True)
